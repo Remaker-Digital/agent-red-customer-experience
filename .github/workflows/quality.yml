@@ -1,0 +1,90 @@
+# Public source checks. No registry login, no deploy, and no secret inputs.
+# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+
+name: Quality
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  ruff:
+    name: Ruff
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - run: pip install ruff==0.16.10
+      - name: Ruff check (blocking, E and F)
+        run: ruff check src/ tests/ --select E,F --output-format=github
+      - name: Ruff format check (advisory)
+        continue-on-error: true
+        run: ruff format --check src/ tests/ --diff
+
+  bandit:
+    name: Bandit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - run: pip install "bandit[toml]"
+      - run: bandit -r src/ -ll -c pyproject.toml
+
+  semgrep:
+    name: Semgrep
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Report Semgrep findings
+        run: |
+          pip install semgrep
+          semgrep --config p/python --config p/security-audit --config p/secrets \
+            --exclude .git --exclude node_modules \
+            --exclude "admin/**/node_modules" --exclude "admin/**/dist" \
+            --exclude "widget/node_modules" --exclude "widget/dist" \
+            .
+
+  pip-audit:
+    name: Dependency audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Install and audit
+        run: |
+          python -m pip install --upgrade "pip>=26.1,<27"
+          pip install -r requirements.txt
+          pip install pip-audit
+          pip-audit --ignore-vuln PYSEC-2026-3740
+
+  docs:
+    name: Docs
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: docs-site
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: docs-site/package-lock.json
+      - run: npm ci
+      - run: npm run build
+      - run: npm run lint:md
+      - run: npm run lint:links

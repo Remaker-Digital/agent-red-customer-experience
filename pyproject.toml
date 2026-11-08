@@ -1,0 +1,96 @@
+[build-system]
+requires = ["setuptools>=70", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "agent-red"
+version = "1.0.0"
+description = "Agent Red Customer Experience application"
+requires-python = ">=3.12"
+dependencies = []
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["src*", "test_host*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "-v --tb=short --strict-markers --timeout=30"
+markers = [
+    "unit: fast isolated unit tests",
+    "integration: cross-module integration tests",
+    "asyncio: async tests run with pytest-asyncio",
+    "e2e: end-to-end tests",
+    "slow: tests that take more than two seconds",
+    "security: adversarial and security-focused tests",
+    "property: property-based tests",
+    "local_env: tests requiring local environment files",
+    "perf: live-repo performance assertions",
+    # Registered by GT-KB's root pyproject.toml until the split (6a5b779).
+    "tier0: blocking regression tests, must pass for every deployment",
+    "tier1: pre-launch gate regression tests, must pass before traffic cutover",
+    "tier2: post-deploy smoke tests, performance and latency validation",
+    "sequential: tests that must not run in parallel (live endpoints, session fixtures)",
+    "visual: visual regression tests requiring Playwright and a Vite dev server",
+    "nats: tests requiring a live NATS JetStream server (nats://localhost:4222)",
+]
+filterwarnings = ["ignore::DeprecationWarning:fastapi"]
+
+[tool.coverage.run]
+source = ["src"]
+branch = true
+
+# Carried from GT-KB's root pyproject.toml (6a5b779), where Agent Red's coverage
+# gate lived until the split; tests/quality/test_coverage_enforcement.py reads it.
+[tool.coverage.report]
+# Ramp plan: 20% → 50% → 70% → 75% (current) → 78% → 80% (launch target)
+# SPEC-1844 / WI-1486: Incremental ramp schedule.
+# Updated 2026-03-17: 6,900+ unit tests. Current coverage: ~73%.
+# Gate raised from 70% to 75%. Next target: 78% in 2 sessions, 80% in 4.
+fail_under = 75
+show_missing = true
+skip_empty = true
+# Each entry is a regex searched anywhere in a line, and a match on a def or if
+# header excludes the whole suite, so pass and ... are anchored to bare statements
+# (tests/unit/test_coverage_exclude_patterns.py).
+exclude_lines = [
+    "pragma: no cover",
+    "if TYPE_CHECKING:",
+    "if __name__ == .__main__.",
+    "raise NotImplementedError",
+    "^[ \\t]*pass[ \\t]*(?:#.*)?$",
+    "^[ \\t]*\\.\\.\\.[ \\t]*(?:#.*)?$",
+    "^[ \\t]*(?:async[ \\t]+)?(?:def|class)[ \\t].*:[ \\t]*\\.\\.\\.[ \\t]*(?:#.*)?$",
+]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 120
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+ignore = ["E501", "B008", "B904", "B905", "SIM108", "UP007"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["E501", "B011", "SIM300"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["src", "test_host"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+
+# ---------------------------------------------------------------------------
+# bandit - Python security scanner
+# ---------------------------------------------------------------------------
+
+[tool.bandit]
+# B608 flags Cosmos DB query construction as SQL injection. The affected query
+# builders use fixed Cosmos SQL fragments with parameterized user values; keep
+# injection review in code review/tests instead of blocking CI on this heuristic.
+skips = ["B608"]

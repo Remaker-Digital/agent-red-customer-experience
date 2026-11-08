@@ -1,0 +1,100 @@
+# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+"""
+Agent Red Customer Experience — FastAPI application entrypoint.
+
+Thin composition root: creates the app, registers middleware, routers,
+static mounts, startup/shutdown handlers, and health endpoints.
+
+All implementation is in ``src/app/`` submodules — this file only wires
+them together and re-exports names that existing test code imports.
+
+Usage:
+    uvicorn src.main:app --host 0.0.0.0 --port 8000 --reload
+
+© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+"""
+
+from __future__ import annotations
+
+from src.app.background import (
+    register_alert_evaluation,
+    register_archival_sweep,
+    register_expiry_scanner,
+    register_expiry_warning,
+    register_idle_scanner,
+    register_ingestion_processor,
+    register_sla_snapshots,
+    register_trial_scanner,
+    register_trial_warning,
+    register_vectorization_scanner,
+    register_website_refresh,
+)
+from src.app.factory import create_app
+from src.app.health import register_health_endpoints
+from src.app.lifecycle import (
+    build_app_lifespan,
+    register_middleware,
+    register_shutdown_handlers,
+    register_startup_handlers,
+)
+from src.app.routers import register_routers
+from src.app.standalone_auth import mount_standalone_admin
+from src.app.static_serving import mount_static_apps
+
+# ---------------------------------------------------------------------------
+# Application composition
+# ---------------------------------------------------------------------------
+
+# Step 1: Collect all startup/shutdown handlers into registries (SPEC-1623).
+# This must happen BEFORE app creation because the lifespan context manager
+# is passed to FastAPI() and cannot be changed after construction.
+register_startup_handlers()
+register_shutdown_handlers()
+register_idle_scanner()
+register_sla_snapshots()
+register_alert_evaluation()
+register_ingestion_processor()
+register_archival_sweep()
+register_trial_scanner()
+register_trial_warning()
+register_expiry_scanner()
+register_expiry_warning()
+register_vectorization_scanner()
+register_website_refresh()
+
+# Step 2: Build the lifespan and create the app.
+app = create_app(lifespan=build_app_lifespan())
+
+# Step 3: Register middleware, routers, static mounts, and health endpoints.
+register_middleware(app)
+register_routers(app)
+mount_static_apps(app)
+mount_standalone_admin(app)
+register_health_endpoints(app)
+
+# ---------------------------------------------------------------------------
+# Re-exports for backward compatibility (consumed by test code)
+# ---------------------------------------------------------------------------
+
+# tests/test_forgot_password.py — function imports + fixture state mutations
+# tests/multi_tenant/test_idle_scanner.py — lifecycle handler checks
+from src.app.background import (  # noqa: E402, F401
+    _idle_scanner_loop,
+    _idle_scanner_task,
+    _shutdown_idle_scanner,
+    _startup_idle_scanner,
+)
+
+# tests/test_health.py — startup handler existence checks
+from src.app.lifecycle import (  # noqa: E402, F401
+    _startup_circuit_breakers,
+    _startup_nats,
+    _startup_secret_service,
+    _startup_tenant_resolution,
+    _startup_tracing,
+)
+from src.app.standalone_auth import (  # noqa: E402, F401
+    _admin_used_reset_nonces,
+    _generate_reset_token,
+    _validate_reset_token,
+)

@@ -1,0 +1,907 @@
+// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+/**
+ * IntegrationsManager — Shared component for managing third-party integrations.
+ *
+ * Displays available integrations (Shopify, Zendesk, Mailchimp, Google Analytics,
+ * Stripe MCP) as cards with status badges, activate/deactivate toggles, and
+ * disconnect actions. Stripe includes MCP credential management panel.
+ * Tier-gated integrations show upgrade prompts for lower-tier tenants.
+ *
+ * C10 capability dependency for Launch UI Test.
+ *
+ * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ */
+
+import React, { useCallback, useState } from 'react';
+import type {
+  ActionConfigItem,
+  BaseComponentProps,
+  ConnectionLogEntry,
+  IntegrationSummary,
+  SyncEvent,
+} from './types/index';
+import {
+  useIntegrations,
+  useActivateIntegration,
+  useDeactivateIntegration,
+  useDisconnectIntegration,
+} from './hooks/index';
+import { HelpTooltip } from './HelpTooltip';
+import { McpConfigPanel } from './McpConfigPanel';
+import { tokens } from './theme/styles';
+
+
+// ---------------------------------------------------------------------------
+// Constants
+// ---------------------------------------------------------------------------
+
+/** Map HoverButton variant → CSS utility class */
+const VARIANT_CLASS: Record<string, string> = {
+  primary: 'ar-btn-action',
+  success: 'ar-btn-activate',
+  outline: 'ar-btn-ghost',
+  danger: 'ar-btn-danger',
+};
+
+const STATUS_COLORS: Record<string, string> = {
+  connected: tokens.success,
+  disconnected: tokens.textTertiary,
+  error: tokens.danger,
+};
+
+const STATUS_LABELS: Record<string, string> = {
+  connected: 'Connected',
+  disconnected: 'Not Connected',
+  error: 'Error',
+};
+
+// Integration logo mapping: type → filename stem (without -dark/-light suffix)
+const INTEGRATION_LOGO_MAP: Record<string, string> = {
+  shopify: 'shopify-logo',
+  zendesk: 'zendesk-logo',
+  mailchimp: 'mailchimp-logo',
+  google_analytics: 'google-analytics-logo',
+  stripe: 'stripe-logo',
+};
+
+const DOCS_BASE = 'https://agentredcx.com/docs/admin-guide';
+
+/** Per-integration tooltip text + doc link. */
+const INTEGRATION_TOOLTIPS: Record<string, { text: string; docLink: string }> = {
+  shopify: {
+    text: 'Core commerce integration. Syncs products, orders, and customer data to power AI responses with real-time store information.',
+    docLink: `${DOCS_BASE}/integrations#shopify`,
+  },
+  zendesk: {
+    text: 'Route escalated conversations to Zendesk tickets. Requires Professional tier or above.',
+    docLink: `${DOCS_BASE}/integrations#zendesk`,
+  },
+  mailchimp: {
+    text: 'Sync customer emails and conversation insights to Mailchimp audiences for targeted marketing.',
+    docLink: `${DOCS_BASE}/integrations#mailchimp`,
+  },
+  google_analytics: {
+    text: 'Send conversation events and conversion data to Google Analytics 4 for unified reporting.',
+    docLink: `${DOCS_BASE}/integrations#google-analytics`,
+  },
+};
+
+// Fallback inline SVG icons (used if logo image fails to load)
+const IntegrationIcons: Record<string, React.FC> = {
+  shopify: () => (
+    <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+      <path d="M15.5 2.5L14 10l-3.5-1L7 17.5l-2-1L3 22h18l-2-8-3.5 1L15.5 2.5z" />
+    </svg>
+  ),
+  zendesk: () => (
+    <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+      <circle cx="12" cy="12" r="9" />
+      <path d="M8 15l4-6 4 6" />
+    </svg>
+  ),
+  mailchimp: () => (
+    <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+      <polyline points="22,6 12,13 2,6" />
+    </svg>
+  ),
+  google_analytics: () => (
+    <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+      <line x1="18" y1="20" x2="18" y2="10" />
+      <line x1="12" y1="20" x2="12" y2="4" />
+      <line x1="6" y1="20" x2="6" y2="14" />
+    </svg>
+  ),
+  stripe: () => (
+    <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+      <rect x="1" y="4" width="22" height="16" rx="2" ry="2" />
+      <line x1="1" y1="10" x2="23" y2="10" />
+    </svg>
+  ),
+};
+
+// ---------------------------------------------------------------------------
+// Sub-components
+// ---------------------------------------------------------------------------
+
+interface IntegrationCardProps {
+  integration: IntegrationSummary;
+  onActivate: IntegrationTypeHandler;
+  onDeactivate: IntegrationTypeHandler;
+  onDisconnect: IntegrationTypeHandler;
+  activating: boolean;
+  deactivating: boolean;
+}
+
+type IntegrationTypeHandler = (type: string) => void; // eslint-disable-line no-unused-vars
+type AdminApiFetch = (url: string, options?: globalThis.RequestInit) => Promise<Response>; // eslint-disable-line no-unused-vars
+type AdminNotify = (message: string, severity: 'success' | 'error' | 'info') => void; // eslint-disable-line no-unused-vars
+
+const cardStyle: React.CSSProperties = {
+  background: tokens.surface,
+  border: `1px solid ${tokens.border}`,
+  borderRadius: 8,
+  padding: 16,
+  display: 'flex',
+  flexDirection: 'row',
+  alignItems: 'center',
+  gap: 16,
+};
+
+const iconContainerStyle: React.CSSProperties = {
+  width: 180,
+  height: 180,
+  borderRadius: 8,
+  background: tokens.page,
+  border: `1px solid ${tokens.border}`,
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  color: tokens.textMuted,
+  flexShrink: 0,
+  overflow: 'hidden',
+};
+
+const badgeStyle = (color: string): React.CSSProperties => ({
+  display: 'inline-flex',
+  alignItems: 'center',
+  gap: 4,
+  padding: '2px 8px',
+  borderRadius: 10,
+  fontSize: 11,
+  fontWeight: 600,
+  background: `${color}22`,
+  color,
+  border: `1px solid ${color}44`,
+});
+
+const tierBadgeStyle: React.CSSProperties = {
+  display: 'inline-flex',
+  alignItems: 'center',
+  gap: 4,
+  padding: '2px 8px',
+  borderRadius: 10,
+  fontSize: 11,
+  fontWeight: 600,
+  background: `${tokens.warning}22`,
+  color: tokens.warning,
+  border: `1px solid ${tokens.warning}44`,
+};
+
+// Button component — uses CSS hover utility classes from tokens.css
+const btnBase: React.CSSProperties = {
+  padding: '6px 14px',
+  borderRadius: 6,
+  fontSize: 13,
+  fontWeight: 500,
+};
+
+const HoverButton: React.FC<{
+  variant: 'primary' | 'success' | 'outline' | 'danger';
+  onClick: () => void;
+  disabled?: boolean;
+  children: React.ReactNode;
+}> = ({ variant, onClick, disabled, children }) => (
+  <button
+    className={VARIANT_CLASS[variant] || 'ar-btn-action'}
+    style={btnBase}
+    onClick={onClick}
+    disabled={disabled}
+  >
+    {children}
+  </button>
+);
+
+const IntegrationCard: React.FC<IntegrationCardProps & {
+  isDark?: boolean;
+  basePath?: string;
+  apiFetch?: AdminApiFetch;
+  tenantId?: string;
+  onNotify?: AdminNotify;
+  onRefetch?: () => void;
+}> = ({
+  integration,
+  onActivate,
+  onDeactivate,
+  onDisconnect,
+  activating,
+  deactivating,
+  isDark = true,
+  basePath = '',
+  apiFetch,
+  tenantId,
+  onNotify,
+  onRefetch,
+}) => {
+  const [showConfirm, setShowConfirm] = useState(false);
+  const [logoError, setLogoError] = useState(false);
+  const IconComponent = IntegrationIcons[integration.icon] || IntegrationIcons.shopify;
+  const statusColor = STATUS_COLORS[integration.status || 'disconnected'] || tokens.textTertiary;
+  const statusLabel = STATUS_LABELS[integration.status || 'disconnected'] || 'Not Configured';
+
+  // Resolve logo path: dark variant for dark mode, light for light mode
+  const logoStem = INTEGRATION_LOGO_MAP[integration.icon] || INTEGRATION_LOGO_MAP[integration.type];
+  const logoSuffix = isDark ? 'dark' : 'light';
+  const logoPath = logoStem ? `${basePath}/integration-logos/${logoStem}-${logoSuffix}.svg` : null;
+
+  return (
+    <div style={cardStyle}>
+      {/* Logo: horizontal rectangle, left side */}
+      <div style={iconContainerStyle}>
+        {logoPath && !logoError ? (
+          <img
+            src={logoPath}
+            alt={`${integration.name} logo`}
+            style={{ objectFit: 'contain', display: 'block' }}
+            onError={() => setLogoError(true)}
+          />
+        ) : (
+          <IconComponent />
+        )}
+      </div>
+
+      {/* Right side: name, badges, description, actions */}
+      <div style={{ flex: 1, minWidth: 0 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
+          <span style={{ fontSize: 22, fontWeight: 600, color: tokens.textPrimary }}>
+            {integration.name}
+            {INTEGRATION_TOOLTIPS[integration.type] && (
+              <HelpTooltip
+                text={INTEGRATION_TOOLTIPS[integration.type].text}
+                docLink={INTEGRATION_TOOLTIPS[integration.type].docLink}
+              />
+            )}
+          </span>
+          {integration.status && (
+            <span style={badgeStyle(statusColor)}>
+              <span
+                style={{
+                  width: 6,
+                  height: 6,
+                  borderRadius: '50%',
+                  background: statusColor,
+                  display: 'inline-block',
+                }}
+              />
+              {statusLabel}
+            </span>
+          )}
+          {!integration.tierMet && integration.tierGate && (
+            <span style={tierBadgeStyle}>
+              {String.fromCodePoint(0x2B06)} {integration.tierGate} tier
+            </span>
+          )}
+        </div>
+        <p style={{ margin: '4px 0 8px', fontSize: 13, color: tokens.textTertiary, lineHeight: 1.4 }}>
+          {integration.description}
+        </p>
+
+        {/* Actions — inline with text */}
+        <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}>
+          {!integration.tierMet ? (
+            <span style={{ fontSize: 12, color: tokens.warning }}>
+              Upgrade to {integration.tierGate} to use this integration
+            </span>
+          ) : integration.enabled ? (
+            <>
+              <HoverButton
+                variant="danger"
+                onClick={() => onDeactivate(integration.type)}
+                disabled={deactivating}
+              >
+                {deactivating ? 'Deactivating...' : 'Deactivate'}
+              </HoverButton>
+              {showConfirm ? (
+                <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
+                  <span style={{ fontSize: 12, color: tokens.danger }}>Disconnect? This removes credentials.</span>
+                  <HoverButton
+                    variant="danger"
+                    onClick={() => { onDisconnect(integration.type); setShowConfirm(false); }}
+                  >
+                    Confirm
+                  </HoverButton>
+                  <HoverButton
+                    variant="outline"
+                    onClick={() => setShowConfirm(false)}
+                  >
+                    Cancel
+                  </HoverButton>
+                </div>
+              ) : (
+                <HoverButton
+                  variant="danger"
+                  onClick={() => setShowConfirm(true)}
+                >
+                  Disconnect
+                </HoverButton>
+              )}
+            </>
+          ) : (
+            <HoverButton
+              variant="primary"
+              onClick={() => onActivate(integration.type)}
+              disabled={activating}
+            >
+              {activating ? 'Activating...' : 'Activate'}
+            </HoverButton>
+          )}
+        </div>
+
+        {/* Stripe MCP config panel — shown when Stripe is enabled */}
+        {integration.type === 'stripe' && integration.enabled && apiFetch && tenantId && onNotify && (
+          <McpConfigPanel
+            tenantId={tenantId}
+            apiFetch={apiFetch}
+            onNotify={onNotify}
+            onStatusChange={onRefetch}
+          />
+        )}
+
+        {/* SPEC-1772: Sync stats for connected integrations */}
+        {integration.enabled && integration.status === 'connected' && (
+          <div style={{
+            marginTop: 8,
+            padding: '8px 12px',
+            background: tokens.page,
+            borderRadius: 6,
+            border: `1px solid ${tokens.border}`,
+            fontSize: 12,
+            color: tokens.textTertiary,
+            display: 'flex',
+            gap: 16,
+            alignItems: 'center',
+            flexWrap: 'wrap',
+          }}>
+            {integration.lastSyncAt && (
+              <span>Last sync: {new Date(integration.lastSyncAt).toLocaleString()}</span>
+            )}
+            {integration.lastSyncStatus === 'error' && (
+              <span style={{ color: tokens.danger }}>Sync error</span>
+            )}
+            {typeof integration.ticketCount === 'number' && (
+              <span>{integration.ticketCount.toLocaleString()} tickets</span>
+            )}
+            {typeof integration.articleCount === 'number' && (
+              <span>{integration.articleCount.toLocaleString()} articles</span>
+            )}
+            {typeof integration.contactCount === 'number' && (
+              <span>{integration.contactCount.toLocaleString()} contacts</span>
+            )}
+          </div>
+        )}
+
+        {/* SPEC-1772: OAuth setup button for disconnected OAuth integrations */}
+        {integration.tierMet && !integration.enabled && integration.authType === 'oauth2' && (
+          <div style={{ marginTop: 6 }}>
+            <span style={{ fontSize: 11, color: tokens.textTertiary }}>
+              OAuth setup required — click Activate to begin authorization
+            </span>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+// ---------------------------------------------------------------------------
+// SPEC-1772: Integration Detail Panel
+// ---------------------------------------------------------------------------
+
+interface IntegrationDetailPanelProps {
+  integration: IntegrationSummary;
+  apiFetch: AdminApiFetch;
+  onClose: () => void;
+  onNotify: AdminNotify;
+  onRefetch: () => void;
+}
+
+const detailPanelStyle: React.CSSProperties = {
+  background: tokens.surface,
+  border: `1px solid ${tokens.border}`,
+  borderRadius: 8,
+  padding: 20,
+  marginBottom: 16,
+};
+
+const tabStyle = (active: boolean): React.CSSProperties => ({
+  padding: '6px 14px',
+  fontSize: 13,
+  fontWeight: active ? 600 : 400,
+  color: active ? tokens.brand : tokens.textTertiary,
+  background: active ? `${tokens.brand}11` : 'transparent',
+  border: `1px solid ${active ? tokens.brand + '44' : 'transparent'}`,
+  borderRadius: 6,
+  cursor: 'pointer',
+});
+
+type DetailTab = 'config' | 'sync' | 'actions' | 'logs';
+
+type IntegrationDetailSummary = IntegrationSummary & {
+  syncHistory?: SyncEvent[];
+  actionConfig?: ActionConfigItem[];
+  connectionLogs?: ConnectionLogEntry[];
+};
+
+const detailSectionStyle: React.CSSProperties = {
+  marginTop: 12,
+  padding: 12,
+  background: tokens.page,
+  border: `1px solid ${tokens.border}`,
+  borderRadius: 6,
+};
+
+const detailRowStyle: React.CSSProperties = {
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  gap: 12,
+  padding: '8px 0',
+  borderTop: `1px solid ${tokens.border}`,
+};
+
+const inputStyle: React.CSSProperties = {
+  width: '100%',
+  marginTop: 4,
+  padding: '6px 8px',
+  borderRadius: 4,
+  border: `1px solid ${tokens.border}`,
+  background: tokens.surface,
+  color: tokens.textPrimary,
+};
+
+const IntegrationDetailPanel: React.FC<IntegrationDetailPanelProps> = ({
+  integration,
+  apiFetch,
+  onClose,
+  onNotify,
+  onRefetch,
+}) => {
+  const [activeTab, setActiveTab] = useState<DetailTab>('config');
+  const [syncing, setSyncing] = useState(false);
+  const detailIntegration = integration as IntegrationDetailSummary;
+  const syncHistory: SyncEvent[] = detailIntegration.syncHistory ?? [];
+  const actionConfig: ActionConfigItem[] = detailIntegration.actionConfig ?? [];
+  const connectionLogs: ConnectionLogEntry[] = detailIntegration.connectionLogs ?? [];
+  const supportsKnowledgeSourceSelection =
+    detailIntegration.category === 'knowledge' || detailIntegration.type === 'google_docs';
+
+  const handleSyncNow = useCallback(async () => {
+    setSyncing(true);
+    try {
+      const res = await apiFetch(`/api/admin/integrations/${integration.type}/sync`, {
+        method: 'POST',
+      });
+      if (res.ok) {
+        onNotify('Sync started', 'success');
+        onRefetch();
+      } else {
+        onNotify('Failed to start sync', 'error');
+      }
+    } catch {
+      onNotify('Sync request failed', 'error');
+    } finally {
+      setSyncing(false);
+    }
+  }, [apiFetch, integration.type, onNotify, onRefetch]);
+
+  return (
+    <div style={detailPanelStyle}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
+        <span style={{ fontSize: 18, fontWeight: 600, color: tokens.textPrimary }}>
+          {integration.name} — Details
+        </span>
+        <button
+          className="ar-btn-ghost"
+          style={{ padding: '4px 10px', fontSize: 12 }}
+          onClick={onClose}
+        >
+          Close
+        </button>
+      </div>
+
+      {/* Tabs */}
+      <div style={{ display: 'flex', gap: 6, marginBottom: 16 }}>
+        {(['config', 'sync', 'actions', 'logs'] as DetailTab[]).map((tab) => (
+          <button
+            key={tab}
+            style={tabStyle(activeTab === tab)}
+            onClick={() => setActiveTab(tab)}
+          >
+            {tab.charAt(0).toUpperCase() + tab.slice(1)}
+          </button>
+        ))}
+      </div>
+
+      {/* Tab content */}
+      {activeTab === 'config' && (
+        <div style={{ fontSize: 13, color: tokens.textSecondary }}>
+          <div style={{ marginBottom: 8 }}>
+            <strong>Category:</strong> {integration.category || 'N/A'}
+          </div>
+          <div style={{ marginBottom: 8 }}>
+            <strong>Auth Type:</strong> {integration.authType || 'N/A'}
+          </div>
+          <div style={{ marginBottom: 8 }}>
+            <strong>Capabilities:</strong>{' '}
+            {integration.capabilities?.join(', ') || 'None listed'}
+          </div>
+          <div style={{ marginBottom: 8 }}>
+            <strong>Tier Gate:</strong> {integration.tierGate || 'All tiers'}
+          </div>
+          {supportsKnowledgeSourceSelection && (
+            <div style={detailSectionStyle}>
+              <div style={{ fontWeight: 600, color: tokens.textPrimary, marginBottom: 8 }}>
+                Knowledge Source Selection
+              </div>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 10 }}>
+                <label>
+                  Folder browser
+                  <select aria-label="Folder browser" defaultValue="all_folders" style={inputStyle}>
+                    <option value="all_folders">All folders</option>
+                    <option value="selected_folder">Selected folder</option>
+                    <option value="recently_changed">Recently changed folders</option>
+                  </select>
+                </label>
+                <label>
+                  Page browser
+                  <select aria-label="Page browser" defaultValue="published_pages" style={inputStyle}>
+                    <option value="published_pages">Published pages</option>
+                    <option value="recent_pages">Recently updated pages</option>
+                    <option value="draft_pages">Draft pages</option>
+                  </select>
+                </label>
+              </div>
+              <HoverButton
+                variant="outline"
+                onClick={() => onNotify('Source selection preview loaded', 'info')}
+              >
+                Browse Sources
+              </HoverButton>
+            </div>
+          )}
+        </div>
+      )}
+
+      {activeTab === 'sync' && (
+        <div style={{ fontSize: 13, color: tokens.textSecondary }}>
+          <div style={{ display: 'flex', gap: 12, alignItems: 'center', marginBottom: 12 }}>
+            <HoverButton
+              variant="primary"
+              onClick={handleSyncNow}
+              disabled={syncing}
+            >
+              {syncing ? 'Syncing...' : 'Sync Now'}
+            </HoverButton>
+            {integration.lastSyncAt && (
+              <span>Last: {new Date(integration.lastSyncAt).toLocaleString()}</span>
+            )}
+          </div>
+          <div style={{ display: 'flex', gap: 24 }}>
+            {typeof integration.ticketCount === 'number' && (
+              <div>
+                <div style={{ fontSize: 24, fontWeight: 600, color: tokens.textPrimary }}>
+                  {integration.ticketCount.toLocaleString()}
+                </div>
+                <div style={{ fontSize: 11, color: tokens.textTertiary }}>Tickets</div>
+              </div>
+            )}
+            {typeof integration.articleCount === 'number' && (
+              <div>
+                <div style={{ fontSize: 24, fontWeight: 600, color: tokens.textPrimary }}>
+                  {integration.articleCount.toLocaleString()}
+                </div>
+                <div style={{ fontSize: 11, color: tokens.textTertiary }}>Articles</div>
+              </div>
+            )}
+            {typeof integration.contactCount === 'number' && (
+              <div>
+                <div style={{ fontSize: 24, fontWeight: 600, color: tokens.textPrimary }}>
+                  {integration.contactCount.toLocaleString()}
+                </div>
+                <div style={{ fontSize: 11, color: tokens.textTertiary }}>Contacts</div>
+              </div>
+            )}
+          </div>
+          <div style={detailSectionStyle}>
+            <div style={{ fontWeight: 600, color: tokens.textPrimary, marginBottom: 8 }}>
+              Sync History
+            </div>
+            {syncHistory.length > 0 ? (
+              syncHistory.map((event) => (
+                <div key={`${event.timestamp}-${event.status}`} style={detailRowStyle}>
+                  <div>
+                    <div style={{ color: tokens.textPrimary }}>{new Date(event.timestamp).toLocaleString()}</div>
+                    {event.errorMessage && (
+                      <div style={{ color: tokens.danger, fontSize: 12 }}>
+                        Error details: {event.errorMessage}
+                      </div>
+                    )}
+                  </div>
+                  <div style={{ textAlign: 'right' }}>
+                    <div style={{ color: event.status === 'error' ? tokens.danger : tokens.success }}>
+                      {event.status}
+                    </div>
+                    <div style={{ fontSize: 12, color: tokens.textTertiary }}>
+                      {event.itemsSynced.toLocaleString()} items synced
+                    </div>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div style={{ fontSize: 12, color: tokens.textTertiary }}>
+                No sync-history events recorded yet.
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {activeTab === 'actions' && (
+        <div style={{ fontSize: 13, color: tokens.textSecondary }}>
+          <p style={{ marginBottom: 8 }}>
+            Configure HITL (Human-in-the-Loop) policies for each action type.
+          </p>
+          <div style={{ fontSize: 12, color: tokens.textTertiary, marginBottom: 8 }}>
+            Action configuration is loaded from the integration&apos;s backend settings.
+            Toggle HITL policies to control which actions require human approval.
+          </div>
+          <div style={detailSectionStyle}>
+            {actionConfig.length > 0 ? (
+              actionConfig.map((action) => (
+                <div key={action.actionType} style={detailRowStyle}>
+                  <div>
+                    <div style={{ color: tokens.textPrimary }}>{action.label}</div>
+                    <div style={{ fontSize: 12, color: tokens.textTertiary }}>
+                      Action type: {action.actionType}
+                    </div>
+                  </div>
+                  <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
+                    <label>
+                      <input type="checkbox" checked={action.enabled} readOnly />
+                      Enabled
+                    </label>
+                    <label>
+                      <input type="checkbox" checked={action.hitlPolicy !== 'never'} readOnly />
+                      HITL policy: {action.hitlPolicy}
+                    </label>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div style={{ fontSize: 12, color: tokens.textTertiary }}>
+                No action configuration rows returned by the integration backend.
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {activeTab === 'logs' && (
+        <div style={{ fontSize: 13, color: tokens.textSecondary }}>
+          <p style={{ marginBottom: 8 }}>Connection logs for this integration.</p>
+          <div style={{
+            fontSize: 12,
+            color: tokens.textTertiary,
+            fontFamily: 'monospace',
+            padding: 12,
+            background: tokens.page,
+            borderRadius: 4,
+            maxHeight: 200,
+            overflow: 'auto',
+          }}>
+            Logs are loaded from the integration events container.
+            Use the API at /api/admin/integrations/{integration.type}/events for programmatic access.
+          </div>
+          <div style={detailSectionStyle}>
+            {connectionLogs.length > 0 ? (
+              connectionLogs.map((entry) => (
+                <div key={`${entry.timestamp}-${entry.level}-${entry.message}`} style={detailRowStyle}>
+                  <div>
+                    <div style={{ color: tokens.textPrimary }}>{entry.message}</div>
+                    {entry.details && (
+                      <div style={{ color: tokens.danger, fontSize: 12 }}>
+                        Error details: {entry.details}
+                      </div>
+                    )}
+                  </div>
+                  <div style={{ textAlign: 'right' }}>
+                    <div>{new Date(entry.timestamp).toLocaleString()}</div>
+                    <div style={{ fontSize: 12, color: tokens.textTertiary }}>
+                      Severity: {entry.level}
+                    </div>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div style={{ fontSize: 12, color: tokens.textTertiary }}>
+                No connection-log entries recorded yet.
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+
+// ---------------------------------------------------------------------------
+// Main component
+// ---------------------------------------------------------------------------
+
+export const IntegrationsManager: React.FC<BaseComponentProps & { isDark?: boolean; basePath?: string }> = ({
+  tenantContext,
+  apiFetch,
+  onNotify,
+  isDark = true,
+  basePath = '',
+}) => {
+  const { data: integrations, loading, error, refetch } = useIntegrations(apiFetch);
+  const { activate, loading: activating } = useActivateIntegration(apiFetch);
+  const { deactivate, loading: deactivating } = useDeactivateIntegration(apiFetch);
+  const { disconnect } = useDisconnectIntegration(apiFetch);
+
+  const [actionTarget, setActionTarget] = useState<string | null>(null);
+  const [detailType, setDetailType] = useState<string | null>(null);
+
+  const handleActivate = useCallback(
+    async (type: string) => {
+      setActionTarget(type);
+      const result = await activate(type);
+      setActionTarget(null);
+      if (result?.success) {
+        onNotify(`${result.message}`, 'success');
+        refetch();
+      } else {
+        onNotify('Failed to activate integration.', 'error');
+      }
+    },
+    [activate, onNotify, refetch],
+  );
+
+  const handleDeactivate = useCallback(
+    async (type: string) => {
+      setActionTarget(type);
+      const result = await deactivate(type);
+      setActionTarget(null);
+      if (result?.success) {
+        onNotify(`${result.message}`, 'success');
+        refetch();
+      } else {
+        onNotify('Failed to deactivate integration.', 'error');
+      }
+    },
+    [deactivate, onNotify, refetch],
+  );
+
+  const handleDisconnect = useCallback(
+    async (type: string) => {
+      const result = await disconnect(type);
+      if (result?.success) {
+        onNotify(`${result.message}`, 'success');
+        refetch();
+      } else {
+        onNotify('Failed to disconnect integration.', 'error');
+      }
+    },
+    [disconnect, onNotify, refetch],
+  );
+
+  // ----- Loading / Error states -----
+
+  if (loading) {
+    return (
+      <div style={{ padding: 40, textAlign: 'center', color: tokens.textTertiary }}>
+        Loading integrations...
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div style={{ padding: 40, textAlign: 'center', color: tokens.danger }}>
+        Failed to load integrations: {error}
+      </div>
+    );
+  }
+
+  const items = integrations ?? [];
+
+  const detailIntegration = detailType
+    ? (items.find((i) => i.type === detailType) as IntegrationDetailSummary | undefined) ?? null
+    : null;
+
+  return (
+    <div style={{ maxWidth: 800 }}>
+      {/* SPEC-1772: Detail panel (shown above cards when active) */}
+      {detailIntegration && (
+        <IntegrationDetailPanel
+          integration={detailIntegration}
+          apiFetch={apiFetch}
+          onClose={() => setDetailType(null)}
+          onNotify={onNotify}
+          onRefetch={refetch}
+        />
+      )}
+
+      {/* Integration cards */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+        {items.map((integration) => (
+          <div key={integration.type}>
+            <IntegrationCard
+              integration={integration}
+              onActivate={handleActivate}
+              onDeactivate={handleDeactivate}
+              onDisconnect={handleDisconnect}
+              activating={activating && actionTarget === integration.type}
+              deactivating={deactivating && actionTarget === integration.type}
+              isDark={isDark}
+              basePath={basePath}
+              apiFetch={apiFetch}
+              tenantId={tenantContext.tenantId}
+              onNotify={onNotify}
+              onRefetch={refetch}
+            />
+            {/* SPEC-1772: Details button for connected integrations */}
+            {integration.enabled && integration.status === 'connected' && (
+              <div style={{ marginTop: 4, textAlign: 'right' }}>
+                <button
+                  className="ar-btn-ghost"
+                  style={{ padding: '3px 10px', fontSize: 11 }}
+                  onClick={() => setDetailType(
+                    detailType === integration.type ? null : integration.type
+                  )}
+                >
+                  {detailType === integration.type ? 'Hide Details' : 'View Details'}
+                </button>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+
+      {items.length === 0 && (
+        <div
+          style={{
+            padding: 40,
+            textAlign: 'center',
+            color: tokens.textTertiary,
+            background: tokens.surface,
+            border: `1px solid ${tokens.border}`,
+            borderRadius: 8,
+          }}
+        >
+          No integrations available.
+        </div>
+      )}
+
+      {/* Summary footer */}
+      <div style={{ marginTop: 16, fontSize: 12, color: tokens.textTertiary }}>
+        {items.filter((i) => i.enabled).length} of {items.length} integrations active
+        {tenantContext.tier === 'starter' || tenantContext.tier === 'trial' ? (
+          <span> {String.fromCodePoint(0x2022)} Some integrations require Professional tier or above</span>
+        ) : null}
+      </div>
+    </div>
+  );
+};

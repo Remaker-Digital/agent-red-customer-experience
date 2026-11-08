@@ -1,0 +1,36 @@
+# Agent Red line endings. Until the split, GT-KB's root .gitattributes normalized
+# this tree; these rules carry the same policy to this repository's root.
+# Every tracked text file is LF in the index and in the checkout, whatever
+# core.autocrlf says. At the split commit (233e20e) the index was already all LF.
+* text=auto eol=lf
+
+# Binary types are declared rather than guessed.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.webp binary
+*.pdf binary
+*.zip binary
+*.whl binary
+*.db binary
+*.sqlite binary
+*.docx binary
+*.xlsx binary
+*.pptx binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.eot binary
+*.otf binary
+*.exe binary
+*.dll binary
+
+# Windows entry points keep CRLF: cmd.exe mis-parses multi-line batch files
+# with LF-only endings.
+*.cmd text eol=crlf
+*.bat text eol=crlf
+*.ps1 text eol=crlf
+
+# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.

@@ -1,0 +1,102 @@
+# Agent Red Customer Experience: Git ignore rules.
+# Until the split these came from GT-KB's root .gitignore; the Agent Red rules
+# there are carried over here, adapted to this repository's root.
+
+# --- Local credentials: never tracked ---------------------------------------
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+
+# --- Python -------------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+*.egg-info/
+.eggs/
+.venv/
+venv/
+
+# Agent Red's SPA and widget bundles are committed on purpose: the API gateway
+# image build runs docker build with no Node step, so these are the only bytes
+# that exist on a clean checkout. Re-included so a stale bundle shows in
+# git status (SPEC-1845).
+!admin/provider/dist/
+!admin/shopify/dist/
+!admin/standalone/dist/
+!widget/dist/
+
+# --- Node ---------------------------------------------------------------------
+node_modules/
+*.tsbuildinfo
+storybook-static/
+docs-site/build/
+docs-site/.docusaurus/
+
+# --- Test, lint and coverage output ------------------------------------------
+.pytest_cache/
+.pytest-tmp/
+.hypothesis/
+.ruff_cache/
+.mypy_cache/
+.coverage
+.coverage.*
+coverage.xml
+coverage-*.xml
+coverage-*.json
+htmlcov/
+test-results*.xml
+test-artifacts/
+playwright-report/
+logs/
+scripts/benchmark-results/
+mutants/
+
+# Generated load-test results (keep the source tests and configuration)
+tests/performance/container-load-results/
+tests/performance/load-test-*.html
+tests/performance/load-test-*.csv
+tests/performance/load-test-*.json
+tests/performance/staging-*.html
+tests/performance/staging-*.csv
+tests/performance/staging-*.json
+tests/performance/ramp-to-overload-*.html
+tests/performance/ramp-to-overload-*.csv
+tests/performance/ramp-to-overload-*.json
+
+# --- Local tool and harness state --------------------------------------------
+.vscode/
+.idea/
+harness-state/
+/assets/
+agent-red.wiki/
+# Agents working on Agent Red use GT-KB's rules, hooks, skills and configuration;
+# GT-KB generates its harness folders untracked (owner principle 2026-10-06).
+.claude/
+.codex/
+# GT-KB's legacy SQLite knowledge base; some local_env spec tests open it at the root.
+groundtruth.db
+
+# PDF generation one-offs (not part of the product)
+pdf-tooling/Generate-PDF-Report.ps1
+pdf-tooling/PDF-Generation-Instructions.md
+pdf-tooling/generate-pdf-report.js
+pdf-tooling/generate-pdf-report.py
+pdf-tooling/generate-pdf.bat
+pdf-tooling/package-pdf.json
+pdf-tooling/PRODUCTION-READINESS-ASSESSMENT.md
+pdf-tooling/PRODUCTION-READINESS-SUMMARY.txt
+
+# --- OS -----------------------------------------------------------------------
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.

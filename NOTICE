@@ -1,0 +1,26 @@
+# Third-party notices
+
+Agent Red Customer Experience is licensed under the PolyForm Noncommercial License 1.0.0. See LICENSE.
+
+Third-party components stay under their own licenses. Those licenses are in the Python package metadata and in the Node lockfiles:
+
+- requirements.txt and requirements-test.txt
+- package-lock.json
+- admin/package-lock.json
+- admin/provider/package-lock.json
+- admin/shopify/package-lock.json
+- admin/standalone/package-lock.json
+- widget/package-lock.json
+- docs-site/package-lock.json
+
+The Python requirements use permissive licenses (MIT, Apache-2.0, BSD, and similar), with one exception: hypothesis is MPL-2.0. MPL-2.0 covers the hypothesis files themselves. It allows this larger work to stay under the PolyForm Noncommercial License.
+
+The Node lockfiles contain no GPL, AGPL, or SSPL license. Five packages have no license field in the lockfile. Their own files say MIT, except one:
+
+- eval, MIT
+- format, MIT
+- khroma, MIT
+- require-like, MIT
+- browser-assert 1.2.1, no license field on the package
+
+stripe and axe-playwright-python are MIT. Their installed metadata does not repeat the license name.
