@@ -1,8 +1,9 @@
 # © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
 """SPA Login Notification Emails (SPEC-1676).
 
-Sends a non-blocking email notification every time a platform admin
-successfully authenticates. The email contains:
+Sends a non-blocking email notification when a platform admin
+authenticates. Each admin gets at most one notification an hour.
+The email contains:
     - Timestamp of the login
     - Client IP address
     - User agent string
@@ -18,11 +19,35 @@ are logged and swallowed.
 
 from __future__ import annotations
 
+import asyncio
 import logging
 import os
+import time
 from datetime import UTC, datetime
 
 logger = logging.getLogger(__name__)
+
+_LOGIN_NOTIFICATION_INTERVAL_SECONDS = 3600.0
+_login_notification_attempts: dict[str, float] = {}
+
+
+def _notification_clock() -> float:
+    return time.monotonic()
+
+
+def claim_login_notification(admin_key: str) -> bool:
+    """Record an attempt and say whether this admin may be notified.
+
+    The attempt is stored before any send. A failed send does not open
+    another attempt inside the hour. One replica holds this map, and a
+    restart clears it.
+    """
+    now = _notification_clock()
+    previous = _login_notification_attempts.get(admin_key)
+    if previous is not None and now - previous < _LOGIN_NOTIFICATION_INTERVAL_SECONDS:
+        return False
+    _login_notification_attempts[admin_key] = now
+    return True
 
 
 _LOGIN_NOTIFICATION_BODY = """
@@ -73,6 +98,41 @@ _LOGIN_NOTIFICATION_BODY = """
 """
 
 
+async def _send_login_smtp(to_email: str, subject: str, html_body: str) -> None:
+    """SMTP send for a login notification. ACS is the fallback in the caller."""
+    import smtplib
+    from email.mime.multipart import MIMEMultipart
+    from email.mime.text import MIMEText
+
+    host = os.environ.get("SMTP_HOST", "")
+    port = int(os.environ.get("SMTP_PORT", "587"))
+    user = os.environ.get("SMTP_USERNAME", "")
+    password = os.environ.get("SMTP_PASSWORD", "")
+    sender = os.environ.get("SMTP_FROM", "") or user
+
+    def _send() -> None:
+        message = MIMEMultipart("alternative")
+        message["From"] = f"Agent Red <{sender}>"
+        message["To"] = to_email
+        message["Subject"] = subject
+        message.attach(MIMEText(html_body, "html"))
+        if port == 465:
+            with smtplib.SMTP_SSL(host, port, timeout=10) as server:
+                if user and password:
+                    server.login(user, password)
+                server.send_message(message)
+        else:
+            with smtplib.SMTP(host, port, timeout=10) as server:
+                server.ehlo()
+                if port != 25:
+                    server.starttls()
+                if user and password:
+                    server.login(user, password)
+                server.send_message(message)
+
+    await asyncio.to_thread(_send)
+
+
 async def send_login_notification(
     admin_email: str,
     notification_email: str | None,
@@ -96,11 +156,12 @@ async def send_login_notification(
     recipient = notification_email or admin_email
 
     try:
-        from src.multi_tenant.alert_delivery import format_branded_email, send_acs_email
+        from src.multi_tenant.alert_delivery import format_branded_email
 
+        smtp_host = os.environ.get("SMTP_HOST", "")
         conn_str = os.environ.get("ACS_CONNECTION_STRING", "")
-        if not conn_str:
-            logger.debug("ACS_CONNECTION_STRING not set — login notification skipped")
+        if not smtp_host and not conn_str:
+            logger.debug("No email provider configured. Login notification skipped")
             return
 
         from src.multi_tenant.welcome_email import _build_admin_login_url
@@ -114,14 +175,32 @@ async def send_login_notification(
             admin_dashboard_url=admin_url,
         )
         full_html = format_branded_email(body_html, admin_url=admin_url)
+        subject = "Agent Red — Platform Admin Sign-in"
+
+        if smtp_host:
+            try:
+                await _send_login_smtp(recipient, subject, full_html)
+                logger.info("Login notification sent: recipient=%s provider=SMTP", recipient)
+                return
+            except Exception:
+                logger.warning(
+                    "SMTP login notification failed for %s. Trying ACS.",
+                    recipient,
+                    exc_info=True,
+                )
+
+        if not conn_str:
+            return
+
+        from src.multi_tenant.alert_delivery import send_acs_email
 
         await send_acs_email(
             conn_str=conn_str,
             to_email=recipient,
-            subject="Agent Red — Platform Admin Sign-in",
+            subject=subject,
             html_body=full_html,
         )
-        logger.info("Login notification sent to %s", recipient)
+        logger.info("Login notification sent: recipient=%s provider=ACS", recipient)
     except Exception as exc:
         # CRITICAL: Never block auth on email failure
         logger.warning("Login notification failed for %s: %s", recipient, exc)

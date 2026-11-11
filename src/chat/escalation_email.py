@@ -150,6 +150,215 @@ sans-serif;max-width:600px;margin:0 auto;color:#333;">
 
 
 # ---------------------------------------------------------------------------
+# Delivery. SMTP first, then ACS. The SMTP block is local to this file.
+# ---------------------------------------------------------------------------
+
+
+def _header_value_is_safe(value: str) -> bool:
+    """A CR or LF in an address or subject can add another email header."""
+    return "\r" not in value and "\n" not in value
+
+
+def _send_smtp_sync(
+    *,
+    host: str,
+    port: int,
+    user: str,
+    password: str,
+    sender: str,
+    to_email: str,
+    subject: str,
+    html_body: str,
+    reply_to: str | None,
+    from_name: str | None = None,
+    envelope_from: str | None = None,
+) -> None:
+    """Blocking SMTP send. Callers run it with asyncio.to_thread.
+
+    A customer email passes from_name and envelope_from so the visible From
+    can differ from the login Titan accepts. Other callers leave both unset.
+    """
+    import smtplib
+    from email.mime.multipart import MIMEMultipart
+    from email.mime.text import MIMEText
+    from email.utils import formataddr
+
+    message = MIMEMultipart("alternative")
+    if from_name is None:
+        message["From"] = f"Agent Red <{sender}>"
+    else:
+        message["From"] = formataddr((from_name, sender))
+        if envelope_from:
+            message["Sender"] = envelope_from
+    message["To"] = to_email
+    message["Subject"] = subject
+    if reply_to:
+        message["Reply-To"] = reply_to
+    message.attach(MIMEText(html_body, "html"))
+
+    def _deliver(server: smtplib.SMTP) -> None:
+        if user and password:
+            server.login(user, password)
+        if envelope_from:
+            server.send_message(message, from_addr=envelope_from)
+        else:
+            server.send_message(message)
+
+    if port == 465:
+        with smtplib.SMTP_SSL(host, port, timeout=10) as server:
+            _deliver(server)
+    else:
+        with smtplib.SMTP(host, port, timeout=10) as server:
+            server.ehlo()
+            if port != 25:
+                server.starttls()
+            _deliver(server)
+
+
+async def _send_acs_with_reply(
+    conn_str: str,
+    to_email: str,
+    subject: str,
+    html_body: str,
+    reply_to: str,
+) -> str:
+    """ACS send that keeps Reply-To set to the customer."""
+    from azure.communication.email import EmailClient
+    from azure.core.pipeline.policies import RetryPolicy
+
+    from src.multi_tenant.alert_delivery import acs_sender_address
+
+    retry_policy = RetryPolicy(
+        retry_total=2,
+        retry_backoff_factor=1,
+        retry_backoff_max=5,
+    )
+    client = EmailClient.from_connection_string(conn_str, retry_policy=retry_policy)
+    message = {
+        "senderAddress": acs_sender_address(),
+        "recipients": {"to": [{"address": to_email}]},
+        "content": {"subject": subject, "html": html_body},
+        "replyTo": [{"address": reply_to}],
+    }
+
+    def _send() -> str:
+        poller = client.begin_send(message)
+        result = poller.result(timeout=60)
+        return getattr(result, "status", "unknown")
+
+    return await asyncio.to_thread(_send)
+
+
+async def _deliver_escalation(
+    *,
+    audience: str,
+    tenant_id: str,
+    conversation_id: str,
+    to_email: str,
+    subject: str,
+    html_body: str,
+    reply_to: str | None,
+    conn_str: str,
+) -> str:
+    """Try SMTP, then ACS. Return Succeeded, an ACS status, or failed."""
+    smtp_host = os.environ.get("SMTP_HOST", "")
+    smtp_from = os.environ.get("SMTP_FROM", "")
+    customer_address = ""
+    customer_name = ""
+    customer_login = ""
+    if audience == "customer":
+        customer_address = os.environ.get("SMTP_CUSTOMER_FROM", "") or smtp_from
+        customer_name = os.environ.get("SMTP_CUSTOMER_FROM_NAME", "") or "Agent Red"
+        customer_login = os.environ.get("SMTP_USERNAME", "")
+        customer_ready = bool(
+            customer_address
+            and customer_login
+            and _header_value_is_safe(customer_address)
+            and _header_value_is_safe(customer_name)
+            and _header_value_is_safe(customer_login)
+        )
+        if smtp_host and not customer_ready:
+            logger.warning(
+                "SMTP customer escalation email skipped: tenant=%s conv=%s",
+                tenant_id,
+                conversation_id[:8],
+            )
+        smtp_ready = bool(smtp_host and customer_ready)
+    else:
+        if smtp_host and not smtp_from:
+            logger.warning(
+                "SMTP escalation email skipped because SMTP_FROM is not set: tenant=%s conv=%s audience=%s",
+                tenant_id,
+                conversation_id[:8],
+                audience,
+            )
+        smtp_ready = bool(smtp_host and smtp_from)
+    if smtp_ready:
+        try:
+            await asyncio.to_thread(
+                _send_smtp_sync,
+                host=smtp_host,
+                port=int(os.environ.get("SMTP_PORT", "587")),
+                user=customer_login if audience == "customer" else os.environ.get("SMTP_USERNAME", ""),
+                password=os.environ.get("SMTP_PASSWORD", ""),
+                sender=customer_address if audience == "customer" else smtp_from,
+                to_email=to_email,
+                subject=subject,
+                html_body=html_body,
+                reply_to=reply_to,
+                from_name=customer_name if audience == "customer" else None,
+                envelope_from=customer_login if audience == "customer" else None,
+            )
+            logger.info(
+                "Escalation email sent: tenant=%s conv=%s audience=%s provider=SMTP status=Succeeded",
+                tenant_id,
+                conversation_id[:8],
+                audience,
+            )
+            return "Succeeded"
+        except Exception:
+            logger.warning(
+                "SMTP escalation email failed: tenant=%s conv=%s audience=%s",
+                tenant_id,
+                conversation_id[:8],
+                audience,
+                exc_info=True,
+            )
+
+    if conn_str:
+        try:
+            if reply_to:
+                status = await _send_acs_with_reply(conn_str, to_email, subject, html_body, reply_to)
+            else:
+                from src.multi_tenant.alert_delivery import send_acs_email
+
+                status = await send_acs_email(
+                    conn_str=conn_str,
+                    to_email=to_email,
+                    subject=subject,
+                    html_body=html_body,
+                )
+            logger.info(
+                "Escalation email sent: tenant=%s conv=%s audience=%s provider=ACS status=%s",
+                tenant_id,
+                conversation_id[:8],
+                audience,
+                status,
+            )
+            return status
+        except Exception:
+            logger.warning(
+                "ACS escalation email failed: tenant=%s conv=%s audience=%s",
+                tenant_id,
+                conversation_id[:8],
+                audience,
+                exc_info=True,
+            )
+            return "failed"
+    return "failed"
+
+
+# ---------------------------------------------------------------------------
 # Public API
 # ---------------------------------------------------------------------------
 
@@ -173,36 +382,39 @@ async def send_escalation_emails(
     Failures are logged but do not raise — escalation should not fail because
     email delivery is down.
     """
-    from src.multi_tenant.alert_delivery import send_acs_email
-
+    smtp_host = os.environ.get("SMTP_HOST", "")
     conn_str = os.environ.get("ACS_CONNECTION_STRING", "")
-    if not conn_str:
-        logger.warning("ACS_CONNECTION_STRING not set — escalation emails skipped")
+    if not smtp_host and not conn_str:
+        logger.warning("No email provider configured. Escalation emails skipped")
         return {"customer": "skipped", "agent": "skipped"}
+
+    if not _header_value_is_safe(customer_email):
+        logger.warning(
+            "Rejected escalation emails because the customer address contains a line break: tenant=%s conv=%s",
+            tenant_id,
+            conversation_id[:8],
+        )
+        return {"customer": "failed", "agent": "failed"}
 
     transcript_html = _format_transcript_html(messages)
     results: dict[str, str] = {}
 
-    # --- Customer email ---
+    # Customer email. A failure here does not stop the agent email.
     try:
         customer_html = _build_customer_email_html(
             store_name=store_name,
             transcript_html=transcript_html,
             response_hours=response_hours,
         )
-        status = await send_acs_email(
-            conn_str=conn_str,
+        results["customer"] = await _deliver_escalation(
+            audience="customer",
+            tenant_id=tenant_id,
+            conversation_id=conversation_id,
             to_email=customer_email,
             subject=f"{store_name} — Your support request has been escalated",
             html_body=customer_html,
-        )
-        results["customer"] = status
-        logger.info(
-            "Escalation email to customer: tenant=%s conv=%s to=%s status=%s",
-            tenant_id,
-            conversation_id[:8],
-            customer_email,
-            status,
+            reply_to=None,
+            conn_str=conn_str,
         )
     except Exception:
         results["customer"] = "failed"
@@ -213,54 +425,35 @@ async def send_escalation_emails(
             exc_info=True,
         )
 
-    # --- Agent email (with Reply-To: customer) ---
+    # Agent email. Reply-To stays the customer on SMTP and on ACS.
     try:
-        agent_html = _build_agent_email_html(
-            store_name=store_name,
-            customer_email=customer_email,
-            transcript_html=transcript_html,
-            reason=reason,
-            category=category,
-            urgency=urgency,
-            conversation_id=conversation_id,
-        )
-        # Use _send_acs_email_sync directly to add replyTo field
-        from azure.communication.email import EmailClient
-        from azure.core.pipeline.policies import RetryPolicy
-
-        from src.multi_tenant.alert_delivery import acs_sender_address
-
-        retry_policy = RetryPolicy(
-            retry_total=2,
-            retry_backoff_factor=1,
-            retry_backoff_max=5,
-        )
-        client = EmailClient.from_connection_string(conn_str, retry_policy=retry_policy)
-        message = {
-            "senderAddress": acs_sender_address(),
-            "recipients": {"to": [{"address": agent_email}]},
-            "content": {
-                "subject": f"[Escalation] [{category}] — Customer: {customer_email}",
-                "html": agent_html,
-            },
-            "replyTo": [{"address": customer_email}],
-        }
-
-        def _send() -> str:
-            poller = client.begin_send(message)
-            result = poller.result(timeout=60)
-            return getattr(result, "status", "unknown")
-
-        status = await asyncio.to_thread(_send)
-        results["agent"] = status
-        logger.info(
-            "Escalation email to agent: tenant=%s conv=%s to=%s reply_to=%s status=%s",
-            tenant_id,
-            conversation_id[:8],
-            agent_email,
-            customer_email,
-            status,
-        )
+        if not _header_value_is_safe(agent_email):
+            logger.warning(
+                "Rejected the agent escalation email because the address contains a line break: tenant=%s conv=%s",
+                tenant_id,
+                conversation_id[:8],
+            )
+            results["agent"] = "failed"
+        else:
+            agent_html = _build_agent_email_html(
+                store_name=store_name,
+                customer_email=customer_email,
+                transcript_html=transcript_html,
+                reason=reason,
+                category=category,
+                urgency=urgency,
+                conversation_id=conversation_id,
+            )
+            results["agent"] = await _deliver_escalation(
+                audience="agent",
+                tenant_id=tenant_id,
+                conversation_id=conversation_id,
+                to_email=agent_email,
+                subject=f"[Escalation] [{category}] — Customer: {customer_email}",
+                html_body=agent_html,
+                reply_to=customer_email,
+                conn_str=conn_str,
+            )
     except Exception:
         results["agent"] = "failed"
         logger.warning(

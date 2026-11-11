@@ -36,6 +36,13 @@ class TenantRepository(TenantScopedRepository):
     def __init__(self) -> None:
         super().__init__(COLLECTION_TENANTS)
 
+    async def _decrypt_row(self, item: dict[str, Any]) -> dict[str, Any]:
+        """Decrypt a tenant row found by a field that is not itself encrypted."""
+        tenant_id = item.get("tenant_id") or item.get("id") or ""
+        if not isinstance(tenant_id, str) or not tenant_id:
+            return item
+        return await self._decrypt_copy(item, tenant_id)
+
     async def get_by_stripe_customer_id(
         self,
         tenant_id: str,
@@ -77,7 +84,7 @@ class TenantRepository(TenantScopedRepository):
             # Cross-partition query (default in SDK v4+)
             max_item_count=1,
         ):
-            items.append(item)
+            items.append(await self._decrypt_row(item))
             break
 
         return items[0] if items else None
@@ -104,7 +111,7 @@ class TenantRepository(TenantScopedRepository):
             # Cross-partition query (default in SDK v4+)
             max_item_count=1,
         ):
-            items.append(item)
+            items.append(await self._decrypt_row(item))
             break
 
         return items[0] if items else None
@@ -159,7 +166,7 @@ class TenantRepository(TenantScopedRepository):
             # Cross-partition query (default in SDK v4+)
             max_item_count=1,
         ):
-            items.append(item)
+            items.append(await self._decrypt_row(item))
             break
 
         return items[0] if items else None
@@ -186,7 +193,7 @@ class TenantRepository(TenantScopedRepository):
             # Cross-partition query (default in SDK v4+)
             max_item_count=1,
         ):
-            items.append(item)
+            items.append(await self._decrypt_row(item))
             break
 
         return items[0] if items else None
@@ -235,7 +242,7 @@ class TenantRepository(TenantScopedRepository):
             ),
             max_item_count=100,
         ):
-            results.append(item)
+            results.append(await self._decrypt_row(item))
         return results
 
     async def list_expired_trials(self) -> list[dict[str, Any]]:
@@ -260,7 +267,7 @@ class TenantRepository(TenantScopedRepository):
             parameters=[{"name": "@now", "value": now_iso}],
             max_item_count=100,
         ):
-            results.append(item)
+            results.append(await self._decrypt_row(item))
         return results
 
     async def list_expiring_trials(self, within_iso: str) -> list[dict[str, Any]]:
@@ -293,7 +300,7 @@ class TenantRepository(TenantScopedRepository):
             ],
             max_item_count=100,
         ):
-            results.append(item)
+            results.append(await self._decrypt_row(item))
         return results
 
     # ------------------------------------------------------------------
@@ -324,7 +331,7 @@ class TenantRepository(TenantScopedRepository):
             parameters=[{"name": "@now", "value": now_iso}],
             max_item_count=100,
         ):
-            results.append(item)
+            results.append(await self._decrypt_row(item))
         return results
 
     async def list_expiring_tenants(self, within_iso: str) -> list[dict[str, Any]]:
@@ -359,7 +366,7 @@ class TenantRepository(TenantScopedRepository):
             ],
             max_item_count=100,
         ):
-            results.append(item)
+            results.append(await self._decrypt_row(item))
         return results
 
     async def update_status(

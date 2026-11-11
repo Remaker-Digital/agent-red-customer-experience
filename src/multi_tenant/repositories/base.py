@@ -210,6 +210,12 @@ class TenantScopedRepository:
             return json.loads(plaintext[5:])
         return plaintext
 
+    async def _decrypt_copy(self, item: dict[str, Any], tenant_id: str) -> dict[str, Any]:
+        """Decrypt one row on a copy so the stored document stays ciphertext."""
+        if not self._encryption_fields or not tenant_id:
+            return item
+        return await self._post_read(dict(item), tenant_id)
+
     async def _pre_write(self, body: dict[str, Any], tenant_id: str) -> dict[str, Any]:
         """Encrypt sensitive fields before Cosmos DB write.
 
@@ -399,6 +405,8 @@ class TenantScopedRepository:
                 "Created %s/%s for tenant=%s",
                 self._collection_name, body.get("id"), tenant_id,
             )
+            if isinstance(result, dict):
+                result = await self._decrypt_copy(result, tenant_id)
             return result
         except CosmosResourceExistsError as exc:
             raise DocumentConflictError(
@@ -465,6 +473,8 @@ class TenantScopedRepository:
             "Upserted %s/%s for tenant=%s",
             self._collection_name, body.get("id"), tenant_id,
         )
+        if isinstance(result, dict):
+            result = await self._decrypt_copy(result, tenant_id)
         return result
 
     async def patch(
@@ -530,6 +540,8 @@ class TenantScopedRepository:
                 "Patched %s/%s for tenant=%s (%d ops)",
                 self._collection_name, document_id, tenant_id, len(operations),
             )
+            if isinstance(result, dict):
+                result = await self._decrypt_copy(result, tenant_id)
             return result
         except CosmosResourceNotFoundError as exc:
             raise DocumentNotFoundError(
@@ -676,6 +688,10 @@ class TenantScopedRepository:
             kwargs["max_item_count"] = max_items
 
         async for item in self._container.query_items(**kwargs):
+            if isinstance(item, dict):
+                row_tenant = item.get("tenant_id")
+                if isinstance(row_tenant, str) and row_tenant:
+                    item = await self._decrypt_copy(item, row_tenant)
             items.append(item)
             if max_items and len(items) >= max_items:
                 break

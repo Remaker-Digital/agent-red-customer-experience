@@ -7,9 +7,19 @@ title: Changelog
 
 All notable changes to Agent Red Customer Experience are documented here.
 
-The product is in a closed beta at v2.0.1. Access is by request. Email support@remakerdigital.com. There is no self-serve sign-up and no free trial. Published prices are planned and are not on offer yet.
+The product is in a closed beta at v2.0.2. Access is by request. Email support@remakerdigital.com. There is no self-serve sign-up and no free trial. Published prices are planned and are not on offer yet.
 
 ---
+
+## v2.0.2 (closed beta)
+
+v2.0.2 keeps every limit from v2.0.0.
+
+- Stored fields are decrypted on read when the tenant has a key. Without a key, the stored text is returned unchanged, and creating a tenant still succeeds.
+- Escalation mail and sign-in notifications try SMTP first and Azure Communication Services second.
+- The sign-in code email and the customer escalation email can show a support sender name and address.
+- When a conversation escalates, the reply tells the customer that a person will follow up.
+- A platform admin receives at most one sign-in notification an hour.
 
 ## v2.0.1 (closed beta)
 

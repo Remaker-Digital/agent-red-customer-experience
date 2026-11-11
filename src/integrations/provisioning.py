@@ -106,6 +106,10 @@ class TenantRecord(BaseModel):
     widget_key: str | None = Field(
         default=None, description="Raw widget key (pk_live_...) — present only in provisioning response"
     )
+    warnings: list[str] = Field(
+        default_factory=list,
+        description="Provisioning warnings. Empty when nothing failed.",
+    )
 
 
 # Grace period duration (30 days, per SLA)
@@ -344,12 +348,16 @@ async def _lookup_tenant(
 # ---------------------------------------------------------------------------
 
 
-async def _provision_tenant_dek(tenant_id: str) -> None:
+_DEK_NOT_STORED = (
+    "Encryption key was not stored. Tenant data stays unencrypted until the key is stored."
+)
+
+
+async def _provision_tenant_dek(tenant_id: str) -> str | None:
     """Create and store a per-tenant DEK for envelope encryption.
 
-    Called during tenant provisioning. Graceful degradation: if encryption
-    is not configured or Key Vault is unavailable, logs a warning and
-    returns without failing the provisioning flow.
+    Called during tenant provisioning. A missing encryption service is not
+    a failure. A failed store returns a warning and does not fail creation.
     """
     try:
         from src.multi_tenant.envelope_encryption import get_envelope_encryption_service
@@ -361,7 +369,7 @@ async def _provision_tenant_dek(tenant_id: str) -> None:
         svc = get_envelope_encryption_service()
         if svc is None:
             logger.debug("Encryption service not initialized — skipping DEK provisioning for %s", tenant_id)
-            return
+            return None
 
         # Generate DEK and wrap it with the Master KEK
         wrapped_dek = await svc.create_tenant_dek(tenant_id)
@@ -380,6 +388,7 @@ async def _provision_tenant_dek(tenant_id: str) -> None:
         )
 
         logger.info("DEK provisioned for tenant %s", tenant_id)
+        return None
 
     except Exception:
         logger.warning(
@@ -387,6 +396,7 @@ async def _provision_tenant_dek(tenant_id: str) -> None:
             tenant_id,
             exc_info=True,
         )
+        return _DEK_NOT_STORED
 
 
 # ---------------------------------------------------------------------------
@@ -559,8 +569,9 @@ async def provision_tenant(
         if stripe_customer_id:
             await _domain_index_repo.upsert(stripe_customer_id, tenant_id, "stripe")
 
-    # SPEC-1843 / WI-1628: Create per-tenant DEK for envelope encryption
-    await _provision_tenant_dek(tenant_id)
+    # SPEC-1843 / WI-1628: Create per-tenant DEK for envelope encryption.
+    # A failed store is reported. Tenant creation still succeeds.
+    dek_warning = await _provision_tenant_dek(tenant_id)
 
     logger.info(
         "Tenant provisioned: tenant=%s channel=%s tier=%s email=%s",
@@ -585,6 +596,7 @@ async def provision_tenant(
         customer_phone=customer_phone,
         created_at=now_iso,
         updated_at=now_iso,
+        warnings=[dek_warning] if dek_warning else [],
     )
 
 
@@ -991,6 +1003,8 @@ async def spa_provision_tenant(
         tier=tier,
         superadmin_email=superadmin_email,
     )
+    if record.warnings:
+        result.errors.extend(record.warnings)
 
     # Step 2: Activate immediately (no webhook round-trip for manual channel)
     try:

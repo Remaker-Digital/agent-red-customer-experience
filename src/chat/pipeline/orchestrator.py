@@ -76,6 +76,39 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 
+def _escalation_reply_note(conversation: dict[str, Any] | None) -> str:
+    """What the reply step is told when this turn is already a handoff.
+
+    The note names the follow-up channel when the conversation has one.
+    It does not include the address or the number.
+    """
+    email = ""
+    phone = ""
+    phone_verified = False
+    if isinstance(conversation, dict):
+        raw_email = conversation.get("identity_email") or ""
+        raw_phone = conversation.get("identity_phone") or ""
+        email = raw_email if isinstance(raw_email, str) else ""
+        phone = raw_phone if isinstance(raw_phone, str) else ""
+        phone_verified = bool(conversation.get("phone_verified", False))
+    if email:
+        hearing = "The customer will hear back by email."
+    elif phone and phone_verified:
+        hearing = "The customer will hear back by phone."
+    else:
+        hearing = (
+            "A person cannot follow up until the customer gives an email address or a phone number. "
+            "Ask for one of those."
+        )
+    return (
+        "HANDOFF ALREADY UNDER WAY:\n"
+        "This turn is being handed to a person. "
+        + hearing
+        + " Confirm that handoff. Do not say you cannot connect the customer to a person, "
+        "and do not tell the customer to look for an escalation option in the chat."
+    )
+
+
 def _build_whatsapp_escalation_markdown_link(
     preferences: PreferencesDocument | dict[str, Any],
     tier: TenantTier,
@@ -751,6 +784,7 @@ class ChatPipeline(AgentDispatchMixin, CriticEscalationMixin, AnalyticsMixin):
             # customer's question first via the normal KR→RG→Critic pipeline,
             # then fire escalation side-effects and append the notice.
             _escalation_pending = False
+            _raw_conv: dict[str, Any] | None = None
 
             if route.target == RouteTarget.ESCALATION:
                 _already_escalated = False
@@ -891,6 +925,9 @@ class ChatPipeline(AgentDispatchMixin, CriticEscalationMixin, AnalyticsMixin):
             )
             raw_response: list[str] = []
 
+            reply_prompt = prompts[AgentRole.RESPONSE_GENERATOR]
+            if _escalation_pending:
+                reply_prompt = f"{reply_prompt}\n\n{_escalation_reply_note(_raw_conv)}"
             try:
                 async for delta in _visible_deltas(
                     pii_tokenizer,
@@ -898,7 +935,7 @@ class ChatPipeline(AgentDispatchMixin, CriticEscalationMixin, AnalyticsMixin):
                         customer_message=tokenized_message,
                         intent=intent,
                         knowledge_context=knowledge_context,
-                        system_prompt=prompts[AgentRole.RESPONSE_GENERATOR],
+                        system_prompt=reply_prompt,
                         budget=budget,
                         model=response_model,
                         conversation_history=history_for_model,

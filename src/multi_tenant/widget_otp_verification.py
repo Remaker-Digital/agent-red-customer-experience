@@ -483,11 +483,19 @@ async def _send_otp_email(
         smtp_port = int(os.environ.get("SMTP_PORT", "587"))
         smtp_user = os.environ.get("SMTP_USERNAME", "")
         smtp_pass = os.environ.get("SMTP_PASSWORD", "")
-        smtp_from = os.environ.get("SMTP_FROM", smtp_user)
+        customer_from = os.environ.get("SMTP_CUSTOMER_FROM", "") or os.environ.get("SMTP_FROM", "")
+        customer_name = os.environ.get("SMTP_CUSTOMER_FROM_NAME", "") or "Agent Red"
+        sender_values = (customer_from, customer_name, smtp_user)
+        sender_safe = bool(customer_from and smtp_user) and all(
+            "\r" not in value and "\n" not in value for value in sender_values
+        )
 
         def _smtp_send() -> None:
+            from email.utils import formataddr
+
             msg = MIMEMultipart("alternative")
-            msg["From"] = f"Agent Red <{smtp_from}>"
+            msg["From"] = formataddr((customer_name, customer_from))
+            msg["Sender"] = smtp_user
             msg["To"] = to_email
             msg["Subject"] = subject
             msg.attach(MIMEText(full_html, "html"))
@@ -495,7 +503,7 @@ async def _send_otp_email(
                 with smtplib.SMTP_SSL(smtp_host, smtp_port, timeout=10) as server:
                     if smtp_user and smtp_pass:
                         server.login(smtp_user, smtp_pass)
-                    server.send_message(msg)
+                    server.send_message(msg, from_addr=smtp_user)
             else:
                 with smtplib.SMTP(smtp_host, smtp_port, timeout=10) as server:
                     server.ehlo()
@@ -503,14 +511,17 @@ async def _send_otp_email(
                         server.starttls()
                     if smtp_user and smtp_pass:
                         server.login(smtp_user, smtp_pass)
-                    server.send_message(msg)
+                    server.send_message(msg, from_addr=smtp_user)
 
-        try:
-            await asyncio.to_thread(_smtp_send)  # SPEC-1622: non-blocking SMTP
-            return True
-        except Exception:
-            logger.exception("SMTP email send failed for widget OTP — trying ACS fallback")
-            # Fall through to ACS provider
+        if not sender_safe:
+            logger.warning("SMTP code email skipped because a sender setting is missing or unsafe")
+        else:
+            try:
+                await asyncio.to_thread(_smtp_send)  # SPEC-1622: non-blocking SMTP
+                return True
+            except Exception:
+                logger.exception("SMTP email send failed for widget OTP — trying ACS fallback")
+                # Fall through to ACS provider
 
     # --- Provider 2: Azure Communication Services (fallback) ---
     conn_str = os.environ.get("AZURE_COMM_CONNECTION_STRING", "")

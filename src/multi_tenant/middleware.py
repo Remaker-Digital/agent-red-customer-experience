@@ -505,22 +505,30 @@ class TenantAuthMiddleware(BaseHTTPMiddleware):
         except Exception:
             pass  # Audit recording must never fail the request
 
-        # SPEC-1676: Fire non-blocking login notification for SPA auth
+        # SPEC-1676: Fire non-blocking login notification for SPA auth.
+        # At most one attempt an hour for each admin. The attempt is recorded
+        # before the task is created, so a failed send does not retry on the
+        # next request. The recipient is unchanged.
         if getattr(tenant_context, "is_platform_admin", False):
             try:
-                from src.multi_tenant.login_notification import send_login_notification
-                user_agent = request.headers.get("user-agent", "")
-                task = asyncio.create_task(
-                    send_login_notification(
-                        admin_email=tenant_context.platform_admin_email or "",
-                        notification_email=tenant_context.platform_admin_notification_email,
-                        client_ip=client_ip,
-                        user_agent=user_agent,
-                    )
+                from src.multi_tenant.login_notification import (
+                    claim_login_notification,
+                    send_login_notification,
                 )
-                # S155 async safety: prevent GC of fire-and-forget tasks
-                _spa_notification_tasks.add(task)
-                task.add_done_callback(_spa_notification_tasks.discard)
+                admin_email = tenant_context.platform_admin_email or ""
+                if claim_login_notification(admin_email):
+                    user_agent = request.headers.get("user-agent", "")
+                    task = asyncio.create_task(
+                        send_login_notification(
+                            admin_email=admin_email,
+                            notification_email=tenant_context.platform_admin_notification_email,
+                            client_ip=client_ip,
+                            user_agent=user_agent,
+                        )
+                    )
+                    # S155 async safety: prevent GC of fire-and-forget tasks
+                    _spa_notification_tasks.add(task)
+                    task.add_done_callback(_spa_notification_tasks.discard)
             except Exception as exc:
                 logger.warning("Login notification setup failed: %s", exc)
 
