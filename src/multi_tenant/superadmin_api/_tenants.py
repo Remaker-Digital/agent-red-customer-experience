@@ -129,7 +129,7 @@ async def list_all_tenants(
     # SPEC-1843 v6 / WI-1641: customer_email and shopify_shop_domain restored
     # (tenancy management data per SPEC-1637). ZK masking applied (S262).
     data_query = (
-        f"SELECT c.tenant_id, c.display_name, c.status, c.tier, c.billing_channel, "
+        f"SELECT c.id, c.tenant_id, c.display_name, c.status, c.tier, c.billing_channel, "
         f"c.customer_email, c.shopify_shop_domain, "
         f"c.created_at, c.updated_at, c.deactivated_at, "
         f"c.consent_status, c.expires_at "
@@ -144,6 +144,12 @@ async def list_all_tenants(
         parameters=params if params else None,
         max_item_count=limit,
     ):
+        from src.multi_tenant.repositories.tenant import decrypt_tenant_row
+
+        decrypted = await decrypt_tenant_row(_state._tenant_repo, item)
+        if decrypted is None:
+            continue
+        item = decrypted
         item["customer_email"] = mask_email(item.get("customer_email"))
         item["shopify_shop_domain"] = mask_domain(item.get("shopify_shop_domain"))
         tenants.append(TenantSummaryItem(**item))

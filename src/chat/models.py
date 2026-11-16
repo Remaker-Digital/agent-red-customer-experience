@@ -252,7 +252,11 @@ class IssueReportResponse(BaseModel):
 
     conversation_id: str = Field(description="Conversation the issue was reported on")
     issue_id: str = Field(description="Assigned issue identifier")
-    accepted: bool = Field(default=True, description="Whether the report was accepted")
+    accepted: bool = Field(default=True, description="Whether the report was saved")
+    notification_delivered: bool = Field(
+        default=False,
+        description="Whether any notification channel confirmed delivery",
+    )
 
 
 class MessageFeedbackRequest(BaseModel):

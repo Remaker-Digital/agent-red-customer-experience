@@ -19,8 +19,12 @@ import hmac as _hmac
 import logging
 import os
 import pathlib
+import re
 import secrets as _secrets
 import time as _time
+from datetime import UTC, datetime
+from html import escape
+from urllib.parse import urlencode
 
 import argon2
 from fastapi import FastAPI, Request
@@ -41,8 +45,9 @@ _ADMIN_INITIAL_PASSWORD = os.environ.get("ADMIN_PREVIEW_PASSWORD", "")
 _ADMIN_RESET_EMAIL = os.environ.get("ADMIN_RESET_EMAIL", "").strip().lower()
 _ADMIN_COOKIE_NAME = "agentred_admin"
 _CSRF_COOKIE_NAME = "agentred_csrf"
-_MIN_PASSWORD_LENGTH = 12
 _DEPLOYED_ENVIRONMENTS = {"staging", "production"}
+_CSRF_PLACEHOLDER = "{{csrf_token}}"
+_TENANT_QUERY_PLACEHOLDER = "{{tenant_query}}"
 
 # Argon2id password hashing (SPEC-1688)
 _ph = argon2.PasswordHasher(type=argon2.Type.ID)
@@ -261,11 +266,6 @@ _LOGO_DATA_URI = (
     "ICAgICAgaWQ9InBhdGgxMyIKICAgICAgIHN0eWxlPSJzdHJva2Utd2lkdGg6MS4zODk0OSIgLz4KICA8L2c+Cjwvc3ZnPgo="
 )
 
-_STANDALONE_FORGOT_LINK = (
-    '  <a href="/admin/standalone/_forgot-password" class="link">Forgot your password?</a>'
-    if _ADMIN_RESET_EMAIL
-    else ""
-)
 _STANDALONE_LOGIN_HTML = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -285,7 +285,7 @@ _STANDALONE_LOGIN_HTML = f"""<!DOCTYPE html>
     <input id="pw" type="password" name="password" placeholder="Enter your password" autofocus required/>
     <button type="submit">Sign In</button>
   </form>
-{_STANDALONE_FORGOT_LINK}
+{{{{forgot_link}}}}
 </div>
 </body>
 </html>"""
@@ -295,22 +295,22 @@ _STANDALONE_FORGOT_PW_HTML = f"""<!DOCTYPE html>
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Agent Red — Forgot Password</title>
+<title>Agent Red | Recover Admin Access</title>
 <style>{_STANDALONE_SHARED_STYLES}</style>
 </head>
 <body>
 <div class="card">
   <img src="{_LOGO_DATA_URI}" alt="Agent Red" width="200" height="49" class="logo" />
-  <h1>Forgot password</h1>
-  <p class="subtitle">Enter your email address and we'll send you a link to reset your password.</p>
+  <h1>Recover admin access</h1>
+  <p class="subtitle">Enter your email address to request a temporary access link.</p>
   <div class="error" id="err">Please enter a valid email address.</div>
-  <form method="POST" action="/admin/standalone/_forgot-password">
+  <form method="POST" action="/admin/standalone/_forgot-password{{{{tenant_query}}}}">
     <input type="hidden" name="csrf_token" value="{{{{csrf_token}}}}"/>
     <label for="email">Email address</label>
     <input id="email" type="email" name="email" placeholder="you@company.com" autofocus required/>
-    <button type="submit">Send reset link</button>
+    <button type="submit">Send recovery link</button>
   </form>
-  <a href="/admin/standalone/" class="link">Back to sign in</a>
+  <a href="/admin/standalone/{{{{tenant_query}}}}" class="link">Back to sign in</a>
 </div>
 </body>
 </html>"""
@@ -320,7 +320,7 @@ _STANDALONE_FORGOT_PW_SENT_HTML = f"""<!DOCTYPE html>
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Agent Red — Check Your Email</title>
+<title>Agent Red | Check Your Email</title>
 <style>{_STANDALONE_SHARED_STYLES}</style>
 </head>
 <body>
@@ -329,41 +329,35 @@ _STANDALONE_FORGOT_PW_SENT_HTML = f"""<!DOCTYPE html>
   <div style="font-size:32px;margin-bottom:12px;">&#9993;</div>
   <h1>Check your email</h1>
   <p class="subtitle">If that email matches our records,
-  we've sent a password reset link. The link expires in 15 minutes.</p>
+  we've sent a temporary access link. The link expires in 15 minutes.</p>
   <p style="font-size:13px;color:#a0a0a0;line-height:1.5;margin-top:12px;">
     Don't see it? Check your spam folder.
   </p>
-  <a href="/admin/standalone/" class="link">Back to sign in</a>
+  <a href="/admin/standalone/{{{{tenant_query}}}}" class="link">Back to sign in</a>
 </div>
 </body>
 </html>"""
 
-_STANDALONE_RESET_PW_HTML = f"""<!DOCTYPE html>
+_STANDALONE_RECOVERY_HTML = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Agent Red — Set New Password</title>
+<title>Agent Red | Recover Admin Access</title>
 <style>{_STANDALONE_SHARED_STYLES}</style>
 </head>
 <body>
 <div class="card">
   <img src="{_LOGO_DATA_URI}" alt="Agent Red" width="200" height="49" class="logo" />
-  <h1>Set new password</h1>
-  <p class="subtitle">Choose a new password for admin access.</p>
-  <div class="error" id="err">Passwords do not match.</div>
-  <div class="success" id="ok">Password changed successfully!</div>
-  <form method="POST" action="/admin/standalone/_reset-password">
+  <h1>Recover admin access</h1>
+  <p class="subtitle">Restore temporary admin access, then sign in to your tenant.
+    The configured admin password is unchanged.</p>
+  <form method="POST" action="/admin/standalone/_reset-password{{{{tenant_query}}}}">
     <input type="hidden" name="token" value="{{{{token}}}}"/>
     <input type="hidden" name="csrf_token" value="{{{{csrf_token}}}}"/>
-    <label for="new">New password</label>
-    <input id="new" type="password" name="new_password" placeholder="New password" autofocus required minlength="12"/>
-    <label for="confirm">Confirm new password</label>
-    <input id="confirm" type="password" name="confirm_password"
-      placeholder="Confirm new password" required minlength="12"/>
-    <button type="submit">Set password</button>
+    <button type="submit">Restore admin access</button>
   </form>
-  <a href="/admin/standalone/" class="link">Back to sign in</a>
+  <a href="/admin/standalone/{{{{tenant_query}}}}" class="link">Back to sign in</a>
 </div>
 </body>
 </html>"""
@@ -373,25 +367,41 @@ _STANDALONE_RESET_INVALID_HTML = f"""<!DOCTYPE html>
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Agent Red — Invalid Link</title>
+<title>Agent Red | Invalid Link</title>
 <style>{_STANDALONE_SHARED_STYLES}</style>
 </head>
 <body>
 <div class="card">
   <img src="{_LOGO_DATA_URI}" alt="Agent Red" width="200" height="49" class="logo" />
   <h1>Invalid or expired link</h1>
-  <p class="subtitle">This password reset link is no longer valid. It may have expired or already been used.</p>
-  <a href="/admin/standalone/_forgot-password" class="link">Request a new link</a>
+  <p class="subtitle">This recovery link is no longer valid. It may have expired or already been used.</p>
+  <a href="/admin/standalone/_forgot-password{{{{tenant_query}}}}" class="link">Request a new link</a>
 </div>
 </body>
 </html>"""
 
 
-def _render_login_html(csrf_token: str | None = None, error: str | None = None) -> str:
+def _tenant_query(request: Request) -> str:
+    """Keep only the tenant identifier as browser navigation context."""
+    tenant = request.query_params.get("tenant", "")
+    if re.fullmatch(r"[A-Za-z0-9_-]{1,128}", tenant):
+        return "?" + urlencode({"tenant": tenant})
+    return ""
+
+
+def _render_login_html(
+    csrf_token: str | None = None, error: str | None = None, tenant_query: str = "",
+) -> str:
     """Render the login page HTML with a fresh CSRF token (SPEC-1690)."""
     if csrf_token is None:
         csrf_token = _generate_csrf_token()
-    html = _STANDALONE_LOGIN_HTML.replace("{{csrf_token}}", csrf_token)
+    forgot_link = ""
+    if _ADMIN_RESET_EMAIL:
+        forgot_link = (
+            f'<a href="/admin/standalone/_forgot-password{escape(tenant_query)}" '
+            'class="link">Recover admin access</a>'
+        )
+    html = _STANDALONE_LOGIN_HTML.replace(_CSRF_PLACEHOLDER, csrf_token).replace("{{forgot_link}}", forgot_link)
     if error:
         html = html.replace(
             "Incorrect password. Please try again.",
@@ -403,11 +413,14 @@ def _render_login_html(csrf_token: str | None = None, error: str | None = None) 
     return html
 
 
-def _render_forgot_pw_html(csrf_token: str | None = None, error: str | None = None) -> str:
+def _render_forgot_pw_html(
+    csrf_token: str | None = None, error: str | None = None, tenant_query: str = "",
+) -> str:
     """Render the forgot-password page HTML with a fresh CSRF token."""
     if csrf_token is None:
         csrf_token = _generate_csrf_token()
-    html = _STANDALONE_FORGOT_PW_HTML.replace("{{csrf_token}}", csrf_token)
+    html = _STANDALONE_FORGOT_PW_HTML.replace(_CSRF_PLACEHOLDER, csrf_token)
+    html = html.replace(_TENANT_QUERY_PLACEHOLDER, escape(tenant_query))
     if error:
         html = html.replace(
             "Please enter a valid email address.",
@@ -419,27 +432,13 @@ def _render_forgot_pw_html(csrf_token: str | None = None, error: str | None = No
     return html
 
 
-def _render_reset_pw_html(
-    token: str,
-    csrf_token: str | None = None,
-    error: str | None = None,
-) -> str:
-    """Render the reset-password page HTML with CSRF token and reset token."""
-    if csrf_token is None:
-        csrf_token = _generate_csrf_token()
-    html = _STANDALONE_RESET_PW_HTML.replace("{{token}}", token).replace(
-        "{{csrf_token}}",
+def _render_recovery_html(token: str, csrf_token: str, tenant_query: str) -> str:
+    """Render the temporary access confirmation form."""
+    html = _STANDALONE_RECOVERY_HTML.replace("{{token}}", escape(token)).replace(
+        _CSRF_PLACEHOLDER,
         csrf_token,
     )
-    if error:
-        html = html.replace(
-            "Passwords do not match.",
-            error,
-        ).replace(
-            'class="error" id="err"',
-            'class="error" id="err" style="display:block"',
-        )
-    return html
+    return html.replace(_TENANT_QUERY_PLACEHOLDER, escape(tenant_query))
 
 
 def _generate_reset_token(ttl: int = 900) -> str:
@@ -493,13 +492,22 @@ def _validate_reset_token(token: str) -> bool:
     return True
 
 
+def _standalone_recovery_sender(smtp_user: str) -> str:
+    """Use the transactional sender, with the original setting as a fallback."""
+    return (
+        os.environ.get("SMTP_FROM")
+        or os.environ.get("SMTP_FROM_ADDRESS")
+        or smtp_user
+        or "noreply@agentred.com"
+    )
+
+
 def _send_admin_password_changed_email(to_email: str, forgot_password_url: str) -> bool:
     """Send a confirmation email after a successful password reset.
 
     Security best practice: notify the admin that their password was changed,
     and provide a self-service recovery link in case they did not initiate it.
     """
-    import smtplib
     from email.mime.multipart import MIMEMultipart
     from email.mime.text import MIMEText
 
@@ -507,59 +515,41 @@ def _send_admin_password_changed_email(to_email: str, forgot_password_url: str) 
     smtp_port = int(os.environ.get("SMTP_PORT", "587"))
     smtp_user = os.environ.get("SMTP_USERNAME", "")
     smtp_pass = os.environ.get("SMTP_PASSWORD", "")
-    sender = os.environ.get("SMTP_FROM_ADDRESS", "noreply@agentred.com")
+    sender = _standalone_recovery_sender(smtp_user)
 
     if not smtp_host:
         logger.warning("SMTP_HOST not configured — cannot send password changed confirmation email")
         return False
 
-    subject = "Your Agent Red Admin Password Has Been Reset"
+    subject = "Agent Red: Admin Access Recovered"
 
-    html_body = f"""\
-<!DOCTYPE html>
-<html>
-<head><meta charset="utf-8"/></head>
-<body style="margin:0;padding:0;background:#0a0a0a;font-family:Inter,system-ui,sans-serif;">
-<div style="max-width:560px;margin:40px auto;padding:40px;
-background:#1f1f1f;border-radius:12px;border:1px solid #272727;">
-  <div style="text-align:center;margin-bottom:24px;">
-    <h1 style="margin:0;font-size:20px;color:#F5F5F5;">Agent Red</h1>
-    <p style="margin:4px 0 0;font-size:14px;color:#A0A0A0;">Customer Experience</p>
-  </div>
-  <h2 style="margin:0 0 16px;font-size:16px;color:#F5F5F5;">Password Reset Successful</h2>
-  <p style="margin:0 0 16px;font-size:14px;color:#E0E0E0;line-height:1.6;">
-    Your admin password has been reset successfully. You are now signed in.
+    from src.multi_tenant.alert_delivery import email_action_template, email_generation_time, format_branded_email
+
+    generated_at = datetime.now(UTC)
+    html_body = format_branded_email(
+        f"""\
+<h2 style="margin:0 0 16px;color:#fafaf9;font-size:20px">Admin Access Recovered</h2>
+<p style="margin:0 0 16px;color:#f5f5f4;font-size:14px;line-height:1.6">
+  A temporary admin access session was issued. The configured admin password is unchanged.
+</p>
+<div style="background:#450a0a;border:1px solid #b91c1c;border-radius:8px;padding:16px">
+  <p style="margin:0 0 8px;color:#fecaca;font-size:14px;font-weight:600">Did not request recovery?</p>
+  <p style="margin:0 0 12px;color:#f5f5f4;font-size:14px;line-height:1.6">
+    If you did not request recovery, contact your Agent Red administrator to secure access.
   </p>
-  <hr style="border:none;border-top:1px solid #272727;margin:24px 0;" />
-  <div style="background:#2a1a1a;border:1px solid #4a2020;border-radius:8px;padding:16px;margin:0 0 16px;">
-    <p style="margin:0 0 8px;font-size:13px;color:#ff6b6b;font-weight:600;">
-      Did not make this change?
-    </p>
-    <p style="margin:0 0 12px;font-size:13px;color:#A0A0A0;line-height:1.5;">
-      If you did not reset your password, someone may have access to your account.
-      Reset your password immediately to secure your account.
-    </p>
-    <a href="{forgot_password_url}"
-      style="display:inline-block;padding:10px 24px;
-      background:#ff3621;color:#ffffff;font-size:13px;
-      font-weight:600;text-decoration:none;border-radius:6px;">
-      Reset Password
-    </a>
-  </div>
-  <hr style="border:none;border-top:1px solid #272727;margin:24px 0;" />
-  <p style="margin:0;font-size:11px;color:#787878;text-align:center;">
-    Agent Red Customer Experience &mdash; A product of Remaker Digital
-  </p>
-</div>
-</body>
-</html>"""
+  {email_action_template(escape(forgot_password_url), "Open Recovery")}
+</div>""",
+        generated_at=generated_at,
+    )
 
     plain_body = (
-        f"Agent Red Admin Password Reset Successful\n\n"
-        f"Your admin password has been reset successfully. You are now signed in.\n\n"
-        f"If you did not reset your password, someone may have access to your account.\n"
-        f"Reset your password immediately: {forgot_password_url}\n"
+        "Agent Red Admin Access Recovered\n\n"
+        "A temporary admin access session was issued. The configured admin password is unchanged.\n\n"
+        "If you did not request recovery, contact your Agent Red administrator to secure access.\n"
+        f"Open recovery: {forgot_password_url}\n"
     )
+
+    plain_body += f"\n{email_generation_time(generated_at)}\n"
 
     try:
         msg = MIMEMultipart("alternative")
@@ -569,19 +559,9 @@ background:#1f1f1f;border-radius:12px;border:1px solid #272727;">
         msg.attach(MIMEText(plain_body, "plain"))
         msg.attach(MIMEText(html_body, "html"))
 
-        if smtp_port == 465:
-            with smtplib.SMTP_SSL(smtp_host, smtp_port, timeout=10.0) as server:
-                if smtp_user and smtp_pass:
-                    server.login(smtp_user, smtp_pass)
-                server.send_message(msg)
-        else:
-            with smtplib.SMTP(smtp_host, smtp_port, timeout=10.0) as server:
-                server.ehlo()
-                if smtp_port != 25:
-                    server.starttls()
-                if smtp_user and smtp_pass:
-                    server.login(smtp_user, smtp_pass)
-                server.send_message(msg)
+        from src.multi_tenant.smtp_tls import send_verified_smtp
+
+        send_verified_smtp(msg, smtp_host, smtp_port, timeout=10.0, username=smtp_user, password=smtp_pass)
 
         logger.info("Admin password changed confirmation email sent to %s", to_email)
         return True
@@ -596,7 +576,6 @@ def _send_admin_reset_email(to_email: str, reset_url: str) -> bool:
 
     Reuses the same SMTP env vars as admin_apikey_api.py.
     """
-    import smtplib
     from email.mime.multipart import MIMEMultipart
     from email.mime.text import MIMEText
 
@@ -604,62 +583,41 @@ def _send_admin_reset_email(to_email: str, reset_url: str) -> bool:
     smtp_port = int(os.environ.get("SMTP_PORT", "587"))
     smtp_user = os.environ.get("SMTP_USERNAME", "")
     smtp_pass = os.environ.get("SMTP_PASSWORD", "")
-    sender = os.environ.get("SMTP_FROM_ADDRESS", "noreply@agentred.com")
+    sender = _standalone_recovery_sender(smtp_user)
 
     if not smtp_host:
         logger.warning("SMTP_HOST not configured — cannot send password reset email")
         return False
 
-    subject = "Reset Your Agent Red Admin Password"
+    subject = "Agent Red: Recover Your Admin Access"
 
-    html_body = f"""\
-<!DOCTYPE html>
-<html>
-<head><meta charset="utf-8"/></head>
-<body style="margin:0;padding:0;background:#0a0a0a;font-family:Inter,system-ui,sans-serif;">
-<div style="max-width:560px;margin:40px auto;padding:40px;
-background:#1f1f1f;border-radius:12px;border:1px solid #272727;">
-  <div style="text-align:center;margin-bottom:24px;">
-    <h1 style="margin:0;font-size:20px;color:#F5F5F5;">Agent Red</h1>
-    <p style="margin:4px 0 0;font-size:14px;color:#A0A0A0;">Customer Experience</p>
-  </div>
-  <h2 style="margin:0 0 16px;font-size:16px;color:#F5F5F5;">Password Reset</h2>
-  <p style="margin:0 0 16px;font-size:14px;color:#E0E0E0;line-height:1.6;">
-    We received a request to reset the admin password. Click the button below to choose a new password.
-  </p>
-  <div style="text-align:center;margin:24px 0;">
-    <a href="{reset_url}"
-      style="display:inline-block;padding:12px 32px;
-      background:#ff3621;color:#ffffff;font-size:14px;
-      font-weight:600;text-decoration:none;border-radius:8px;">
-      Reset Password
-    </a>
-  </div>
-  <p style="margin:16px 0 0;font-size:13px;color:#A0A0A0;line-height:1.5;">
-    This link expires in 15 minutes. If you did not request this, you can safely ignore this email.
-  </p>
-  <hr style="border:none;border-top:1px solid #272727;margin:24px 0;" />
-  <p style="margin:0 0 8px;font-size:13px;color:#A0A0A0;line-height:1.5;">
-    If the button doesn't work, copy and paste this link into your browser:
-  </p>
-  <p style="margin:0;font-family:'JetBrains Mono',monospace;font-size:11px;color:#787878;word-break:break-all;">
-    {reset_url}
-  </p>
-  <hr style="border:none;border-top:1px solid #272727;margin:24px 0;" />
-  <p style="margin:0;font-size:11px;color:#787878;text-align:center;">
-    Agent Red Customer Experience &mdash; A product of Remaker Digital
-  </p>
+    from src.multi_tenant.alert_delivery import email_action_template, email_generation_time, format_branded_email
+
+    generated_at = datetime.now(UTC)
+    html_body = format_branded_email(
+        f"""\
+<h2 style="margin:0 0 16px;color:#fafaf9;font-size:20px">Recover Admin Access</h2>
+<p style="margin:0 0 16px;color:#f5f5f4;font-size:14px;line-height:1.6">
+  We received a request for temporary admin access. The configured admin password is unchanged.
+</p>
+<div style="margin:24px 0;text-align:center">
+  {email_action_template(escape(reset_url), "Recover Admin Access")}
 </div>
-</body>
-</html>"""
+<p style="margin:16px 0 0;color:#d6d3d1;font-size:13px;line-height:1.6">
+  This link expires in 15 minutes. If you did not request this, you can safely ignore this email.
+</p>""",
+        generated_at=generated_at,
+    )
 
     plain_body = (
-        f"Agent Red Admin Password Reset\n\n"
-        f"We received a request to reset the admin password.\n\n"
-        f"Click this link to choose a new password:\n{reset_url}\n\n"
+        "Agent Red Admin Access Recovery\n\n"
+        "We received a request for temporary admin access. The configured admin password is unchanged.\n\n"
+        f"Open the recovery form:\n{reset_url}\n\n"
         f"This link expires in 15 minutes.\n"
         f"If you did not request this, you can safely ignore this email.\n"
     )
+
+    plain_body += f"\n{email_generation_time(generated_at)}\n"
 
     try:
         msg = MIMEMultipart("alternative")
@@ -669,19 +627,9 @@ background:#1f1f1f;border-radius:12px;border:1px solid #272727;">
         msg.attach(MIMEText(plain_body, "plain"))
         msg.attach(MIMEText(html_body, "html"))
 
-        if smtp_port == 465:
-            with smtplib.SMTP_SSL(smtp_host, smtp_port, timeout=10.0) as server:
-                if smtp_user and smtp_pass:
-                    server.login(smtp_user, smtp_pass)
-                server.send_message(msg)
-        else:
-            with smtplib.SMTP(smtp_host, smtp_port, timeout=10.0) as server:
-                server.ehlo()
-                if smtp_port != 25:
-                    server.starttls()
-                if smtp_user and smtp_pass:
-                    server.login(smtp_user, smtp_pass)
-                server.send_message(msg)
+        from src.multi_tenant.smtp_tls import send_verified_smtp
+
+        send_verified_smtp(msg, smtp_host, smtp_port, timeout=10.0, username=smtp_user, password=smtp_pass)
 
         logger.info("Admin password reset email sent to %s", to_email)
         return True
@@ -797,7 +745,9 @@ def mount_standalone_admin(app: FastAPI) -> None:
         async def _admin_forgot_password_form(request: Request) -> StarletteResponse:
             """Show the forgot password form (enter email) with CSRF token."""
             csrf = _generate_csrf_token()
-            response = HTMLResponse(content=_render_forgot_pw_html(csrf_token=csrf))
+            response = HTMLResponse(
+                content=_render_forgot_pw_html(csrf_token=csrf, tenant_query=_tenant_query(request)),
+            )
             response.set_cookie(_CSRF_COOKIE_NAME, csrf, httponly=True, secure=True, samesite="lax", max_age=3600)
             return response
 
@@ -808,12 +758,15 @@ def mount_standalone_admin(app: FastAPI) -> None:
             email = str(form.get("email", "")).strip().lower()
             form_csrf = str(form.get("csrf_token", ""))
             cookie_csrf = request.cookies.get(_CSRF_COOKIE_NAME, "")
+            tenant_query = _tenant_query(request)
 
             # CSRF validation (SPEC-1690)
             if not _validate_csrf_token(form_csrf, cookie_csrf):
                 csrf = _generate_csrf_token()
                 response = HTMLResponse(
-                    content=_render_forgot_pw_html(csrf_token=csrf, error="Invalid request. Please try again."),
+                    content=_render_forgot_pw_html(
+                        csrf_token=csrf, error="Invalid request. Please try again.", tenant_query=tenant_query,
+                    ),
                     status_code=403,
                 )
                 response.set_cookie(_CSRF_COOKIE_NAME, csrf, httponly=True, secure=True, samesite="lax", max_age=3600)
@@ -833,6 +786,7 @@ def mount_standalone_admin(app: FastAPI) -> None:
                     content=_render_forgot_pw_html(
                         csrf_token=csrf,
                         error="Too many requests. Please wait a few minutes and try again.",
+                        tenant_query=tenant_query,
                     ),
                     status_code=429,
                 )
@@ -843,7 +797,7 @@ def mount_standalone_admin(app: FastAPI) -> None:
             if not email or "@" not in email:
                 csrf = _generate_csrf_token()
                 response = HTMLResponse(
-                    content=_render_forgot_pw_html(csrf_token=csrf),
+                    content=_render_forgot_pw_html(csrf_token=csrf, tenant_query=tenant_query),
                     status_code=400,
                 )
                 response.set_cookie(_CSRF_COOKIE_NAME, csrf, httponly=True, secure=True, samesite="lax", max_age=3600)
@@ -857,68 +811,51 @@ def mount_standalone_admin(app: FastAPI) -> None:
                 # Build reset URL
                 scheme = request.headers.get("x-forwarded-proto", request.url.scheme)
                 host = request.headers.get("host", request.url.netloc)
-                reset_url = f"{scheme}://{host}/admin/standalone/_reset-password?token={reset_token}"
+                reset_query = urlencode({"token": reset_token}) + tenant_query.replace("?", "&", 1)
+                reset_url = f"{scheme}://{host}/admin/standalone/_reset-password?{reset_query}"
 
                 import asyncio
 
                 await asyncio.to_thread(_send_admin_reset_email, email, reset_url)  # SPEC-1622: non-blocking SMTP
 
             # Always return success page (prevents email enumeration)
-            return HTMLResponse(content=_STANDALONE_FORGOT_PW_SENT_HTML)
+            return HTMLResponse(
+                content=_STANDALONE_FORGOT_PW_SENT_HTML.replace(_TENANT_QUERY_PLACEHOLDER, escape(tenant_query)),
+            )
 
         @app.get("/admin/standalone/_reset-password", include_in_schema=False)
         async def _admin_reset_password_form(request: Request) -> StarletteResponse:
-            """Show the set-new-password form if the token is valid (with CSRF)."""
+            """Show the recovery confirmation form for a valid link."""
             token = request.query_params.get("token", "")
+            tenant_query = _tenant_query(request)
             if not _validate_reset_token(token):
-                return HTMLResponse(content=_STANDALONE_RESET_INVALID_HTML, status_code=400)
+                invalid = _STANDALONE_RESET_INVALID_HTML.replace(_TENANT_QUERY_PLACEHOLDER, escape(tenant_query))
+                return HTMLResponse(content=invalid, status_code=400)
             csrf = _generate_csrf_token()
-            response = HTMLResponse(content=_render_reset_pw_html(token=token, csrf_token=csrf))
+            response = HTMLResponse(
+                content=_render_recovery_html(token=token, csrf_token=csrf, tenant_query=tenant_query),
+            )
             response.set_cookie(_CSRF_COOKIE_NAME, csrf, httponly=True, secure=True, samesite="lax", max_age=3600)
             return response
 
         @app.post("/admin/standalone/_reset-password", include_in_schema=False)
         async def _admin_reset_password(request: Request) -> StarletteResponse:
-            """Process password reset: validate CSRF + token, auto-login (SPEC-1690/1691)."""
+            """Validate CSRF and the recovery token, then restore temporary access."""
 
             form = await request.form()
             token = str(form.get("token", ""))
-            new_pw = str(form.get("new_password", ""))
-            confirm = str(form.get("confirm_password", ""))
             form_csrf = str(form.get("csrf_token", ""))
             cookie_csrf = request.cookies.get(_CSRF_COOKIE_NAME, "")
+            tenant_query = _tenant_query(request)
+            invalid = _STANDALONE_RESET_INVALID_HTML.replace(_TENANT_QUERY_PLACEHOLDER, escape(tenant_query))
 
             # CSRF validation (SPEC-1690)
             if not _validate_csrf_token(form_csrf, cookie_csrf):
-                return HTMLResponse(content=_STANDALONE_RESET_INVALID_HTML, status_code=400)
+                return HTMLResponse(content=invalid, status_code=400)
 
             # Validate token
             if not _validate_reset_token(token):
-                return HTMLResponse(content=_STANDALONE_RESET_INVALID_HTML, status_code=400)
-
-            # Validate passwords match
-            if new_pw != confirm:
-                csrf = _generate_csrf_token()
-                response = HTMLResponse(
-                    content=_render_reset_pw_html(token=token, csrf_token=csrf),
-                    status_code=400,
-                )
-                response.set_cookie(_CSRF_COOKIE_NAME, csrf, httponly=True, secure=True, samesite="lax", max_age=3600)
-                return response
-
-            # Validate minimum length (SPEC-1691)
-            if len(new_pw) < _MIN_PASSWORD_LENGTH:
-                csrf = _generate_csrf_token()
-                response = HTMLResponse(
-                    content=_render_reset_pw_html(
-                        token=token,
-                        csrf_token=csrf,
-                        error=f"Password must be at least {_MIN_PASSWORD_LENGTH} characters.",
-                    ),
-                    status_code=400,
-                )
-                response.set_cookie(_CSRF_COOKIE_NAME, csrf, httponly=True, secure=True, samesite="lax", max_age=3600)
-                return response
+                return HTMLResponse(content=invalid, status_code=400)
 
             # Multi-replica safety: Do NOT change the password in-memory.
             # With minReplicas > 1, an in-memory password change only affects
@@ -945,7 +882,7 @@ def mount_standalone_admin(app: FastAPI) -> None:
             if _ADMIN_RESET_EMAIL:
                 scheme = request.headers.get("x-forwarded-proto", request.url.scheme)
                 host = request.headers.get("host", request.url.hostname or "localhost")
-                forgot_url = f"{scheme}://{host}/admin/standalone/_forgot-password"
+                forgot_url = f"{scheme}://{host}/admin/standalone/_forgot-password{tenant_query}"
                 import asyncio
 
                 await asyncio.to_thread(
@@ -956,7 +893,7 @@ def mount_standalone_admin(app: FastAPI) -> None:
             session_token = _generate_session_token()
             response = StarletteResponse(
                 status_code=303,
-                headers={"location": "/admin/standalone/"},
+                headers={"location": f"/admin/standalone/{tenant_query}"},
             )
             response.set_cookie(
                 _ADMIN_COOKIE_NAME,
@@ -985,7 +922,10 @@ def mount_standalone_admin(app: FastAPI) -> None:
             """Serve the standalone admin SPA root with trailing slash (password-gated)."""
             if not _check_admin_cookie(request):
                 csrf = _generate_csrf_token()
-                response = HTMLResponse(content=_render_login_html(csrf_token=csrf), headers=_NO_CACHE_HEADERS)
+                response = HTMLResponse(
+                    content=_render_login_html(csrf_token=csrf, tenant_query=_tenant_query(request)),
+                    headers=_NO_CACHE_HEADERS,
+                )
                 response.set_cookie(_CSRF_COOKIE_NAME, csrf, httponly=True, secure=True, samesite="lax", max_age=3600)
                 return response
             return FileResponse(str(_admin_standalone_dist / "index.html"), headers=_NO_CACHE_HEADERS)
@@ -995,7 +935,10 @@ def mount_standalone_admin(app: FastAPI) -> None:
             """Serve the standalone admin SPA root (password-gated)."""
             if not _check_admin_cookie(request):
                 csrf = _generate_csrf_token()
-                response = HTMLResponse(content=_render_login_html(csrf_token=csrf), headers=_NO_CACHE_HEADERS)
+                response = HTMLResponse(
+                    content=_render_login_html(csrf_token=csrf, tenant_query=_tenant_query(request)),
+                    headers=_NO_CACHE_HEADERS,
+                )
                 response.set_cookie(_CSRF_COOKIE_NAME, csrf, httponly=True, secure=True, samesite="lax", max_age=3600)
                 return response
             return FileResponse(str(_admin_standalone_dist / "index.html"), headers=_NO_CACHE_HEADERS)

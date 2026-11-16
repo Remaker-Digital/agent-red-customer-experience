@@ -60,6 +60,11 @@ class TestPreAuthWiring:
 # ---------------------------------------------------------------------------
 
 
+def _module_uses_smtp(source: str) -> bool:
+    """True when the module opens SMTP itself or through the TLS helpers."""
+    return any(name in source for name in ("smtplib", "open_verified_smtp", "send_verified_smtp"))
+
+
 class TestSmtpAsyncOffload:
     """Verify all SMTP send paths use asyncio.to_thread()."""
 
@@ -79,18 +84,18 @@ class TestSmtpAsyncOffload:
     def test_smtp_module_uses_to_thread(self, module_path: str):
         """Each SMTP-using module must wrap blocking I/O with to_thread."""
         source = Path(module_path).read_text()
-        if "smtplib" not in source:
-            pytest.skip(f"{module_path} does not use smtplib")
+        if not _module_uses_smtp(source):
+            pytest.skip(f"{module_path} does not use SMTP")
         assert "asyncio.to_thread" in source, (
-            f"{module_path} uses smtplib but does not wrap with asyncio.to_thread()"
+            f"{module_path} uses SMTP but does not wrap with asyncio.to_thread()"
         )
 
     @pytest.mark.parametrize("module_path", SMTP_MODULES)
     def test_smtp_module_has_inner_function(self, module_path: str):
         """SMTP modules should define an inner _smtp_send function."""
         source = Path(module_path).read_text()
-        if "smtplib" not in source:
-            pytest.skip(f"{module_path} does not use smtplib")
+        if not _module_uses_smtp(source):
+            pytest.skip(f"{module_path} does not use SMTP")
         # Either inner function pattern or whole-function offload via to_thread
         has_inner = "_smtp_send" in source
         has_to_thread_call = "to_thread(" in source

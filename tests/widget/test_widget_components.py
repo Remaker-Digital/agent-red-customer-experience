@@ -284,21 +284,23 @@ class TestPanel:
         )
 
     def test_spec_1189_drag_to_reposition(self) -> None:
-        """SPEC-1189: Panel supports drag-to-reposition via mousedown on header."""
-        assert "handleDragStart" in self.SRC, (
-            "Panel should define handleDragStart for drag-to-reposition"
+        """SPEC-1189: The widget entry point provides the panel drag callback."""
+        source = (COMPONENTS.parent / "index.ts").read_text(encoding="utf-8")
+        assert "onDragStart: mobileFullscreen ? undefined : startPanelDrag" in source, (
+            "The widget should connect desktop panel dragging and disable it in mobile fullscreen"
         )
 
     def test_spec_1189_drag_start_event(self) -> None:
-        """SPEC-1189: Drag start posts message to parent frame."""
-        assert "ar:drag-start" in self.SRC, (
-            "Panel should post 'ar:drag-start' message to parent frame"
+        """SPEC-1189: A left mouse press on the header starts dragging."""
+        header = _read("Header.tsx")
+        assert "onMouseDown=" in header and "e.button === 0" in header, (
+            "The header should start a drag on a left mouse press"
         )
 
     def test_spec_1189_header_receives_drag_handler(self) -> None:
         """SPEC-1189: Header component receives onDragStart prop."""
-        assert "onDragStart={handleDragStart}" in self.SRC, (
-            "Panel should pass handleDragStart to Header as onDragStart prop"
+        assert "onDragStart={onDragStart}" in self.SRC, (
+            "Panel should forward the drag callback to Header"
         )
 
     def test_wi_255_input_bar_min_height(self) -> None:
@@ -602,9 +604,9 @@ class TestInputBar:
         )
 
     def test_spec_1207_char_count_display(self) -> None:
-        """SPEC-1207: Display current/max character count."""
-        assert "text.length}/{MAX_MESSAGE_LENGTH}" in self.SRC, (
-            "InputBar should display text.length/MAX_MESSAGE_LENGTH counter"
+        """SPEC-1207: Display the outgoing message length against the limit."""
+        assert "message.length}/{MAX_MESSAGE_LENGTH}" in self.SRC, (
+            "InputBar should count the composed outgoing message, including attachments"
         )
 
     def test_spec_1209_file_upload_button(self) -> None:

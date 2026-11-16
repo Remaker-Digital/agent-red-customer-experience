@@ -21,12 +21,15 @@ Security properties:
 
 from __future__ import annotations
 
+from html import escape
 import logging
 import os
 from datetime import UTC, datetime
 
 from fastapi import APIRouter, Request
 from pydantic import BaseModel, Field
+
+from src.multi_tenant.alert_delivery import email_action_template
 
 logger = logging.getLogger(__name__)
 
@@ -218,34 +221,30 @@ async def recover_spa_key(
 # ---------------------------------------------------------------------------
 
 _RECOVERY_EMAIL_BODY = """
-<h2 style="margin:0 0 16px;color:#111827;font-size:20px">
+<h2 style="margin:0 0 16px;color:#fafaf9;font-size:20px">
   SPA API Key Recovery
 </h2>
-<p style="color:#374151;font-size:14px;line-height:1.6;margin:0 0 16px">
+<p style="color:#f5f5f4;font-size:14px;line-height:1.6;margin:0 0 16px">
   Your Agent Red platform admin API key has been recovered using a backup
   code. Your previous key has been invalidated immediately.
 </p>
-<p style="color:#374151;font-size:14px;line-height:1.6;margin:0 0 8px">
+<p style="color:#f5f5f4;font-size:14px;line-height:1.6;margin:0 0 8px">
   <strong>Your new API key:</strong>
 </p>
-<div style="background:#f3f4f6;padding:12px 16px;border-radius:6px;margin:0 0 24px">
-  <code style="font-size:13px;word-break:break-all;color:#111827">{new_key}</code>
+<div style="background:#1c1917;padding:12px 16px;border-radius:8px;margin:0 0 24px">
+  <code style="font-size:13px;word-break:break-all;color:#fafaf9">{new_key}</code>
 </div>
 <p style="color:#ef4444;font-size:13px;line-height:1.5;margin:0 0 16px">
   <strong>Save this key immediately.</strong> It will not be shown again.
   One of your backup codes has been consumed.
 </p>
 <div style="text-align:center;margin:24px 0">
-  <a href="{admin_dashboard_url}" style="display:inline-block;padding:10px 24px;
-     background:#ff3621;color:#ffffff;font-size:14px;font-weight:600;
-     text-decoration:none;border-radius:4px">
-    Sign in to Dashboard
-  </a>
+  """ + email_action_template("{admin_dashboard_url}", "Sign in to Dashboard") + """
 </div>
-<p style="color:#9ca3af;font-size:12px;line-height:1.5;margin:16px 0 0">
+<p style="color:#d6d3d1;font-size:12px;line-height:1.5;margin:16px 0 0">
   If you did not initiate this recovery, your backup codes may be
   compromised. Sign in to your
-  <a href="{admin_dashboard_url}" style="color:#ff3621">admin dashboard</a>
+  <a href="{admin_dashboard_url}" style="color:#93c5fd">admin dashboard</a>
   and generate new backup codes immediately.
 </p>
 """
@@ -266,14 +265,14 @@ async def _send_recovery_email(to_email: str, new_key: str) -> None:
         admin_url = _build_admin_login_url()
         body_html = _RECOVERY_EMAIL_BODY.format(
             new_key=new_key,
-            admin_dashboard_url=admin_url,
+            admin_dashboard_url=escape(admin_url),
         )
-        full_html = format_branded_email(body_html, admin_url=admin_url)
+        full_html = format_branded_email(body_html)
 
         await send_acs_email(
             conn_str=conn_str,
             to_email=to_email,
-            subject="Agent Red — SPA API Key Recovery",
+            subject="Agent Red: Platform Admin API Key Recovery",
             html_body=full_html,
         )
         logger.info("Recovery email sent to %s", to_email)

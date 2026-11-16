@@ -158,8 +158,6 @@ def register_middleware(app: FastAPI) -> None:
     """
     import os
 
-    from fastapi.middleware.cors import CORSMiddleware
-
     from src.multi_tenant.api_versioning import ApiVersionMiddleware
     from src.multi_tenant.middleware import (
         RateLimitMiddleware,
@@ -177,6 +175,8 @@ def register_middleware(app: FastAPI) -> None:
         SecurityHeadersMiddleware,
         TrustedProxyMiddleware,
     )
+
+    from src.multi_tenant.widget_cors import WidgetCORSMiddleware
 
     # --- Inner middleware (closest to route handler) ---
     app.add_middleware(SecurityHeadersMiddleware)
@@ -216,7 +216,7 @@ def register_middleware(app: FastAPI) -> None:
     )
 
     app.add_middleware(
-        CORSMiddleware,
+        WidgetCORSMiddleware,
         allow_origins=_cors_origins,
         allow_origin_regex=_cors_origin_regex,
         allow_credentials=True,

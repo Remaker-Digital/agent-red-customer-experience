@@ -85,7 +85,7 @@ class TestTenantFilters:
             f"Expected billing_channel=shopify, got {[c['url'] for c in gets]}"
         )
         expect(tenants_page.get_by_text("2 tenants found")).to_be_visible()
-        expect(tenants_page.get_by_text("Example Storefront")).to_be_visible()
+        expect(tenants_page.get_by_text("example-shop Storefront")).to_be_visible()
         expect(tenants_page.get_by_text("Acme Corporation")).to_have_count(0)
 
 

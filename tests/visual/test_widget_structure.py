@@ -18,12 +18,40 @@ Run with:
 import pytest
 from playwright.sync_api import FrameLocator, Page, expect
 
+from tests.visual.conftest import VITE_PORT
+
 
 # ---------------------------------------------------------------------------
 # Marker: all tests in this module require the "visual" marker
 # ---------------------------------------------------------------------------
 
 pytestmark = pytest.mark.visual
+
+
+def test_dev_storefront_boots_without_browser_mocks(page: Page, vite_server) -> None:
+    """The manual Vite preview must load the widget in an ordinary browser."""
+    page.goto(f"http://localhost:{VITE_PORT}/dev.html", wait_until="domcontentloaded")
+    expect(page.get_by_role("status")).to_have_text("Widget ready.")
+    expect(page.locator("#agent-red-widget")).to_be_attached(timeout=5_000)
+
+    open_button = page.get_by_role("button", name="Open Widget")
+    expect(open_button).to_be_enabled()
+    open_button.click()
+    panel = page.locator('iframe[title="Agent Red Chat"]')
+    expect(panel).to_have_css("opacity", "1")
+    check_state = page.get_by_role("button", name="Check isOpen")
+    check_state.click()
+    expect(page.get_by_role("status")).to_have_text("The widget is open.")
+
+    page.get_by_role("button", name="Close Widget").click()
+    expect(panel).to_have_css("opacity", "0")
+    check_state.click()
+    expect(page.get_by_role("status")).to_have_text("The widget is closed.")
+
+    page.get_by_role("button", name="Destroy").click()
+    expect(page.locator("#agent-red-widget")).to_have_count(0)
+    expect(open_button).to_be_disabled()
+    expect(page.get_by_role("status")).to_contain_text("Widget destroyed.")
 
 
 # ===========================================================================
@@ -66,6 +94,27 @@ class TestWidgetLifecycle:
         )
         assert iframe is not None, "Panel iframe was not created after open()"
 
+    @pytest.mark.parametrize(("position", "saved_width"), [("bottom-right", None), ("bottom-left", "440px")])
+    def test_panel_fits_a_narrow_viewport(
+        self, widget_page: Page, mock_config: dict, position: str, saved_width: str | None,
+    ) -> None:
+        if saved_width:
+            mock_config["widget_position"] = position
+            widget_page.evaluate("(width) => sessionStorage.setItem('ar_panel_width', width)", saved_width)
+            widget_page.reload(wait_until="domcontentloaded")
+            widget_page.wait_for_function("!!window.AgentRed")
+        widget_page.set_viewport_size({"width": 390, "height": 844})
+        widget_page.evaluate("window.AgentRed.open()")
+        panel = widget_page.get_by_title("Agent Red Chat", exact=True)
+        expect(panel).to_have_css("opacity", "1")
+        narrow = panel.bounding_box()
+        assert narrow is not None
+        assert narrow["x"] >= -0.5
+        assert narrow["x"] + narrow["width"] <= 390.5
+
+        widget_page.set_viewport_size({"width": 800, "height": 844})
+        expect(panel).to_have_css("width", saved_width or "380px")
+
     def test_close_hides_iframe(self, widget_page: Page) -> None:
         """Calling AgentRed.close() sets iframe opacity to 0."""
         widget_page.evaluate("window.AgentRed.open()")
@@ -104,6 +153,137 @@ class TestWidgetLifecycle:
             "document.querySelectorAll('iframe[title=\"Agent Red Chat\"]').length"
         )
         assert iframe_count == 0, "Panel iframe should be removed after destroy()"
+
+
+@pytest.mark.parametrize("launcher_position", ["bottom-right", "bottom-left"])
+def test_resize_handle_tracks_left_edge_after_repositioning(
+    widget_page: Page, mock_config: dict, launcher_position: str,
+) -> None:
+    mock_config["widget_position"] = launcher_position
+    widget_page.reload()
+    widget_page.wait_for_function("window.AgentRed !== undefined")
+    widget_page.evaluate("window.AgentRed.open()")
+
+    panel = widget_page.locator('iframe[title="Agent Red Chat"]')
+    handle = widget_page.locator(".ar-panel-resize-handle")
+    header = widget_page.frame_locator('iframe[title="Agent Red Chat"]').locator("#ar-panel-heading")
+
+    def bounds(locator):
+        rect = locator.bounding_box()
+        assert rect is not None
+        return rect
+
+    def assert_handle_alignment():
+        panel_bounds = bounds(panel)
+        handle_bounds = bounds(handle)
+        for axis in ("x", "y", "height"):
+            assert handle_bounds[axis] == pytest.approx(panel_bounds[axis], abs=0.5)
+
+    widget_page.wait_for_function("""
+        () => {
+          const panel = document.querySelector('iframe[title="Agent Red Chat"]');
+          return panel?.style.opacity === '1' && panel.getAnimations().length === 0;
+        }
+    """)
+    assert_handle_alignment()
+
+    original = bounds(panel)
+    title = bounds(header)
+    start_x = title["x"] + 10
+    start_y = title["y"] + title["height"] / 2
+    drag_x = -180 if launcher_position == "bottom-right" else 180
+    widget_page.mouse.move(start_x, start_y)
+    widget_page.mouse.down()
+    widget_page.wait_for_function("""
+        document.querySelector('iframe[title="Agent Red Chat"]').style.transition === 'none'
+    """)
+    widget_page.evaluate(
+        """([x, y]) => {
+          document.dispatchEvent(new MouseEvent('mousemove', { clientX: x, clientY: y, buttons: 1 }));
+          document.dispatchEvent(new MouseEvent('mouseup', { clientX: x, clientY: y }));
+        }""",
+        [start_x + drag_x, start_y - 24],
+    )
+    widget_page.mouse.up()
+    moved = bounds(panel)
+    assert abs(moved["x"] - original["x"]) > 100
+    assert moved["y"] != original["y"]
+    assert_handle_alignment()
+
+    for delta in (-64, 48):
+        before = bounds(panel)
+        grip = bounds(handle)
+        start_x = grip["x"] + grip["width"] / 2
+        start_y = grip["y"] + grip["height"] / 2
+        widget_page.mouse.move(start_x, start_y)
+        widget_page.mouse.down()
+        widget_page.mouse.move(start_x + delta, start_y, steps=5)
+        widget_page.mouse.up()
+        after = bounds(panel)
+        assert after["x"] == pytest.approx(before["x"] + delta, abs=1)
+        assert after["x"] + after["width"] == pytest.approx(before["x"] + before["width"], abs=1)
+        assert_handle_alignment()
+
+    widget_page.reload()
+    widget_page.wait_for_function("window.AgentRed !== undefined")
+    widget_page.evaluate("window.AgentRed.open()")
+    widget_page.wait_for_function("""
+        () => {
+          const panel = document.querySelector('iframe[title="Agent Red Chat"]');
+          return panel?.style.opacity === '1' && panel.getAnimations().length === 0;
+        }
+    """)
+    assert_handle_alignment()
+    assert bounds(panel) == pytest.approx(after, abs=1)
+    widget_page.evaluate("window.AgentRed.hide()")
+    expect(handle).to_be_hidden()
+    widget_page.evaluate("window.AgentRed.show()")
+    assert_handle_alignment()
+    widget_page.evaluate("window.AgentRed.destroy()")
+    expect(handle).to_have_count(0)
+
+
+@pytest.mark.parametrize("mode", ["light", "dark"])
+def test_close_button_colors_on_open_reopen_and_keyboard_focus(
+    widget_page: Page, mock_config: dict, mode: str,
+) -> None:
+    mock_config["widget_color_mode"] = mode
+    widget_page.reload()
+    widget_page.wait_for_function("window.AgentRed !== undefined")
+
+    panel_element = widget_page.locator('iframe[title="Agent Red Chat"]')
+    panel = widget_page.frame_locator('iframe[title="Agent Red Chat"]')
+    dialog = panel.get_by_role("dialog")
+    close = panel.get_by_role("button", name="Close chat")
+    open_button = widget_page.get_by_role("button", name="Open Widget", exact=True)
+
+    for keyboard in (False, True):
+        if keyboard:
+            widget_page.mouse.move(0, 0)
+            open_button.press("Enter")
+        else:
+            open_button.click()
+        expect(panel_element).to_have_css("opacity", "1")
+        expect(dialog).to_be_focused()
+        expect(close).to_have_css("background-color", "rgba(0, 0, 0, 0)")
+        expect(close).to_have_css("color", "rgb(255, 255, 255)")
+
+        if keyboard:
+            widget_page.keyboard.press("Tab")
+            expect(close).to_be_focused()
+            expect(close).to_have_css("outline-style", "solid")
+            expect(close).to_have_css("background-color", "rgba(0, 0, 0, 0)")
+            widget_page.keyboard.press("Escape")
+        else:
+            close.hover()
+            expect(close).to_have_css("color", "rgb(255, 255, 255)")
+            expect(close).to_have_css("background-color", "rgba(28, 25, 23, 0.22)")
+            expect(close).to_have_css("border-top-color", "rgb(255, 255, 255)")
+            widget_page.mouse.down()
+            expect(close).to_have_css("color", "rgb(255, 255, 255)")
+            expect(close).to_have_css("background-color", "rgba(28, 25, 23, 0.34)")
+            widget_page.mouse.up()
+        expect(panel_element).to_have_css("opacity", "0")
 
 
 # ===========================================================================
@@ -177,7 +357,7 @@ class TestPanelHeaderCustomConfig:
             body=json.dumps({"conversation_id": "test-conv-custom"}),
         ))
 
-        page.goto("http://localhost:3100/dev.html", wait_until="domcontentloaded")
+        page.goto(f"http://localhost:{VITE_PORT}/dev.html", wait_until="domcontentloaded")
         page.wait_for_function("!!window.AgentRed", timeout=10_000)
         page.evaluate("window.AgentRed.open()")
         page.wait_for_selector('iframe[title="Agent Red Chat"]', timeout=5_000)

@@ -109,20 +109,16 @@ class TestMockTwoFaChallenge:
             timeout=15_000
         )
 
-        # Invalid code first — aria-label is "Verify code"
+        # The final digit auto-submits the invalid code.
         fill_mantine_pin(page, "000000")
-        page.get_by_role("button", name="Verify code").click()
         expect(page.get_by_text(re.compile(r"Invalid code", re.I))).to_be_visible(timeout=10_000)
         assert len(totp_posts) >= 1
 
-        # Clear pin inputs then enter valid TOTP (onComplete may auto-submit)
+        # Clear the inputs, then let the final digit auto-submit the valid code.
         pin_inputs = page.locator(".mantine-PinInput-input")
         for i in range(min(pin_inputs.count(), 6)):
             pin_inputs.nth(i).fill("")
         fill_mantine_pin(page, "123456")
-        verify = page.get_by_role("button", name="Verify code")
-        if verify.count() and verify.first.is_visible():
-            verify.first.click()
 
         page.wait_for_selector("text=Dashboard", timeout=20_000)
         dismiss_onboarding_if_present(page)
@@ -145,7 +141,7 @@ class TestMockRoleGating:
 
         set_whoami_role(page, mock_base_url, role=role, email=email)
         # Reload so layout re-fetches whoami with the new role (auth already in sessionStorage
-        # from the UI login above — not init-script injection).
+        # from the UI login above).
         page.reload(wait_until="networkidle")
         page.wait_for_selector("text=Dashboard", timeout=15_000)
         dismiss_onboarding_if_present(page)

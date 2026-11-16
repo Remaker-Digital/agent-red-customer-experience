@@ -42,7 +42,7 @@ business days of receiving the return. Final sale items are not eligible
 for return. Customer pays return shipping unless the item is defective.
 ```
 
-**Tip:** Write your policy as a set of clear, factual statements. Avoid marketing language. The AI will rephrase these facts in your brand voice when responding to customers — you do not need to write the policy in a conversational tone.
+**Tip:** Write your policy as a set of clear, factual statements. Avoid marketing language. The AI will rephrase these facts in your brand voice when responding to customers: you do not need to write the policy in a conversational tone.
 
 ---
 
@@ -93,7 +93,7 @@ Your human support team's business hours. The AI uses this to inform customers w
 
 ## Additional policies
 
-A catch-all field for any business rules not covered above — loyalty programs, price matching, gift cards, custom orders, age verification, or anything else the AI should know.
+A catch-all field for any business rules not covered above: loyalty programs, price matching, gift cards, custom orders, age verification, or anything else the AI should know.
 
 **Tips for writing effective policy text:**
 - One policy per paragraph. Do not mix return and shipping rules in the same block.
@@ -114,9 +114,9 @@ A common mistake is writing the same policy information in both the policy field
 - Use the policy fields (in the Policy overrides section of the Knowledge Base page) for canonical policy text. This is the authoritative source.
 - Knowledge base articles should reference or supplement policies, not duplicate them.
 - If you have a detailed shipping FAQ ("How long does shipping take to Hawaii?"), put that in a knowledge base article and put the general shipping policy in the Shipping information field.
-- The AI will combine both sources when answering — the policy provides the rules, and the FAQ article provides the specific detail.
+- The AI will combine both sources when answering: the policy provides the rules, and the FAQ article provides the specific detail.
 
-See [Knowledge base management — Avoiding duplication](./knowledge-base-management.md#avoiding-duplication) for more guidance.
+See [Knowledge base management: Avoiding duplication](./knowledge-base-management.md#avoiding-duplication) for more guidance.
 
 ---
 

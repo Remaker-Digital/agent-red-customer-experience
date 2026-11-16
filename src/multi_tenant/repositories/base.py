@@ -27,10 +27,28 @@ from azure.cosmos.exceptions import (
 from pydantic import BaseModel
 
 from src.multi_tenant.cosmos_client import get_cosmos_manager
+from src.multi_tenant.log_safety import loggable
 
 logger = logging.getLogger(__name__)
 
 T = TypeVar("T", bound=BaseModel)
+
+
+def _log_document_id(document_id: str) -> str:
+    """Mask an id that contains an email so the address is not logged."""
+    if "@" not in document_id:
+        return document_id
+    pieces: list[str] = []
+    for piece in document_id.split(":"):
+        if "@" not in piece:
+            pieces.append(piece)
+            continue
+        at = piece.find("@")
+        if at < 1:
+            pieces.append("***")
+        else:
+            pieces.append(piece[0] + "***" + piece[at:])
+    return ":".join(pieces)
 
 
 # ---------------------------------------------------------------------------
@@ -88,9 +106,10 @@ async def _fetch_tenant_dek(tenant_id: str) -> _DekCacheEntry | None:
     if svc is None:
         return None
 
-    # Get the TenantSecretService singleton (initialized at startup)
+    # A service that was never opened has no vault. That is the same as no
+    # DEK. An opened client that then fails still raises below.
     secret_svc = get_secret_service()
-    if secret_svc is None:
+    if secret_svc is None or not getattr(secret_svc, "_initialized", False):
         return None
 
     # Retrieve wrapped DEK (base64-encoded string in KV)
@@ -129,6 +148,18 @@ class DocumentNotFoundError(Exception):
 
 class DocumentConflictError(Exception):
     """Raised when a create would conflict with an existing document."""
+
+
+class TenantDekUnavailableError(Exception):
+    """Key Vault could not supply this tenant's DEK.
+
+    A tenant with no DEK is not this error. Callers still pass plaintext
+    through when no DEK exists.
+    """
+
+    def __init__(self, tenant_id: str) -> None:
+        self.tenant_id = tenant_id
+        super().__init__(f"DEK unavailable for tenant={tenant_id}")
 
 
 class EncryptedFieldPatchError(Exception):
@@ -216,6 +247,45 @@ class TenantScopedRepository:
             return item
         return await self._post_read(dict(item), tenant_id)
 
+    async def _take_list_row(
+        self,
+        item: dict[str, Any],
+        tenant_id: str,
+    ) -> dict[str, Any] | None:
+        """Decrypt one listed row. A failure leaves that row out.
+
+        The log names the collection, document and tenant. It does not
+        include the field value.
+        """
+        try:
+            return await self._decrypt_copy(item, tenant_id)
+        except TenantDekUnavailableError:
+            raise
+        except Exception:
+            document_id = item.get("id", "") if isinstance(item, dict) else ""
+            logger.warning(
+                "Could not decrypt %s/%s for tenant=%s. The row was left out.",
+                self._collection_name,
+                _log_document_id(str(document_id)),
+                tenant_id,
+            )
+            return None
+
+    async def _take_listed_row(
+        self,
+        item: dict[str, Any],
+        tenant_id: str,
+    ) -> dict[str, Any] | None:
+        """List helper. A DEK outage leaves the row out instead of failing the list."""
+        try:
+            return await self._take_list_row(item, tenant_id)
+        except TenantDekUnavailableError:
+            logger.warning(
+                "DEK unavailable for tenant=%s. The row was left out.",
+                tenant_id,
+            )
+            return None
+
     async def _pre_write(self, body: dict[str, Any], tenant_id: str) -> dict[str, Any]:
         """Encrypt sensitive fields before Cosmos DB write.
 
@@ -256,8 +326,11 @@ class TenantScopedRepository:
         strings are decrypted; plaintext passes through unchanged.
 
         No-op if encryption service is not initialized or no fields declared.
+        A row that contains none of the encrypted fields does not need the key.
         """
         if not self._encryption_fields:
+            return body
+        if not any(field in body for field in self._encryption_fields):
             return body
         from src.multi_tenant.envelope_encryption import get_envelope_encryption_service
         svc = get_envelope_encryption_service()
@@ -285,7 +358,9 @@ class TenantScopedRepository:
                     continue
             except Exception:
                 continue
-            # Looks like ciphertext — decrypt it
+            # A failed decrypt raises. Callers that list rows catch it.
+            # A point read must not return ciphertext that a later write
+            # would encrypt again.
             plaintext = svc.decrypt_field(
                 entry.wrapped_dek, value,
                 tenant_id=tenant_id, doc_id=doc_id,
@@ -319,16 +394,18 @@ class TenantScopedRepository:
             if entry is not None:
                 del _dek_cache[tenant_id]
 
-            # Fetch from Key Vault
+            # Fetch from Key Vault. A failure is not cached and is not
+            # treated as "no DEK", which would write plaintext or encrypt
+            # ciphertext again.
             try:
                 new_entry = await _fetch_tenant_dek(tenant_id)
-            except Exception:
+            except Exception as exc:
                 logger.warning(
-                    "Failed to fetch DEK for tenant %s — encryption inactive",
-                    tenant_id,
+                    "Failed to fetch DEK for tenant %s",
+                    loggable(tenant_id),
                     exc_info=True,
                 )
-                return None
+                raise TenantDekUnavailableError(tenant_id) from exc
 
             if new_entry is None:
                 return None
@@ -608,6 +685,8 @@ class TenantScopedRepository:
         query_text: str,
         parameters: list[dict[str, Any]] | None = None,
         max_items: int | None = None,
+        *,
+        require_decryption: bool = False,
     ) -> list[dict[str, Any]]:
         """Execute a SQL query scoped to a single tenant partition.
 
@@ -620,6 +699,7 @@ class TenantScopedRepository:
             parameters: Query parameters, e.g.:
                 [{"name": "@status", "value": "active"}]
             max_items: Maximum number of items to return.
+            require_decryption: Propagate errors for authoritative reads.
 
         Returns:
             List of matching documents.
@@ -652,8 +732,14 @@ class TenantScopedRepository:
                     self._collection_name, item_tenant, tenant_id,
                 )
                 continue
-            # SPEC-1843: decrypt sensitive fields after read
-            item = await self._post_read(item, tenant_id)
+            # SPEC-1843: decrypt sensitive fields after read.
+            # Ordinary lists can omit a bad row. Authoritative reads need the error.
+            row = await (
+                self._decrypt_copy(item, tenant_id) if require_decryption else self._take_list_row(item, tenant_id)
+            )
+            if row is None:
+                continue
+            item = row
             items.append(item)
             if max_items and len(items) >= max_items:
                 break
@@ -691,7 +777,9 @@ class TenantScopedRepository:
             if isinstance(item, dict):
                 row_tenant = item.get("tenant_id")
                 if isinstance(row_tenant, str) and row_tenant:
-                    item = await self._decrypt_copy(item, row_tenant)
+                    item = await self._take_listed_row(item, row_tenant)
+                    if item is None:
+                        continue
             items.append(item)
             if max_items and len(items) >= max_items:
                 break
@@ -703,6 +791,8 @@ class TenantScopedRepository:
         tenant_id: str,
         query_text: str,
         parameters: list[dict[str, Any]] | None = None,
+        *,
+        strict: bool = False,
     ) -> int:
         """Execute a COUNT query scoped to a single tenant partition.
 
@@ -711,6 +801,7 @@ class TenantScopedRepository:
             query_text: SQL query returning a count, e.g.:
                 "SELECT VALUE COUNT(1) FROM c WHERE c.is_billable = true"
             parameters: Query parameters.
+            strict: Require exactly one nonnegative integer result.
 
         Returns:
             The count result.
@@ -724,7 +815,15 @@ class TenantScopedRepository:
         if parameters:
             kwargs["parameters"] = parameters
 
+        count = None
         async for item in self._container.query_items(**kwargs):
-            return item  # COUNT queries return a single scalar
+            if not strict:
+                return item  # COUNT queries return a single scalar
+            if count is not None or type(item) is not int or item < 0:
+                raise ValueError("COUNT query did not return exactly one nonnegative integer")
+            count = item
 
-        return 0
+        if strict and count is None:
+            raise ValueError("COUNT query returned no result")
+
+        return 0 if count is None else count

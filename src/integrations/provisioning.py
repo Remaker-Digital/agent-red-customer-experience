@@ -50,6 +50,7 @@ from src.multi_tenant.cosmos_schema import (  # noqa: F401  — re-export
     BillingChannel,
     TenantStatus,
 )
+from src.multi_tenant.log_safety import loggable
 
 logger = logging.getLogger(__name__)
 
@@ -269,10 +270,24 @@ def _require_superadmin_contact(
     return normalized_email, normalized_phone
 
 
-async def _generate_display_name(contact: str) -> str:
-    """Generate a unique display_name from a contact address (SPEC-1881).
+async def _tenant_display_name(merchant_name: str | None, tenant_id: str) -> str:
+    """The display_name for a new tenant. Never the owner's email or phone (decision 93).
 
-    Format: {contact}-001, incrementing ordinal if the name already exists.
+    display_name is not encrypted and is the escalation email's store name
+    when nothing else is set, so it must not hold a contact. A merchant name
+    gets the SPEC-1881 ordinal ("Acme-001"). Without one, or when the name is
+    an email address, it is "Tenant <first 8 characters of the tenant id>".
+    """
+    name = (merchant_name or "").strip()
+    if name and "@" not in name:
+        return await _generate_display_name(name)
+    return f"Tenant {tenant_id[:8]}"
+
+
+async def _generate_display_name(contact: str) -> str:
+    """Generate a unique display_name from a merchant name (SPEC-1881).
+
+    Format: {name}-001, incrementing ordinal if the name already exists.
     Requires a cross-partition query to check uniqueness.
     """
     if not contact:
@@ -352,6 +367,11 @@ _DEK_NOT_STORED = (
     "Encryption key was not stored. Tenant data stays unencrypted until the key is stored."
 )
 
+_LOOKUP_KEY_NOT_STORED = (
+    "Owner email lookup key is not stored. The owner email is encrypted without its lookup hash, "
+    "so email-based API key reset cannot find this tenant until the key is stored."
+)
+
 
 async def _provision_tenant_dek(tenant_id: str) -> str | None:
     """Create and store a per-tenant DEK for envelope encryption.
@@ -399,6 +419,30 @@ async def _provision_tenant_dek(tenant_id: str) -> str | None:
         return _DEK_NOT_STORED
 
 
+async def _owner_email_lookup_warning(customer_email: str | None, dek_warning: str | None) -> str | None:
+    """A warning when the owner email was stored encrypted without its lookup hash.
+
+    That happens when the tenant's DEK is stored but customer-email-lookup-key
+    is not. find_by_customer_email then cannot match the ciphertext, so the
+    email-based API key reset does not find the tenant. The tenant is still
+    created and the email stays encrypted. A key that cannot be read already
+    failed the tenant write, so it is not handled here.
+    """
+    if dek_warning or not customer_email or "@" not in customer_email:
+        return None
+    from src.multi_tenant.envelope_encryption import get_envelope_encryption_service
+    from src.multi_tenant.repositories.tenant import customer_email_lookup_hash
+
+    if get_envelope_encryption_service() is None:
+        return None
+    if await customer_email_lookup_hash(customer_email) is not None:
+        return None
+    logger.warning(
+        "Owner email lookup key is not stored. Email-based API key reset cannot find this tenant."
+    )
+    return _LOOKUP_KEY_NOT_STORED
+
+
 # ---------------------------------------------------------------------------
 # Core provisioning logic (all async — callers must await)
 # ---------------------------------------------------------------------------
@@ -415,6 +459,7 @@ async def provision_tenant(
     shopify_subscription_id: str | None = None,
     customer_email: str | None = None,
     customer_phone: str | None = None,
+    merchant_name: str | None = None,
 ) -> TenantRecord:
     """Provision a new tenant after checkout completion.
 
@@ -536,8 +581,8 @@ async def provision_tenant(
     # Create new tenant
     tenant_id = str(uuid.uuid4())
 
-    # SPEC-1881: Generate unique display_name from contact address
-    display_name = await _generate_display_name(customer_email or customer_phone or "")
+    # SPEC-1881 / decision 93: from the merchant name, never from the contact.
+    display_name = await _tenant_display_name(merchant_name, tenant_id)
 
     from src.multi_tenant.cosmos_schema import TenantDocument
 
@@ -560,7 +605,15 @@ async def provision_tenant(
         updated_at=now_iso,
     )
 
+    # SPEC-1843 / WI-1628: Create the per-tenant DEK before the tenant
+    # document is written. The repository encrypts customer_email,
+    # brand_name and shopify_shop_domain on write only when the DEK
+    # exists, and nothing encrypts them later. A failed store is reported.
+    # Tenant creation still succeeds.
+    dek_warning = await _provision_tenant_dek(tenant_id)
+
     await _tenant_repo.upsert(tenant_id, doc)
+    lookup_warning = await _owner_email_lookup_warning(customer_email, dek_warning)
 
     # SPEC-1644: Write domain index entries for O(1) lookups
     if _domain_index_repo:
@@ -568,10 +621,6 @@ async def provision_tenant(
             await _domain_index_repo.upsert(shopify_shop_domain, tenant_id, "shopify")
         if stripe_customer_id:
             await _domain_index_repo.upsert(stripe_customer_id, tenant_id, "stripe")
-
-    # SPEC-1843 / WI-1628: Create per-tenant DEK for envelope encryption.
-    # A failed store is reported. Tenant creation still succeeds.
-    dek_warning = await _provision_tenant_dek(tenant_id)
 
     logger.info(
         "Tenant provisioned: tenant=%s channel=%s tier=%s email=%s",
@@ -596,7 +645,7 @@ async def provision_tenant(
         customer_phone=customer_phone,
         created_at=now_iso,
         updated_at=now_iso,
-        warnings=[dek_warning] if dek_warning else [],
+        warnings=[warning for warning in (dek_warning, lookup_warning) if warning],
     )
 
 
@@ -626,7 +675,12 @@ async def auto_provision_superadmin(
         from src.multi_tenant.repository import TeamMemberRepository
 
         repo = TeamMemberRepository()
-        member_id = f"{tenant_id}:{customer_email}"
+        existing = await repo.find_by_email(tenant_id, customer_email)
+        if existing is not None:
+            logger.info("Superadmin already exists: tenant=%s", tenant_id[:8])
+            return None
+        canonical_email = customer_email.strip().lower()
+        member_id = f"{tenant_id}:{canonical_email}"
         raw_key = generate_user_api_key(tenant_id)
         key_hash = hash_api_key(raw_key)
         key_prefix = raw_key[:12] + "..."
@@ -636,7 +690,7 @@ async def auto_provision_superadmin(
         doc = TeamMemberDocument(
             id=member_id,
             tenant_id=tenant_id,
-            email=customer_email,
+            email=canonical_email,
             display_name="Owner",
             role=TeamMemberRole.SUPERADMIN,
             is_active=True,
@@ -652,8 +706,8 @@ async def auto_provision_superadmin(
         await repo.create(tenant_id, doc)
         logger.info(
             "Superadmin auto-provisioned: tenant=%s email=%s prefix=%s",
-            tenant_id[:8],
-            customer_email,
+            loggable(tenant_id[:8]),
+            loggable(canonical_email),
             key_prefix,
         )
         return raw_key
@@ -993,6 +1047,7 @@ async def spa_provision_tenant(
     # Step 1: Create tenant (PROVISIONING status)
     record = await provision_tenant(
         billing_channel=BillingChannel.MANUAL,
+        merchant_name=merchant_name,
         tier=tier,
         customer_email=superadmin_email,
     )
@@ -1120,7 +1175,12 @@ async def provision_trial_tenant(
         updated_at=now_iso,
     )
 
+    # The DEK comes first, as in provision_tenant, so the owner email is
+    # stored encrypted. A failed store is reported in warnings.
+    dek_warning = await _provision_tenant_dek(tenant_id)
+
     await _tenant_repo.upsert(tenant_id, doc)
+    lookup_warning = await _owner_email_lookup_warning(customer_email, dek_warning)
 
     logger.info(
         "Trial tenant provisioned: tenant=%s email=%s duration=%dd limit=%d",
@@ -1156,6 +1216,7 @@ async def provision_trial_tenant(
         created_at=now_iso,
         updated_at=now_iso,
         widget_key=widget_key,
+        warnings=[warning for warning in (dek_warning, lookup_warning) if warning],
     )
 
 
@@ -1224,6 +1285,64 @@ async def _validate_api_key_for_tenant(
     except Exception as exc:
         logger.warning("API key validation failed for tenant=%s: %s", tenant_id, exc)
         raise _KeyStoreUnavailable from exc
+
+
+async def _validate_session_for_tenant(
+    tenant_id: str,
+    session_token: str,
+) -> dict[str, Any] | None:
+    """Validate a magic-link session against a known tenant (F45).
+
+    The standalone admin sends ``X-Session-Token`` after a magic link or a
+    six-digit code. The session must be valid and signed for ``tenant_id``,
+    so a session never answers for another tenant. A member session is
+    checked against the member document, as the authentication middleware
+    does, and its role is the lower of the signed and the current role.
+
+    Returns the tenant document with ``_team_member`` fields, or None when the
+    session is not valid for this tenant. Raises ``_KeyStoreUnavailable`` when
+    the store cannot answer.
+    """
+    from src.multi_tenant.magic_link_auth import verify_magic_link_session_token
+    from src.multi_tenant.middleware import AuthenticationError, TenantAuthMiddleware
+    from src.multi_tenant.repositories import DocumentNotFoundError
+
+    payload = verify_magic_link_session_token(session_token)
+    if payload is None or payload.get("sub") != tenant_id:
+        return None
+
+    if _tenant_repo is None:
+        raise _KeyStoreUnavailable
+    try:
+        tenant_doc = await _tenant_repo.read(tenant_id, tenant_id)
+    except DocumentNotFoundError:
+        return None
+    except Exception as exc:
+        logger.warning("Session validation failed for tenant=%s: %s", tenant_id, type(exc).__name__)
+        raise _KeyStoreUnavailable from exc
+    if not tenant_doc:
+        return None
+
+    member_id = payload.get("member_id")
+    try:
+        role, *_rest = await TenantAuthMiddleware._resolve_session_member(
+            tenant_id,
+            member_id,
+            payload.get("role"),
+        )
+    except AuthenticationError as exc:
+        if exc.status_code == 503:
+            raise _KeyStoreUnavailable from exc
+        return None
+
+    if member_id:
+        role_value = getattr(role, "value", role)
+    else:
+        role_value = "admin"  # Tenant owner session, as the tenant API key
+    return {
+        **tenant_doc,
+        "_team_member": {"role": role_value, "email": payload.get("email"), "id": member_id},
+    }
 
 
 async def _read_brand_name(tenant_id: str) -> str | None:
@@ -1326,7 +1445,7 @@ async def lookup_tenant_endpoint(
         "Returns user info on success, 401 on failure with no tenant info."
     ),
     responses={
-        400: {"description": "Missing tenant or API key"},
+        400: {"description": "Missing tenant, API key or session token"},
         401: {"description": "Invalid API key for this tenant"},
         429: {"description": "Too many failed attempts from this client"},
         503: {"description": "The key store is temporarily unavailable"},
@@ -1356,12 +1475,18 @@ async def validate_key_endpoint(
             headers={"Retry-After": str(AUTH_BLOCK_DURATION_SECONDS)},
         )
 
+    # The API key wins when both are sent. A magic-link session (F45) is the
+    # standalone admin's credential after a magic link or a six-digit code.
     api_key = request.headers.get("X-API-Key", "").strip()
-    if not api_key:
-        raise HTTPException(status_code=400, detail="X-API-Key header is required.")
+    session_token = request.headers.get("X-Session-Token", "").strip()
+    if not api_key and not session_token:
+        raise HTTPException(status_code=400, detail="X-API-Key or X-Session-Token header is required.")
 
     try:
-        doc = await _validate_api_key_for_tenant(body.tenant, api_key)
+        if api_key:
+            doc = await _validate_api_key_for_tenant(body.tenant, api_key)
+        else:
+            doc = await _validate_session_for_tenant(body.tenant, session_token)
     except _KeyStoreUnavailable:
         raise HTTPException(
             status_code=503, detail="Key validation is temporarily unavailable. Please try again."
@@ -1369,7 +1494,9 @@ async def validate_key_endpoint(
     if not doc:
         limiter.record_failure(client_ip)
         # SPEC-1644: reveal nothing about the key's actual tenant
-        raise HTTPException(status_code=401, detail="Invalid API key.")
+        if api_key:
+            raise HTTPException(status_code=401, detail="Invalid API key.")
+        raise HTTPException(status_code=401, detail="Invalid or expired session. Please sign in again.")
     limiter.record_success(client_ip)  # as the authentication middleware does
 
     tenant_id = doc.get("tenant_id") or doc.get("id")

@@ -167,8 +167,7 @@ class TestTrialConversationCap:
             "trial_conversation_limit": 50,
         })
 
-        # Mock conversation query returns count of 10 (SELECT VALUE COUNT(1))
-        repos["conversation_repo"].query = AsyncMock(return_value=[10])
+        repos["conversation_repo"].query_count = AsyncMock(return_value=10)
 
         allowed, status = await service.enforce_trial_cap("t-trial-001")
         assert allowed is True
@@ -191,8 +190,7 @@ class TestTrialConversationCap:
             "trial_conversation_limit": 50,
         })
 
-        # 50 conversations used = limit reached (SELECT VALUE COUNT(1))
-        repos["conversation_repo"].query = AsyncMock(return_value=[50])
+        repos["conversation_repo"].query_count = AsyncMock(return_value=50)
 
         allowed, status = await service.enforce_trial_cap("t-trial-001")
         assert allowed is False

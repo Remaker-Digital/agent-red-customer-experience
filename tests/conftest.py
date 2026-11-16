@@ -17,6 +17,7 @@ Work Item #103 (Test Infrastructure).
 from __future__ import annotations
 
 import atexit
+import copy
 import hashlib
 import os
 import shutil
@@ -315,10 +316,14 @@ class MockContainerProxy:
         return body
 
     async def replace_item(self, item: str, body: dict[str, Any], **kwargs: Any) -> dict[str, Any]:
-        """Replace an existing item by ID (used by read-modify-write patterns)."""
+        """Replace an existing item by ID (used by read-modify-write patterns).
+
+        Returns a copy, as Cosmos returns a new document: a caller that
+        decrypts the result must not change what is stored.
+        """
         self.items = [doc for doc in self.items if doc.get("id") != (body.get("id") or item)]
         self.items.append(body)
-        return body
+        return copy.deepcopy(body)
 
     async def read_item(self, item: str, partition_key: str, **kwargs: Any) -> dict[str, Any]:
         for doc in self.items:
@@ -483,7 +488,9 @@ def mock_keyvault() -> MagicMock:
     kv_mock.close = AsyncMock()
     kv_mock.health_check = AsyncMock(return_value={"status": "healthy", "detail": "Mock Key Vault"})
 
-    async def _store_secret(tenant_id: str, secret_type: Any, value: str) -> None:
+    async def _store_secret(
+        tenant_id: str, secret_type: Any, value: str, *, tags: dict[str, str] | None = None
+    ) -> None:
         kv_store[f"tenant-{tenant_id}-{secret_type.value}"] = value
 
     async def _get_secret(tenant_id: str, secret_type: Any) -> str | None:
@@ -492,9 +499,17 @@ def mock_keyvault() -> MagicMock:
     async def _delete_secret(tenant_id: str, secret_type: Any) -> None:
         kv_store.pop(f"tenant-{tenant_id}-{secret_type.value}", None)
 
+    async def _get_secret_raw(name: str) -> str | None:
+        return kv_store.get(name)
+
+    async def _set_secret_raw(name: str, value: str) -> None:
+        kv_store[name] = value
+
     kv_mock.store_secret = AsyncMock(side_effect=_store_secret)
     kv_mock.get_secret = AsyncMock(side_effect=_get_secret)
     kv_mock.delete_secret = AsyncMock(side_effect=_delete_secret)
+    kv_mock.get_secret_raw = AsyncMock(side_effect=_get_secret_raw)
+    kv_mock.set_secret_raw = AsyncMock(side_effect=_set_secret_raw)
     kv_mock._store = kv_store  # Expose for test assertions
 
     with patch.object(_secret_service_mod, "_service", kv_mock):

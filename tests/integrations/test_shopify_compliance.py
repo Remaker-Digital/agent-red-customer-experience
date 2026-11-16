@@ -211,7 +211,7 @@ class TestGDPRWebhookURLs:
             "shopify.app.toml should not contain localhost URLs for GDPR webhooks"
 
         # Verify a real FQDN is used (production or staging)
-        assert "agent-red-api-gateway" in content or "agent-red-staging" in content or "agentred" in content, \
+        assert "agent-red-api-gateway" in content or "example-gateway-stage" in content or "agentred" in content, \
             "shopify.app.toml should reference the API Gateway (production or staging)"
 
     def test_shopify_app_toml_has_all_gdpr_endpoints(self):

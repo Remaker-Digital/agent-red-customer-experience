@@ -21,7 +21,7 @@ Configuration:
 - Remote defaults tuned for 307 ops within 30min timeout
 
 Usage (staging — via test host container):
-    FUZZ_TARGET_URL=https://agent-red-staging.xxx.eastus.azurecontainerapps.io \
+    FUZZ_TARGET_URL=https://example-gateway-stage.xxx.eastus.azurecontainerapps.io \
     FUZZ_API_KEY=ar_spa_plat_xxx \
     pytest tests/fuzzing/test_api_fuzz.py -v --timeout=600
 

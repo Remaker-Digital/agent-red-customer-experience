@@ -9,7 +9,6 @@ the details as context summary.
 
 from __future__ import annotations
 
-import asyncio
 from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
@@ -60,16 +59,15 @@ class TestIssueReportEscalationWiring:
             "Escalation context_summary must include issue details"
         )
 
-    def test_escalation_is_fire_and_forget(self):
-        """Escalation call uses asyncio.ensure_future (non-blocking)."""
+    def test_the_response_wait_for_escalation_has_a_time_limit(self):
+        """A slow notification attempt cannot delay the response indefinitely."""
         from pathlib import Path
 
         src = Path("src/chat/endpoints.py").read_text(encoding="utf-8")
         idx = src.find("async def report_issue(")
         body = src[idx:idx + 5000]
-        assert "ensure_future" in body, (
-            "Escalation must be fire-and-forget via ensure_future"
-        )
+        assert "asyncio.wait(" in body
+        assert "timeout=" in body
 
 
 # ---------------------------------------------------------------------------
@@ -87,7 +85,7 @@ class TestIssueReportEscalation:
 
         mock_session = MagicMock()
         mock_session.get_conversation = AsyncMock(return_value=MagicMock())
-        mock_session.conversation_repo = None
+        mock_session.conversation_repo = MagicMock(append_message=AsyncMock())
 
         mock_ctx = MagicMock()
         mock_ctx.tenant_id = "test-tenant"
@@ -111,11 +109,10 @@ class TestIssueReportEscalation:
                 request=request,
                 ctx=mock_ctx,
             )
-            # Let the fire-and-forget task run
-            await asyncio.sleep(0.1)
 
         assert result.accepted is True
-        assert mock_esc.called or len(captured_calls) > 0
+        mock_esc.assert_awaited_once()
+        assert len(captured_calls) == 1
 
     @pytest.mark.asyncio
     async def test_escalation_reason_includes_issue_type(self):
@@ -124,7 +121,7 @@ class TestIssueReportEscalation:
 
         mock_session = MagicMock()
         mock_session.get_conversation = AsyncMock(return_value=MagicMock())
-        mock_session.conversation_repo = None
+        mock_session.conversation_repo = MagicMock(append_message=AsyncMock())
 
         mock_ctx = MagicMock()
         mock_ctx.tenant_id = "test-tenant"
@@ -143,7 +140,6 @@ class TestIssueReportEscalation:
              patch("src.multi_tenant.alert_delivery.send_escalation_alert", side_effect=capture), \
              patch("src.multi_tenant.repository.AuditLogRepository"):
             await report_issue("conv-456", request, mock_ctx)
-            await asyncio.sleep(0.1)
 
         assert "Rude Response" in escalation_kwargs.get("reason", ""), (
             f"Reason should contain human-readable issue type, got: {escalation_kwargs}"
@@ -156,7 +152,7 @@ class TestIssueReportEscalation:
 
         mock_session = MagicMock()
         mock_session.get_conversation = AsyncMock(return_value=MagicMock())
-        mock_session.conversation_repo = None
+        mock_session.conversation_repo = MagicMock(append_message=AsyncMock())
 
         mock_ctx = MagicMock()
         mock_ctx.tenant_id = "test-tenant"
@@ -176,7 +172,6 @@ class TestIssueReportEscalation:
              patch("src.multi_tenant.alert_delivery.send_escalation_alert", side_effect=capture), \
              patch("src.multi_tenant.repository.AuditLogRepository"):
             await report_issue("conv-789", request, mock_ctx)
-            await asyncio.sleep(0.1)
 
         assert details_text in escalation_kwargs.get("context_summary", ""), (
             f"Context should include details, got: {escalation_kwargs}"
@@ -189,7 +184,7 @@ class TestIssueReportEscalation:
 
         mock_session = MagicMock()
         mock_session.get_conversation = AsyncMock(return_value=MagicMock())
-        mock_session.conversation_repo = None
+        mock_session.conversation_repo = MagicMock(append_message=AsyncMock())
 
         mock_ctx = MagicMock()
         mock_ctx.tenant_id = "test-tenant"
@@ -205,4 +200,5 @@ class TestIssueReportEscalation:
              patch("src.multi_tenant.repository.AuditLogRepository"):
             result = await report_issue("conv-fail", request, mock_ctx)
 
-        assert result.accepted is True, "Response must succeed even if escalation fails"
+        assert result.accepted is True
+        assert result.notification_delivered is False

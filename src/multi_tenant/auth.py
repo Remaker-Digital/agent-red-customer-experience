@@ -487,7 +487,7 @@ def generate_spa_api_key() -> str:
     """Generate a new SPA platform admin API key.
 
     Format: ar_spa_plat_{random}
-    Example: ar_spa_plat_yZR6wMzdVDlVJhbdRPW1Vh01TkytKcQ3
+    Example: YOUR_SPA_SESSION_TOKEN
 
     Unlike tenant user keys (ar_user_{tenant_prefix}_{random}), SPA keys
     have NO tenant prefix because the SPA has no tenant affiliation.
@@ -639,7 +639,7 @@ def generate_widget_key(tenant_id: str) -> str:
     """Generate a new publishable widget key.
 
     Format: pk_live_{tenant_hash}_{random}
-    Example: pk_live_000000000000_exampleplaceholderkeynotreal0000
+    Example: YOUR_PUBLIC_WIDGET_KEY
 
     The tenant hash prefix (first 12 hex chars of SHA-256) makes keys
     visually distinguishable per tenant. The random suffix (32 hex chars)
@@ -662,7 +662,7 @@ def validate_widget_key_format(key: str) -> bool:
     """Check that a widget key matches the expected format.
 
     Format: pk_live_{tenant_id_hash}_{random}
-    Example: pk_live_a7f3c9e1_x8k2m5p9
+    Example: YOUR_PUBLIC_WIDGET_KEY
 
     The key must start with the WIDGET_KEY_PREFIX and contain at least
     two underscore-separated segments after the prefix.

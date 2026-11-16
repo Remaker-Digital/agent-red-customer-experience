@@ -112,7 +112,7 @@ class TestLocalUIDevMode:
         assert env_file.exists()
         content = env_file.read_text()
         assert "VITE_API_URL" in content
-        assert "staging.example.com" in content  # Staging FQDN example
+        assert "example-platform" in content  # Staging FQDN
 
     def test_standalone_staging_env_exists(self):
         """Standalone admin .env.staging exists."""

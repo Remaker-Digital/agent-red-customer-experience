@@ -289,6 +289,19 @@ class TestPreviewPanelRemoved:
         """WidgetPreview is not rendered in the page template JSX."""
         assert "<WidgetPreview config={config}" not in self.source
 
+    def test_conversation_backgrounds_reach_the_draft_preview(self) -> None:
+        """The mounted widget previews both draft backgrounds, including cleared values."""
+        excluded = re.search(r"const COLOR_PREVIEW_KEYS = \[([^\]]+)\];", self.source)
+        assert excluded
+        assert set(re.findall(r"'([^']+)'", excluded[1])) == {
+            "widget_primary_color",
+            "widget_launcher_color",
+            "widget_header_gradient_end",
+        }
+        assert "widget_background_color: wc.backgroundColor || null" in self.source
+        assert "widget_dark_background_color: wc.darkBackgroundColor || null" in self.source
+        assert "sdk.setConfigPartial(fields)" in self.source
+
     def test_widget_preview_component_still_defined(self) -> None:
         """WidgetPreview function is still defined (may be used elsewhere)."""
         assert "function WidgetPreview(" in self.source

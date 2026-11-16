@@ -27,9 +27,9 @@ Annual billing saves 17% on platform fees.
 
 Billing follows a three-tier priority:
 
-1. **Included allowance** — Conversations are first consumed from your plan's monthly included allowance
-2. **Conversation packs** — After included allowance is exhausted, pre-purchased pack credits are consumed (FIFO order)
-3. **Overage** — Conversations beyond both included and pack balance are billed at your tier's overage rate
+1. **Included allowance**: Conversations are first consumed from your plan's monthly included allowance
+2. **Conversation packs**: After included allowance is exhausted, pre-purchased pack credits are consumed (FIFO order)
+3. **Overage**: Conversations beyond both included and pack balance are billed at your tier's overage rate
 
 See [Billable Conversation Spec](/docs/billing/billable-conversation-spec) for the exact definition of what counts as a billable conversation.
 
@@ -49,11 +49,11 @@ Packs are consumed in FIFO (first-in, first-out) order. Unused credits expire af
 
 The Billing page shows real-time usage for your current billing period:
 
-- **Conversations used** — Total billable conversations with a usage ring showing percentage of included allowance consumed
-- **Pack balance** — Remaining pre-purchased conversation credits
-- **Current overage** — Dollar amount of overage charges accrued this period
-- **Estimated overage cost** — Projected total overage cost based on current usage trends
-- **Daily usage chart** — 30-day view of total and billable conversations per day
+- **Conversations used**: Total billable conversations with a usage ring showing percentage of included allowance consumed
+- **Pack balance**: Remaining pre-purchased conversation credits
+- **Current overage**: Dollar amount of overage charges accrued this period
+- **Estimated overage cost**: Projected total overage cost based on current usage trends
+- **Daily usage chart**: 30-day view of total and billable conversations per day
 
 ## Add-On Modules
 

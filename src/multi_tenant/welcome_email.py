@@ -19,8 +19,11 @@ Call sites:
 
 from __future__ import annotations
 
+from html import escape
 import logging
 import os
+
+from src.multi_tenant.alert_delivery import email_action_template
 
 logger = logging.getLogger(__name__)
 
@@ -30,37 +33,33 @@ logger = logging.getLogger(__name__)
 # ---------------------------------------------------------------------------
 
 _WELCOME_EMAIL_BODY = """
-<h2 style="margin:0 0 16px;color:#111827;font-size:20px">Welcome to Agent Red</h2>
-<p style="color:#374151;font-size:14px;line-height:1.6;margin:0 0 24px">
+<h2 style="margin:0 0 16px;color:#fafaf9;font-size:20px">Welcome to Agent Red</h2>
+<p style="color:#f5f5f4;font-size:14px;line-height:1.6;margin:0 0 24px">
   Your account is ready. Click the button below to sign in to your admin dashboard.
 </p>
 
-<div style="background:#fff7ed;border:1px solid #fed7aa;padding:16px;margin:16px 0;text-align:center">
-  <p style="margin:0 0 12px;color:#9a3412;font-size:13px;font-weight:600">
+<div style="background:#422006;border:1px solid #a16207;border-radius:8px;padding:16px;margin:16px 0;text-align:center">
+  <p style="margin:0 0 12px;color:#fed7aa;font-size:13px;font-weight:600">
     Your Admin Dashboard
   </p>
-  <a href="{admin_login_url}" style="display:inline-block;padding:10px 24px;
-     background:#ff3621;color:#ffffff;font-size:14px;font-weight:600;
-     text-decoration:none">
-    Sign in to Dashboard
-  </a>
-  <p style="margin:8px 0 0;color:#9a3412;font-size:12px">
+  """ + email_action_template("{admin_login_url}", "Sign in to Dashboard") + """
+  <p style="margin:8px 0 0;color:#fed7aa;font-size:12px">
     This link expires in 15 minutes. Request a new one from the sign-in page.
   </p>
 </div>
 
-<h3 style="margin:24px 0 12px;color:#111827;font-size:16px">Next Steps</h3>
-<ol style="color:#374151;font-size:14px;line-height:1.8;margin:0;padding-left:20px">
-  <li>Click <a href="{admin_login_url}" style="color:#ff3621;font-weight:600">Sign in to Dashboard</a> above</li>
+<h3 style="margin:24px 0 12px;color:#fafaf9;font-size:16px">Next Steps</h3>
+<ol style="color:#f5f5f4;font-size:14px;line-height:1.8;margin:0;padding-left:20px">
+  <li>Click <a href="{admin_login_url}" style="color:#93c5fd;font-weight:600">Sign in to Dashboard</a> above</li>
   <li>Configure your brand name, voice, and AI agent personality</li>
   <li>Add your widget key to your website to start chatting with customers</li>
   <li>Invite team members to handle escalated conversations</li>
 </ol>
 
-<p style="color:#9ca3af;font-size:12px;line-height:1.5;margin:24px 0 0">
+<p style="color:#d6d3d1;font-size:12px;line-height:1.5;margin:24px 0 0">
   Plan: <strong>{tier}</strong>
   &nbsp;&middot;&nbsp;
-  Tenant ID: <code style="font-size:11px">{tenant_id}</code>
+  Account ID: <code style="font-size:11px">{tenant_id}</code>
 </p>
 """
 
@@ -167,18 +166,19 @@ async def send_welcome_email(
     html_body = _WELCOME_EMAIL_BODY.format(
         tier=(tier or "trial").capitalize(),
         tenant_id=tenant_id,
-        admin_login_url=resolved_url,
+        admin_login_url=escape(resolved_url),
     )
-    full_html = format_branded_email(html_body, admin_url=resolved_url)
-    subject = "Welcome to Agent Red — Your account is ready"
+    full_html = format_branded_email(html_body)
+    subject = "Agent Red: Your Account Is Ready"
 
     # --- Provider 1: SMTP (Titan or other SMTP provider) ---
     smtp_host = os.environ.get("SMTP_HOST", "")
     if smtp_host:
         import asyncio
-        import smtplib
         from email.mime.multipart import MIMEMultipart
         from email.mime.text import MIMEText
+
+        from src.multi_tenant.smtp_tls import send_verified_smtp
 
         smtp_port = int(os.environ.get("SMTP_PORT", "587"))
         smtp_user = os.environ.get("SMTP_USERNAME", "")
@@ -191,19 +191,7 @@ async def send_welcome_email(
             msg["To"] = to_email
             msg["Subject"] = subject
             msg.attach(MIMEText(full_html, "html"))
-            if smtp_port == 465:
-                with smtplib.SMTP_SSL(smtp_host, smtp_port, timeout=15) as server:
-                    if smtp_user and smtp_pass:
-                        server.login(smtp_user, smtp_pass)
-                    server.send_message(msg)
-            else:
-                with smtplib.SMTP(smtp_host, smtp_port, timeout=15) as server:
-                    server.ehlo()
-                    if smtp_port != 25:
-                        server.starttls()
-                    if smtp_user and smtp_pass:
-                        server.login(smtp_user, smtp_pass)
-                    server.send_message(msg)
+            send_verified_smtp(msg, smtp_host, smtp_port, timeout=15, username=smtp_user, password=smtp_pass)
 
         try:
             await asyncio.to_thread(_smtp_send)  # SPEC-1622: non-blocking SMTP

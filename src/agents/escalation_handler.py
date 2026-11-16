@@ -24,6 +24,7 @@ from typing import Any
 
 from src.agents.base import AgentRedBaseAgent
 from src.agents.model_params import chat_completion_params
+from src.multi_tenant.cosmos_schema import ESCALATION_CATEGORIES
 
 logger = logging.getLogger(__name__)
 
@@ -103,11 +104,13 @@ class EscalationHandlerAgent(AgentRedBaseAgent):
             except json.JSONDecodeError:
                 parsed = {}
 
+            raw_category = parsed.get("category", "general_inquiry")
+            category = raw_category if raw_category in ESCALATION_CATEGORIES else "general_inquiry"
             return {
                 "reason": parsed.get("reason", "Customer requested human agent"),
                 "urgency": parsed.get("urgency", "medium"),
                 "context_summary": parsed.get("context_summary", ""),
-                "category": parsed.get("category", "general_inquiry"),
+                "category": category,
                 "model": AZURE_IC_MODEL,
             }
         except Exception:

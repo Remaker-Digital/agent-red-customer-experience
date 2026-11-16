@@ -82,15 +82,33 @@ SHOP_REDACT_PAYLOAD = {
 # ---------------------------------------------------------------------------
 
 
+class _CleanMiss:
+    """A lookup that reads storage and finds no tenant: the shop is not ours.
+
+    The app has no database in these tests, so without it a redact cannot tell
+    a missing tenant from a failed read and answers 503. These tests are about
+    the HMAC signature.
+    """
+
+    async def lookup(self, domain: str, *, strict: bool = False) -> None:
+        return None
+
+    async def find_by_shopify_domain(self, domain: str) -> None:
+        return None
+
+
 @pytest.fixture
 def gdpr_client():
     """TestClient with SHOPIFY_API_SECRET set for HMAC verification."""
+    from src.integrations.shopify_gdpr_webhooks import configure_shopify_gdpr_services
     from src.main import app
 
     with patch.dict(os.environ, {"SHOPIFY_API_SECRET": SHOPIFY_SECRET}), \
          patch("src.integrations.shopify_gdpr_webhooks._SHOPIFY_API_SECRET", SHOPIFY_SECRET):
         with TestClient(app) as client:
+            configure_shopify_gdpr_services(tenant_repo=_CleanMiss(), domain_index_repo=_CleanMiss())
             yield client
+        configure_shopify_gdpr_services()
 
 
 # ---------------------------------------------------------------------------

@@ -46,7 +46,7 @@ class _Smtp:
     def ehlo(self) -> None:
         return None
 
-    def starttls(self) -> None:
+    def starttls(self, context: object = None) -> None:
         return None
 
     def login(self, user: str, password: str) -> None:
@@ -213,17 +213,17 @@ async def test_customer_escalation_uses_the_customer_from_and_the_login_envelope
 
     _clear_mail(monkeypatch)
     _set_smtp(monkeypatch)
-    monkeypatch.setenv("SMTP_USERNAME", "smtp-login@example.com")
-    monkeypatch.setenv("SMTP_FROM", "smtp-login@example.com")
+    monkeypatch.setenv("SMTP_USERNAME", "mike@example.com")
+    monkeypatch.setenv("SMTP_FROM", "mike@example.com")
     monkeypatch.setenv("SMTP_CUSTOMER_FROM", "support@example.com")
     monkeypatch.setenv("SMTP_CUSTOMER_FROM_NAME", "Support, Team")
     result = await send_escalation_emails(**_kwargs())
     assert result == {"customer": "Succeeded", "agent": "Succeeded"}
     customer, agent = _Smtp.messages
     assert customer["From"] == formataddr(("Support, Team", "support@example.com"))
-    assert customer["Sender"] == "smtp-login@example.com"
-    assert _Smtp.envelopes[0] == "smtp-login@example.com"
-    assert agent["From"] == "Agent Red <smtp-login@example.com>"
+    assert customer["Sender"] == "mike@example.com"
+    assert _Smtp.envelopes[0] == "mike@example.com"
+    assert agent["From"] == "Agent Red <mike@example.com>"
     assert agent["Sender"] is None
     assert _Smtp.envelopes[1] is None
 
@@ -236,20 +236,20 @@ async def test_customer_escalation_falls_back_when_customer_from_is_unset(
 
     _clear_mail(monkeypatch)
     _set_smtp(monkeypatch)
-    monkeypatch.setenv("SMTP_USERNAME", "smtp-login@example.com")
-    monkeypatch.setenv("SMTP_FROM", "smtp-login@example.com")
+    monkeypatch.setenv("SMTP_USERNAME", "mike@example.com")
+    monkeypatch.setenv("SMTP_FROM", "mike@example.com")
     result = await send_escalation_emails(**_kwargs())
     assert result["customer"] == "Succeeded"
-    assert _Smtp.messages[0]["From"] == formataddr(("Agent Red", "smtp-login@example.com"))
-    assert _Smtp.messages[0]["Sender"] == "smtp-login@example.com"
-    assert _Smtp.envelopes[0] == "smtp-login@example.com"
+    assert _Smtp.messages[0]["From"] == formataddr(("Agent Red", "mike@example.com"))
+    assert _Smtp.messages[0]["Sender"] == "mike@example.com"
+    assert _Smtp.envelopes[0] == "mike@example.com"
 
 
 @pytest.mark.asyncio
 async def test_crlf_in_customer_from_cannot_add_a_header(monkeypatch: pytest.MonkeyPatch) -> None:
     _clear_mail(monkeypatch)
     _set_smtp(monkeypatch)
-    monkeypatch.setenv("SMTP_FROM", "smtp-login@example.com")
+    monkeypatch.setenv("SMTP_FROM", "mike@example.com")
     monkeypatch.setenv("SMTP_CUSTOMER_FROM", "support@example.com\r\nBcc: evil@example.com")
     monkeypatch.setenv("SMTP_CUSTOMER_FROM_NAME", "Support")
     result = await send_escalation_emails(**_kwargs())

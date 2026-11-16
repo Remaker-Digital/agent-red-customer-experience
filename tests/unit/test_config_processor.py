@@ -238,6 +238,22 @@ class TestGetConfigDiff:
 # ---------------------------------------------------------------------------
 
 
+def test_dark_widget_background_survives_preferences_round_trip():
+    from src.multi_tenant.config.field_mapping import _config_to_preferences, _preferences_to_config
+    from src.multi_tenant.tenant_config_schema import validate_config
+
+    field = "widget_dark_background_color"
+    values = {field: "#0e151a"}
+    result = validate_config(values, TIER)
+    assert result.valid
+    assert result.sanitized[field] == values[field]
+
+    stored = _config_to_preferences(TENANT_ID, result.sanitized, 1, "test-admin")
+    assert _preferences_to_config(stored.model_dump())[field] == values[field]
+    assert validate_config({field: None}, TIER).sanitized[field] is None
+    assert not validate_config({field: "not-a-color"}, TIER).valid
+
+
 class TestUpdateConfig:
     """Tests for update_config."""
 

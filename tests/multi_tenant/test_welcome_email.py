@@ -75,7 +75,7 @@ class TestWelcomeEmailTemplate:
         # The CTA button href
         assert 'href="https://example.com/admin/standalone/"' in rendered
         # Brand color on the button
-        assert "#ff3621" in rendered
+        assert "background:#3b82f6;color:#ffffff" in rendered
 
 
 # ---------------------------------------------------------------------------
@@ -102,18 +102,18 @@ class TestBuildAdminLoginUrl:
     def test_prod_url_fallback(self):
         with patch.dict("os.environ", {
             "STANDALONE_ADMIN_URL": "",
-            "PROD_URL": "https://myapp.azurecontainerapps.io",
+            "PROD_URL": "https://example.azurecontainerapps.io",
         }, clear=True):
             result = _build_admin_login_url()
-        assert result == "https://myapp.azurecontainerapps.io/admin/standalone/"
+        assert result == "https://example.azurecontainerapps.io/admin/standalone/"
 
     def test_prod_url_trailing_slash_handled(self):
         with patch.dict("os.environ", {
             "STANDALONE_ADMIN_URL": "",
-            "PROD_URL": "https://myapp.azurecontainerapps.io/",
+            "PROD_URL": "https://example.azurecontainerapps.io/",
         }, clear=True):
             result = _build_admin_login_url()
-        assert result == "https://myapp.azurecontainerapps.io/admin/standalone/"
+        assert result == "https://example.azurecontainerapps.io/admin/standalone/"
 
     def test_no_env_vars_returns_relative_fallback(self):
         """SPEC-0058: Without env vars, returns relative path (no hardcoded FQDN)."""
@@ -188,7 +188,7 @@ class TestSendWelcomeEmail:
         mock_client.begin_send.assert_called_once()
         msg = mock_client.begin_send.call_args[0][0]
         assert msg["recipients"]["to"][0]["address"] == "merchant@example.com"
-        assert "Welcome to Agent Red" in msg["content"]["subject"]
+        assert msg["content"]["subject"] == "Agent Red: Your Account Is Ready"
 
     @pytest.mark.asyncio
     async def test_acs_email_contains_admin_url(self):
@@ -394,6 +394,6 @@ class TestWelcomeEmailIntegration:
         ):
             from src.integrations.provisioning import provision_trial_tenant
 
-            await provision_trial_tenant(customer_email=None)
+            await provision_trial_tenant(customer_phone="+12025550123")
 
         mock_send.assert_not_called()

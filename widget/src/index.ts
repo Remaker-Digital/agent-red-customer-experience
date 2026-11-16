@@ -36,6 +36,7 @@ import { resolveLocaleCode, getLocalePack } from '@/locale';
 import { createStore } from '@/state/store';
 import { configureTransport, fetchWidgetConfig } from '@/transport/http';
 import { detectPageContext } from '@/utils/templateVars';
+import { readWidgetEmbedOverrides } from '@/utils/widgetEmbedOverrides';
 import { Launcher } from '@/components/Launcher';
 import { Panel } from '@/components/Panel';
 
@@ -97,35 +98,7 @@ interface AgentRedSDK {
     return;
   }
 
-  // Read inline overrides from data attributes (set by Shopify Liquid template).
-  // Only non-empty attributes are included — the Liquid template omits attributes
-  // that match platform defaults, so API-fetched config is the source of truth
-  // and data attributes only override when the merchant explicitly changed a value
-  // in the Shopify theme editor.
-  const dataOverrides: Record<string, string | boolean> = {};
-  const attrMap: Record<string, string> = {
-    'data-color': 'widget_primary_color',
-    'data-position': 'widget_position',
-    'data-auto-open': 'widget_auto_open',
-    'data-auto-open-delay': 'widget_auto_open_delay',
-    'data-mobile-enabled': 'widget_mobile_enabled',
-    'data-mobile-fullscreen': 'widget_mobile_fullscreen',
-    'data-sound-enabled': 'widget_sound_enabled',
-    'data-greeting': 'widget_greeting_message',
-    'data-header-text': 'widget_header_text',
-    'data-agent-name': 'widget_agent_display_name',
-    'data-context': 'widget_context',
-    'data-customer-name': 'widget_customer_name',
-  };
-  for (const [attr, configKey] of Object.entries(attrMap)) {
-    const val = scriptTag.getAttribute(attr);
-    if (val !== null && val !== '') {
-      // Convert boolean-like strings
-      if (val === 'true') dataOverrides[configKey] = true;
-      else if (val === 'false') dataOverrides[configKey] = false;
-      else dataOverrides[configKey] = val;
-    }
-  }
+  const dataOverrides = readWidgetEmbedOverrides(scriptTag);
 
   // Read Shopify customer identity passthrough data attributes (AUTH-4).
   // When a Shopify customer is logged in and the merchant has configured an
@@ -176,11 +149,7 @@ async function init(
     console.warn('[AgentRed] Failed to fetch widget configuration. Widget will not load.');
     return;
   }
-  // Merge data-attribute overrides from the script tag (Shopify Liquid template).
-  // These take precedence over API-fetched config only when the merchant has
-  // explicitly changed a setting in the Shopify theme editor. The Liquid template
-  // omits attributes that match platform defaults, so this merge only applies
-  // merchant-intentional overrides.
+  // Explicit embed attributes take precedence over the API configuration.
   const hasOverrides = dataOverrides && Object.keys(dataOverrides).length > 0;
   const config: WidgetConfig = hasOverrides
     ? { ...fetchedConfig, ...dataOverrides } as WidgetConfig
@@ -240,7 +209,7 @@ async function init(
       const raw = sessionStorage.getItem(DRAG_STORAGE_KEY);
       if (!raw) return null;
       const pos = JSON.parse(raw);
-      if (typeof pos.left === 'number' && typeof pos.top === 'number') return pos;
+      if (Number.isFinite(pos.left) && Number.isFinite(pos.top)) return pos;
     } catch { /* ignore */ }
     return null;
   }
@@ -349,6 +318,7 @@ async function init(
           `bottom: ${offsetY + launcherSize + gap}px`,
           position === 'bottom-right' ? `right: ${offsetX}px` : `left: ${offsetX}px`,
           `width: ${tokens.panelWidth}`,
+          `max-width: calc(100% - ${offsetX}px)`,
           `height: ${tokens.panelHeight}`,
           'border: none',
           `border-radius: ${tokens.borderRadiusLg}`,
@@ -381,6 +351,7 @@ async function init(
             config,
             locale,
             onClose: closeWidget,
+            onDragStart: mobileFullscreen ? undefined : startPanelDrag,
           }),
           root,
         );
@@ -395,17 +366,18 @@ async function init(
   let dragOverlay: HTMLDivElement | null = null;
   let dragStartLeft = 0;
   let dragStartTop = 0;
-  let dragStartScreenX = 0;
-  let dragStartScreenY = 0;
+  let dragStartClientX = 0;
+  let dragStartClientY = 0;
 
   function onDragMove(ev: MouseEvent) {
     if (!panelIframe) return;
-    const dx = ev.screenX - dragStartScreenX;
-    const dy = ev.screenY - dragStartScreenY;
+    const dx = ev.clientX - dragStartClientX;
+    const dy = ev.clientY - dragStartClientY;
     const w = panelIframe.offsetWidth;
     const h = panelIframe.offsetHeight;
     const { left, top } = clampToViewport(dragStartLeft + dx, dragStartTop + dy, w, h);
     applyDragPosition(panelIframe, left, top);
+    positionResizeHandle();
   }
 
   function onDragEnd() {
@@ -431,35 +403,43 @@ async function init(
   }
 
   // ---------------------------------------------------------------------------
-  // SPEC-0113: Resizable width — drag handle on the leading edge
+  // SPEC-0113: Resizable width: drag handle on the left edge
   // ---------------------------------------------------------------------------
 
   let resizeHandle: HTMLDivElement | null = null;
   let resizeOverlay: HTMLDivElement | null = null;
   let resizeStartX = 0;
-  let resizeStartWidth = 0;
+  let resizeStartLeft = 0;
+  let resizeStartRight = 0;
+  let resizeFrame = 0;
+  let panelSizeObserver: ResizeObserver | null = null;
   const MIN_PANEL_WIDTH = 300;
   const MAX_PANEL_WIDTH = 700;
 
-  function positionResizeHandle(handle: HTMLDivElement, iframe: HTMLIFrameElement) {
-    const rect = iframe.getBoundingClientRect();
-    const isRight = (config.widget_position || 'bottom-right') === 'bottom-right';
-    handle.style.top = `${rect.top}px`;
-    handle.style.height = `${rect.height}px`;
-    if (isRight) {
-      handle.style.left = `${rect.left - 3}px`;
-    } else {
-      handle.style.left = `${rect.right - 3}px`;
+  function positionResizeHandle() {
+    if (!resizeHandle || !panelIframe || resizeHandle.style.display === 'none') return;
+
+    const rect = panelIframe.getBoundingClientRect();
+    resizeHandle.style.left = `${rect.left}px`;
+    resizeHandle.style.top = `${rect.top}px`;
+    resizeHandle.style.height = `${rect.height}px`;
+  }
+
+  function trackPanelOpening() {
+    positionResizeHandle();
+    if (panelIframe?.getAnimations?.().some((animation) => animation.playState === 'running')) {
+      resizeFrame = requestAnimationFrame(trackPanelOpening);
     }
   }
 
   function createResizeHandle(): HTMLDivElement {
     const handle = document.createElement('div');
-    const isRight = (config.widget_position || 'bottom-right') === 'bottom-right';
+    handle.className = 'ar-panel-resize-handle';
+    handle.setAttribute('aria-hidden', 'true');
     handle.style.cssText = [
       'position: fixed',
       'width: 6px',
-      `cursor: ${isRight ? 'w-resize' : 'e-resize'}`,
+      'cursor: ew-resize',
       'background: transparent',
       `z-index: ${tokens.zIndexPanel + 2}`,
       'user-select: none',
@@ -475,20 +455,23 @@ async function init(
     });
 
     handle.addEventListener('mousedown', (e) => {
+      if (e.button !== 0 || !panelIframe) return;
       e.preventDefault();
       e.stopPropagation();
-      if (!panelIframe) return;
 
-      resizeStartX = e.screenX;
-      resizeStartWidth = panelIframe.offsetWidth;
       panelIframe.style.transition = 'none';
+      const rect = panelIframe.getBoundingClientRect();
+      resizeStartX = e.clientX;
+      resizeStartLeft = rect.left;
+      resizeStartRight = rect.right;
+      applyDragPosition(panelIframe, rect.left, rect.top);
 
       resizeOverlay = document.createElement('div');
       resizeOverlay.style.cssText = [
         'position: fixed',
         'inset: 0',
         `z-index: ${tokens.zIndexPanel + 3}`,
-        `cursor: ${isRight ? 'w-resize' : 'e-resize'}`,
+        'cursor: ew-resize',
         'user-select: none',
       ].join('; ');
       document.body.appendChild(resizeOverlay);
@@ -502,17 +485,13 @@ async function init(
 
   function onResizeMove(ev: MouseEvent) {
     if (!panelIframe) return;
-    const dx = ev.screenX - resizeStartX;
-    const isRight = (config.widget_position || 'bottom-right') === 'bottom-right';
-    // Dragging left on a right-positioned panel expands it
-    const newWidth = Math.max(MIN_PANEL_WIDTH, Math.min(MAX_PANEL_WIDTH,
-      resizeStartWidth + (isRight ? -dx : dx)
-    ));
-    panelIframe.style.width = `${newWidth}px`;
-    // Reposition resize handle within iframe if needed
-    if (resizeHandle) {
-      resizeHandle.style.display = 'block';
-    }
+    const requestedLeft = resizeStartLeft + ev.clientX - resizeStartX;
+    const maxWidth = Math.min(MAX_PANEL_WIDTH, Math.max(resizeStartRight, panelIframe.offsetWidth));
+    const minWidth = Math.min(MIN_PANEL_WIDTH, maxWidth);
+    const width = Math.max(minWidth, Math.min(maxWidth, resizeStartRight - requestedLeft));
+    panelIframe.style.width = `${width}px`;
+    panelIframe.style.left = `${resizeStartRight - panelIframe.getBoundingClientRect().width}px`;
+    positionResizeHandle();
   }
 
   function onResizeEnd() {
@@ -530,43 +509,46 @@ async function init(
       // Persist width
       try {
         sessionStorage.setItem('ar_panel_width', panelIframe.style.width);
+        saveDragPosition(panelIframe.offsetLeft, panelIframe.offsetTop);
       } catch { /* noop */ }
     }
   }
 
+  function startPanelDrag(ev: MouseEvent) {
+    if (!panelIframe) return;
+    ev.preventDefault();
+    // Record the iframe's current position in viewport pixels
+    const rect = panelIframe.getBoundingClientRect();
+    dragStartLeft = rect.left;
+    dragStartTop = rect.top;
+    dragStartClientX = rect.left + ev.clientX;
+    dragStartClientY = rect.top + ev.clientY;
+
+    // Disable CSS transition during drag for instant feedback
+    panelIframe.style.transition = 'none';
+
+    // Switch from bottom/right anchoring to left/top so deltas work correctly
+    applyDragPosition(panelIframe, rect.left, rect.top);
+
+    // Create a transparent overlay covering the whole viewport.
+    // This captures mousemove/mouseup events that would otherwise be
+    // swallowed by the iframe (the mouse moves over the iframe during drag).
+    dragOverlay = document.createElement('div');
+    dragOverlay.style.cssText = [
+      'position: fixed',
+      'inset: 0',
+      `z-index: ${tokens.zIndexPanel + 1}`,
+      'cursor: grabbing',
+      'user-select: none',
+    ].join('; ');
+    document.body.appendChild(dragOverlay);
+
+    document.addEventListener('mousemove', onDragMove);
+    document.addEventListener('mouseup', onDragEnd);
+  }
+
   window.addEventListener('message', (ev) => {
     if (!ev.data || typeof ev.data.type !== 'string') return;
-
-    if (ev.data.type === 'ar:drag-start' && panelIframe) {
-      // Record the iframe's current position in viewport pixels
-      const rect = panelIframe.getBoundingClientRect();
-      dragStartLeft = rect.left;
-      dragStartTop = rect.top;
-      dragStartScreenX = ev.data.screenX;
-      dragStartScreenY = ev.data.screenY;
-
-      // Disable CSS transition during drag for instant feedback
-      panelIframe.style.transition = 'none';
-
-      // Switch from bottom/right anchoring to left/top so deltas work correctly
-      applyDragPosition(panelIframe, rect.left, rect.top);
-
-      // Create a transparent overlay covering the whole viewport.
-      // This captures mousemove/mouseup events that would otherwise be
-      // swallowed by the iframe (the mouse moves over the iframe during drag).
-      dragOverlay = document.createElement('div');
-      dragOverlay.style.cssText = [
-        'position: fixed',
-        'inset: 0',
-        `z-index: ${tokens.zIndexPanel + 1}`,
-        'cursor: grabbing',
-        'user-select: none',
-      ].join('; ');
-      document.body.appendChild(dragOverlay);
-
-      document.addEventListener('mousemove', onDragMove);
-      document.addEventListener('mouseup', onDragEnd);
-    }
 
     // WI-0868: Live config preview from admin WidgetConfigurator
     if (ev.data.type === 'ar:config-preview' && ev.data.payload) {
@@ -610,19 +592,31 @@ async function init(
       if (!mobileFullscreen) {
         resizeHandle = createResizeHandle();
         document.body.appendChild(resizeHandle);
+        if (typeof ResizeObserver !== 'undefined') {
+          panelSizeObserver = new ResizeObserver(positionResizeHandle);
+          panelSizeObserver.observe(panelIframe);
+        }
+        window.addEventListener('resize', positionResizeHandle);
       }
 
       // Restore persisted drag position from sessionStorage (WI #253)
       // Skip in mobile fullscreen — panel is fixed at 0,0
       if (!mobileFullscreen) {
         const saved = loadDragPosition();
-        if (saved) {
-          const w = panelIframe.offsetWidth || parseInt(tokens.panelWidth, 10);
-          const h = panelIframe.offsetHeight || parseInt(tokens.panelHeight, 10);
-          const { left, top } = clampToViewport(saved.left, saved.top, w, h);
-          applyDragPosition(panelIframe, left, top);
-        }
+        if (saved) applyDragPosition(panelIframe, saved.left, saved.top);
       }
+    }
+
+    // A closed panel retains its drag position while the host viewport can shrink.
+    // Refit that position before revealing the existing frame or a restored one.
+    if (!mobileFullscreen && panelIframe.style.right === 'auto') {
+      const width = document.documentElement.clientWidth || window.innerWidth;
+      const height = document.documentElement.clientHeight || window.innerHeight;
+      const maxLeft = width - panelIframe.offsetWidth;
+      const maxTop = height - panelIframe.offsetHeight;
+      const left = Math.max(0, Math.min(parseFloat(panelIframe.style.left), maxLeft));
+      const top = Math.max(0, Math.min(parseFloat(panelIframe.style.top), maxTop));
+      applyDragPosition(panelIframe, left, top);
     }
 
     // Double-rAF ensures the browser has painted the initial opacity:0 state
@@ -630,26 +624,19 @@ async function init(
     // paint frame as the DOM insertion, causing the transition to be skipped.
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
-        if (panelIframe) {
+        if (panelIframe && store.getState().view !== 'closed') {
           panelIframe.style.opacity = '1';
           panelIframe.style.transform = mobileFullscreen ? 'translateY(0)' : 'translateY(0) scale(1)';
           panelIframe.style.pointerEvents = 'auto';
           // SPEC-0113: Show and position resize handle
           if (resizeHandle && panelIframe) {
-            positionResizeHandle(resizeHandle, panelIframe);
             resizeHandle.style.display = 'block';
+            cancelAnimationFrame(resizeFrame);
+            trackPanelOpening();
           }
-          // Phase 2 (S254): Move focus into the iframe for keyboard users.
-          // This is the host→iframe layer of the two-layer focus management.
-          // Inside the iframe, Panel.tsx has role="dialog" + aria-modal.
-          try {
-            panelIframe.contentWindow?.focus();
-            // Focus the first interactive element (textarea or button)
-            const firstFocusable = panelIframe.contentDocument?.querySelector<HTMLElement>(
-              'textarea, button, input, [tabindex="0"]'
-            );
-            if (firstFocusable) firstFocusable.focus();
-          } catch { /* cross-origin iframe — silently skip */ }
+          // Enter the dialog without selecting a control or invoking the software keyboard.
+          panelIframe.contentWindow?.focus();
+          panelIframe.contentDocument?.querySelector<HTMLElement>('[role="dialog"]')?.focus();
         }
       });
     });
@@ -661,6 +648,8 @@ async function init(
       panelIframe.style.transform = mobileFullscreen ? 'translateY(12px)' : 'translateY(12px) scale(0.95)';
       panelIframe.style.pointerEvents = 'none';
     }
+    cancelAnimationFrame(resizeFrame);
+    if (resizeOverlay) onResizeEnd();
     // SPEC-0113: Hide resize handle
     if (resizeHandle) {
       resizeHandle.style.display = 'none';
@@ -791,12 +780,23 @@ async function init(
     hide: () => {
       shadowHost.style.display = 'none';
       if (panelIframe) panelIframe.style.display = 'none';
+      if (resizeHandle) resizeHandle.style.display = 'none';
     },
     show: () => {
       shadowHost.style.display = '';
       if (panelIframe) panelIframe.style.display = '';
+      if (resizeHandle && store.getState().view !== 'closed') {
+        resizeHandle.style.display = 'block';
+        positionResizeHandle();
+      }
     },
     destroy: () => {
+      hidePanel();
+      if (dragOverlay) onDragEnd();
+      panelSizeObserver?.disconnect();
+      window.removeEventListener('resize', positionResizeHandle);
+      resizeHandle?.remove();
+      resizeHandle = null;
       store.resetConversation();
       if (panelIframe) {
         panelIframe.remove();
@@ -809,11 +809,10 @@ async function init(
     setLocale: (code: LocaleCode) => {
       const pack = getLocalePack(code);
       const cfg = store.getState().config;
-      // Merchant overrides always take precedence over locale pack
+      // Keep merchant placeholder and offline copy when switching languages.
       store.setState({
         locale: {
           ...pack,
-          ...(cfg.widget_header_text ? { headerTitle: cfg.widget_header_text } : {}),
           ...(cfg.widget_input_placeholder ? { inputPlaceholder: cfg.widget_input_placeholder } : {}),
           ...(cfg.widget_offline_message ? { offlineMessage: cfg.widget_offline_message } : {}),
         },
@@ -832,11 +831,9 @@ async function init(
       store.setState({ config: updated });
       // Re-evaluate visibility with new rules
       if (!shouldShowOnPage(updated)) {
-        shadowHost.style.display = 'none';
-        if (panelIframe) panelIframe.style.display = 'none';
+        sdk.hide();
       } else {
-        shadowHost.style.display = '';
-        if (panelIframe) panelIframe.style.display = '';
+        sdk.show();
       }
     },
   };
@@ -954,7 +951,6 @@ function buildLocale(config: WidgetConfig): Locale {
   const pack = getLocalePack(code);
   return {
     ...pack,
-    ...(config.widget_header_text ? { headerTitle: config.widget_header_text } : {}),
     ...(config.widget_input_placeholder ? { inputPlaceholder: config.widget_input_placeholder } : {}),
     ...(config.widget_offline_message ? { offlineMessage: config.widget_offline_message } : {}),
   };

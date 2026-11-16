@@ -1,14 +1,12 @@
 ---
 sidebar_position: 10
 title: Widget appearance
-description: Customize the chat widget's visual design — colors, position, launcher icon, dark mode, mobile behavior, and branding.
+description: Customize the chat widget's visual design, colors, position, launcher icon, dark mode, mobile behavior, and branding.
 ---
 
 # Widget appearance
 
-These settings control how the chat widget looks on your storefront. Changes take effect immediately for new page loads — customers who already have the widget open will see the changes when they refresh.
-
-![Widget configuration page showing installation code, appearance settings, and live preview](/img/admin/widget-configuration.png)
+These settings control how the chat widget looks on your storefront. Changes take effect immediately for new page loads: customers who already have the widget open will see the changes when they refresh.
 
 ## Primary color
 
@@ -23,7 +21,7 @@ The main accent color used for the launcher button, send button, links, and acti
 
 **Tips:**
 - Use a color with sufficient contrast against white and dark backgrounds. Agent Red checks WCAG contrast ratios in the live preview.
-- Avoid very light colors (pastel yellow, light grey) — they are difficult to see against most storefront backgrounds.
+- Avoid very light colors (pastel yellow, light grey): they are difficult to see against most storefront backgrounds.
 - The widget automatically derives hover and pressed states from the primary color.
 
 ---
@@ -64,7 +62,7 @@ Where the launcher button and chat panel appear on the page. Most stores use `bo
 | | |
 |---|---|
 | **Field** | `widget_offset_x`, `widget_offset_y` |
-| **Type** | Number (0–100 pixels) |
+| **Type** | Number (0 to 100 pixels) |
 | **Default** | `20` each |
 | **Affects** | Widget |
 
@@ -99,7 +97,7 @@ The name displayed in the chat header. If not set, falls back to the brand name 
 A URL to an image displayed as the agent's avatar in the chat header and next to agent messages. Use a square image (recommended 64x64 pixels or larger).
 
 **Tips:**
-- Use a brand mascot, team photo, or abstract logo — something that humanizes the experience.
+- Use a brand mascot, team photo, or abstract logo: something that humanizes the experience.
 - Host the image on your own CDN or Shopify files for reliability. External URLs may be blocked by Content Security Policy on some storefronts.
 
 ---
@@ -192,7 +190,7 @@ Controls whether the widget appears on mobile devices (screen width under 768px)
 | **Default** | Uses primary color |
 | **Affects** | Widget |
 
-The color of the floating launcher button. By default, the launcher uses the widget's primary color. Set this field to give the launcher a distinct color — useful when the primary color is used for links and buttons inside the chat panel but you want the launcher to stand out differently on your storefront.
+The color of the floating launcher button. By default, the launcher uses the widget's primary color. Set this field to give the launcher a distinct color: useful when the primary color is used for links and buttons inside the chat panel but you want the launcher to stand out differently on your storefront.
 
 ---
 
@@ -221,7 +219,7 @@ The icon displayed on the floating launcher button.
 | | |
 |---|---|
 | **Field** | `widget_launcher_size` |
-| **Type** | Number (40–80 pixels) |
+| **Type** | Number (40 to 80 pixels) |
 | **Default** | `56` |
 | **Affects** | Widget |
 
@@ -234,7 +232,7 @@ The diameter of the floating launcher button in pixels.
 | | |
 |---|---|
 | **Field** | `widget_border_radius` |
-| **Type** | Number (0–20 pixels) |
+| **Type** | Number (0 to 20 pixels) |
 | **Default** | `8` |
 | **Affects** | Widget |
 

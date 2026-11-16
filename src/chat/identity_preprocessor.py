@@ -516,15 +516,17 @@ async def preprocess_identity(
                     if sent:
                         try:
                             now_iso = datetime.now(UTC).isoformat()
-                            await conv_repo.patch(
+                            # identity_phone is encrypted at rest, and the repository refuses a patch of an
+                            # encrypted field, so this is a read-modify-write.
+                            await conv_repo.update_encrypted_fields(
                                 tenant_id,
                                 conversation_id,
-                                operations=[
-                                    {"op": "set", "path": "/identity_phone", "value": phone},
-                                    {"op": "set", "path": "/identity_sms_sent_at", "value": now_iso},
-                                    {"op": "set", "path": "/identity_sms_attempts", "value": 0},
-                                    {"op": "set", "path": "/updated_at", "value": now_iso},
-                                ],
+                                {
+                                    "identity_phone": phone,
+                                    "identity_sms_sent_at": now_iso,
+                                    "identity_sms_attempts": 0,
+                                    "updated_at": now_iso,
+                                },
                             )
                         except Exception as exc:
                             logger.warning("Failed to update conversation with phone: %s", exc)
@@ -639,15 +641,17 @@ async def preprocess_identity(
                 if sent:
                     try:
                         now_iso = datetime.now(UTC).isoformat()
-                        await conv_repo.patch(
+                        # identity_email is encrypted at rest, and the repository refuses a patch of an
+                        # encrypted field, so this is a read-modify-write.
+                        await conv_repo.update_encrypted_fields(
                             tenant_id,
                             conversation_id,
-                            operations=[
-                                {"op": "set", "path": "/identity_email", "value": email},
-                                {"op": "set", "path": "/identity_otp_sent_at", "value": now_iso},
-                                {"op": "set", "path": "/identity_otp_attempts", "value": 0},
-                                {"op": "set", "path": "/updated_at", "value": now_iso},
-                            ],
+                            {
+                                "identity_email": email,
+                                "identity_otp_sent_at": now_iso,
+                                "identity_otp_attempts": 0,
+                                "updated_at": now_iso,
+                            },
                         )
                     except Exception as exc:
                         logger.warning("Failed to update conversation with email: %s", exc)
@@ -683,15 +687,17 @@ async def preprocess_identity(
         # Update conversation with email + OTP timestamp
         try:
             now_iso = datetime.now(UTC).isoformat()
-            await conv_repo.patch(
+            # identity_email is encrypted at rest, and the repository refuses a patch of an
+            # encrypted field, so this is a read-modify-write.
+            await conv_repo.update_encrypted_fields(
                 tenant_id,
                 conversation_id,
-                operations=[
-                    {"op": "set", "path": "/identity_email", "value": email},
-                    {"op": "set", "path": "/identity_otp_sent_at", "value": now_iso},
-                    {"op": "set", "path": "/identity_otp_attempts", "value": 0},
-                    {"op": "set", "path": "/updated_at", "value": now_iso},
-                ],
+                {
+                    "identity_email": email,
+                    "identity_otp_sent_at": now_iso,
+                    "identity_otp_attempts": 0,
+                    "updated_at": now_iso,
+                },
             )
         except Exception as exc:
             logger.warning("Failed to update conversation with identity email: %s", exc)
@@ -740,15 +746,17 @@ async def preprocess_identity(
             # Update conversation with phone + SMS OTP timestamp
             try:
                 now_iso = datetime.now(UTC).isoformat()
-                await conv_repo.patch(
+                # identity_phone is encrypted at rest, and the repository refuses a patch of an
+                # encrypted field, so this is a read-modify-write.
+                await conv_repo.update_encrypted_fields(
                     tenant_id,
                     conversation_id,
-                    operations=[
-                        {"op": "set", "path": "/identity_phone", "value": phone},
-                        {"op": "set", "path": "/identity_sms_sent_at", "value": now_iso},
-                        {"op": "set", "path": "/identity_sms_attempts", "value": 0},
-                        {"op": "set", "path": "/updated_at", "value": now_iso},
-                    ],
+                    {
+                        "identity_phone": phone,
+                        "identity_sms_sent_at": now_iso,
+                        "identity_sms_attempts": 0,
+                        "updated_at": now_iso,
+                    },
                 )
             except Exception as exc:
                 logger.warning("Failed to update conversation with identity phone: %s", exc)

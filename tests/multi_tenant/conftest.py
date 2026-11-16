@@ -12,6 +12,8 @@ from __future__ import annotations
 
 from unittest.mock import AsyncMock, MagicMock
 
+from pathlib import Path
+
 import pytest
 
 from src.multi_tenant.superadmin_api._monolith import (
@@ -223,3 +225,151 @@ def memory_repos():
     configure_memory_dashboard(memory_repo=memory_repo)
     yield {"memory_repo": memory_repo}
     configure_memory_dashboard(memory_repo=None)
+
+
+_PUBLIC_SNAPSHOT_ROOT = Path(__file__).resolve().parents[2]
+_PRIVATE_PATHS = {
+    "test_s153_batch10_spec_verification.py": {
+        ".claude/SCHEDULE.md": {
+            "test_schedule_exists",
+            "test_schedule_has_groups",
+        },
+        "CLAUDE.md": {
+            "test_honest_feedback_in_project",
+            "test_customer_experience_in_claude_md",
+            "test_priority_in_claude_md",
+            "test_no_effort_estimates_as_metric",
+            "test_quality_governance",
+            "test_no_effort_in_governance",
+            "test_quality_over_effort",
+            "test_feedback_guidance",
+            "test_work_priority_bias",
+            "test_quality_governance_present",
+            "test_honest_feedback_documented",
+        },
+        "CLAUDE_ARCHIVE.md": {
+            "test_archive_exists",
+            "test_claude_md_references_archive",
+        },
+        "scripts/deploy_pipeline.py": {
+            "test_deploy_pipeline_has_phases",
+        },
+        "scripts/run-tests-thermal-safe.ps1": {
+            "test_thermal_safe_script",
+            "test_cooling_cycles",
+            "test_test_harness_exists",
+            "test_harness_runs_multiple_suites",
+        },
+        "scripts/seed_tenant.py": {
+            "test_seed_script_cleans_data",
+        },
+        "scripts/test_pipeline.py": {
+            "test_test_pipeline_exists",
+            "test_test_pipeline_has_phases",
+        },
+    },
+    "test_s153_batch11_spec_verification.py": {
+        ".claude/SCHEDULE.md": {
+            "test_schedule_is_writable",
+        },
+        ".claude/hooks/assertion-check.py": {
+            "test_quality_dashboard_exists",
+        },
+        "CLAUDE.md": {
+            "test_deploy_gate_in_governance",
+            "test_quality_first_in_governance",
+            "test_gov_03_test_clarity",
+        },
+        "scripts/archive/record_test_results.py": {
+            "test_record_test_results_script",
+            "test_script_parses_junit",
+        },
+        "scripts/deploy_pipeline.py": {
+            "test_staging_environment_configured",
+            "test_deploy_pipeline_comprehensive",
+            "test_production_verification_phase",
+            "test_production_track_in_pipeline",
+            "test_deploy_pipeline_error_handling",
+        },
+        "scripts/seed_tenant.py": {
+            "test_seed_script_creates_clean_state",
+            "test_seed_is_distinct_script",
+            "test_seed_has_multiple_phases",
+            "test_seed_creates_example_data",
+            "test_seed_deletes_all_prior_data",
+            "test_seed_creates_realistic_data",
+        },
+        "scripts/upgrade_verification.py": {
+            "test_upgrade_verification_exists",
+            "test_upgrade_phases",
+            "test_upgrade_verification_script",
+        },
+    },
+    "test_s153_batch12_spec_verification.py": {
+        "scripts/deploy_pipeline.py": {
+            "test_deploy_pipeline_has_verification",
+            "test_deploy_pipeline_exists",
+            "test_deploy_pipeline_has_phases",
+            "test_deploy_pipeline_has_staging_and_production",
+        },
+        "scripts/test_pipeline.py": {
+            "test_test_pipeline_exists",
+            "test_test_pipeline_has_phases",
+        },
+        "scripts/upgrade_verification.py": {
+            "test_upgrade_verification_exists",
+        },
+    },
+    "test_s153_batch4_spec_verification.py": {
+        ".claude/hooks/assertion-check.py": {
+            "test_assertion_check_hook_has_dashboard",
+        },
+    },
+    "test_s153_batch5_spec_verification.py": {
+        "CLAUDE.md": {
+            "test_agntcy_referenced_as_external",
+        },
+        "scripts/": {
+            "test_staging_config_exists",
+        },
+        "scripts/upgrade_verification.py": {
+            "test_upgrade_script_has_env_param",
+        },
+    },
+    "test_s153_batch7_spec_verification.py": {
+        "scripts/deploy_pipeline.py": {
+            "test_deploy_pipeline_exists",
+            "test_deploy_pipeline_automated",
+            "test_staging_track_exists",
+            "test_rollback_documented",
+            "test_staging_before_production",
+            "test_staging_deployment",
+            "test_staging_validation_first",
+        },
+        "scripts/upgrade_verification.py": {
+            "test_upgrade_verifies_keys",
+            "test_upgrade_verification_exists",
+            "test_data_integrity_assertions",
+            "test_team_data_verification",
+        },
+    },
+    "test_s153_batch9_spec_verification.py": {
+        "CLAUDE.md": {
+            "test_glossary_in_project",
+        },
+        "scripts/seed_tenant.py": {
+            "test_seed_script_exists",
+            "test_seed_before_tests",
+        },
+    },
+}
+
+
+def pytest_collection_modifyitems(items):
+    for item in items:
+        paths = _PRIVATE_PATHS.get(item.path.name, {})
+        name = item.originalname if hasattr(item, "originalname") else item.name
+        for path, tests in paths.items():
+            if name in tests and not (_PUBLIC_SNAPSHOT_ROOT / path).exists():
+                item.add_marker(pytest.mark.skip(reason=f"needs {path}, which is not in the public source"))
+                break

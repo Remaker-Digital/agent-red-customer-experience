@@ -45,8 +45,11 @@ class ConversationRepository(TenantScopedRepository):
     """
 
     # SPEC-1843 / WI-1627: Fields encrypted at rest with tenant DEK
+    # identity_email and identity_phone: the customer's own contact details,
+    # found by P6 on v2.0.4 stored in plain text. No query matches on them.
     _encryption_fields = frozenset({
         "messages", "customer_intent", "escalation_reason", "transcript",
+        "identity_email", "identity_phone",
     })
 
     def __init__(self) -> None:

@@ -118,19 +118,19 @@ class OtpVerifyResponse(BaseModel):
 # ---------------------------------------------------------------------------
 
 _OTP_EMAIL_BODY = """
-<h2 style="margin:0 0 16px;color:#111827;font-size:20px">Your Verification Code</h2>
-<p style="color:#374151;font-size:14px;line-height:1.6;margin:0 0 24px">
+<h2 style="margin:0 0 16px;color:#fafaf9;font-size:20px">Your Verification Code</h2>
+<p style="color:#f5f5f4;font-size:14px;line-height:1.6;margin:0 0 24px">
   Enter this code in the chat widget to verify your email address.
 </p>
 <div style="text-align:center;margin:24px 0">
-  <div style="display:inline-block;padding:16px 40px;background:#f8f9fa;
-       border:2px solid #e5e7eb;border-radius:8px;font-size:32px;
+  <div style="display:inline-block;padding:16px;background:#1c1917;
+       border:1px solid #44403c;border-radius:8px;font-size:32px;
        font-family:'SF Mono',SFMono-Regular,ui-monospace,monospace;
-       font-weight:700;letter-spacing:8px;color:#111827">
+       font-weight:700;letter-spacing:6px;color:#fafaf9">
     {code}
   </div>
 </div>
-<p style="color:#9ca3af;font-size:12px;line-height:1.5;margin:16px 0 0">
+<p style="color:#d6d3d1;font-size:12px;line-height:1.5;margin:16px 0 0">
   This code expires in 10 minutes. If you didn't request this, ignore this email.
 </p>
 """
@@ -470,13 +470,12 @@ async def _send_otp_email(
 
     html_body = _OTP_EMAIL_BODY.format(code=otp_code)
     full_html = format_branded_email(html_body)
-    subject = "Your verification code"
+    subject = "Agent Red: Your Verification Code"
 
     # --- Provider 1: SMTP (Titan or other SMTP provider) ---
     smtp_host = os.environ.get("SMTP_HOST", "")
     if smtp_host:
         import asyncio
-        import smtplib
         from email.mime.multipart import MIMEMultipart
         from email.mime.text import MIMEText
 
@@ -499,19 +498,18 @@ async def _send_otp_email(
             msg["To"] = to_email
             msg["Subject"] = subject
             msg.attach(MIMEText(full_html, "html"))
-            if smtp_port == 465:
-                with smtplib.SMTP_SSL(smtp_host, smtp_port, timeout=10) as server:
-                    if smtp_user and smtp_pass:
-                        server.login(smtp_user, smtp_pass)
-                    server.send_message(msg, from_addr=smtp_user)
-            else:
-                with smtplib.SMTP(smtp_host, smtp_port, timeout=10) as server:
-                    server.ehlo()
-                    if smtp_port != 25:
-                        server.starttls()
-                    if smtp_user and smtp_pass:
-                        server.login(smtp_user, smtp_pass)
-                    server.send_message(msg, from_addr=smtp_user)
+            from src.multi_tenant.smtp_tls import open_verified_smtp
+
+            with open_verified_smtp(
+                smtp_host,
+                smtp_port,
+                timeout=10,
+                username=smtp_user,
+                password=smtp_pass,
+            ) as server:
+                if smtp_user and smtp_pass:
+                    server.login(smtp_user, smtp_pass)
+                server.send_message(msg, from_addr=smtp_user)
 
         if not sender_safe:
             logger.warning("SMTP code email skipped because a sender setting is missing or unsafe")

@@ -1,7 +1,7 @@
 ---
 sidebar_position: 8
 title: Integrations
-description: Connect Agent Red to Shopify, Stripe, Zendesk, Mailchimp, and Google Analytics — setup guides for each platform.
+description: Connect Agent Red to Shopify, Stripe, Zendesk, Mailchimp, and Google Analytics, setup guides for each platform.
 ---
 
 # Integrations
@@ -60,10 +60,10 @@ Enables synchronization of product catalog, order data, and customer profiles fr
 
 | Data type | How it is used |
 |---|---|
-| Products | Name, description, price, availability — added to knowledge base for product questions |
-| Orders | Order status, tracking, delivery dates — available for order lookup queries |
-| Customers | Name, email, order history — populates the customer profile for personalized responses |
-| Inventory | Stock levels — allows the AI to answer "Is this in stock?" questions accurately |
+| Products | Name, description, price, availability: added to knowledge base for product questions |
+| Orders | Order status, tracking, delivery dates: available for order lookup queries |
+| Customers | Name, email, order history: populates the customer profile for personalized responses |
+| Inventory | Stock levels: allows the AI to answer "Is this in stock?" questions accurately |
 
 **When to turn it off:**
 - You are testing Agent Red without connecting to real store data.
@@ -85,7 +85,7 @@ Most stores should leave this on. Without Shopify sync, the AI cannot answer pro
 
 Connects Agent Red to your Stripe account via the Model Context Protocol (MCP), enabling the AI to answer customer questions about payments, subscriptions, invoices, and refund status directly from Stripe data.
 
-### Prerequisites — setting up your Stripe account
+### Prerequisites: setting up your Stripe account
 
 Before enabling this integration, you need a Stripe account with a restricted API key:
 
@@ -131,7 +131,7 @@ Use a Stripe **restricted key** (`rk_`) with read-only permissions for maximum s
 - Your Stripe API key is stored in Azure Key Vault (never in the database).
 - Keys are cached in memory for 5 minutes to reduce Key Vault latency.
 - All queries go through the Critic/Supervisor safety validation.
-- Connection failures are handled gracefully — the AI responds using knowledge base data when Stripe is unavailable.
+- Connection failures are handled gracefully: the AI responds using knowledge base data when Stripe is unavailable.
 
 ---
 
@@ -146,7 +146,7 @@ Use a Stripe **restricted key** (`rk_`) with read-only permissions for maximum s
 
 Routes escalated conversations to Zendesk as support tickets, enabling your existing helpdesk workflow to handle cases that the AI cannot resolve.
 
-### Prerequisites — setting up your Zendesk account
+### Prerequisites: setting up your Zendesk account
 
 1. **Create a Zendesk account** (if you do not have one) at [zendesk.com](https://www.zendesk.com). A Zendesk Suite or Support plan is required.
 2. **Create an API token** in Zendesk:
@@ -154,8 +154,8 @@ Routes escalated conversations to Zendesk as support tickets, enabling your exis
    - Click **Settings** and ensure **Token access** is enabled.
    - Click **Add API token**.
    - Name it "Agent Red" and click **Create**.
-   - Copy the token — it is only shown once.
-3. **Note your Zendesk subdomain** — this is the `yourcompany` part of `yourcompany.zendesk.com`.
+   - Copy the token: it is only shown once.
+3. **Note your Zendesk subdomain**: this is the `yourcompany` part of `yourcompany.zendesk.com`.
 
 ### Connecting Zendesk to Agent Red
 
@@ -197,7 +197,7 @@ To get the most out of the integration, configure these settings in Zendesk:
 
 Sends customer interaction data to Mailchimp, enabling targeted post-conversation email campaigns based on conversation topics and outcomes.
 
-### Prerequisites — setting up your Mailchimp account
+### Prerequisites: setting up your Mailchimp account
 
 1. **Create a Mailchimp account** (if you do not have one) at [mailchimp.com](https://mailchimp.com). A Standard or Premium plan is recommended for automation features.
 2. **Generate an API key:**
@@ -208,9 +208,9 @@ Sends customer interaction data to Mailchimp, enabling targeted post-conversatio
    - Go to **Audience → All contacts → Settings → Audience name and defaults**.
    - Copy the **Audience ID** shown at the bottom of the page.
 4. **Create tags** in your audience for segmentation (optional but recommended):
-   - `agent-red-customer` — for all customers who interacted with Agent Red
-   - `escalated` — for customers whose conversations were escalated
-   - `resolved` — for customers whose issues were resolved by the AI
+   - `agent-red-customer`, for all customers who interacted with Agent Red
+   - `escalated`, for customers whose conversations were escalated
+   - `resolved`, for customers whose issues were resolved by the AI
 
 ### Connecting Mailchimp to Agent Red
 
@@ -232,7 +232,7 @@ After each conversation ends, Agent Red can add or update the customer in your M
 ### Mailchimp campaign ideas
 
 - **Post-purchase follow-up:** Segment customers tagged with product-related conversation topics and send care instructions or upsell emails.
-- **Recovery campaigns:** Target customers whose conversations were escalated — send a follow-up email checking on their satisfaction.
+- **Recovery campaigns:** Target customers whose conversations were escalated: send a follow-up email checking on their satisfaction.
 - **FAQ awareness:** If many customers ask the same question, send a broadcast email with the answer to reduce future support volume.
 
 ---
@@ -248,7 +248,7 @@ After each conversation ends, Agent Red can add or update the customer in your M
 
 Sends conversation events to Google Analytics, enabling you to track widget interactions alongside your existing website analytics.
 
-### Prerequisites — setting up Google Analytics
+### Prerequisites: setting up Google Analytics
 
 1. **Create a Google Analytics 4 (GA4) property** (if you do not have one) at [analytics.google.com](https://analytics.google.com).
 2. **Get your Measurement ID:**
@@ -297,7 +297,7 @@ To analyze Agent Red data in GA4:
 | **Default** | Off |
 | **Tier** | Enterprise only |
 
-Enterprise customers can connect Agent Red to custom APIs and data sources. Custom integrations use webhook-based communication — Agent Red sends events to your endpoint and can receive responses.
+Enterprise customers can connect Agent Red to custom APIs and data sources. Custom integrations use webhook-based communication: Agent Red sends events to your endpoint and can receive responses.
 
 Contact your account manager to configure a custom integration for your specific use case.
 

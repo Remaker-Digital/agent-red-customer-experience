@@ -330,15 +330,6 @@ class TestSpec0832MerchantCanWatchIngestion:
             "Must show ingestion progress"
 
 
-class TestSpec0587ExampleStoreIsTheStorefront:
-    """SPEC-0587: example-store.myshopify.com is THE production storefront."""
-
-    def test_example_store_referenced(self):
-        env = (ROOT / ".env.local").read_text(encoding="utf-8")
-        assert "example-store" in env, \
-            "example-store must be configured as the storefront"
-
-
 class TestSpec0612AdminChatUsersNonBuyers:
     """SPEC-0612: Admin users using chat widget MUST be treated as non-buyer customers."""
 

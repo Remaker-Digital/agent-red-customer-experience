@@ -422,7 +422,7 @@ class TestPipelineStateManagement:
 
         # Mock the background task creation to avoid actually running the pipeline
         with patch("asyncio.create_task"), patch.dict(
-            os.environ, {"CONTAINER_APP_FQDN": "agent-red-staging.example.com"}, clear=False
+            os.environ, {"CONTAINER_APP_FQDN": "example-gateway-stage.example.com"}, clear=False
         ):
             result = await trigger_deployment(req)
 
@@ -611,7 +611,7 @@ class TestSPAContract:
         req = TriggerRequest(version="v1.0.0")
 
         with patch("asyncio.create_task"), patch.dict(
-            os.environ, {"CONTAINER_APP_FQDN": "agent-red-staging.example.com"}, clear=False
+            os.environ, {"CONTAINER_APP_FQDN": "example-gateway-stage.example.com"}, clear=False
         ):
             result = await trigger_deployment(req)
 

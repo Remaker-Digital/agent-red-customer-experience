@@ -26,6 +26,21 @@ async def test_deployed_config_guard_allows_complete_production_env(monkeypatch:
 
 
 @pytest.mark.asyncio
+@pytest.mark.parametrize(("length", "allowed"), [(11, False), (12, True)])
+async def test_deployed_config_guard_enforces_admin_password_length(monkeypatch, length, allowed):
+    from src.app.lifecycle import _startup_required_deployed_config
+
+    _set_valid_deployed_env(monkeypatch)
+    monkeypatch.setenv("ADMIN_PREVIEW_PASSWORD", "p" * length)
+
+    if allowed:
+        await _startup_required_deployed_config()
+    else:
+        with pytest.raises(RuntimeError, match="ADMIN_PREVIEW_PASSWORD must be at least 12 characters"):
+            await _startup_required_deployed_config()
+
+
+@pytest.mark.asyncio
 async def test_deployed_config_guard_rejects_missing_signing_secret(monkeypatch: pytest.MonkeyPatch) -> None:
     from src.app.lifecycle import _startup_required_deployed_config
 

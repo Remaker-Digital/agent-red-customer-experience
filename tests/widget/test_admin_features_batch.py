@@ -1004,11 +1004,19 @@ class TestRuntimeJsApi:
         assert "getLocalePack(code)" in source
 
     def test_sdk_set_locale_merges_merchant_overrides(self) -> None:
-        """setLocale preserves merchant text overrides (header_text, etc.)."""
-        source = _read(self.INDEX_TS)
-        # The setLocale implementation should spread merchant overrides on top
-        assert "widget_header_text" in source
-        assert "widget_input_placeholder" in source
+        """Locale changes preserve the merchant placeholder, offline copy, and header."""
+        entry = _read(self.INDEX_TS)
+        set_locale = entry.split("setLocale:", 1)[1].split("setTheme:", 1)[0]
+        _, locale_pack_spread, merchant_overrides = set_locale.partition("...pack,")
+        assert locale_pack_spread
+        assert "inputPlaceholder: cfg.widget_input_placeholder" in merchant_overrides
+        assert "offlineMessage: cfg.widget_offline_message" in merchant_overrides
+
+        panel = _read(self.PANEL_TSX)
+        assert "locale={activeLocale}" in panel
+        assert "headerText={activeConfig.widget_header_text || null}" in panel
+        header = _read(WIDGET_SRC / "components" / "Header.tsx")
+        assert "headerText || locale.headerTitle" in header
 
     def test_sdk_set_theme_implementation(self) -> None:
         """SDK object implements setTheme by setting tokenOverrides in store."""

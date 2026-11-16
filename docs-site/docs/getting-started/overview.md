@@ -8,8 +8,6 @@ description: What Agent Red Customer Experience does, how the closed-beta pipeli
 
 Agent Red Customer Experience is in a closed beta. It automates customer support for e-commerce stores. The closed beta runs seven core roles in one gateway process: intent classification, knowledge retrieval, response generation, a critic, escalation, analytics, and a co-pilot for staff. Peer agents are not part of the beta. To request access, email [support@remakerdigital.com](mailto:support@remakerdigital.com).
 
-![Agent Red admin dashboard](/img/admin/dashboard.png)
-
 ## The agent pipeline
 
 When a customer sends a message, it flows through the agent pipeline:
@@ -29,11 +27,11 @@ flowchart LR
 ```
 
 1. **Intent Classification.** Determines what the customer needs (order status, return request, product question, and others) across 18 total intent categories (17 customer-facing plus an admin-assistance route for admin-authenticated traffic) using a smaller language model.
-2. **Knowledge Retrieval** — Searches your product catalog, FAQ database, and policy documents using hybrid semantic vector + keyword search to find relevant context.
-3. **Response Generation** — Composes a natural-language reply using the retrieved context and conversation history, personalized to your brand voice.
-4. **Critic / Supervisor** — Validates the response for factual accuracy, policy compliance, and content safety before it reaches the customer.
-5. **Escalation Detection** — Evaluates whether the conversation requires human attention (angry customer, complex issue, VIP account) and routes accordingly.
-6. **Analytics** — Records conversation metrics for quality monitoring, reporting, and continuous improvement.
+2. **Knowledge Retrieval**: Searches your product catalog, FAQ database, and policy documents using hybrid semantic vector + keyword search to find relevant context.
+3. **Response Generation**: Composes a natural-language reply using the retrieved context and conversation history, personalized to your brand voice.
+4. **Critic / Supervisor**: Validates the response for factual accuracy, policy compliance, and content safety before it reaches the customer.
+5. **Escalation Detection**: Evaluates whether the conversation requires human attention (angry customer, complex issue, VIP account) and routes accordingly.
+6. **Analytics**: Records conversation metrics for quality monitoring, reporting, and continuous improvement.
 
 ## Architecture
 
@@ -95,7 +93,7 @@ These are the performance targets Agent Red is designed to achieve:
 ## Next steps
 
 - [How It Works](./how-it-works): the core pipeline, communication, and data flow.
-- [Initial Setup](./setup) — What you need to get Agent Red running for your store.
+- [Initial Setup](./setup): What you need to get Agent Red running for your store.
 
 ---
 

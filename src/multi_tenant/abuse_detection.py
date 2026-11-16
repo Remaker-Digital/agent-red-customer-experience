@@ -3,7 +3,7 @@
 
 Provides REST endpoints for the service provider (SUPERADMIN role) to detect
 and flag tenants exhibiting anomalous usage patterns. Scans for rate anomalies,
-volume spikes, widget abuse, token exhaustion, and elevated error rates.
+volume spikes, token exhaustion, and elevated error rates.
 
 Endpoints:
     GET  /api/superadmin/abuse/signals             — Cross-tenant abuse signal scan
@@ -39,7 +39,6 @@ RATE_ANOMALY_THRESHOLD_PCT = 80  # % of tier rate limit
 VOLUME_SPIKE_MULTIPLIER = 3.0  # x above 7-day average
 TOKEN_EXHAUSTION_THRESHOLD_PCT = 90  # % of tier allowance
 ERROR_RATE_THRESHOLD_PCT = 10  # % error rate in conversations
-WIDGET_ABUSE_SIGNAL = "origin_mismatch"  # mismatched widget origin
 
 
 # ---------------------------------------------------------------------------
@@ -52,7 +51,6 @@ class SignalType(str, Enum):
 
     RATE_ANOMALY = "rate_anomaly"
     VOLUME_SPIKE = "volume_spike"
-    WIDGET_ABUSE = "widget_abuse"
     TOKEN_EXHAUSTION = "token_exhaustion"
     ERROR_RATE = "error_rate"
 
@@ -244,44 +242,7 @@ async def _detect_volume_spike(
                 threshold=threshold,
             )
     except Exception:
-        logger.warning("Volume spike detection failed for tenant=%s", tenant_id, exc_info=True)
-    return None
-
-
-async def _detect_widget_abuse(
-    tenant_id: str, tenant_doc: dict[str, Any], now: datetime,
-) -> AbuseSignal | None:
-    """Detect widget origin mismatch (SPEC-1840).
-
-    Checks if the tenant has configured approved widget origins. If not
-    configured, flags as potential widget abuse (open widget without origin
-    restriction). Degrades gracefully on error.
-    """
-    try:
-        # SPEC-1840: approved_widget_origins is saved on the tenant's active
-        # preferences, not the tenant document (architecture review S14).
-        from src.multi_tenant.middleware import approved_widget_origins
-
-        approved_origins = await approved_widget_origins(tenant_id, tenant_doc)
-        # Tenant documents hold the key's hash; the raw key is on preferences.
-        widget_key = tenant_doc.get("widget_key") or tenant_doc.get("widget_key_hash") or ""
-
-        # Flag tenants that have a widget key but no origin restriction
-        if widget_key and not approved_origins:
-            return AbuseSignal(
-                tenant_id=tenant_id,
-                signal_type=SignalType.WIDGET_ABUSE.value,
-                severity=Severity.MEDIUM.value,
-                description=(
-                    "Widget key is active but no allowed origin is configured. "
-                    "Widget requests may come from unauthorized domains."
-                ),
-                detected_at=now.isoformat(),
-                metric_value=1.0,
-                threshold=0.0,
-            )
-    except Exception:
-        logger.warning("Widget abuse detection failed for tenant=%s", tenant_id, exc_info=True)
+        logger.warning("Volume spike detection failed", exc_info=True)
     return None
 
 
@@ -335,7 +296,7 @@ async def _detect_token_exhaustion(
                 threshold=float(tier_limit),
             )
     except Exception:
-        logger.warning("Token exhaustion detection failed for tenant=%s", tenant_id, exc_info=True)
+        logger.warning("Token exhaustion detection failed", exc_info=True)
     return None
 
 
@@ -401,13 +362,11 @@ async def _detect_error_rate(
                 threshold=threshold,
             )
     except Exception:
-        logger.warning("Error rate detection failed for tenant=%s", tenant_id, exc_info=True)
+        logger.warning("Error rate detection failed", exc_info=True)
     return None
 
 
-async def _scan_tenant(
-    tenant_id: str, tenant_doc: dict[str, Any], now: datetime,
-) -> list[AbuseSignal]:
+async def _scan_tenant(tenant_id: str, now: datetime) -> list[AbuseSignal]:
     """Run all abuse signal detectors for a single tenant.
 
     Each detector degrades gracefully — a failed detector does not block others.
@@ -416,7 +375,6 @@ async def _scan_tenant(
 
     detectors = [
         _detect_volume_spike(tenant_id, now),
-        _detect_widget_abuse(tenant_id, tenant_doc, now),
         _detect_token_exhaustion(tenant_id, now),
         _detect_error_rate(tenant_id, now),
     ]
@@ -427,7 +385,7 @@ async def _scan_tenant(
             if result is not None:
                 signals.append(result)
         except Exception:
-            logger.warning("Detector failed for tenant=%s", tenant_id, exc_info=True)
+            logger.warning("Detector failed", exc_info=True)
 
     return signals
 
@@ -469,13 +427,13 @@ async def scan_abuse_signals(
     flagged_count = 0
 
     for tid in tenant_ids:
-        # Read the tenant document for config-based checks
+        # Read the tenant's manual abuse flag
         try:
             tenant_doc = await _tenant_repo.read(tid, tid)
         except Exception:
             tenant_doc = {}
 
-        signals = await _scan_tenant(tid, tenant_doc, now)
+        signals = await _scan_tenant(tid, now)
         is_flagged = tenant_doc.get("abuse_flagged", False)
         if is_flagged:
             flagged_count += 1
@@ -529,7 +487,7 @@ async def get_tenant_abuse_profile(
         raise HTTPException(status_code=404, detail=f"Tenant not found: {tenant_id}")
 
     now = datetime.now(UTC)
-    signals = await _scan_tenant(tenant_id, tenant_doc, now)
+    signals = await _scan_tenant(tenant_id, now)
     risk_score = _compute_risk_score(signals)
 
     return TenantAbuseProfile(

@@ -66,6 +66,7 @@ export interface ShopifyCustomer {
 export type WidgetView =
   | 'closed'           // Launcher button only
   | 'prechat'          // Pre-chat form (if configured)
+  | 'verify_email'     // Direct visitor email verification
   | 'otp'              // OTP email verification (AUTH-3)
   | 'phone_otp'        // SMS OTP phone verification (SPEC-1879)
   | 'conversation'     // Active chat

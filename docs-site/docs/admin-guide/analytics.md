@@ -10,6 +10,8 @@ The Analytics Dashboard gives you a real-time view of your AI agent's performanc
 
 ![Analytics dashboard showing usage, topics, and knowledge gaps](/img/admin/analytics-dashboard.png)
 
+Illustrative example based on prior work.
+
 ## Analytics-to-action loop
 
 ```mermaid
@@ -34,14 +36,14 @@ The average time for the AI to generate a complete response, measured from the m
 The percentage of conversations resolved entirely by the AI without requiring human escalation. A higher resolution rate means your knowledge base and agent configuration are effectively handling customer needs.
 
 ### Customer Satisfaction
-Average customer rating on a 1–5 scale, collected via optional post-conversation feedback. This metric only reflects conversations where customers chose to leave a rating.
+Average customer rating on a 1 to 5 scale, collected via optional post-conversation feedback. This metric only reflects conversations where customers chose to leave a rating.
 
 ### Escalation Rate
 The percentage of conversations handed off to a human team member. Monitor this alongside your escalation threshold setting in [Agent Configuration](/docs/admin-guide/escalation-rules) to find the right balance.
 
 ## Daily Usage Chart
 
-The daily usage chart shows two series — **total conversations** and **billable conversations** — over your selected time period (7, 14, 30, or 90 days). Use this to identify peak support hours, seasonal trends, and the impact of marketing campaigns on support volume.
+The daily usage chart shows two series: **total conversations** and **billable conversations**: over your selected time period (7, 14, 30, or 90 days). Use this to identify peak support hours, seasonal trends, and the impact of marketing campaigns on support volume.
 
 ## Top Topics
 
@@ -49,7 +51,7 @@ The most frequently detected customer topics, ranked by conversation count. This
 
 ## Topic Breakdown
 
-A complete table of all detected topics with conversation count and distribution percentage. The AI processing pipeline labels each topic with a user-friendly name (e.g., "Question routing", "Knowledge lookup", "Response generation", "Quality review"). Use this to prioritize knowledge base improvements — topics with high volume but low resolution rates are candidates for new or updated articles.
+A complete table of all detected topics with conversation count and distribution percentage. The AI processing pipeline labels each topic with a user-friendly name (e.g., "Question routing", "Knowledge lookup", "Response generation", "Quality review"). Use this to prioritize knowledge base improvements: topics with high volume but low resolution rates are candidates for new or updated articles.
 
 ## Knowledge Gaps
 

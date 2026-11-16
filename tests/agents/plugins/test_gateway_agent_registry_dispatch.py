@@ -69,7 +69,7 @@ class TestGatewayAgentSpec1710:
         assert gateway_agent.tier_gate == "starter"
         assert gateway_agent.health_check == "/health"
         assert gateway_agent.status == "available"
-        assert gateway_agent.endpoint == "${AGENT_GATEWAY_URL:-http://10.0.1.23:8080}"
+        assert gateway_agent.endpoint == "${AGENT_GATEWAY_URL:-http://192.0.2.23:8080}"
         assert gateway_agent.resolve_endpoint() == "http://gateway-agent.test:8080"
         assert gateway_agent.capabilities == GATEWAY_CAPABILITIES
 
@@ -96,7 +96,7 @@ class TestGatewayAgentSpec1710:
         }
         assert set(catalog) == set(GATEWAY_CAPABILITIES)
         for tool_name in GATEWAY_CAPABILITIES:
-            assert catalog[tool_name]["_endpoint"] == ("${AGENT_GATEWAY_URL:-http://10.0.1.23:8080}")
+            assert catalog[tool_name]["_endpoint"] == ("${AGENT_GATEWAY_URL:-http://192.0.2.23:8080}")
             assert catalog[tool_name]["_is_external"] is False
 
     @pytest.mark.asyncio

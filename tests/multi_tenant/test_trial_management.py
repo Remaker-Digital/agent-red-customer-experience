@@ -96,8 +96,8 @@ def _make_repos(
     conversation_repo = AsyncMock()
     conversation_repo.create.return_value = {}
 
-    # query for conversation count returns a list with one integer
-    conversation_repo.query.return_value = [conversation_count]
+    # query_count returns a scalar integer.
+    conversation_repo.query_count.return_value = conversation_count
 
     # -- Profile repo --
     profile_repo = AsyncMock()

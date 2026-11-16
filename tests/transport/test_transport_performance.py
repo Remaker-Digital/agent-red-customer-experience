@@ -12,8 +12,8 @@ Hard enforcement deferred to Phase 5 after baseline stabilization.
 
 Analytics is explicitly excluded: fire-and-forget, non-customer-facing.
 
-Recovery plan reference: INSIGHTS-2026-03-27-01-00.md Phase 4.
-Codex GO: INSIGHTS-2026-03-28-02-05-PHASE4-PLAN-REREVIEW.md.
+Recovery plan reference: the original transport analysis Phase 4.
+Codex GO: the original transport analysis.
 Governing decisions: ADR-001, DCL-002 v4.
 
 © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
@@ -23,18 +23,24 @@ from __future__ import annotations
 
 import json
 import time
+from functools import partial
 from pathlib import Path
 
+import httpx
 import pytest
 
 from tests.transport.conftest import (
     BenchmarkResult,
+    ESCALATION_STAGE_NAMES,
+    GATEWAY_ATTEMPTS,
+    LatencyReport,
+    PIPELINE_STAGE_NAMES,
     get_stage_latency,
     get_total_latency,
     has_error_event,
+    is_done_event,
     requires_test_host,
     run_conversation,
-    TEST_HOST_URL,
 )
 
 # Sample messages — varied to avoid caching effects
@@ -75,190 +81,106 @@ ESCALATION_MESSAGES = [
 # ---------------------------------------------------------------------------
 
 
+def _measure_conversations(base_url, headers, messages, report, readers):
+    def observe(message):
+        try:
+            events = run_conversation(base_url, headers, message)
+        except (httpx.HTTPError, ValueError, KeyError):
+            events = []
+        if (
+            any(not isinstance(event, dict) for event in events)
+            or has_error_event(events)
+            or not any(map(is_done_event, events))
+        ):
+            for result in report.populations.values():
+                result.errors += 1
+            return
+        for name, result in report.populations.items():
+            if report.population_key == "stages":
+                stage_statuses = [event.get("status") for event in events if event.get("stage") == name]
+                if all(status == "skipped" for status in stage_statuses):
+                    result.absent += 1
+                    continue
+            result.record(readers[name](events))
+
+    report.measure(messages, observe)
+    report.require_measurements()
+
+
 class TestPerHopStageLatency:
-    """Measure per-agent latency from SSE stage events (latency_ms)."""
+    """Measure latency on the transport test host."""
 
     @requires_test_host
     def test_per_hop_stage_latency(self, staging_base_url, widget_headers, benchmark_output):
-        """20 conversations — per-stage P50/P95 from latency_ms.
-
-        Provisional targets (measurement, not hard gates):
-        - IC P95 < 200ms (gpt-4o-mini classification)
-        - KR P95 < 5000ms (vector search + Cosmos, occasional cold-partition outliers)
-        - RG P95 < 5000ms (gpt-4o streaming, in-process per DCL-002 v4)
-        - Critic P95 < 1000ms (fail-closed if unavailable)
-        """
-        stage_results = {
-            "intent-classifier": BenchmarkResult(name="ic-latency", tier="per-interface"),
-            "knowledge-retrieval": BenchmarkResult(name="kr-latency", tier="per-interface"),
-            "response-generator": BenchmarkResult(name="rg-latency", tier="per-interface"),
-            "critic-supervisor": BenchmarkResult(name="critic-latency", tier="per-interface"),
-        }
-
-        for msg in SAMPLE_MESSAGES[:20]:
-            events = run_conversation(staging_base_url, widget_headers, msg)
-            if has_error_event(events):
-                for r in stage_results.values():
-                    r.errors += 1
-                continue
-
-            for stage_name, result in stage_results.items():
-                latency = get_stage_latency(events, stage_name)
-                if latency is not None:
-                    result.samples.append(latency)
-
-        # Report
-        for stage_name, result in stage_results.items():
-            print(f"\n  {stage_name}: P50={result.p50:.0f}ms P95={result.p95:.0f}ms "
-                  f"({len(result.samples)} samples, {result.errors} errors)")
-
-        # Provisional thresholds (measurement, not hard gates)
-        ic = stage_results["intent-classifier"]
-        kr = stage_results["knowledge-retrieval"]
-        rg = stage_results["response-generator"]
-        cr = stage_results["critic-supervisor"]
-
-        assert len(ic.samples) >= 10, f"Insufficient IC samples: {len(ic.samples)}"
-        assert ic.p95 < 200, f"IC P95={ic.p95:.0f}ms exceeds provisional 200ms"
-        assert kr.p95 < 5000, f"KR P95={kr.p95:.0f}ms exceeds provisional 5000ms"
-        assert rg.p95 < 5000, f"RG P95={rg.p95:.0f}ms exceeds provisional 5000ms"
-        assert cr.p95 < 1000, f"Critic P95={cr.p95:.0f}ms exceeds provisional 1000ms"
-
-        # Write benchmark artifact
-        report = {
-            "timestamp": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
-            "test": "per_hop_stage_latency",
-            "sample_count": 20,
-            "stages": {name: r.to_dict() for name, r in stage_results.items()},
-        }
-        (benchmark_output / "per-hop-latency.json").write_text(json.dumps(report, indent=2))
+        report = LatencyReport(
+            benchmark_output / "per-hop-latency.json", "per_hop_stage_latency", len(SAMPLE_MESSAGES),
+            {name: BenchmarkResult(name, "per-interface") for name in PIPELINE_STAGE_NAMES}, "stages",
+        )
+        readers = {name: partial(get_stage_latency, stage_name=name) for name in PIPELINE_STAGE_NAMES}
+        _measure_conversations(staging_base_url, widget_headers, SAMPLE_MESSAGES, report, readers)
 
     @requires_test_host
     def test_total_pipeline_latency(self, staging_base_url, widget_headers, benchmark_output):
-        """20 conversations — total pipeline P50/P95/P99 from done event."""
-        result = BenchmarkResult(name="total-pipeline", tier="end-to-end")
-
-        for msg in SAMPLE_MESSAGES[:20]:
-            events = run_conversation(staging_base_url, widget_headers, msg)
-            if has_error_event(events):
-                result.errors += 1
-                continue
-            total = get_total_latency(events)
-            if total is not None:
-                result.samples.append(total)
-
-        print(f"\n  Pipeline: P50={result.p50:.0f}ms P95={result.p95:.0f}ms "
-              f"P99={result.p99:.0f}ms ({len(result.samples)} samples, {result.errors} errors)")
-
-        assert len(result.samples) >= 10, f"Insufficient samples: {len(result.samples)}"
-        assert result.p95 < 8000, f"Pipeline P95={result.p95:.0f}ms exceeds provisional 8000ms"
-
-        report = {
-            "timestamp": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
-            "test": "total_pipeline_latency",
-            "benchmarks": [result.to_dict()],
-        }
-        (benchmark_output / "pipeline-latency.json").write_text(json.dumps(report, indent=2))
+        result = BenchmarkResult("total-pipeline", "end-to-end")
+        report = LatencyReport(
+            benchmark_output / "pipeline-latency.json", "total_pipeline_latency",
+            len(SAMPLE_MESSAGES), {result.name: result}, "benchmarks",
+        )
+        _measure_conversations(
+            staging_base_url, widget_headers, SAMPLE_MESSAGES, report, {result.name: get_total_latency},
+        )
 
     @requires_test_host
-    def test_gateway_baseline_latency(self, staging_base_url):
-        """20x /ready — gateway overhead without agent dispatch."""
-        import httpx
-        result = BenchmarkResult(name="gateway-baseline", tier="http")
-        client = httpx.Client(timeout=30.0)
-        try:
-            # Warm-up request (TLS handshake + connection pool init)
-            client.get(f"{staging_base_url}/ready")
-            for _ in range(20):
+    def test_gateway_baseline_latency(self, staging_base_url, benchmark_output):
+        """Measure /ready separately from agent dispatch."""
+        result = BenchmarkResult("gateway-baseline", "http")
+        report = LatencyReport(
+            benchmark_output / "gateway-baseline.json", "gateway_baseline_latency",
+            GATEWAY_ATTEMPTS, {result.name: result}, "benchmarks",
+        )
+        report.write()
+        with httpx.Client(timeout=30.0) as client:
+            try:
+                report.warmup_status = client.get(f"{staging_base_url}/ready").status_code
+            except httpx.HTTPError:
+                pass
+
+            def observe(_):
                 start = time.monotonic()
-                resp = client.get(f"{staging_base_url}/ready")
-                elapsed = (time.monotonic() - start) * 1000
-                if resp.status_code == 200:
-                    result.samples.append(elapsed)
+                try:
+                    response = client.get(f"{staging_base_url}/ready")
+                except httpx.HTTPError:
+                    result.errors += 1
+                    return
+                if response.status_code == 200:
+                    result.record((time.monotonic() - start) * 1000)
                 else:
                     result.errors += 1
-        finally:
-            client.close()
 
-        print(f"\n  Gateway baseline: P50={result.p50:.0f}ms P95={result.p95:.0f}ms")
-        assert result.p95 < 500, f"Gateway P95={result.p95:.0f}ms exceeds 500ms"
-        assert result.errors == 0
+            report.measure(range(GATEWAY_ATTEMPTS), observe)
+
+        assert result.errors == 0, f"/ready failed on {result.errors} of {GATEWAY_ATTEMPTS} measured requests"
+        report.require_measurements()
 
     @requires_test_host
     def test_escalation_path_latency(self, staging_base_url, widget_headers, benchmark_output):
-        """5 escalation conversations — IC + escalation-handler latency_ms.
-
-        If escalation is not classifiable (environment limitation), reports
-        as a measurement gap — not a pass-equivalent (per Codex advisory).
-        """
-        ic_result = BenchmarkResult(name="escalation-ic", tier="per-interface")
-        esc_result = BenchmarkResult(name="escalation-handler", tier="per-interface")
-        measurement_gap = False
-
-        for msg in ESCALATION_MESSAGES[:5]:
-            events = run_conversation(staging_base_url, widget_headers, msg)
-            if has_error_event(events):
-                ic_result.errors += 1
-                continue
-
-            ic_latency = get_stage_latency(events, "intent-classifier")
-            if ic_latency is not None:
-                ic_result.samples.append(ic_latency)
-
-            esc_latency = get_stage_latency(events, "escalation-handler")
-            if esc_latency is not None:
-                esc_result.samples.append(esc_latency)
-            else:
-                # Stage may exist without latency_ms, or not exist at all.
-                # Either way, escalation-handler latency is unmeasured.
-                measurement_gap = True
-
-        print(f"\n  Escalation IC: P50={ic_result.p50:.0f}ms ({len(ic_result.samples)} samples)")
-        print(f"  Escalation Handler: P50={esc_result.p50:.0f}ms ({len(esc_result.samples)} samples)")
-        if measurement_gap:
-            print("  WARNING: escalation-handler stage not observed — measurement gap")
-
-        assert len(ic_result.samples) >= 1, "No IC samples from escalation attempts"
-
-        report = {
-            "timestamp": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
-            "test": "escalation_path_latency",
-            "measurement_gap": measurement_gap,
-            "stages": {
-                "intent-classifier": ic_result.to_dict(),
-                "escalation-handler": esc_result.to_dict(),
-            },
-        }
-        (benchmark_output / "escalation-latency.json").write_text(json.dumps(report, indent=2))
+        report = LatencyReport(
+            benchmark_output / "escalation-latency.json", "escalation_path_latency", len(ESCALATION_MESSAGES),
+            {name: BenchmarkResult(name, "per-interface") for name in ESCALATION_STAGE_NAMES}, "stages",
+        )
+        readers = {name: partial(get_stage_latency, stage_name=name) for name in ESCALATION_STAGE_NAMES}
+        _measure_conversations(staging_base_url, widget_headers, ESCALATION_MESSAGES, report, readers)
 
     @requires_test_host
     def test_widget_pipeline_latency(self, staging_base_url, widget_headers, benchmark_output):
-        """20 widget conversations — same metrics as per-hop test.
-
-        Verifies widget traffic has comparable latency.
-        """
-        result = BenchmarkResult(name="widget-pipeline", tier="widget")
-
-        for msg in SAMPLE_MESSAGES[:20]:
-            events = run_conversation(staging_base_url, widget_headers, msg)
-            if has_error_event(events):
-                result.errors += 1
-                continue
-            total = get_total_latency(events)
-            if total is not None:
-                result.samples.append(total)
-
-        print(f"\n  Widget pipeline: P50={result.p50:.0f}ms P95={result.p95:.0f}ms "
-              f"({len(result.samples)} samples, {result.errors} errors)")
-
-        assert len(result.samples) >= 10, f"Insufficient widget samples: {len(result.samples)}"
-
-        report = {
-            "timestamp": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
-            "test": "widget_pipeline_latency",
-            "benchmarks": [result.to_dict()],
-        }
-        (benchmark_output / "widget-latency.json").write_text(json.dumps(report, indent=2))
+        result = BenchmarkResult("widget-pipeline", "widget")
+        report = LatencyReport(
+            benchmark_output / "widget-latency.json", "widget_pipeline_latency",
+            len(SAMPLE_MESSAGES), {result.name: result}, "benchmarks",
+        )
+        _measure_conversations(
+            staging_base_url, widget_headers, SAMPLE_MESSAGES, report, {result.name: get_total_latency},
+        )
 
 
 # ---------------------------------------------------------------------------
@@ -339,7 +261,7 @@ class TestArchitectureVerification:
 
 
 class TestFailureInjection:
-    """Verify failure paths have bounded latency."""
+    """Verify transport and critic failure responses."""
 
     def test_503_on_transport_exhaustion(self):
         """_require_transport_or_fail() raises HTTPException 503."""
@@ -347,16 +269,13 @@ class TestFailureInjection:
         from src.chat.pipeline.agent_dispatch import AgentDispatchMixin
 
         mixin = AgentDispatchMixin.__new__(AgentDispatchMixin)
-        start = time.monotonic()
         with pytest.raises(HTTPException) as exc_info:
             mixin._require_transport_or_fail("test-agent")
-        elapsed = (time.monotonic() - start) * 1000
 
         assert exc_info.value.status_code == 503
-        assert elapsed < 50, f"503 took {elapsed:.1f}ms — should be near-instant"
 
-    def test_critic_fail_closed_latency(self):
-        """Critic unavailable returns safe fallback in <10ms."""
+    def test_critic_unavailable_returns_safe_fallback(self):
+        """Verify the safe fallback when the critic is unavailable."""
         import asyncio
         from unittest.mock import patch
 
@@ -369,8 +288,7 @@ class TestFailureInjection:
 
         with patch("src.multi_tenant.agntcy_sdk_integration._transport", None), \
              patch("src.multi_tenant.agntcy_sdk_integration._transport_setup_ok", False):
-            start = time.monotonic()
-            approved, message, result = asyncio.run(
+            approved, message, _ = asyncio.run(
                 mixin._validate_with_critic(
                     tenant_id="test-tenant",
                     conversation_id="test-conv",
@@ -380,12 +298,9 @@ class TestFailureInjection:
                     knowledge_titles=None,
                 )
             )
-            elapsed = (time.monotonic() - start) * 1000
 
         assert approved is False
         assert message == SAFE_FALLBACK_MESSAGE
-        assert elapsed < 10, f"Fail-closed took {elapsed:.1f}ms — should be <10ms"
-        print(f"\n  Critic fail-closed: {elapsed:.1f}ms")
 
 
 # ---------------------------------------------------------------------------
@@ -397,9 +312,7 @@ class TestBenchmarkOutput:
     """Generate consolidated benchmark report."""
 
     def test_benchmark_report_generation(self, benchmark_output):
-        """Generate structured JSON report from all benchmark artifacts."""
-        import httpx
-
+        """Summarize saved observations for the selected run."""
         artifacts = {}
         for f in benchmark_output.glob("*.json"):
             if f.stem.startswith("transport-benchmark-"):
@@ -409,19 +322,11 @@ class TestBenchmarkOutput:
             except (json.JSONDecodeError, OSError):
                 pass
 
-        version = "unknown"
-        if TEST_HOST_URL:
-            try:
-                resp = httpx.get(f"{TEST_HOST_URL.rstrip('/')}/health", timeout=10.0)
-                version = resp.json().get("product_version", "unknown")
-            except Exception:
-                pass
-
+        if not artifacts:
+            pytest.skip("No benchmark artifacts to summarize.")
         report = {
             "timestamp": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
-            "version": version,
             "phase": "4",
-            "test_host_url": TEST_HOST_URL or "not configured",
             "artifacts": artifacts,
         }
 

@@ -76,19 +76,12 @@ from src.multi_tenant.magic_link_auth import verify_magic_link_session_token
 
 logger = logging.getLogger(__name__)
 
-# SPEC-1840: a tenant's approved widget origins are saved on its active
-# preferences (PreferencesDocument), not on the tenant document that the
-# widget-key lookup returns. Cached briefly so widget requests do not each
-# add a Cosmos query; a change in the admin applies within the TTL.
-_WIDGET_ORIGINS_TTL_S = 60.0
-_widget_origins_cache: dict[str, tuple[float, list[str]]] = {}
-
-
 # Credential headers a page cannot set cross-site without a CORS preflight.
 # Query-string credentials (api_key, session_token, widget_key, key) can be
 # planted in a visitor's browser by any page, so their refusals are not
 # counted toward the pre-auth block (architecture review S9, RC-16).
-_HEADER_CREDENTIALS = ("authorization", API_KEY_HEADER, "x-session-token", WIDGET_KEY_HEADER, VERIFICATION_TOKEN_HEADER)
+# Public widget requests also cannot contribute to the account pre-auth block.
+_HEADER_CREDENTIALS = ("authorization", API_KEY_HEADER, "x-session-token", VERIFICATION_TOKEN_HEADER)
 
 # Magic-link session refusals (architecture review S12). A removed or
 # deactivated member gets the expired-session message, so a refusal never
@@ -106,98 +99,6 @@ def _credential_in_headers(request: Request) -> bool:
     """True if the request presented a credential in a header."""
     return any(request.headers.get(name) for name in _HEADER_CREDENTIALS)
 
-
-def request_origin(origin: str | None, referer: str | None) -> str | None:
-    """The request's origin for widget origin checks.
-
-    The Origin header is used as sent. Without one, the Referer is reduced to
-    its scheme and authority (``https://shop.example/products/1`` becomes
-    ``https://shop.example``) so it compares with an approved origin.
-    """
-    if origin:
-        return origin
-    if not referer:
-        return None
-    from urllib.parse import urlsplit
-
-    try:
-        parts = urlsplit(referer)
-    except ValueError:  # a malformed authority such as "https://[broken"
-        return None
-    return f"{parts.scheme}://{parts.netloc}" if parts.scheme and parts.netloc else None
-
-
-def _canonical_origins(value: Any) -> list[str]:
-    """Saved approved origins as a list of non-empty strings.
-
-    The field is not in the configuration field registry, so a draft can save
-    any value: a bare string is one origin (not a list of its characters), and
-    entries that are not strings are dropped rather than raising later.
-    """
-    if isinstance(value, str):
-        value = [value]
-    if not isinstance(value, list):
-        return []
-    return [entry.strip() for entry in value if isinstance(entry, str) and entry.strip()]
-
-
-def _loggable(value: Any) -> str:
-    """A value for a log line, with CR and LF removed so it cannot forge log entries."""
-    return str(value).replace("\r", "").replace("\n", "")
-
-
-async def approved_widget_origins(tenant_id: str, tenant_doc: dict[str, Any]) -> list[str]:
-    """The tenant's approved widget origins, from its active preferences.
-
-    If the preferences cannot be read, the last value read for the tenant is
-    used; with none, the request is refused (503) rather than allowing every
-    origin. Failing closed keeps a transient error from lifting a merchant's
-    restriction (``tenant_doc`` never holds the field, so it cannot stand in).
-
-    With no active document, the 'previous' document's origins apply, uncached:
-    activation (and restoring the previous version) demotes the active document
-    before promoting the next one, and a failed promotion stops there, so the
-    demoted document is the policy that was in force a moment ago. Two
-    'previous' documents mean a restore failed after demoting the active one,
-    and which of them was active cannot be told apart, so that state is handled
-    like a failed read. With neither document, the last value read is used,
-    and with none the tenant has no restriction to apply.
-    """
-    now = time.monotonic()
-    cached = _widget_origins_cache.get(tenant_id)
-    if cached and now - cached[0] < _WIDGET_ORIGINS_TTL_S:
-        return cached[1]
-    try:
-        from src.multi_tenant.repositories import PreferencesRepository
-
-        repo = PreferencesRepository()
-        prefs = await repo.get_active(tenant_id)
-        if prefs is None:
-            previous = await repo.list_previous(tenant_id)
-            if len(previous) == 1:
-                return _canonical_origins(previous[0].get("approved_widget_origins"))
-            if previous:
-                raise RuntimeError("no active preferences and more than one previous document (a failed restore)")
-            return cached[1] if cached else []
-        origins = _canonical_origins(prefs.get("approved_widget_origins"))
-    except Exception:
-        if cached:
-            logger.warning(
-                "SPEC-1840: could not refresh approved_widget_origins for tenant %s; using the last value read",
-                _loggable(tenant_id),
-                exc_info=True,
-            )
-            return cached[1]
-        logger.warning(
-            "SPEC-1840: could not read approved_widget_origins for tenant %s; refusing the widget request",
-            _loggable(tenant_id),
-            exc_info=True,
-        )
-        raise AuthenticationError(
-            "Widget origin settings are temporarily unavailable. Please try again.", status_code=503
-        ) from None
-    _widget_origins_cache[tenant_id] = (now, origins)
-    return origins
 
 # S155/SPEC-1676: Task set to prevent GC of fire-and-forget notification tasks
 _spa_notification_tasks: set[asyncio.Task] = set()
@@ -605,8 +506,7 @@ class TenantAuthMiddleware(BaseHTTPMiddleware):
             )
 
         if widget_key:
-            origin = request_origin(request.headers.get("origin"), request.headers.get("referer"))
-            return await self._auth_widget_key(widget_key, request.url.path, origin, request.method)
+            return await self._auth_widget_key(widget_key, request.url.path, request.method)
 
         # Try internal verification token (SPEC-1846: cloud-native verification)
         verification_token = request.headers.get(VERIFICATION_TOKEN_HEADER)
@@ -949,17 +849,13 @@ class TenantAuthMiddleware(BaseHTTPMiddleware):
 
     @staticmethod
     async def _auth_widget_key(
-        widget_key: str, path: str, origin: str | None, method: str,
+        widget_key: str, path: str, method: str,
     ) -> TenantContext:
         """Authenticate via publishable widget key (Decision UI-6).
 
         Widget keys are scoped to /api/chat/* and to GET or HEAD on exactly
         /api/config. Requests to other paths or methods are rejected even if
         the key is valid.
-
-        SPEC-1840 / WI-1623: If the tenant has configured
-        ``approved_widget_origins``, the request Origin header must match
-        one of the approved origins.  Empty list = allow all (migration).
         """
         # Enforce scope: widget keys cannot reach billing, config writes, etc.
         if not is_widget_key_allowed_path(path, method):
@@ -974,42 +870,6 @@ class TenantAuthMiddleware(BaseHTTPMiddleware):
             )
 
         tenant = await verify_widget_key(widget_key, _resolve_by_widget_key_hash)
-
-        # SPEC-1840: Origin validation against approved_widget_origins
-        approved_origins = await approved_widget_origins(
-            tenant.get("tenant_id") or tenant.get("id") or "", tenant
-        )
-        if approved_origins and origin:
-            # Normalize: compare lowercase, strip trailing slashes
-            normalized_origin = origin.rstrip("/").lower()
-            allowed = any(
-                normalized_origin == ao.rstrip("/").lower()
-                for ao in approved_origins
-            )
-            if not allowed:
-                raise AuthenticationError(
-                    "Widget key rejected: origin not in approved_widget_origins.",
-                    status_code=403,
-                )
-        elif approved_origins and not origin:
-            # Origins configured but request has no Origin header
-            logger.warning(
-                "SPEC-1840: Widget request without Origin header; "
-                "tenant %s has approved_widget_origins configured",
-                tenant.get("tenant_id", "unknown"),
-            )
-            raise AuthenticationError(
-                "Widget key rejected: Origin header required when origin restrictions are configured.",
-                status_code=403,
-            )
-        elif not approved_origins:
-            # No origins configured — allow all (backward-compatible migration)
-            if origin:
-                logger.debug(
-                    "SPEC-1840: No approved_widget_origins configured for tenant %s; "
-                    "allowing origin %s (migration period)",
-                    tenant.get("tenant_id", "unknown"), origin,
-                )
 
         resolved = TenantAuthMiddleware._resolve_tenant_fields(tenant)
         tenant_id, status, tier, trial_expires_at, expires_at, rl_rpm = resolved
@@ -1719,7 +1579,7 @@ async def authenticate_widget_websocket(websocket: Any) -> TenantContext:
     WebSocket scopes through untouched, so the WebSocket handler calls this
     before accepting. The key comes from the query (``widget_key``, as the
     widget sends it, or ``key``), with the same checks as HTTP widget-key
-    requests: key hash, tenant status, expiry and approved origins.
+    requests: key hash, tenant status and expiry.
 
     Raises:
         AuthenticationError: no key, or the key is not valid for this path.
@@ -1728,5 +1588,5 @@ async def authenticate_widget_websocket(websocket: Any) -> TenantContext:
     if not widget_key:
         raise AuthenticationError("Widget key required for the chat WebSocket.", counts_toward_block=False)
     return await TenantAuthMiddleware._auth_widget_key(
-        widget_key, websocket.url.path, websocket.headers.get("origin"), "GET"
+        widget_key, websocket.url.path, "GET"
     )

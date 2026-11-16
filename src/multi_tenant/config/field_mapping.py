@@ -44,6 +44,7 @@ _PREFS_DIRECT_FIELDS: set[str] = {
     # Widget appearance — visual (21 fields)
     "widget_primary_color",
     "widget_background_color",
+    "widget_dark_background_color",
     "widget_position",
     "widget_offset_x",
     "widget_offset_y",
@@ -95,7 +96,7 @@ _PREFS_DIRECT_FIELDS: set[str] = {
     "widget_offline_form_enabled",
     # Widget authentication
     "widget_key",
-    "approved_widget_origins",  # SPEC-1840: domain restriction for widget keys
+    "approved_widget_origins",  # Legacy stored field for compatibility
     # Widget appearance — content and targeting (3 fields)
     "widget_header_text",
     "widget_input_placeholder",

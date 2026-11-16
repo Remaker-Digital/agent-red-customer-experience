@@ -238,6 +238,16 @@ def test_a_refused_query_credential_is_not_counted(app_client, small_limiter, pa
     assert _config(app_client, TEST_API_KEY_STARTER).status_code == 200
 
 
+def test_public_widget_refusals_do_not_count_toward_the_account_block(app_client, small_limiter):
+    for _ in range(LIMIT):
+        response = app_client.get(
+            "/api/config",
+            headers={"Origin": "https://example.net", "X-Widget-Key": "not-a-widget-key"},
+        )
+        assert response.status_code == 401
+    assert not small_limiter._trackers
+
+
 def test_a_refused_header_credential_still_counts(app_client, small_limiter):
     """A header credential needs a CORS preflight cross-site; the residual from allowed origins is RC-16."""
     for _ in range(LIMIT):

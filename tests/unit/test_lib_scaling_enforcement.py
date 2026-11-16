@@ -97,7 +97,7 @@ def test_enforce_one_returns_false_on_runner_failure() -> None:
     logger = RecordingLogger()
 
     ok = _enforce_one(
-        app_name="agent-red-staging",
+        app_name="example-gateway-stage",
         min_r=1,
         max_r=5,
         resource_group="example-group",
@@ -107,7 +107,7 @@ def test_enforce_one_returns_false_on_runner_failure() -> None:
 
     assert ok is False
     # Logger should record the failure
-    assert any("WARNING" in m and "agent-red-staging" in m for m in logger.messages)
+    assert any("WARNING" in m and "example-gateway-stage" in m for m in logger.messages)
 
 
 # T3 — enforce_all_scaling calls _enforce_one once per target
@@ -188,7 +188,7 @@ def test_enforce_all_scaling_continues_on_partial_failure() -> None:
     "environment,expected_first",
     [
         ("production", "agent-red-api-gateway"),
-        ("staging", "agent-red-staging"),
+        ("staging", "example-gateway-stage"),
     ],
 )
 def test_get_scaling_targets_environment_specific_gateway(environment: str, expected_first: str) -> None:

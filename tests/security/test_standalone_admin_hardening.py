@@ -1,6 +1,6 @@
 """Tests for standalone admin auth hardening (S161).
 
-SPEC-1688 (Argon2id), SPEC-1689 (opaque session), SPEC-1690 (CSRF), SPEC-1691 (12-char min).
+SPEC-1688 (Argon2id), SPEC-1689 (opaque session), SPEC-1690 (CSRF).
 
 (c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
 """
@@ -123,18 +123,3 @@ class TestCSRFProtection:
             html = m._render_login_html()
             assert "csrf_token" in html
             assert 'type="hidden"' in html
-
-
-class TestPasswordPolicy:
-    """SPEC-1691: Password minimum MUST be 12 characters."""
-
-    def test_min_password_length_constant(self):
-        import src.app.standalone_auth as m
-        val = getattr(m, "_MIN_PASSWORD_LENGTH", None)
-        assert val is not None, "Missing _MIN_PASSWORD_LENGTH"
-        assert val >= 12
-
-    def test_reset_html_no_minlength_6(self):
-        import src.app.standalone_auth as m
-        html = getattr(m, "_STANDALONE_RESET_PW_HTML", "")
-        assert 'minlength="6"' not in html

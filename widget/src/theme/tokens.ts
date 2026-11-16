@@ -113,6 +113,7 @@ export interface DesignTokens {
 export interface WidgetConfig {
   widget_primary_color?: string | null;
   widget_background_color?: string | null;
+  widget_dark_background_color?: string | null;
   widget_position?: 'bottom-right' | 'bottom-left' | null;
   widget_offset_x?: number | null;
   widget_offset_y?: number | null;
@@ -192,8 +193,10 @@ export interface QuickActionButton {
 // Defaults
 // ---------------------------------------------------------------------------
 
+export const AGENT_RED_BRAND_COLOR = '#ff3621';
+
 const DEFAULTS = {
-  primaryColor: '#ff3621',
+  primaryColor: AGENT_RED_BRAND_COLOR,
   backgroundColor: '#FFFFFF',
   position: 'bottom-right' as const,
   offsetX: 20,
@@ -223,6 +226,15 @@ function luminance(hex: string): number {
   const g = gsrgb <= 0.03928 ? gsrgb / 12.92 : ((gsrgb + 0.055) / 1.055) ** 2.4;
   const b = bsrgb <= 0.03928 ? bsrgb / 12.92 : ((bsrgb + 0.055) / 1.055) ** 2.4;
   return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+}
+
+/** Keep normal text at a contrast ratio of at least 4.5:1. */
+function hasTextContrast(foreground: string, background: string): boolean {
+  const foregroundLuminance = luminance(foreground);
+  const backgroundLuminance = luminance(background);
+  const lighter = Math.max(foregroundLuminance, backgroundLuminance);
+  const darker = Math.min(foregroundLuminance, backgroundLuminance);
+  return (lighter + 0.05) / (darker + 0.05) >= 4.5;
 }
 
 /** Choose white or black text for contrast against a background.
@@ -391,27 +403,43 @@ export function resolveTokens(config: WidgetConfig): DesignTokens {
 
   // Color tokens — split by light/dark mode
   if (isDark) {
+    const background = config.widget_dark_background_color;
+    const backgroundLuminance = background ? luminance(background) : 0;
+    const lightBackground = backgroundLuminance > 0.1791;
+    const shade = lightBackground ? 1 : -1;
+    const preferredText = lightBackground ? '#000000' : '#f5f5f4';
+    const text = background && !hasTextContrast(preferredText, background)
+      ? focusRingColor(background)
+      : preferredText;
+    const secondaryText = backgroundLuminance < 0.07 ? '#b7c3cc' : text;
+    const shadedSurface = background ? darken(background, shade * 0.05) : '#292524';
+    const surface = background
+      && (!hasTextContrast(text, shadedSurface) || !hasTextContrast(secondaryText, shadedSurface))
+      ? background
+      : shadedSurface;
+    const border = background ? darken(background, shade * 0.12) : '#44403c';
+    const agentBubbleColor = config.widget_agent_bubble_color || surface;
     return {
       ...base,
       colorPrimary: primary,
       colorPrimaryHover: darken(primary, -0.1),
       colorPrimaryText: contrastText(primary),
-      colorBackground: '#1c1917',
-      colorSurface: '#292524',
-      colorSurfaceHover: '#44403c',
-      colorBorder: '#44403c',
-      colorText: '#f5f5f4',
-      colorTextSecondary: '#a8a29e',
-      colorTextMuted: '#57534e',
-      colorAgentBubble: config.widget_agent_bubble_color || '#292524',
-      colorAgentBubbleText: config.widget_agent_bubble_text_color || '#f5f5f4',
+      colorBackground: background || '#1c1917',
+      colorSurface: surface,
+      colorSurfaceHover: border,
+      colorBorder: border,
+      colorText: text,
+      colorTextSecondary: background ? secondaryText : '#a8a29e',
+      colorTextMuted: background ? secondaryText : '#57534e',
+      colorAgentBubble: agentBubbleColor,
+      colorAgentBubbleText: config.widget_agent_bubble_text_color || (background ? focusRingColor(agentBubbleColor) : text),
       colorCustomerBubble: config.widget_customer_bubble_color || primary,
       colorCustomerBubbleText: config.widget_customer_bubble_text_color || contrastText(config.widget_customer_bubble_color || primary),
-      colorAgentBubbleBorder: '#44403c',
+      colorAgentBubbleBorder: border,
       colorError: '#EF4444',
       colorSuccess: '#22C55E',
       colorOverlay: 'rgba(0, 0, 0, 0.6)',
-      colorInputBarBg: '#0c0a09',
+      colorInputBarBg: background || '#0c0a09',
       colorLauncher: config.widget_launcher_color || primary,
       colorLauncherHover: darken(config.widget_launcher_color || primary, -0.1),
     };

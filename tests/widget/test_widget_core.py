@@ -50,28 +50,14 @@ class TestWidgetShadowDOM:
 
     def test_data_attribute_overrides_count(self) -> None:
         """SPEC-1129: Support at least 10 data-attribute overrides for Shopify."""
-        source = (WIDGET_SRC / "index.ts").read_text()
-        # Count 'data-' entries in the attrMap object
-        re.findall(r"'data-[a-z-]+'", source)
-        # The attrMap has data-color, data-position, data-auto-open, data-auto-open-delay,
-        # data-mobile-enabled, data-sound-enabled, data-greeting, data-header-text,
-        # data-agent-name, data-context, data-customer-name = 11 in attrMap.
-        # Plus Shopify identity: data-shopify-customer-id, data-shopify-customer-hmac,
-        # data-shopify-customer-email, data-shopify-customer-name = 4 more.
-        # Also data-widget-key, data-api-url, data-page-type, data-page-handle,
-        # data-product-title, data-collection-title from other files.
-        # The attrMap alone has 11 entries (>= 10).
-        attr_map_entries = re.findall(
-            r"'data-[a-z-]+'\s*:\s*'widget_", source
-        )
-        assert len(attr_map_entries) >= 10, (
-            f"Expected >= 10 data-attribute overrides in attrMap, found {len(attr_map_entries)}"
-        )
+        source = (WIDGET_SRC / "utils" / "widgetEmbedOverrides.ts").read_text(encoding="utf-8")
+        mapped_attributes = set(re.findall(r"'(data-[a-z-]+)'\s*:\s*'widget_[a-z_]+'", source))
+        assert len(mapped_attributes) >= 10, f"Expected at least 10 override attributes, found {len(mapped_attributes)}"
 
     def test_data_attribute_specific_keys(self) -> None:
-        """SPEC-1129: Specific data attributes must be present (color, position, auto-open, etc.)."""
-        source = (WIDGET_SRC / "index.ts").read_text()
-        required_attrs = [
+        """SPEC-1129: Apply the supported embed attributes over fetched configuration."""
+        source = (WIDGET_SRC / "utils" / "widgetEmbedOverrides.ts").read_text(encoding="utf-8")
+        required_attrs = {
             "data-color",
             "data-position",
             "data-auto-open",
@@ -82,9 +68,13 @@ class TestWidgetShadowDOM:
             "data-header-text",
             "data-agent-name",
             "data-context",
-        ]
-        for attr in required_attrs:
-            assert attr in source, f"Missing data attribute: {attr}"
+        }
+        mapped_attributes = set(re.findall(r"'(data-[a-z-]+)'\s*:\s*'widget_[a-z_]+'", source))
+        assert required_attrs <= mapped_attributes, f"Missing data attributes: {required_attrs - mapped_attributes}"
+
+        entry = (WIDGET_SRC / "index.ts").read_text(encoding="utf-8")
+        assert "readWidgetEmbedOverrides(scriptTag)" in entry
+        assert "{ ...fetchedConfig, ...dataOverrides }" in entry
 
     def test_config_fetch_api_endpoint(self) -> None:
         """SPEC-1131: Fetch widget config from /api/config endpoint."""
@@ -174,11 +164,14 @@ class TestWidgetShadowDOM:
         assert "clampToViewport" in source, \
             "Must clamp drag position to viewport"
 
-    def test_drag_message_handler(self) -> None:
-        """SPEC-1136 / WI 253: Listen for ar:drag-start messages from panel iframe."""
+    def test_panel_drag_handler_tracks_host_mouse_events(self) -> None:
+        """SPEC-1136 / WI 253: Track dragging in the host document."""
         source = (WIDGET_SRC / "index.ts").read_text()
-        assert "ar:drag-start" in source, \
-            "Must handle 'ar:drag-start' message for drag initiation"
+        assert "function startPanelDrag(" in source
+        assert "document.addEventListener('mousemove', onDragMove)" in source
+        assert "document.addEventListener('mouseup', onDragEnd)" in source
+        assert "document.removeEventListener('mousemove', onDragMove)" in source
+        assert "document.removeEventListener('mouseup', onDragEnd)" in source
 
 
 # ---------------------------------------------------------------------------

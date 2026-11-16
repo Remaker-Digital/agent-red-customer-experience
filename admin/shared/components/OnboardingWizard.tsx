@@ -411,7 +411,7 @@ export const OnboardingWizard: React.FC<Props> = ({
   /** Derive a brand name fallback from shopDomain or template category. */
   const inferBrandName = (): string | null => {
     if (shopDomain) {
-      // "example-store.myshopify.com" → "Example Store"
+      // "example-store.myshopify.com" → "example-shop 9939" → "example-shop"
       const storeName = shopDomain.replace('.myshopify.com', '').replace(/[._]/g, ' ');
       // Capitalize each word, drop trailing numbers-only segments
       const parts = storeName.split(/[-\s]+/).filter((p) => !/^\d+$/.test(p));

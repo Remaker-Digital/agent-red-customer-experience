@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import {
   Paper,
   ColorPicker,
+  ColorInput,
   Slider,
   Select,
   SegmentedControl,
@@ -81,6 +82,8 @@ function renderGreetingPreview(msg: string): string {
 
 interface WidgetConfig {
   primaryColor: string;
+  backgroundColor: string;
+  darkBackgroundColor: string;
   launcherColor: string;
   headerGradientEnd: string;
   headerGradientEnabled: boolean;
@@ -121,6 +124,8 @@ interface WidgetConfig {
 
 const DEFAULT_WIDGET_CONFIG: WidgetConfig = {
   primaryColor: BRAND_RED,
+  backgroundColor: '',
+  darkBackgroundColor: '',
   launcherColor: '',
   headerGradientEnd: '#8B1520',
   headerGradientEnabled: false,
@@ -168,6 +173,8 @@ function configToWidgetConfig(cfg: Record<string, unknown>): Partial<WidgetConfi
   const partial: Partial<WidgetConfig> = {};
 
   if (cfg.widget_primary_color != null) partial.primaryColor = String(cfg.widget_primary_color);
+  partial.backgroundColor = typeof cfg.widget_background_color === 'string' ? cfg.widget_background_color : '';
+  partial.darkBackgroundColor = typeof cfg.widget_dark_background_color === 'string' ? cfg.widget_dark_background_color : '';
   if (cfg.widget_launcher_color != null) partial.launcherColor = String(cfg.widget_launcher_color);
   if (cfg.widget_header_gradient_end != null) partial.headerGradientEnd = String(cfg.widget_header_gradient_end);
   if (cfg.widget_header_gradient_enabled != null) partial.headerGradientEnabled = Boolean(cfg.widget_header_gradient_enabled);
@@ -212,6 +219,8 @@ function configToWidgetConfig(cfg: Record<string, unknown>): Partial<WidgetConfi
 function widgetConfigToApiFields(wc: WidgetConfig): Record<string, unknown> {
   return {
     widget_primary_color: wc.primaryColor,
+    widget_background_color: wc.backgroundColor || null,
+    widget_dark_background_color: wc.darkBackgroundColor || null,
     widget_launcher_color: wc.launcherColor || null,
     widget_header_gradient_end: wc.headerGradientEnd,
     widget_header_gradient_enabled: wc.headerGradientEnabled,
@@ -267,6 +276,30 @@ function SectionHeader({ children, tooltip, docLink }: { children: React.ReactNo
 // ---------------------------------------------------------------------------
 // ColorField — Mantine ColorPicker + hex input + swatches
 // ---------------------------------------------------------------------------
+
+function ConversationBackgroundField({ label, value, onChange }: {
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+}) {
+  const [input, setInput] = useState(value);
+  useEffect(() => setInput(value), [value]);
+
+  return (
+    <ColorInput
+      label={label}
+      placeholder="Use theme default"
+      format="hex"
+      value={input}
+      eyeDropperButtonProps={{ 'aria-label': `Pick a screen color for the ${label.toLowerCase()}` }}
+      onChange={(next) => {
+        setInput(next);
+        if (/^(#[0-9a-f]{6})?$/i.test(next)) onChange(next);
+      }}
+      onBlur={() => setInput(value)}
+    />
+  );
+}
 
 function ColorField({
   label,
@@ -843,6 +876,11 @@ function AvatarDropZone({ onFileSelected, uploading, progress, error }: AvatarDr
 // ---------------------------------------------------------------------------
 
 export function WidgetPage() {
+  const { configRefreshKey } = useAppContext();
+  return <WidgetPageForm key={configRefreshKey} />;
+}
+
+function WidgetPageForm() {
   const { apiFetch, onNotify, refreshActivationStatus } = useAppContext();
   const configResult = useConfig(apiFetch);
   const { updateConfig: saveConfig, loading: saving, error: saveError } = useUpdateConfig(apiFetch);
@@ -900,16 +938,21 @@ export function WidgetPage() {
   // Dispatch draft config to the live widget on this page (SPEC-1551).
   // The widget exposes window.AgentRed.setConfigPartial() which reactively
   // updates the launcher and panel, giving merchants a real-time preview.
-  // WI-3039: Color fields are excluded — color changes apply only after activation.
+  // WI-3039 keeps launcher and header colors gated by activation.
   const COLOR_PREVIEW_KEYS = ['widget_primary_color', 'widget_launcher_color', 'widget_header_gradient_end'];
   useEffect(() => {
     if (!initialized) return;
-    const sdk = (window as any).AgentRed;
-    if (sdk?.setConfigPartial) {
+    function applyDraftPreview() {
+      const sdk = (window as any).AgentRed;
+      if (!sdk?.setConfigPartial) return;
       const fields = widgetConfigToApiFields(config);
       for (const key of COLOR_PREVIEW_KEYS) delete fields[key];
       sdk.setConfigPartial(fields);
     }
+
+    window.addEventListener('agentred:ready', applyDraftPreview);
+    applyDraftPreview();
+    return () => window.removeEventListener('agentred:ready', applyDraftPreview);
   }, [config, initialized]);
 
   function update<K extends keyof WidgetConfig>(key: K, value: WidgetConfig[K]) {
@@ -1188,6 +1231,18 @@ export function WidgetPage() {
                       swatches={['#8B1520', '#1E40AF', '#047857', '#5B21B6', '#B45309', '#BE185D', '#1F2937', '#374151']}
                     />
                   </div>
+                </Group>
+                <Group grow align="flex-start" gap="md">
+                  <ConversationBackgroundField
+                    label="Light conversation background"
+                    value={config.backgroundColor}
+                    onChange={(value) => updateAndSave('backgroundColor', value)}
+                  />
+                  <ConversationBackgroundField
+                    label="Dark conversation background"
+                    value={config.darkBackgroundColor}
+                    onChange={(value) => updateAndSave('darkBackgroundColor', value)}
+                  />
                 </Group>
                 {/* Gradient toggle (WI #270) */}
                 <Switch
@@ -1554,9 +1609,9 @@ export function WidgetPage() {
                   onChange={(e) => update('agentDisplayName', e.currentTarget.value)}
                   placeholder="Agent Red"
                 />
-                <Text size="sm" fw={500}>Agent avatar</Text>
+                <Text size="sm" fw={500}>Chat header icon or logo</Text>
                 <Text size="xs" c="dimmed" mb={4}>
-                  Upload a PNG or JPEG image (max 256 KB). Leave empty for initials fallback.
+                  Upload a square PNG or JPEG (max 256 KB), then activate the draft to show it in the chat header.
                 </Text>
                 {config.agentAvatarUrl ? (
                   <Group gap="sm" align="center">
@@ -1570,8 +1625,8 @@ export function WidgetPage() {
                     }}>
                       <img
                         src={config.agentAvatarUrl}
-                        alt="Avatar preview"
-                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                        alt="Chat header icon preview"
+                        style={{ width: '100%', height: '100%', objectFit: 'contain' }}
                         onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
                       />
                     </div>

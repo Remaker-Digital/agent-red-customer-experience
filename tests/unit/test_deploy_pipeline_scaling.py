@@ -209,8 +209,8 @@ def test_phase_15_drift_appears_in_final_summary_when_status_is_pass() -> None:
         "Enforce Scaling Baseline",
         "PASS",
         12.4,
-        detail="failed=2 ok=6 total=8 names=agent-red-slim,agent-red-staging",
-        extra="DRIFT: 2/8 failed (agent-red-slim,agent-red-staging)",
+        detail="failed=2 ok=6 total=8 names=agent-red-slim,example-gateway-stage",
+        extra="DRIFT: 2/8 failed (agent-red-slim,example-gateway-stage)",
     )
 
     captured: list[str] = []
@@ -230,7 +230,7 @@ def test_phase_15_drift_appears_in_final_summary_when_status_is_pass() -> None:
         pipeline._print_summary([drift_result], args, _time.time() - 1.0, None, None)
 
     summary_text = "\n".join(captured)
-    assert "DRIFT: 2/8 failed (agent-red-slim,agent-red-staging)" in summary_text, (
+    assert "DRIFT: 2/8 failed (agent-red-slim,example-gateway-stage)" in summary_text, (
         f"Final summary must surface DRIFT marker for operator visibility.\nCaptured output:\n{summary_text}"
     )
     # Status row must also still show PASS (proving drift visibility doesn't

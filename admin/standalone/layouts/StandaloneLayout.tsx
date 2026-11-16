@@ -49,6 +49,7 @@ import ActivationDialog from '../../shared/ActivationDialog';
 import RestoreDialog from '../../shared/RestoreDialog';
 import { OnboardingWizard } from '../../shared/components/OnboardingWizard';
 import { tokens } from '../../shared/theme/styles';
+import { syncWidgetAppearance } from './widgetAppearance';
 
 // ---------------------------------------------------------------------------
 // Types
@@ -620,50 +621,11 @@ export const StandaloneLayout: React.FC<StandaloneLayoutProps> = ({
     const isActive = activationStatus?.is_active === true;
     if (!isActive) return; // Widget not loaded — nothing to swap
 
-    const sdk = (window as unknown as Record<string, unknown>).AgentRed as
-      { setConfigPartial?: (overrides: Record<string, unknown>) => void } | undefined;
-    if (!sdk?.setConfigPartial) return;
-
-    const onConfigPage = location.pathname === '/configuration';
-    let cancelled = false;
-
-    async function applyConfig() {
-      try {
-        // Draft config for the Configuration page; active config for all other pages
-        const endpoint = onConfigPage
-          ? '/api/config?state=draft'
-          : '/api/config?page_type=all';
-        const resp = await apiFetch(endpoint);
-        if (cancelled || !resp.ok) return;
-        const data = await resp.json();
-        const config = data?.config || {};
-
-        // Extract widget-relevant fields for setConfigPartial
-        const overrides: Record<string, unknown> = {};
-        for (const [key, val] of Object.entries(config)) {
-          if (key.startsWith('widget_') && val != null) {
-            overrides[key] = val;
-          }
-        }
-        // Map non-prefixed fields the widget recognizes
-        if (config.greeting_message != null) {
-          overrides.widget_greeting_message = config.greeting_message;
-        }
-        if (config.brand_name != null) {
-          overrides.brand_name = config.brand_name;
-        }
-
-        if (!cancelled && sdk?.setConfigPartial) {
-          sdk.setConfigPartial(overrides);
-        }
-      } catch {
-        // Non-fatal — widget continues with current config
-      }
-    }
-
-    applyConfig();
-
-    return () => { cancelled = true; };
+    return syncWidgetAppearance(
+      apiFetch,
+      location.pathname === '/configuration',
+      location.pathname === '/widget',
+    );
   }, [tenantContext, apiFetch, activationStatus?.is_active, location.pathname, configRefreshKey]);
 
   // ---- Context value -----------------------------------------------------

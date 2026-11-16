@@ -13,6 +13,13 @@ from src.multi_tenant.cosmos_schema import COLLECTION_KNOWLEDGE_BASES
 from src.multi_tenant.repositories.base import TenantScopedRepository
 
 
+def _knowledge_text_matches(row: dict[str, Any], needle: str) -> bool:
+    """Match a search needle against title and content after decryption."""
+    title = str(row.get("title") or "")
+    content = str(row.get("content") or "")
+    return needle in title.lower() or needle in content.lower()
+
+
 class KnowledgeBaseRepository(TenantScopedRepository):
     """Repository for the knowledge_bases collection."""
 
@@ -131,23 +138,27 @@ class KnowledgeBaseRepository(TenantScopedRepository):
             conditions.append("c.is_active = @is_active")
             params.append({"name": "@is_active", "value": is_active})
 
-        if search is not None:
-            conditions.append(
-                "(CONTAINS(LOWER(c.title), LOWER(@search))"
-                " OR CONTAINS(LOWER(IS_DEFINED(c.content) ? c.content : ''), LOWER(@search)))"
-            )
-            params.append({"name": "@search", "value": search})
-
         where_clause = " AND ".join(conditions) if conditions else "1=1"
+        if search is not None:
+            rows = await self.query(
+                tenant_id,
+                (
+                    f"SELECT * FROM c WHERE {where_clause} "
+                    "ORDER BY c.updated_at DESC"
+                ),
+                params,
+            )
+            needle = search.lower()
+            matched = [row for row in rows if _knowledge_text_matches(row, needle)]
+            return matched[offset : offset + limit]
+
         params.append({"name": "@offset", "value": offset})
         params.append({"name": "@limit", "value": limit})
-
         query_text = (
             f"SELECT * FROM c WHERE {where_clause} "
             "ORDER BY c.updated_at DESC "
             "OFFSET @offset LIMIT @limit"
         )
-
         return await self.query(tenant_id, query_text, params)
 
     async def count_filtered(
@@ -175,16 +186,17 @@ class KnowledgeBaseRepository(TenantScopedRepository):
             conditions.append("c.is_active = @is_active")
             params.append({"name": "@is_active", "value": is_active})
 
-        if search is not None:
-            conditions.append(
-                "(CONTAINS(LOWER(c.title), LOWER(@search))"
-                " OR CONTAINS(LOWER(IS_DEFINED(c.content) ? c.content : ''), LOWER(@search)))"
-            )
-            params.append({"name": "@search", "value": search})
-
         where_clause = " AND ".join(conditions) if conditions else "1=1"
-        query_text = f"SELECT VALUE COUNT(1) FROM c WHERE {where_clause}"
+        if search is not None:
+            rows = await self.query(
+                tenant_id,
+                f"SELECT * FROM c WHERE {where_clause}",
+                params,
+            )
+            needle = search.lower()
+            return sum(1 for row in rows if _knowledge_text_matches(row, needle))
 
+        query_text = f"SELECT VALUE COUNT(1) FROM c WHERE {where_clause}"
         return await self.query_count(tenant_id, query_text, params)
 
     async def soft_delete(
@@ -265,7 +277,10 @@ class KnowledgeBaseRepository(TenantScopedRepository):
             parameters=params,
             partition_key=tenant_id,
         ):
-            items.append(await self._decrypt_copy(item, tenant_id))
+            row = await self._take_list_row(item, tenant_id)
+            if row is None:
+                continue
+            items.append(row)
             if len(items) >= top_k:
                 break
 

@@ -28,7 +28,8 @@ logger = logging.getLogger(__name__)
 # Collections and their sensitive fields — MUST match repository _encryption_fields.
 # Per architecture plan section 4.1.3 + SPEC-1843 full scope.
 ENCRYPTED_COLLECTIONS: dict[str, list[str]] = {
-    "conversations": ["messages", "customer_intent", "escalation_reason", "transcript"],
+    "conversations": ["messages", "customer_intent", "escalation_reason", "transcript",
+                      "identity_email", "identity_phone"],
     "knowledge_bases": ["content", "title", "description", "source_text"],
     "customer_profiles": ["name", "email", "phone", "address", "notes", "preferences"],
     "memory_vectors": ["chunk_text", "source_conversation_id"],

@@ -5,7 +5,7 @@ agent topology to production (GOV-16). Each test validates one gate
 criterion from the recovery plan. All gates execute or validate — none
 merely check existence or inspect source code.
 
-Gate criteria (INSIGHTS-2026-03-27-01-00.md Phase 5):
+Gate criteria (the original transport analysis Phase 5):
 1. Executable transport/container tests pass
 2. Widget end-to-end tests pass
 3. Per-container performance baselines pass
@@ -13,7 +13,7 @@ Gate criteria (INSIGHTS-2026-03-27-01-00.md Phase 5):
 5. MCP exception register is empty or explicitly approved
 6. KB/spec state reflects the real deployed architecture
 
-Codex GO: INSIGHTS-2026-03-28-02-38-PHASE5-PLAN-REREVIEW.md.
+Codex GO: the original transport analysis.
 Governing decisions: ADR-001, DCL-002 v4, DCL-003, GOV-16.
 
 © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
@@ -29,6 +29,19 @@ from pathlib import Path
 from unittest.mock import patch
 
 import pytest
+
+from tests.transport.conftest import (
+    BENCHMARK_RUN_ID,
+    BENCHMARK_SCHEMA_VERSION,
+    ESCALATION_STAGE_NAMES,
+    GATEWAY_ATTEMPTS,
+    OPTIONAL_LATENCY_POPULATIONS,
+    PIPELINE_STAGE_NAMES,
+    SELECTED_BENCHMARK_RUN,
+    BenchmarkResult,
+    usable_latency,
+)
+from tests.transport.test_transport_performance import ESCALATION_MESSAGES, SAMPLE_MESSAGES
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
@@ -184,105 +197,107 @@ class TestGate3PerformanceBaselines:
         pytest.fail(f"Could not parse test count: {result.stdout[-200:]}")
 
     def test_benchmark_artifacts_validated(self):
-        """Benchmark artifacts must exist, parse, and contain valid structure.
+        """Check complete evidence from the selected transport run.
 
-        Per Codex advisory: file existence alone is not sufficient.
-        Content must be parsed and validated for required keys, version,
-        sample counts, and measurement gaps.
-
-        Artifacts are produced by live Phase 4 runs against a test host.
-        ADO non-prod / local CI has no staging transport host, so the
-        directory is absent — skip rather than fail the release gate.
+        Set TRANSPORT_BENCHMARK_RUN_ID to reuse the run ID across separate
+        collection and validation invocations.
         """
-        benchmark_dir = PROJECT_ROOT / "scripts" / "benchmark-results"
-        if not benchmark_dir.is_dir():
-            pytest.skip(
-                "Phase 4 benchmark-results not generated in this environment "
-                "(requires test-host / staging transport run)"
-            )
-
-        # Expected artifact contracts: {filename: required_top_level_keys}
-        artifact_contracts = {
-            "per-hop-latency.json": ["timestamp", "test", "stages"],
-            "pipeline-latency.json": ["timestamp", "test", "benchmarks"],
-            "escalation-latency.json": ["timestamp", "test", "stages"],
-            "widget-latency.json": ["timestamp", "test", "benchmarks"],
-            "transport-tier.json": ["timestamp", "test", "active_tier"],
+        output = PROJECT_ROOT / "scripts" / "benchmark-results"
+        run_dir = output / BENCHMARK_RUN_ID
+        latency_contracts = {
+            "per-hop-latency.json": ("per_hop_stage_latency", len(SAMPLE_MESSAGES), "stages", PIPELINE_STAGE_NAMES),
+            "pipeline-latency.json": ("total_pipeline_latency", len(SAMPLE_MESSAGES), "benchmarks", ("total-pipeline",)),
+            "escalation-latency.json": (
+                "escalation_path_latency", len(ESCALATION_MESSAGES), "stages", ESCALATION_STAGE_NAMES,
+            ),
+            "widget-latency.json": ("widget_pipeline_latency", len(SAMPLE_MESSAGES), "benchmarks", ("widget-pipeline",)),
         }
-
-        measurement_gaps: list[str] = []
-        missing = [name for name in artifact_contracts if not (benchmark_dir / name).exists()]
-        if missing:
-            pytest.skip(
-                "Phase 4 benchmark artifacts incomplete "
-                f"(missing {', '.join(missing)}); regenerate via test-host run"
+        has_latency_evidence = any(
+            (directory / name).is_file()
+            for directory in (run_dir, output)
+            for name in latency_contracts
+        )
+        if not SELECTED_BENCHMARK_RUN and not has_latency_evidence:
+            pytest.skip("Transport benchmark artifacts have not been generated for this run.")
+        for filename, contract in latency_contracts.items():
+            self._validate_latency_artifact(output, filename, *contract)
+        if (run_dir / "gateway-baseline.json").is_file():
+            self._validate_latency_artifact(
+                output, "gateway-baseline.json", "gateway_baseline_latency",
+                GATEWAY_ATTEMPTS, "benchmarks", ("gateway-baseline",),
             )
 
-        for filename, required_keys in artifact_contracts.items():
-            path = benchmark_dir / filename
-            assert path.exists(), f"Missing benchmark artifact: {filename}"
-
-            data = json.loads(path.read_text())
-
-            # Validate required top-level keys
-            for key in required_keys:
-                assert key in data, (
-                    f"{filename}: missing required key '{key}'. "
-                    f"Found: {list(data.keys())}"
-                )
-
-            # Validate stages have sample counts where coverage is claimed
-            if "stages" in data:
-                for stage_name, stage_data in data["stages"].items():
-                    if isinstance(stage_data, dict):
-                        sample_count = stage_data.get("sample_count", 0)
-                        if sample_count == 0 and stage_name != "escalation-handler":
-                            pytest.fail(
-                                f"{filename}: {stage_name} has 0 samples "
-                                "— benchmark claims coverage but has no data"
-                            )
-
-            # Validate benchmarks have non-zero samples
-            if "benchmarks" in data:
-                for bench in data["benchmarks"]:
-                    if isinstance(bench, dict):
-                        assert bench.get("sample_count", 0) > 0, (
-                            f"{filename}: benchmark {bench.get('name')} has 0 samples"
-                        )
-
-            # Surface measurement gaps honestly
-            if data.get("measurement_gap"):
-                measurement_gaps.append(filename)
-
-        # Validate consolidated report has version
-        consolidated = list(benchmark_dir.glob("transport-benchmark-*.json"))
-        if consolidated:
-            report = json.loads(consolidated[-1].read_text())
-            version = report.get("version", "unknown")
-            assert version != "unknown", (
-                "Consolidated benchmark report has version='unknown' — "
-                "staging version not captured"
-            )
-
-        if measurement_gaps:
-            print(f"\n  WARNING: Measurement gaps in: {measurement_gaps}")
-            print("  These are honest coverage limitations, not pass-equivalent.")
+        tier_path = run_dir / "transport-tier.json"
+        assert tier_path.is_file(), f"{tier_path.name}: missing for the selected run"
+        tier = json.loads(tier_path.read_text(encoding="utf-8"))
+        assert tier.get("timestamp") and tier.get("test") == "transport_tier_identification"
+        assert tier.get("active_tier") not in (None, "", "unknown")
 
     def test_per_hop_latency_data_present(self):
-        """Per-hop latency artifact must have data for IC/KR/RG/Critic."""
-        path = PROJECT_ROOT / "scripts" / "benchmark-results" / "per-hop-latency.json"
-        if not path.exists():
-            pytest.skip("per-hop-latency.json not generated yet")
+        """Require each per-hop population to cover the planned workload."""
+        output = PROJECT_ROOT / "scripts" / "benchmark-results"
+        name = "per-hop-latency.json"
+        if (
+            not SELECTED_BENCHMARK_RUN
+            and not (output / BENCHMARK_RUN_ID / name).is_file()
+            and not (output / name).is_file()
+        ):
+            pytest.skip("Per-hop benchmark has not been generated for this run.")
+        self._validate_latency_artifact(
+            output, name, "per_hop_stage_latency", len(SAMPLE_MESSAGES), "stages", PIPELINE_STAGE_NAMES,
+        )
 
-        data = json.loads(path.read_text())
-        stages = data.get("stages", {})
-        for required in ["intent-classifier", "knowledge-retrieval",
-                         "response-generator", "critic-supervisor"]:
-            assert required in stages, f"Missing stage: {required}"
-            stage = stages[required]
-            assert stage.get("sample_count", 0) > 0, (
-                f"{required} has 0 samples in per-hop benchmark"
-            )
+    @staticmethod
+    def _validate_latency_artifact(output, filename, test_name, planned, population_key, names):
+        path = output / BENCHMARK_RUN_ID / filename
+        if not path.is_file() and (output / filename).is_file():
+            pytest.fail(f"{filename}: legacy artifact is diagnostic only. Generate evidence for the selected run.")
+        assert path.is_file(), f"{filename}: missing for the selected run"
+        data = json.loads(path.read_text(encoding="utf-8"))
+        if (
+            data.get("schema_version") != BENCHMARK_SCHEMA_VERSION
+            or data.get("completed") is not True
+            or data.get("valid") is not True
+        ):
+            pytest.fail(f"{filename}: legacy, incomplete or invalid artifact is diagnostic only.")
+        assert data.get("timestamp") and data.get("test") == test_name
+        assert data.get("run_id") == BENCHMARK_RUN_ID, f"{filename}: artifact is from a different run"
+        for count in ("planned_count", "attempt_count", "completed_count"):
+            assert type(data.get(count)) is int and data[count] == planned, f"{filename}: invalid {count}"
+        entries = data.get(population_key)
+        if population_key == "stages":
+            assert isinstance(entries, dict) and entries.keys() == set(names), f"{filename}: stage list differs"
+            populations = [entries[name] for name in names]
+        else:
+            assert isinstance(entries, list) and len(entries) == len(names), f"{filename}: population list differs"
+            populations = entries
+
+        measurements = 0
+        for name, result in zip(names, populations, strict=True):
+            assert isinstance(result, dict), f"{filename}: invalid population"
+            assert result.get("name") == name, f"{filename}: wrong population"
+            counts = [result.get(key) for key in ("sample_count", "missing_count", "errors", "absent_count")]
+            assert all(type(count) is int and count >= 0 for count in counts), f"{filename}: invalid counts for {name}"
+            assert sum(counts) == planned, f"{filename}: unaccounted observations for {name}"
+            assert result["errors"] == result["missing_count"] == 0, f"{filename}: {name} has missing or errored observations"
+            if population_key == "benchmarks":
+                assert result["absent_count"] == 0, f"{filename}: unexpected absent observation"
+            samples = result.get("samples_ms")
+            assert isinstance(samples, list) and len(samples) == result["sample_count"]
+            assert all(map(usable_latency, samples)), f"{filename}: unusable latency sample"
+            if name not in OPTIONAL_LATENCY_POPULATIONS:
+                assert samples, f"{filename}: {name} has no usable latency measurements"
+            measurements += len(samples)
+            stats = BenchmarkResult(name, "validation", samples).to_dict()
+            for percentile in ("p50_ms", "p95_ms", "p99_ms"):
+                expected = stats[percentile]
+                assert percentile in result, f"{filename}: missing {percentile}"
+                actual = result[percentile]
+                if expected is None:
+                    assert actual is None, f"{filename}: {percentile} must be null without samples"
+                else:
+                    assert usable_latency(actual) and actual == expected, f"{filename}: incorrect {percentile}"
+        assert measurements > 0, f"{filename}: no usable latency measurements"
 
 
 # ---------------------------------------------------------------------------

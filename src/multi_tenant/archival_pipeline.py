@@ -97,6 +97,8 @@ class TenantArchivalResult:
     profiles_archived: int
     vectors_archived: int
     bytes_written: int
+    candidate_documents: int = 0
+    failed_collections: tuple[str, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -108,6 +110,8 @@ class ArchivalScanResult:
     bytes_written: int
     errors: int
     tenant_details: list[TenantArchivalResult] = field(default_factory=list)
+    candidate_documents: int = 0
+    tenants_skipped: int = 0
 
 
 # ---------------------------------------------------------------------------
@@ -164,20 +168,19 @@ class ArchivalPipelineService:
         deleted after a successful upload.  Enterprise documents are
         archived (for ML training corpus) but NOT deleted.
 
-        Returns:
-            ArchivalScanResult with aggregate archival counts.
+        Without a Blob client, return a read-only inventory of candidates.
         """
         now = datetime.now(UTC)
+        if self._blob is None:
+            return await self._run_dry_scan(now)
+
         tenants_scanned = 0
         total_docs = 0
         total_bytes = 0
         errors = 0
         details: list[TenantArchivalResult] = []
 
-        all_tenants = await self._tenants.query(
-            query="SELECT * FROM c WHERE c.status IN ('active', 'past_due')",
-            parameters=[],
-        )
+        all_tenants = await self._tenants.list_archival_tenants()
 
         for tenant in all_tenants:
             tenants_scanned += 1
@@ -202,6 +205,8 @@ class ArchivalPipelineService:
                 if tenant_total > 0:
                     total_docs += tenant_total
                     total_bytes += result.bytes_written
+                errors += len(result.failed_collections)
+                if tenant_total or result.failed_collections:
                     details.append(result)
             except Exception:
                 logger.exception(
@@ -235,6 +240,7 @@ class ArchivalPipelineService:
         tier's history_depth_days, serialize to Parquet, upload to the
         warm-archive Blob container, and optionally delete from Cosmos DB
         (non-Enterprise only).
+        Without a Blob client, return only candidate counts.
 
         Args:
             tenant_id: Tenant whose data to archive.
@@ -246,58 +252,45 @@ class ArchivalPipelineService:
         Returns:
             TenantArchivalResult with counts and bytes written.
         """
-        convs_archived = 0
-        profiles_archived = 0
-        vectors_archived = 0
+        if self._blob is None:
+            return await self._count_candidates(tenant_id, tier, cutoff_iso)
+
+        archived = dict.fromkeys(("conversations", "profiles", "vectors"), 0)
         bytes_written = 0
+        failed_collections: list[str] = []
 
         delete_after_archive = tier != ENTERPRISE_TIER
 
-        # --- Conversations ---
-        if self._conversations:
-            count, nbytes = await self._archive_collection(
-                repo=self._conversations,
+        for repo, label, date_field in (
+            (self._conversations, "conversations", "ended_at"),
+            (self._profiles, "profiles", "updated_at"),
+            (self._vectors, "vectors", "created_at"),
+        ):
+            if not repo:
+                continue
+            result = await self._archive_collection(
+                repo=repo,
                 tenant_id=tenant_id,
                 cutoff_iso=cutoff_iso,
-                date_field="ended_at",
-                collection_label="conversations",
+                date_field=date_field,
+                collection_label=label,
                 now=now,
                 delete_originals=delete_after_archive,
             )
-            convs_archived = count
+            if result is None:
+                failed_collections.append(label)
+                continue
+            count, nbytes = result
+            archived[label] = count
             bytes_written += nbytes
 
-        # --- Customer profiles ---
-        if self._profiles:
-            count, nbytes = await self._archive_collection(
-                repo=self._profiles,
-                tenant_id=tenant_id,
-                cutoff_iso=cutoff_iso,
-                date_field="updated_at",
-                collection_label="profiles",
-                now=now,
-                delete_originals=delete_after_archive,
-            )
-            profiles_archived = count
-            bytes_written += nbytes
-
-        # --- Memory vectors ---
-        if self._vectors:
-            count, nbytes = await self._archive_collection(
-                repo=self._vectors,
-                tenant_id=tenant_id,
-                cutoff_iso=cutoff_iso,
-                date_field="created_at",
-                collection_label="vectors",
-                now=now,
-                delete_originals=delete_after_archive,
-            )
-            vectors_archived = count
-            bytes_written += nbytes
+        convs_archived = archived["conversations"]
+        profiles_archived = archived["profiles"]
+        vectors_archived = archived["vectors"]
 
         # Audit trail
         total = convs_archived + profiles_archived + vectors_archived
-        if self._audit and total > 0:
+        if self._blob is not None and self._audit and total > 0:
             await self._audit.log_event(
                 tenant_id=tenant_id,
                 event_type=AUDIT_EVENT_DATA_ARCHIVED,
@@ -320,6 +313,7 @@ class ArchivalPipelineService:
             profiles_archived=profiles_archived,
             vectors_archived=vectors_archived,
             bytes_written=bytes_written,
+            failed_collections=tuple(failed_collections),
         )
 
     async def archive_cold_tier(
@@ -370,6 +364,71 @@ class ArchivalPipelineService:
     # ------------------------------------------------------------------
     # Internal helpers
     # ------------------------------------------------------------------
+
+    async def _run_dry_scan(self, now: datetime) -> ArchivalScanResult:
+        try:
+            tenants = await self._tenants.list_archival_tenants()
+        except Exception:
+            logger.exception("Could not list tenants for archival inventory")
+            return ArchivalScanResult(tenants_scanned=0, documents_archived=0, bytes_written=0, errors=1)
+
+        skipped = 0
+        errors = 0
+        candidates = 0
+        details: list[TenantArchivalResult] = []
+        for tenant in tenants:
+            try:
+                tenant_id = tenant["tenant_id"]
+                if not isinstance(tenant_id, str) or not tenant_id:
+                    raise ValueError("Missing tenant ID")
+                tier = TenantTier(tenant["tier"]).value
+                cutoff = self._calculate_cutoff(tier, now)
+            except (KeyError, TypeError, ValueError):
+                logger.warning("Invalid tenant metadata for archival inventory")
+                errors += 1
+                continue
+            if cutoff is None:
+                skipped += 1
+                continue
+
+            result = await self._count_candidates(tenant_id, tier, cutoff)
+            candidates += result.candidate_documents
+            errors += len(result.failed_collections)
+            if result.candidate_documents or result.failed_collections:
+                details.append(result)
+
+        return ArchivalScanResult(
+            tenants_scanned=len(tenants), documents_archived=0, bytes_written=0, errors=errors,
+            tenant_details=details, candidate_documents=candidates, tenants_skipped=skipped,
+        )
+
+    async def _count_candidates(
+        self, tenant_id: str, tier: str, cutoff_iso: str,
+    ) -> TenantArchivalResult:
+        candidates = 0
+        failures: list[str] = []
+        parameters = [{"name": "@tid", "value": tenant_id}, {"name": "@cutoff", "value": cutoff_iso}]
+        for repo, label, date_field in (
+            (self._conversations, "conversations", "ended_at"),
+            (self._profiles, "profiles", "updated_at"),
+            (self._vectors, "vectors", "created_at"),
+        ):
+            if repo is None:
+                continue
+            try:
+                candidates += await repo.query_count(
+                    tenant_id=tenant_id,
+                    query_text=f"SELECT VALUE COUNT(1) FROM c WHERE c.tenant_id = @tid AND c.{date_field} < @cutoff",
+                    parameters=parameters,
+                    strict=True,
+                )
+            except Exception:
+                logger.warning("Could not count archival candidates for %s in tenant %s", label, tenant_id)
+                failures.append(label)
+        return TenantArchivalResult(
+            tenant_id=tenant_id, tier=tier, conversations_archived=0, profiles_archived=0,
+            vectors_archived=0, bytes_written=0, candidate_documents=candidates, failed_collections=tuple(failures),
+        )
 
     def _calculate_cutoff(
         self,
@@ -438,7 +497,7 @@ class ArchivalPipelineService:
         collection_label: str,
         now: datetime,
         delete_originals: bool,
-    ) -> tuple[int, int]:
+    ) -> tuple[int, int] | None:
         """Archive documents from one collection to Blob Storage.
 
         Queries documents older than cutoff, serializes them to Parquet
@@ -457,7 +516,7 @@ class ArchivalPipelineService:
                               Cosmos DB (False for Enterprise tier).
 
         Returns:
-            Tuple of (document_count, bytes_written).
+            Tuple of (document_count, bytes_written), or None on batch failure.
         """
         archived = 0
         total_bytes = 0
@@ -478,7 +537,7 @@ class ArchivalPipelineService:
                 "Could not query old %s for tenant %s",
                 collection_label, tenant_id,
             )
-            return 0, 0
+            return None
 
         if not old_docs:
             return 0, 0
@@ -487,13 +546,12 @@ class ArchivalPipelineService:
         parquet_bytes = self._serialize_to_parquet(old_docs)
         if parquet_bytes is None:
             logger.warning(
-                "Serialization failed for %s/%s — skipping upload",
+                "Serialization failed for %s/%s. Upload skipped.",
                 tenant_id, collection_label,
             )
-            return 0, 0
+            return None
 
         total_bytes = len(parquet_bytes)
-
         # Upload to Blob Storage
         blob_name = self._build_blob_name(
             tenant_id, collection_label, now,
@@ -504,10 +562,10 @@ class ArchivalPipelineService:
 
         if not upload_ok:
             logger.warning(
-                "Blob upload failed for %s/%s — documents NOT deleted",
+                "Blob upload failed for %s/%s. Source documents retained.",
                 tenant_id, collection_label,
             )
-            return 0, 0
+            return None
 
         archived = len(old_docs)
 
@@ -649,16 +707,11 @@ class ArchivalPipelineService:
             True on success, False on failure or if no blob client.
         """
         if self._blob is None:
-            logger.info(
-                "Blob client not configured — archival upload skipped "
-                "(blob_name=%s, %d bytes)",
-                blob_name, len(data),
-            )
-            # In development, treat as success so downstream logic
-            # (deletion, audit) still proceeds for testing purposes.
-            return True
+            return False
 
         try:
+            from azure.storage.blob import ContentSettings
+
             container_client = self._blob.get_container_client(
                 WARM_ARCHIVE_CONTAINER,
             )
@@ -667,9 +720,7 @@ class ArchivalPipelineService:
                 data,
                 overwrite=True,
                 blob_type="BlockBlob",
-                content_settings={
-                    "content_type": "application/octet-stream",
-                },
+                content_settings=ContentSettings(content_type="application/octet-stream"),
             )
             logger.info(
                 "Uploaded %d bytes to %s/%s",

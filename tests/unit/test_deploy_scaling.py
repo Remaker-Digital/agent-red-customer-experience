@@ -202,7 +202,7 @@ class TestScalingConfigCoversDeployedApps:
         """Both env-specific gateway names must appear in SCALING_CONFIG."""
         mod = _load_deploy_module()
         assert "agent-red-api-gateway" in mod.SCALING_CONFIG
-        assert "agent-red-staging" in mod.SCALING_CONFIG
+        assert "example-gateway-stage" in mod.SCALING_CONFIG
 
 
 # ---------------------------------------------------------------------------
@@ -268,7 +268,7 @@ class TestEnforceAllScaling:
         called_names = {c[0] for c in calls}
         # Production gateway, not staging gateway.
         assert "agent-red-api-gateway" in called_names
-        assert "agent-red-staging" not in called_names
+        assert "example-gateway-stage" not in called_names
         # All 6 shared agent containers.
         for agent in mod.AGENT_CONTAINER_APPS.values():
             assert agent in called_names, f"{agent} was not scaled in production"
@@ -301,14 +301,14 @@ class TestEnforceAllScaling:
 
         called_names = {c[0] for c in calls}
         # Staging gateway, not production gateway.
-        assert "agent-red-staging" in called_names
+        assert "example-gateway-stage" in called_names
         assert "agent-red-api-gateway" not in called_names
         # All 6 agents + slim still covered (shared apps).
         assert len(calls) == 8, f"expected 8 calls, got {len(calls)}: {calls}"
 
         # Staging gateway preserves the WI-3156 baseline (min=1, max=5) that
         # Codex explicitly instructed us not to change in GO condition 4.
-        staging_call = next(c for c in calls if c[0] == "agent-red-staging")
+        staging_call = next(c for c in calls if c[0] == "example-gateway-stage")
         assert staging_call[1:] == (1, 5), (
             f"staging gateway scaled to {staging_call[1:]}, expected (1, 5) — "
             f"WI-3156 baseline preserved per Codex GO condition 4"

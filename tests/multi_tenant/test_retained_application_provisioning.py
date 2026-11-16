@@ -13,6 +13,7 @@ import builtins
 import importlib.util
 import logging
 import sys
+from contextlib import asynccontextmanager
 from pathlib import Path
 from types import SimpleNamespace
 
@@ -51,6 +52,7 @@ def initializer(request, schema):
         "CosmosManager",
         {
             "DATABASE_NAME": schema.DATABASE_NAME,
+            "asynccontextmanager": asynccontextmanager,
             "initialize_database": schema.initialize_database,
             "os": SimpleNamespace(environ={"COSMOS_DB_DATABASE": "qualification-only"}),
             "logger": logging.getLogger(__name__),

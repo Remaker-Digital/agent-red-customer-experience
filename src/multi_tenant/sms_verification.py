@@ -171,7 +171,7 @@ class SmsVerificationService:
                 recipient=email,
                 channel="email",
                 code=code,
-                subject=f"Your Agent Red {purpose} code",
+                subject=f"Agent Red: Your {purpose} code",
                 metadata=metadata,
             )
 
@@ -209,13 +209,13 @@ class SmsVerificationService:
         """Send a verification code via email (SMTP primary, ACS fallback)."""
         import asyncio
 
-        subject = f"Your Agent Red {purpose} code"
-        body = (
-            "<html><body>"
+        subject = f"Agent Red: Your {purpose} code"
+        from src.multi_tenant.alert_delivery import format_branded_email
+
+        body = format_branded_email(
             f"<p>Your verification code is: <strong>{code}</strong></p>"
             f"<p>This code expires in {_CODE_TTL // 60} minutes.</p>"
             "<p>If you did not request this, please ignore this email.</p>"
-            "</body></html>"
         )
 
         try:

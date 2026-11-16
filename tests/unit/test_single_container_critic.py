@@ -19,7 +19,6 @@ import ast
 import asyncio
 import dataclasses
 import os
-import time
 from pathlib import Path
 from types import SimpleNamespace
 from typing import Any
@@ -257,12 +256,16 @@ async def test_timeout_fail_closed(beta: None, monkeypatch: pytest.MonkeyPatch) 
     monkeypatch.setattr(f"{IN_PROCESS}.CRITIC_MIN_TIMEOUT_S", 0.05)
     policy = _policy_that_must_not_run()
     pipeline = _pipeline(critic=policy)
-    _use_critic(pipeline, _FakeCritic(APPROVE, delay=10))
+    pending = asyncio.get_running_loop().create_future()
 
-    started = time.monotonic()
+    async def hang(payload: dict[str, Any], headers: dict[str, str]) -> Any:
+        return await pending
+
+    _use_critic(pipeline, SimpleNamespace(process=hang))
+
     outcome = await _validate(pipeline, budget=SimpleNamespace(remaining_ms=10.0))
 
-    assert time.monotonic() - started < 1.0
+    assert pending.cancelled()
     result = _assert_blocked(outcome, CriticBlockReason.ERROR)
     assert result.flags == ["in_process_critic_timeout"]
     assert result.verdict is None
@@ -563,8 +566,10 @@ async def test_execute_retracts_on_inprocess_critic_timeout(beta: None, monkeypa
     preferences.fine_tuning_active_model_id = None
     preferences.fine_tuning_ab_experiment_id = None
 
+    pending = asyncio.get_running_loop().create_future()
+
     async def hang(*args: Any, **kwargs: Any) -> Any:
-        await asyncio.sleep(30)
+        return await pending
 
     client = MagicMock()
     client.chat.completions.create = AsyncMock(side_effect=hang)
@@ -575,7 +580,6 @@ async def test_execute_retracts_on_inprocess_critic_timeout(beta: None, monkeypa
         yield "Hello "
         yield "world"
 
-    started = time.monotonic()
     with (
         patch.object(
             pipeline,
@@ -598,7 +602,7 @@ async def test_execute_retracts_on_inprocess_critic_timeout(beta: None, monkeypa
             async for event in pipeline.execute("t-001", "conv-001", "Hello?", tenant=tenant, preferences=preferences)
         ]
 
-    assert time.monotonic() - started < 5.0
+    assert pending.cancelled()
     kinds = [event.event for event in events]
     assert StreamEventType.ERROR not in kinds
     assert kinds.count(StreamEventType.TOKEN) == 2

@@ -632,6 +632,7 @@ class TestHandleCheckoutCompleted:
         from src.integrations.stripe_webhooks import handle_checkout_completed
 
         mock_team_repo = AsyncMock()
+        mock_team_repo.find_by_email.return_value = None  # no team member with this email yet
 
         event = {
             "data": {
@@ -848,6 +849,7 @@ class TestAutoProvisionSuperadmin:
     @pytest.mark.asyncio
     async def test_creates_superadmin_member(self):
         mock_repo = AsyncMock()
+        mock_repo.find_by_email.return_value = None  # no team member with this email yet
         with patch("src.multi_tenant.repository.TeamMemberRepository", return_value=mock_repo):
             key = await auto_provision_superadmin("tenant-001", "owner@example.com")
         assert key is not None
@@ -868,6 +870,7 @@ class TestAutoProvisionSuperadmin:
     @pytest.mark.asyncio
     async def test_returns_none_on_failure(self):
         mock_repo = AsyncMock()
+        mock_repo.find_by_email.return_value = None  # no team member with this email yet
         mock_repo.create.side_effect = RuntimeError("Cosmos unavailable")
         with patch("src.multi_tenant.repository.TeamMemberRepository", return_value=mock_repo):
             key = await auto_provision_superadmin("tenant-001", "owner@example.com")
@@ -876,6 +879,7 @@ class TestAutoProvisionSuperadmin:
     @pytest.mark.asyncio
     async def test_key_hash_stored(self):
         mock_repo = AsyncMock()
+        mock_repo.find_by_email.return_value = None  # no team member with this email yet
         with patch("src.multi_tenant.repository.TeamMemberRepository", return_value=mock_repo):
             key = await auto_provision_superadmin("tenant-001", "owner@example.com")
         doc = mock_repo.create.call_args[0][1]
@@ -885,6 +889,7 @@ class TestAutoProvisionSuperadmin:
     @pytest.mark.asyncio
     async def test_member_id_format(self):
         mock_repo = AsyncMock()
+        mock_repo.find_by_email.return_value = None  # no team member with this email yet
         with patch("src.multi_tenant.repository.TeamMemberRepository", return_value=mock_repo):
             await auto_provision_superadmin("tenant-001", "owner@example.com")
         doc = mock_repo.create.call_args[0][1]

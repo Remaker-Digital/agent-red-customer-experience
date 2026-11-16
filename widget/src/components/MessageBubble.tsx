@@ -28,24 +28,28 @@ import { AnswerBlocks } from './AnswerBlocks';
 
 const MARKDOWN_LINK_RE = /\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g;
 
-function renderWithLinks(
+function renderInlineText(text: string, emphasize: boolean): (string | VNode)[] {
+  if (!emphasize) return [text];
+
+  return text.split(/(\*\*[^*\r\n]+\*\*)/).map((part, index) =>
+    index % 2 === 0 ? part : <strong>{part.slice(2, -2)}</strong>,
+  );
+}
+
+function renderLinks(
   text: string,
   tokens: DesignTokens,
   linkColor: string,
+  emphasizeLabel: boolean,
+  insideStrong = false,
 ): (string | VNode)[] {
   const parts: (string | VNode)[] = [];
   let lastIndex = 0;
-  let match: RegExpExecArray | null;
 
-  // Reset regex state for each call
-  MARKDOWN_LINK_RE.lastIndex = 0;
-
-  while ((match = MARKDOWN_LINK_RE.exec(text)) !== null) {
-    // Text before the link
+  for (const match of text.matchAll(MARKDOWN_LINK_RE)) {
     if (match.index > lastIndex) {
       parts.push(text.slice(lastIndex, match.index));
     }
-    // The clickable link — target="_top" opens in the parent frame (not the widget iframe)
     parts.push(
       <a
         href={match[2]}
@@ -55,22 +59,46 @@ function renderWithLinks(
           color: linkColor,
           textDecoration: 'underline',
           textUnderlineOffset: '2px',
-          fontWeight: tokens.fontWeightMedium,
+          fontWeight: insideStrong ? 'inherit' : tokens.fontWeightMedium,
           cursor: 'pointer',
         }}
       >
-        {match[1]}
-      </a>
+        {renderInlineText(match[1], emphasizeLabel)}
+      </a>,
     );
     lastIndex = match.index + match[0].length;
   }
 
-  // Remaining text after last link
   if (lastIndex < text.length) {
     parts.push(text.slice(lastIndex));
   }
 
-  return parts.length > 0 ? parts : [text];
+  return parts;
+}
+
+function renderWithLinks(
+  text: string,
+  tokens: DesignTokens,
+  linkColor: string,
+  emphasize: boolean,
+): (string | VNode)[] {
+  if (!emphasize) return renderLinks(text, tokens, linkColor, false);
+
+  // Ignore delimiters inside links while preserving offsets into the original text.
+  const masked = text.replace(MARKDOWN_LINK_RE, (link) => link.replace(/\*/g, ' '));
+  const parts: (string | VNode)[] = [];
+  let lastIndex = 0;
+
+  for (const match of masked.matchAll(/\*\*[^*\r\n]+\*\*/g)) {
+    parts.push(...renderLinks(text.slice(lastIndex, match.index), tokens, linkColor, true));
+    lastIndex = match.index + match[0].length;
+    parts.push(
+      <strong>{renderLinks(text.slice(match.index + 2, lastIndex - 2), tokens, linkColor, true, true)}</strong>,
+    );
+  }
+
+  parts.push(...renderLinks(text.slice(lastIndex), tokens, linkColor, true));
+  return parts;
 }
 
 /** Extract unique source domains from markdown links in message text. */
@@ -271,12 +299,13 @@ export const MessageBubble: FunctionComponent<MessageBubbleProps> = ({
             </div>
           )}
 
-          {/* Message content — renders markdown [text](url) as clickable links */}
+          {/* Message content preserves links and renders emphasis in agent replies. */}
           <span>
             {renderWithLinks(
               message.content,
               tokens,
               isCustomer ? tokens.colorCustomerBubbleText : tokens.colorPrimary,
+              message.role === 'agent',
             )}
           </span>
 

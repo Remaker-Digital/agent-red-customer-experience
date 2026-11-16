@@ -372,17 +372,21 @@ export async function submitMessageFeedback(
   return resp.ok;
 }
 
+export type IssueReportStatus = 'delivered' | 'saved' | 'failed';
+
 /** Report an issue with the conversation (C7). */
 export async function reportIssue(
   conversationId: string,
   issueType: string,
   details: string,
-): Promise<boolean> {
-  const resp = await request('POST', `/api/chat/conversations/${conversationId}/issue`, {
-    issue_type: issueType,
-    details,
-  });
-  return resp.ok;
+): Promise<IssueReportStatus> {
+  const resp = await request<{ accepted: boolean; notification_delivered?: boolean }>(
+    'POST',
+    `/api/chat/conversations/${conversationId}/issue`,
+    { issue_type: issueType, details },
+  );
+  if (!resp.ok || resp.data?.accepted !== true) return 'failed';
+  return resp.data.notification_delivered === true ? 'delivered' : 'saved';
 }
 
 // ---------------------------------------------------------------------------
@@ -413,7 +417,7 @@ export async function sendOtp(
     email,
     name: name ?? '',
   });
-  return resp.ok;
+  return resp.ok && resp.data?.sent === true;
 }
 
 /** Verify a 6-digit OTP code. Returns customer_token on success. */

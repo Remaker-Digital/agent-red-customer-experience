@@ -23,6 +23,8 @@ from __future__ import annotations
 import logging
 from typing import Any
 
+from azure.cosmos.exceptions import CosmosResourceNotFoundError
+
 from src.multi_tenant.cosmos_client import get_cosmos_manager
 from src.multi_tenant.cosmos_schema import COLLECTION_DOMAIN_INDEX
 
@@ -43,12 +45,14 @@ class DomainIndexRepository:
     def _container(self) -> Any:
         return get_cosmos_manager().get_container(self._collection_name)
 
-    async def lookup(self, domain: str) -> str | None:
+    async def lookup(self, domain: str, *, strict: bool = False) -> str | None:
         """Resolve a domain/identifier to a tenant ID.
 
         Args:
             domain: The external identifier (e.g. "example-store.myshopify.com"
                 or Stripe customer ID "cus_...").
+            strict: Raise any error other than not found. A caller that must
+                not treat a failed read as "not indexed" sets it.
 
         Returns:
             The tenant_id, or None if not indexed.
@@ -59,8 +63,11 @@ class DomainIndexRepository:
                 partition_key=domain,
             )
             return item.get("tenant_id")
+        except CosmosResourceNotFoundError:
+            return None
         except Exception:
-            # CosmosResourceNotFoundError or other — domain not indexed
+            if strict:
+                raise
             return None
 
     async def upsert(

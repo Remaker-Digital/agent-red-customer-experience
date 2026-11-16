@@ -20,8 +20,7 @@ Usage:
 Environment variables:
     CANARY_TARGET_URL: Production gateway URL (required)
     CANARY_WIDGET_KEY: Widget key for conversation test (required)
-    CANARY_ORIGIN: Origin header for widget requests, needed when the canary
-        tenant restricts approved_widget_origins (optional)
+    CANARY_ORIGIN: Origin header to exercise cross-origin widget requests (optional)
     SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASSWORD: Email alert config
     CANARY_ALERT_EMAIL: Recipient for failure alerts (default: ADMIN_RESET_EMAIL)
 
@@ -133,8 +132,12 @@ def check_sse_stream(client: httpx.Client, widget_key: str, conv_id: str) -> tup
 def send_alert(subject: str, body: str) -> None:
     """Send failure alert via SMTP."""
     try:
-        import smtplib
         from email.mime.text import MIMEText
+
+        from datetime import UTC, datetime
+
+        from src.multi_tenant.alert_delivery import email_generation_time
+        from src.multi_tenant.smtp_tls import open_verified_smtp
 
         host = os.environ.get("SMTP_HOST", "")
         port = int(os.environ.get("SMTP_PORT", "465"))
@@ -147,12 +150,12 @@ def send_alert(subject: str, body: str) -> None:
             logger.warning("SMTP not configured - cannot send alert email")
             return
 
-        msg = MIMEText(body)
-        msg["Subject"] = subject
+        msg = MIMEText(f"{body}\n\n{email_generation_time(datetime.now(UTC))}")
+        msg["Subject"] = f"Agent Red: {subject}"
         msg["From"] = sender
         msg["To"] = recipient
 
-        with smtplib.SMTP_SSL(host, port) as smtp:
+        with open_verified_smtp(host, port, username=user, password=password) as smtp:
             smtp.login(user, password)
             smtp.send_message(msg)
         logger.info("Alert sent to %s", recipient)

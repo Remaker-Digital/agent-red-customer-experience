@@ -109,39 +109,6 @@ class TestSpec0264CoverageGate50Percent:
             assert "fail_under" in src, "Must have coverage gate configured"
 
 
-class TestSpec0449AzureOpenAIExclusive:
-    """SPEC-0449: Azure OpenAI Service in East US 2 is exclusively for Agent Red."""
-
-    def test_azure_openai_in_env(self):
-        env = (ROOT / ".env.local").read_text(encoding="utf-8")
-        assert "AZURE_OPENAI" in env, "Must have Azure OpenAI credentials"
-
-    def test_east_us_region(self):
-        env = (ROOT / ".env.local").read_text(encoding="utf-8")
-        assert "agent-red-openai" in env or "eastus" in env.lower(), \
-            "Must reference East US Azure OpenAI resource"
-
-
-class TestSpec0539EnvLocalHasURLsAndKeys:
-    """SPEC-0539: URLs, API keys and passwords MUST be in env.local after builds."""
-
-    def test_env_local_has_api_gateway(self):
-        env = (ROOT / ".env.local").read_text(encoding="utf-8")
-        assert "agent-red-api-gateway" in env or "PROD_URL" in env, \
-            "Must have API gateway URL"
-
-    def test_env_local_has_cosmos(self):
-        env = (ROOT / ".env.local").read_text(encoding="utf-8")
-        assert "cosmos" in env.lower() or "COSMOS" in env, \
-            "Must have Cosmos DB credentials"
-
-    def test_env_local_has_multiple_keys(self):
-        env = (ROOT / ".env.local").read_text(encoding="utf-8")
-        key_indicators = ["API_KEY", "SECRET", "KEY", "TOKEN"]
-        found = sum(1 for k in key_indicators if k in env)
-        assert found >= 3, f"Must have multiple API keys/secrets, found {found}"
-
-
 # ── Wizard ────────────────────────────────────────────────────────────
 
 

@@ -1,16 +1,14 @@
 ---
 sidebar_position: 13
 title: Knowledge base management
-description: Create, edit, upload, and organize knowledge base articles — best practices for avoiding duplication, resolving conflicts, and optimizing AI response quality.
+description: Create, edit, upload, and organize knowledge base articles, best practices for avoiding duplication, resolving conflicts, and optimizing AI response quality.
 ---
 
 # Knowledge base management
 
 The knowledge base is the single most important factor in the quality of your AI agent's responses. A well-organized knowledge base with clear, non-overlapping articles produces accurate, consistent answers. A messy knowledge base with duplicated or conflicting information produces confused, contradictory answers.
 
-This page covers the operational side of managing your knowledge base — creating articles, uploading documents, organizing content, and avoiding common pitfalls.
-
-![Knowledge base management page showing articles, categories, and status indicators](/img/admin/knowledge-base.png)
+This page covers the operational side of managing your knowledge base: creating articles, uploading documents, organizing content, and avoiding common pitfalls.
 
 :::info
 For settings that control how the AI *searches* the knowledge base (retrieval depth, search weights, relevance thresholds), see [Knowledge base configuration](./knowledge-base.md).
@@ -45,7 +43,7 @@ The title is the first thing the hybrid search evaluates. A good title significa
 
 ### Writing effective content
 
-The content field is what the AI reads to construct its answer. The AI does not need marketing language, formatting, or persuasion — it needs clear, factual information that it can rephrase in your brand voice.
+The content field is what the AI reads to construct its answer. The AI does not need marketing language, formatting, or persuasion: it needs clear, factual information that it can rephrase in your brand voice.
 
 **Do:**
 ```
@@ -136,13 +134,13 @@ draft → published → archived
 | **Published** | Yes | Article is complete and ready for the AI to use. |
 | **Archived** | No | Article is outdated or no longer relevant. Preserved for reference but not searchable. |
 
-**Important:** Archiving an article is reversible, but it does remove the vector embedding. When you archive an article, its vector embedding is deleted and it becomes unsearchable. When you unarchive (re-publish) it, a new embedding is generated automatically — there may be a brief delay before the article becomes searchable again while the embedding is created.
+**Important:** Archiving an article is reversible, but it does remove the vector embedding. When you archive an article, its vector embedding is deleted and it becomes unsearchable. When you unarchive (re-publish) it, a new embedding is generated automatically: there may be a brief delay before the article becomes searchable again while the embedding is created.
 
 ---
 
 ## Staleness and freshness
 
-Every knowledge base article has a staleness score (0.0–1.0) that indicates how likely the content is to be outdated. The staleness score is calculated from three factors:
+Every knowledge base article has a staleness score (0.0 to 1.0) that indicates how likely the content is to be outdated. The staleness score is calculated from three factors:
 
 | Factor | Weight | Description |
 |---|---|---|
@@ -154,10 +152,10 @@ Every knowledge base article has a staleness score (0.0–1.0) that indicates ho
 
 | Score | Category | Badge color | Action |
 |---|---|---|---|
-| 0.0–0.3 | Fresh | Green | No action needed |
-| 0.3–0.6 | Aging | Yellow | Review when convenient |
-| 0.6–0.8 | Stale | Orange | Review and update soon |
-| 0.8–1.0 | Very stale | Red | Update immediately — may contain outdated information |
+| 0.0 to 0.3 | Fresh | Green | No action needed |
+| 0.3 to 0.6 | Aging | Yellow | Review when convenient |
+| 0.6 to 0.8 | Stale | Orange | Review and update soon |
+| 0.8 to 1.0 | Very stale | Red | Update immediately: may contain outdated information |
 
 **Mark as verified:** If you review an article and confirm the content is still accurate, click **Mark as verified** to reset the verification recency factor. This reduces the staleness score without requiring you to edit the content.
 
@@ -167,7 +165,7 @@ Every knowledge base article has a staleness score (0.0–1.0) that indicates ho
 
 ## Avoiding duplication
 
-Duplication is the most common knowledge base problem and the primary cause of inconsistent AI responses. When two articles cover the same topic with slightly different information, the AI may retrieve both and produce a response that blends them — often incorrectly.
+Duplication is the most common knowledge base problem and the primary cause of inconsistent AI responses. When two articles cover the same topic with slightly different information, the AI may retrieve both and produce a response that blends them: often incorrectly.
 
 ### How to identify duplication
 
@@ -194,7 +192,7 @@ Duplication is the most common knowledge base problem and the primary cause of i
 When the hybrid search retrieves multiple articles on the same topic:
 - The response generator receives all retrieved articles as context.
 - It attempts to synthesize a coherent answer from all sources.
-- If the sources conflict, the response generator picks the most specific or most recently updated source — but this behavior is not guaranteed.
+- If the sources conflict, the response generator picks the most specific or most recently updated source: but this behavior is not guaranteed.
 - The Critic/Supervisor may flag the response if it detects factual inconsistency.
 
 **The solution is always to fix the knowledge base**, not to hope the AI resolves conflicts correctly.
@@ -217,7 +215,7 @@ If you discover the AI is giving inconsistent answers, follow this process:
 
 ## Organizing with categories
 
-Categories are freeform text labels — you can create any category you want. Consistent categories improve both the admin experience (filtering) and AI performance (when using intent-to-source routing).
+Categories are freeform text labels: you can create any category you want. Consistent categories improve both the admin experience (filtering) and AI performance (when using intent-to-source routing).
 
 **Recommended categories for e-commerce:**
 
@@ -233,8 +231,8 @@ Categories are freeform text labels — you can create any category you want. Co
 | `Company` | About us, contact information, store locations, careers |
 
 **Tips:**
-- Use 5–10 categories maximum. More than that becomes difficult to maintain.
-- Avoid overlapping categories. "Shipping & Returns" is a category that invites mixing topics — use separate "Shipping" and "Returns" categories.
+- Use 5 to 10 categories maximum. More than that becomes difficult to maintain.
+- Avoid overlapping categories. "Shipping & Returns" is a category that invites mixing topics: use separate "Shipping" and "Returns" categories.
 - Avoid hyper-specific categories with only one article. A category with a single article provides no organizational value.
 
 ---
@@ -275,7 +273,7 @@ Follow this process to systematically improve your knowledge base over time:
 
 2. **Run a conflict scan.** From the Knowledge Base page, click the **Conflict scan** button. The scan checks for duplicate, overlapping, or contradictory entries and reports issues grouped by severity (High, Medium, Low). Each issue shows similarity percentages and a suggested resolution. Fix all High-severity conflicts immediately.
 
-3. **Review the analytics.** After your first week, check the Dashboard for knowledge gaps — questions the AI could not answer confidently. Create articles to cover those gaps.
+3. **Review the analytics.** After your first week, check the Dashboard for knowledge gaps: questions the AI could not answer confidently. Create articles to cover those gaps.
 
 4. **Test article quality.** Open the chat widget and ask the exact questions your articles should answer. If the AI gives a vague or incomplete response, the article likely needs clearer language, a better title, or both.
 

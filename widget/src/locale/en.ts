@@ -24,6 +24,15 @@ export interface Locale {
   closeWidget: string;
   minimizeWidget: string;
   attachFile: string;
+  textAttachment: {
+    help: string;
+    unsupported: string;
+    unreadable: string;
+    tooLong: string;
+    reading: string;
+    remove: string;
+    messageLabel: string;
+  };
   ratingPrompt: string;
   ratingThankYou: string;
   ratingCommentPlaceholder: string;
@@ -54,8 +63,14 @@ export interface Locale {
   issueSubmit: string;
   issueSubmitting: string;
   issueSubmitSuccess: string;
+  issueSubmitFailure: string;
+  issueNotificationUnconfirmed: string;
   issueCancel: string;
   issueDone: string;
+  verifyEmail: string;
+  emailVerified: string;
+  emailSendCode: string;
+  emailSendFailed: string;
   otpPrompt: string;
   otpVerify: string;
   otpResend: string;
@@ -116,6 +131,15 @@ export const en: Locale = {
   closeWidget: 'Close chat',
   minimizeWidget: 'Minimize',
   attachFile: 'Attach file',
+  textAttachment: {
+    help: 'Attach a UTF-8 .txt file. Its contents are sent as part of your message.',
+    unsupported: 'Choose a UTF-8 .txt file.',
+    unreadable: 'The file is empty or does not contain readable UTF-8 text.',
+    tooLong: 'The attachment and message must fit within 2,000 characters.',
+    reading: 'Reading attachment...',
+    remove: 'Remove attachment',
+    messageLabel: 'Text attachment',
+  },
   ratingPrompt: 'Was this conversation helpful?',
   ratingThankYou: 'Thank you for your feedback!',
   ratingCommentPlaceholder: 'Any additional comments? (optional)',
@@ -146,8 +170,14 @@ export const en: Locale = {
   issueSubmit: 'Submit Report',
   issueSubmitting: 'Submitting...',
   issueSubmitSuccess: 'Thank you! Your report has been submitted.',
+  issueSubmitFailure: 'We could not submit your report. Please try again.',
+  issueNotificationUnconfirmed: 'Your report was saved, but we could not confirm that the team was notified.',
   issueCancel: 'Cancel',
   issueDone: 'Done',
+  verifyEmail: 'Verify email',
+  emailVerified: 'Email verified',
+  emailSendCode: 'Send code',
+  emailSendFailed: 'Unable to request a verification code. Please try again.',
   otpPrompt: 'Enter the code we sent to your email.',
   otpVerify: 'Verify',
   otpResend: 'Resend code',

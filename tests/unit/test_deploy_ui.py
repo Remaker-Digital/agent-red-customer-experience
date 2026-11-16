@@ -122,7 +122,7 @@ class TestEnvironmentRegistry:
         assert set(deploy_ui.ENVIRONMENTS.keys()) == {"staging", "production"}
 
     def test_staging_container_app(self):
-        assert deploy_ui.ENVIRONMENTS["staging"]["container_app"] == "agent-red-staging"
+        assert deploy_ui.ENVIRONMENTS["staging"]["container_app"] == "example-gateway-stage"
 
     def test_production_container_app(self):
         assert deploy_ui.ENVIRONMENTS["production"]["container_app"] == "agent-red-api-gateway"
@@ -358,7 +358,7 @@ class TestDeployUi:
         assert "v1.81.2-ui" in result["new_image"]
         assert "az acr build" in result["acr_cmd"]
         assert "az containerapp update" in result["deploy_cmd"]
-        assert "agent-red-staging" in result["deploy_cmd"]
+        assert "example-gateway-stage" in result["deploy_cmd"]
 
     def test_dry_run_production_uses_correct_app(self, patched_components):
         result = deploy_ui.deploy_ui("production", "v1.80.5", dry_run=True)

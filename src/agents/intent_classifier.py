@@ -54,6 +54,13 @@ INTENT_TAXONOMY = [
     "admin_assistance",
 ]
 
+_HANDOFF_CLASSIFICATION_RULE = (
+    "Classify an explicit request for a human handoff as escalation, "
+    "even when the request includes a support topic. This includes asking "
+    "for someone to contact the customer about their issue. "
+    "A request for contact information alone is not a handoff."
+)
+
 
 class IntentClassifierAgent(AgentRedBaseAgent):
     """Classify customer intent from a raw message.
@@ -117,7 +124,7 @@ class IntentClassifierAgent(AgentRedBaseAgent):
         response = await self._openai_client.chat.completions.create(
             model=AZURE_IC_MODEL,
             messages=[
-                {"role": "system", "content": system_prompt},
+                {"role": "system", "content": f"{system_prompt}\n\n{_HANDOFF_CLASSIFICATION_RULE}"},
                 {"role": "user", "content": ic_user_prompt},
             ],
             **chat_completion_params("IC", temperature=0.0, max_tokens=150),

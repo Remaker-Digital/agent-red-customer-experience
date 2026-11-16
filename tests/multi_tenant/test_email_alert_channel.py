@@ -187,7 +187,7 @@ class TestEmailTemplateRendering:
 
     def test_usage_80_template(self, sample_usage_alert):
         subject, html = _render_email(sample_usage_alert)
-        assert "[Agent Red]" in subject
+        assert subject.startswith("Agent Red: ")
         assert "Approaching" in subject
         assert "Agent Red" in html
         assert "82%" in html
@@ -226,13 +226,15 @@ class TestEmailTemplateRendering:
 
     def test_generic_fallback_template(self, sample_generic_alert):
         subject, html = _render_email(sample_generic_alert)
-        assert "[Agent Red]" in subject
+        assert subject.startswith("Agent Red: ")
         assert "Data retention" in html
 
     def test_html_has_wrapper_structure(self, sample_usage_alert):
         _, html = _render_email(sample_usage_alert)
         assert "<!DOCTYPE html>" in html
-        assert "#ff3621" in html  # Brand color
+        assert 'bgcolor="#0c0a09"' in html
+        assert 'bgcolor="#292524"' in html
+        assert 'alt="Agent Red Customer Experience"' in html
         assert "Remaker Digital" in html
         assert "remakerdigital.com" in html
 
@@ -554,7 +556,7 @@ class TestEscalationAlert:
         subject, html = _render_email(alert)
         assert "Customer Escalation" in html
         assert "Action Required" in html
-        assert "[Agent Red]" in subject
+        assert subject.startswith("Agent Red: ")
 
     @pytest.mark.asyncio
     async def test_send_escalation_alert_calls_service(self):

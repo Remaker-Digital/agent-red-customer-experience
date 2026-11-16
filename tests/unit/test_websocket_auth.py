@@ -55,11 +55,11 @@ def fresh_limiter(monkeypatch):
 
 
 @pytest.fixture(autouse=True)
-def no_origin_restriction():
-    """Handshakes check approved origins on the active preferences (S14, #139); none are set here."""
-    no_origins = AsyncMock(return_value={"approved_widget_origins": []})
-    with patch("src.multi_tenant.repositories.preferences.PreferencesRepository.get_active", no_origins):
-        yield
+def legacy_origins():
+    """Model a tenant that still stores its former allowlist."""
+    saved_origins = AsyncMock(return_value={"approved_widget_origins": ["https://old.example"]})
+    with patch("src.multi_tenant.repositories.preferences.PreferencesRepository.get_active", saved_origins):
+        yield saved_origins
 
 
 @pytest.fixture
@@ -91,13 +91,17 @@ def test_handshake_is_refused(app_client, conversations, url):
 
 
 @pytest.mark.parametrize("param", ["widget_key", "key"])
-def test_own_conversation_connects_and_relays(app_client, conversations, param):
+def test_own_conversation_connects_and_relays(app_client, conversations, legacy_origins, param):
     url = f"/api/chat/ws/{OWN}?{param}={TEST_WIDGET_KEY}"
-    with app_client.websocket_connect(url) as first, app_client.websocket_connect(url) as second:
+    with (
+        app_client.websocket_connect(url, headers={"Origin": "https://shop.example.net"}) as first,
+        app_client.websocket_connect(url, headers={"Origin": "https://help.example.org"}) as second,
+    ):
         first.send_json({"type": "typing_start", "data": {}})
         relayed = second.receive_json()
     assert relayed["conversation_id"] == OWN
     assert relayed["type"] == "typing_start"
+    legacy_origins.assert_not_awaited()
 
 
 def test_refused_when_chat_service_is_not_ready(app_client, monkeypatch):

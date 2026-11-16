@@ -126,7 +126,7 @@ MOCK_TENANTS = [
     },
     {
         "tenantId": "example-store",
-        "displayName": "Example Storefront",
+        "displayName": "example-shop Storefront",
         "status": "active",
         "tier": "professional",
         "billingChannel": "shopify",
@@ -313,7 +313,7 @@ MOCK_PIPELINE_TENANTS = {
         },
         {
             "tenantId": "example-store",
-            "displayName": "Example Storefront",
+            "displayName": "example-shop Storefront",
             "tier": "professional",
             "totalConversations": 421,
             "billableConversations": 398,

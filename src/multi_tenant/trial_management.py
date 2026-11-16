@@ -39,6 +39,7 @@ from datetime import UTC, datetime, timedelta
 from enum import Enum
 from typing import Any
 
+from src.multi_tenant.auth import TenantContext
 from src.multi_tenant.cosmos_schema import (
     AuditEventType,
     BillingChannel,
@@ -47,6 +48,7 @@ from src.multi_tenant.cosmos_schema import (
     TenantTier,
 )
 from src.multi_tenant.entitlement_service import get_entitlement_service
+from src.multi_tenant.middleware import get_tenant_context
 from src.integrations.provisioning import _require_superadmin_contact
 
 logger = logging.getLogger(__name__)
@@ -843,11 +845,10 @@ class TrialManagementService:
             return 0
 
         try:
-            results = await self._conversations.query(
-                query=("SELECT VALUE COUNT(1) FROM c WHERE c.tenant_id = @tid AND c.is_billable = true"),
-                parameters=[{"name": "@tid", "value": tenant_id}],
+            return await self._conversations.query_count(
+                tenant_id=tenant_id,
+                query_text="SELECT VALUE COUNT(1) FROM c WHERE c.is_billable = true",
             )
-            return results[0] if results else 0
         except Exception:
             logger.warning("Could not count trial conversations for %s", tenant_id)
             return 0
@@ -1169,16 +1170,24 @@ async def provision_trial_endpoint(
     )
 
 
-@trial_router.get("/status/{tenant_id}", response_model=TrialStatusResponse)
+@trial_router.get(
+    "/status/{tenant_id}",
+    response_model=TrialStatusResponse,
+    responses={403: {"description": "Access denied for the requested tenant"}},
+)
 async def get_trial_status_endpoint(
     tenant_id: str,
+    ctx: TenantContext = Depends(get_tenant_context),
     service: TrialManagementService = Depends(_get_trial_service),
 ) -> TrialStatusResponse:
     """Get trial status for dashboard display."""
+    if tenant_id != ctx.tenant_id:
+        raise HTTPException(status_code=403, detail="Trial status requests may only name the calling tenant.")
+
     try:
-        status = await service.get_trial_status(tenant_id)
+        status = await service.get_trial_status(ctx.tenant_id)
     except Exception as e:
-        logger.exception("Trial status lookup failed: tenant=%s", tenant_id)
+        logger.exception("Trial status lookup failed: tenant=%s", ctx.tenant_id)
         raise HTTPException(status_code=503, detail="Trial store unavailable") from e
     if not status:
         raise HTTPException(status_code=404, detail="Trial tenant not found")

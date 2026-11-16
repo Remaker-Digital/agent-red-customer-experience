@@ -242,7 +242,8 @@ class TestCanarySMTPEnvWiring:
         }):
             with patch("smtplib.SMTP_SSL") as mock_smtp:
                 mock_conn = MagicMock()
-                mock_smtp.return_value.__enter__ = MagicMock(return_value=mock_conn)
-                mock_smtp.return_value.__exit__ = MagicMock(return_value=False)
+                mock_smtp.return_value = mock_conn
                 send_alert("Test", "Body")
-                mock_smtp.assert_called_once_with("mail.test.com", 465)
+                args, kwargs = mock_smtp.call_args
+                assert args[:2] == ("mail.test.com", 465)
+                assert kwargs["context"] is not None

@@ -275,7 +275,7 @@ class CriticPolicy:
 
     Usage:
         policy = CriticPolicy(
-            critic_urls=["http://10.0.1.7:8080", "http://10.0.1.7b:8080"],
+            critic_urls=["http://192.0.2.7:8080", "http://10.0.1.7b:8080"],
             conversation_repo=conversation_repo,
             audit_repo=audit_repo,
         )
@@ -508,7 +508,7 @@ class CriticPolicy:
         """Make an HTTP call to a single Critic replica.
 
         Args:
-            base_url: Critic replica base URL (e.g., "http://10.0.1.7:8080").
+            base_url: Critic replica base URL (e.g., "http://192.0.2.7:8080").
             payload: Validation request payload.
             request_id: Correlation ID.
             start_time: Monotonic timestamp when validation started.

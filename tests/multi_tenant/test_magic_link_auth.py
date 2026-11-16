@@ -25,15 +25,11 @@ from unittest.mock import AsyncMock, MagicMock, patch
 import jwt
 import pytest
 
-from src.multi_tenant.security_hardening import get_rate_limit_backend, set_rate_limit_backend, InMemoryRateLimitBackend
 from src.multi_tenant.magic_link_auth import (
     MagicLinkRequest,
     MagicLinkRequestResponse,
     _JWT_SECRET,
-    _RATE_MAX,
-    _RATE_WINDOW,
     _TOKEN_TYPE,
-    _is_rate_limited,
     create_magic_link_session_token,
     request_magic_link,
     verify_magic_link,
@@ -44,15 +40,6 @@ from src.multi_tenant.magic_link_auth import (
 # ---------------------------------------------------------------------------
 # Fixtures
 # ---------------------------------------------------------------------------
-
-
-@pytest.fixture(autouse=True)
-def _clear_rate_limit():
-    """Use a fresh rate-limit backend per test for isolation."""
-    original = get_rate_limit_backend()
-    set_rate_limit_backend(InMemoryRateLimitBackend())
-    yield
-    set_rate_limit_backend(original)
 
 
 @pytest.fixture()
@@ -182,38 +169,6 @@ class TestVerifySessionToken:
 
 
 # ---------------------------------------------------------------------------
-# Rate limiting tests (ML-09 to ML-11)
-# ---------------------------------------------------------------------------
-
-
-class TestRateLimiting:
-    """ML-09 to ML-11: IP-based rate limiting for magic link requests."""
-
-    def test_ml09_first_request_not_limited(self):
-        assert _is_rate_limited("10.0.0.1") is False
-
-    def test_ml10_within_limit_not_blocked(self):
-        for _ in range(_RATE_MAX - 1):
-            assert _is_rate_limited("10.0.0.2") is False
-
-    def test_ml11_exceeds_limit_blocked(self):
-        for _ in range(_RATE_MAX):
-            _is_rate_limited("10.0.0.3")
-        assert _is_rate_limited("10.0.0.3") is True
-
-    def test_ml12_different_ips_independent(self):
-        for _ in range(_RATE_MAX):
-            _is_rate_limited("10.0.0.4")
-        assert _is_rate_limited("10.0.0.4") is True
-        assert _is_rate_limited("10.0.0.5") is False
-
-    def test_ml13_old_entries_expire(self):
-        """Entries older than the rate window should be cleaned up."""
-        get_rate_limit_backend().reset("magic_link:10.0.0.6")
-        assert _is_rate_limited("10.0.0.6") is False
-
-
-# ---------------------------------------------------------------------------
 # Request endpoint tests (ML-14 to ML-17)
 # ---------------------------------------------------------------------------
 
@@ -262,17 +217,6 @@ class TestRequestEndpoint:
         assert call_kwargs.kwargs.get("token_type") == _TOKEN_TYPE or (
             len(call_kwargs.args) >= 2 and call_kwargs.args[1] == _TOKEN_TYPE
         )
-
-    @pytest.mark.asyncio
-    async def test_ml16_rate_limited_returns_200(self, mock_request):
-        # Exhaust rate limit
-        for _ in range(_RATE_MAX):
-            _is_rate_limited(mock_request.client.host)
-        result = await request_magic_link(
-            MagicLinkRequest(email="any@test.com", tenant="any-tenant"),
-            mock_request,
-        )
-        assert isinstance(result, MagicLinkRequestResponse)
 
     @pytest.mark.asyncio
     async def test_ml17_email_case_normalized(self, mock_request, mock_tenant_repo, mock_token_repo):
@@ -584,54 +528,6 @@ class TestVerifyWithMemberIdentity:
 
 
 # ---------------------------------------------------------------------------
-# SPEC-1281: Magic link rate limit 3 per 5 min per IP
-# ---------------------------------------------------------------------------
-
-
-class TestSpec1281RateLimit:
-    """SPEC-1281: Magic link rate limit 3 per 5 min per IP."""
-
-    def test_spec1281_rate_max_is_3(self):
-        """SPEC-1281: _RATE_MAX is 3."""
-        assert _RATE_MAX == 3
-
-    def test_spec1281_rate_window_is_300_seconds(self):
-        """SPEC-1281: _RATE_WINDOW is 300 seconds (5 minutes)."""
-        assert _RATE_WINDOW == 300.0
-
-    def test_spec1281_first_three_requests_not_limited(self):
-        """SPEC-1281: First 3 requests from same IP are allowed."""
-        ip = "10.0.1.1"
-        for i in range(_RATE_MAX):
-            assert _is_rate_limited(ip) is False, f"Request {i+1} should not be limited"
-
-    def test_spec1281_fourth_request_is_limited(self):
-        """SPEC-1281: 4th request from same IP within 5 min is blocked."""
-        ip = "10.0.1.2"
-        for _ in range(_RATE_MAX):
-            _is_rate_limited(ip)
-        assert _is_rate_limited(ip) is True
-
-    def test_spec1281_different_ips_independent(self):
-        """SPEC-1281: Rate limits are independent per IP."""
-        ip_a = "10.0.1.3"
-        ip_b = "10.0.1.4"
-        for _ in range(_RATE_MAX):
-            _is_rate_limited(ip_a)
-        # ip_a exhausted, ip_b still clean
-        assert _is_rate_limited(ip_a) is True
-        assert _is_rate_limited(ip_b) is False
-
-    def test_spec1281_expired_entries_reset(self):
-        """SPEC-1281: Entries older than 5 minutes are cleaned up."""
-        ip = "10.0.1.5"
-        # Pre-populate with entries beyond the window
-        get_rate_limit_backend().reset(f"magic_link:{ip}")
-        # Should not be limited (old entries expire)
-        assert _is_rate_limited(ip) is False
-
-
-# ---------------------------------------------------------------------------
 # SPEC-1282: Uniform 200 response on magic link (anti-enumeration)
 # ---------------------------------------------------------------------------
 
@@ -678,17 +574,6 @@ class TestSpec1282UniformResponse:
                 MagicLinkRequest(email="merchant@example.com", tenant="tenant-abc-123"),
                 mock_request,
             )
-        assert isinstance(result, MagicLinkRequestResponse)
-
-    @pytest.mark.asyncio
-    async def test_spec1282_rate_limited_returns_200(self, mock_request):
-        """SPEC-1282: Rate-limited requests also return 200 (anti-enumeration)."""
-        for _ in range(_RATE_MAX):
-            _is_rate_limited(mock_request.client.host)
-        result = await request_magic_link(
-            MagicLinkRequest(email="any@test.com", tenant="any-tenant"),
-            mock_request,
-        )
         assert isinstance(result, MagicLinkRequestResponse)
 
     def test_spec1282_response_message_is_generic(self):

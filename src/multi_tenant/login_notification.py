@@ -19,11 +19,14 @@ are logged and swallowed.
 
 from __future__ import annotations
 
+from html import escape
 import asyncio
 import logging
 import os
 import time
 from datetime import UTC, datetime
+
+from src.multi_tenant.alert_delivery import email_action_template
 
 logger = logging.getLogger(__name__)
 
@@ -51,48 +54,44 @@ def claim_login_notification(admin_key: str) -> bool:
 
 
 _LOGIN_NOTIFICATION_BODY = """
-<h2 style="margin:0 0 16px;color:#111827;font-size:20px">
+<h2 style="margin:0 0 16px;color:#fafaf9;font-size:20px">
   Platform Admin Sign-in Notification
 </h2>
-<p style="color:#374151;font-size:14px;line-height:1.6;margin:0 0 16px">
+<p style="color:#f5f5f4;font-size:14px;line-height:1.6;margin:0 0 16px">
   Your Agent Red platform admin account was used to sign in.
 </p>
 <table style="width:100%;border-collapse:collapse;margin:0 0 24px">
   <tr>
-    <td style="padding:8px 12px;color:#6b7280;font-size:13px;border-bottom:1px solid #e5e7eb;width:120px">
+    <td style="padding:8px 12px;color:#d6d3d1;font-size:13px;border-bottom:1px solid #44403c;width:120px">
       Time
     </td>
-    <td style="padding:8px 12px;color:#111827;font-size:13px;border-bottom:1px solid #e5e7eb">
+    <td style="padding:8px 12px;color:#fafaf9;font-size:13px;border-bottom:1px solid #44403c">
       {timestamp}
     </td>
   </tr>
   <tr>
-    <td style="padding:8px 12px;color:#6b7280;font-size:13px;border-bottom:1px solid #e5e7eb">
+    <td style="padding:8px 12px;color:#d6d3d1;font-size:13px;border-bottom:1px solid #44403c">
       IP Address
     </td>
-    <td style="padding:8px 12px;color:#111827;font-size:13px;border-bottom:1px solid #e5e7eb">
+    <td style="padding:8px 12px;color:#fafaf9;font-size:13px;border-bottom:1px solid #44403c">
       {client_ip}
     </td>
   </tr>
   <tr>
-    <td style="padding:8px 12px;color:#6b7280;font-size:13px;border-bottom:1px solid #e5e7eb">
+    <td style="padding:8px 12px;color:#d6d3d1;font-size:13px;border-bottom:1px solid #44403c">
       User Agent
     </td>
-    <td style="padding:8px 12px;color:#111827;font-size:13px;border-bottom:1px solid #e5e7eb;word-break:break-word">
+    <td style="padding:8px 12px;color:#fafaf9;font-size:13px;border-bottom:1px solid #44403c;word-break:break-word">
       {user_agent}
     </td>
   </tr>
 </table>
 <div style="text-align:center;margin:24px 0">
-  <a href="{admin_dashboard_url}" style="display:inline-block;padding:10px 24px;
-     background:#ff3621;color:#ffffff;font-size:14px;font-weight:600;
-     text-decoration:none;border-radius:4px">
-    Sign in to Dashboard
-  </a>
+  """ + email_action_template("{admin_dashboard_url}", "Sign in to Dashboard") + """
 </div>
-<p style="color:#9ca3af;font-size:12px;line-height:1.5;margin:0">
+<p style="color:#d6d3d1;font-size:12px;line-height:1.5;margin:0">
   If this was not you, sign in to your
-  <a href="{admin_dashboard_url}" style="color:#ff3621">admin dashboard</a>
+  <a href="{admin_dashboard_url}" style="color:#93c5fd">admin dashboard</a>
   to generate new backup codes and rotate your API key immediately.
 </p>
 """
@@ -100,9 +99,10 @@ _LOGIN_NOTIFICATION_BODY = """
 
 async def _send_login_smtp(to_email: str, subject: str, html_body: str) -> None:
     """SMTP send for a login notification. ACS is the fallback in the caller."""
-    import smtplib
     from email.mime.multipart import MIMEMultipart
     from email.mime.text import MIMEText
+
+    from src.multi_tenant.smtp_tls import open_verified_smtp
 
     host = os.environ.get("SMTP_HOST", "")
     port = int(os.environ.get("SMTP_PORT", "587"))
@@ -116,19 +116,10 @@ async def _send_login_smtp(to_email: str, subject: str, html_body: str) -> None:
         message["To"] = to_email
         message["Subject"] = subject
         message.attach(MIMEText(html_body, "html"))
-        if port == 465:
-            with smtplib.SMTP_SSL(host, port, timeout=10) as server:
-                if user and password:
-                    server.login(user, password)
-                server.send_message(message)
-        else:
-            with smtplib.SMTP(host, port, timeout=10) as server:
-                server.ehlo()
-                if port != 25:
-                    server.starttls()
-                if user and password:
-                    server.login(user, password)
-                server.send_message(message)
+        with open_verified_smtp(host, port, timeout=10, username=user, password=password) as server:
+            if user and password:
+                server.login(user, password)
+            server.send_message(message)
 
     await asyncio.to_thread(_send)
 
@@ -154,6 +145,11 @@ async def send_login_notification(
         The User-Agent header from the request.
     """
     recipient = notification_email or admin_email
+    from src.chat.escalation_email import _header_value_is_safe
+
+    if not _header_value_is_safe(recipient):
+        logger.warning("Login notification skipped because the recipient contains a line break")
+        return
 
     try:
         from src.multi_tenant.alert_delivery import format_branded_email
@@ -172,10 +168,10 @@ async def send_login_notification(
             timestamp=timestamp,
             client_ip=client_ip,
             user_agent=user_agent or "Unknown",
-            admin_dashboard_url=admin_url,
+            admin_dashboard_url=escape(admin_url),
         )
-        full_html = format_branded_email(body_html, admin_url=admin_url)
-        subject = "Agent Red — Platform Admin Sign-in"
+        full_html = format_branded_email(body_html)
+        subject = "Agent Red: Platform Admin Sign-in"
 
         if smtp_host:
             try:

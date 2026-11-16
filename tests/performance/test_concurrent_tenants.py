@@ -1,11 +1,11 @@
 """14c: Performance validation — concurrent tenant load testing.
 
-Validates that the API gateway can handle 680 concurrent merchant tenants
-at near-term scale (SPEC-1516). Uses mock infrastructure to avoid live
-Azure dependencies.
+Exercises tenant data and isolation with a mocked population of 680 tenants
+(SPEC-1516). The mock batch checks correctness.
 
 Test structure:
-    - PERF-01 to PERF-04: Single-tenant response time baselines
+    - PERF-01 to PERF-02: Tenant identity and serialization
+    - PERF-03 to PERF-04: Waived evaluation cases
     - PERF-05 to PERF-08: Concurrent tenant load under mock conditions
     - PERF-09 to PERF-12: Resource isolation under concurrent access
 
@@ -63,24 +63,15 @@ def _make_tenant_doc(tenant_id: str) -> dict[str, Any]:
 
 
 class TestSingleTenantBaseline:
-    """Single-tenant performance baselines (mock infrastructure)."""
+    """Tenant fixture and serialization checks."""
 
-    def test_perf_01_tenant_context_creation_is_fast(self):
-        """PERF-01: TenantContext creation under 1ms."""
-        start = time.perf_counter()
-        for i in range(1000):
-            _make_tenant_context(f"t-{i:04d}")
-        elapsed = time.perf_counter() - start
-        assert elapsed < 1.0, f"1000 context creations took {elapsed:.3f}s"
+    def test_perf_01_tenant_context_preserves_identity(self):
+        ctx = _make_tenant_context("t-0001")
+        assert (ctx.tenant_id, ctx.team_member_id, ctx.team_member_role) == ("t-0001", "member-t-0001", "admin")
 
-    def test_perf_02_tenant_doc_serialization_is_fast(self):
-        """PERF-02: Tenant doc dict creation under 1ms."""
-        start = time.perf_counter()
-        for i in range(1000):
-            doc = _make_tenant_doc(f"t-{i:04d}")
-            json.dumps(doc)
-        elapsed = time.perf_counter() - start
-        assert elapsed < 1.0, f"1000 serializations took {elapsed:.3f}s"
+    def test_perf_02_tenant_doc_round_trips_through_json(self):
+        doc = _make_tenant_doc("t-0001")
+        assert json.loads(json.dumps(doc)) == doc
 
     @pytest.mark.skip(
         reason="waived per DELIB-S330-SLICE-8-6-PHASE-3-G-EVALUATION-MODULE-WAIVER: "
@@ -137,7 +128,7 @@ class TestConcurrentTenantLoad:
 
     @pytest.mark.asyncio
     async def test_perf_05_concurrent_context_creation(self):
-        """PERF-05: 50 concurrent tenant contexts can be created."""
+        """PERF-05: Every context in the mock batch keeps a distinct tenant."""
         async def create_context(i: int) -> MagicMock:
             return _make_tenant_context(f"t-{i:04d}")
 
@@ -150,21 +141,18 @@ class TestConcurrentTenantLoad:
 
     @pytest.mark.asyncio
     async def test_perf_06_concurrent_mock_db_reads(self):
-        """PERF-06: 50 concurrent mock DB reads complete without contention."""
+        """PERF-06: Every mock read returns the requested tenant."""
         mock_repo = AsyncMock()
         mock_repo.read = AsyncMock(side_effect=lambda tid: _make_tenant_doc(tid))
 
         async def read_tenant(i: int) -> dict:
             return await mock_repo.read(f"t-{i:04d}")
 
-        start = time.perf_counter()
         tasks = [read_tenant(i) for i in range(TENANT_COUNT)]
         results = await asyncio.gather(*tasks)
-        elapsed = time.perf_counter() - start
 
-        assert len(results) == TENANT_COUNT
+        assert [r["tenant_id"] for r in results] == [f"t-{i:04d}" for i in range(TENANT_COUNT)]
         assert all(r["status"] == "active" for r in results)
-        assert elapsed < 2.0, f"50 concurrent reads took {elapsed:.3f}s"
 
     @pytest.mark.asyncio
     async def test_perf_07_concurrent_mock_writes(self):

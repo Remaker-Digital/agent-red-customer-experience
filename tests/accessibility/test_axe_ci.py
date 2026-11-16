@@ -75,3 +75,15 @@ class TestProviderConsoleAccessibility:
             raise AssertionError(
                 f"{len(errors)} a11y issue(s) on {page_name} ({AXE_CI} baseline):\n" + "\n".join(errors)
             )
+
+    def test_conversation_background_eyedropper_names(self, a11y_page: Page, a11y_base_url: str) -> None:
+        """Both background eyedroppers expose distinct accessible names."""
+        a11y_page.add_init_script("window.EyeDropper ??= class {};")
+        navigate_a11y(a11y_page, a11y_base_url, "/widget")
+
+        for mode in ("light", "dark"):
+            expect(
+                a11y_page.get_by_role(
+                    "button", name=f"Pick a screen color for the {mode} conversation background", exact=True
+                )
+            ).to_be_visible()

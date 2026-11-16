@@ -18,9 +18,9 @@
  */
 
 import { FunctionComponent } from 'preact';
-import { useState, useRef, useCallback, useMemo } from 'preact/hooks';
+import { useState, useRef, useCallback, useMemo, useId } from 'preact/hooks';
 import type { DesignTokens } from '@/theme/tokens';
-import { focusRingColor } from '@/theme/tokens';
+import { AGENT_RED_BRAND_COLOR, focusRingColor } from '@/theme/tokens';
 import type { Locale } from '@/locale/en';
 
 // ---------------------------------------------------------------------------
@@ -28,12 +28,24 @@ import type { Locale } from '@/locale/en';
 // ---------------------------------------------------------------------------
 
 const MAX_MESSAGE_LENGTH = 2000;
+const MAX_TEXT_FILE_BYTES = MAX_MESSAGE_LENGTH * 4;
 const MIN_TEXTAREA_HEIGHT = 66; // ~3 lines of text (WI #255)
 const MAX_TEXTAREA_HEIGHT = 140; // ~5 lines of text
 
 // ---------------------------------------------------------------------------
 // Props
 // ---------------------------------------------------------------------------
+
+type AttachmentError = 'unsupported' | 'unreadable' | 'tooLong';
+
+interface TextAttachment {
+  name: string;
+  text: string;
+}
+
+function formatAttachment(label: string, attachment: TextAttachment): string {
+  return '[' + label + ': ' + attachment.name + ']\n' + attachment.text;
+}
 
 interface InputBarProps {
   tokens: DesignTokens;
@@ -61,21 +73,72 @@ export const InputBar: FunctionComponent<InputBarProps> = ({
   inputPlaceholder,
 }) => {
   const [text, setText] = useState('');
+  const [attachment, setAttachment] = useState<TextAttachment | null>(null);
+  const [attachmentError, setAttachmentError] = useState<AttachmentError | null>(null);
+  const [readingAttachment, setReadingAttachment] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const attachmentHelpId = useId();
 
   const placeholder = inputPlaceholder || locale.inputPlaceholder;
-  const canSend = text.trim().length > 0 && !isLoading && !disabled;
+  const selectedAttachment = fileUploadEnabled ? attachment : null;
+  const attachmentUnavailable = disabled || isLoading || readingAttachment;
+  const fileMessage = selectedAttachment ? formatAttachment(locale.textAttachment.messageLabel, selectedAttachment) : '';
+  const message = [text.trim(), fileMessage].filter(Boolean).join('\n\n');
+  const exceedsLimit = message.length > MAX_MESSAGE_LENGTH;
+  const visibleAttachmentError = exceedsLimit ? 'tooLong' : attachmentError;
+  const canSend = message.length > 0 && !exceedsLimit && !attachmentUnavailable;
 
   const handleSend = useCallback(() => {
-    const trimmed = text.trim();
-    if (!trimmed || isLoading || disabled) return;
-    onSend(trimmed);
+    if (!canSend) return;
+    onSend(message);
     setText('');
+    setAttachment(null);
+    setAttachmentError(null);
     // Reset textarea height
     if (textareaRef.current) {
       textareaRef.current.style.height = `${MIN_TEXTAREA_HEIGHT}px`;
     }
-  }, [text, isLoading, disabled, onSend]);
+  }, [canSend, message, onSend]);
+
+  async function handleFileChange(event: Event) {
+    const input = event.currentTarget as HTMLInputElement;
+    const file = input.files?.[0];
+    input.value = '';
+    if (!file || !fileUploadEnabled || attachmentUnavailable) return;
+
+    setAttachmentError(null);
+    if (!/\.txt$/i.test(file.name) || (file.type && file.type !== 'text/plain')) {
+      setAttachmentError('unsupported');
+      return;
+    }
+    if (file.size > MAX_TEXT_FILE_BYTES) {
+      setAttachmentError('tooLong');
+      return;
+    }
+
+    setReadingAttachment(true);
+    try {
+      const text = new TextDecoder('utf-8', { fatal: true }).decode(await file.arrayBuffer());
+      if (!text.trim() || text.includes('\0')) {
+        setAttachmentError('unreadable');
+        return;
+      }
+
+      const nextAttachment = { name: file.name.replace(/\s+/g, ' ').trim(), text };
+      const content = formatAttachment(locale.textAttachment.messageLabel, nextAttachment);
+      if (content.length > MAX_MESSAGE_LENGTH) {
+        setAttachmentError('tooLong');
+        return;
+      }
+
+      setAttachment(nextAttachment);
+    } catch {
+      setAttachmentError('unreadable');
+    } finally {
+      setReadingAttachment(false);
+    }
+  }
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
@@ -129,34 +192,45 @@ export const InputBar: FunctionComponent<InputBarProps> = ({
       >
         {/* File upload button */}
         {fileUploadEnabled && (
-          <button
-            type="button"
-            className="ar-input-attach"
-            aria-label={locale.attachFile}
-            disabled={disabled}
-            style={{
-              background: 'none',
-              border: 'none',
-              color: disabled ? tokens.colorTextMuted : tokens.colorTextSecondary,
-              cursor: disabled ? 'default' : 'pointer',
-              padding: tokens.space1,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              borderRadius: tokens.borderRadiusSm,
-              transition: `color ${tokens.transitionFast}, box-shadow ${tokens.transitionFast}`,
-              outline: 'none',
-              flexShrink: 0,
-            }}
-            onMouseEnter={(e) => {
-              if (!disabled) (e.currentTarget as HTMLElement).style.color = tokens.colorText;
-            }}
-            onMouseLeave={(e) => {
-              if (!disabled) (e.currentTarget as HTMLElement).style.color = tokens.colorTextSecondary;
-            }}
-          >
-            <PaperclipIcon size={18} />
-          </button>
+          <>
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept=".txt"
+              onChange={handleFileChange}
+              hidden
+            />
+            <button
+              type="button"
+              className="ar-input-attach"
+              aria-label={locale.attachFile}
+              aria-describedby={attachmentHelpId}
+              disabled={attachmentUnavailable}
+              onClick={() => fileInputRef.current?.click()}
+              style={{
+                background: 'none',
+                border: 'none',
+                color: attachmentUnavailable ? tokens.colorTextMuted : tokens.colorTextSecondary,
+                cursor: attachmentUnavailable ? 'default' : 'pointer',
+                padding: tokens.space1,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                borderRadius: tokens.borderRadiusSm,
+                transition: `color ${tokens.transitionFast}, box-shadow ${tokens.transitionFast}`,
+                outline: 'none',
+                flexShrink: 0,
+              }}
+              onMouseEnter={(e) => {
+                if (!attachmentUnavailable) (e.currentTarget as HTMLElement).style.color = tokens.colorText;
+              }}
+              onMouseLeave={(e) => {
+                if (!attachmentUnavailable) (e.currentTarget as HTMLElement).style.color = tokens.colorTextSecondary;
+              }}
+            >
+              <PaperclipIcon size={18} />
+            </button>
+          </>
         )}
 
         {/* Textarea in visible container */}
@@ -226,18 +300,53 @@ export const InputBar: FunctionComponent<InputBarProps> = ({
         </button>
       </div>
 
+      {fileUploadEnabled && (
+        <div
+          style={{
+            padding: `0 ${tokens.space3} ${tokens.space1}`,
+            fontSize: tokens.fontSizeXs,
+            fontFamily: tokens.fontFamily,
+            color: tokens.colorTextSecondary,
+          }}
+        >
+          <p id={attachmentHelpId}>{locale.textAttachment.help}</p>
+          {readingAttachment && <p role="status">{locale.textAttachment.reading}</p>}
+          {selectedAttachment && (
+            <div style={{ display: 'flex', alignItems: 'center', gap: tokens.space2 }}>
+              <span style={{ overflowWrap: 'anywhere' }}>{selectedAttachment.name}</span>
+              <button
+                type="button"
+                disabled={attachmentUnavailable}
+                onClick={() => {
+                  setAttachment(null);
+                  setAttachmentError(null);
+                }}
+                style={{ font: 'inherit', color: 'inherit', padding: tokens.space1 }}
+              >
+                {locale.textAttachment.remove}
+              </button>
+            </div>
+          )}
+          {visibleAttachmentError && (
+            <p role="alert" style={{ color: tokens.colorError }}>
+              {locale.textAttachment[visibleAttachmentError]}
+            </p>
+          )}
+        </div>
+      )}
+
       {/* Character count warning */}
-      {text.length > MAX_MESSAGE_LENGTH * 0.9 && (
+      {message.length > MAX_MESSAGE_LENGTH * 0.9 && (
         <div
           style={{
             fontSize: tokens.fontSizeXs,
             fontFamily: tokens.fontFamily,
-            color: text.length >= MAX_MESSAGE_LENGTH ? tokens.colorError : tokens.colorTextMuted,
+            color: message.length >= MAX_MESSAGE_LENGTH ? tokens.colorError : tokens.colorTextMuted,
             textAlign: 'right',
             padding: `0 ${tokens.space3} ${tokens.space1}`,
           }}
         >
-          {text.length}/{MAX_MESSAGE_LENGTH}
+          {message.length}/{MAX_MESSAGE_LENGTH}
         </div>
       )}
 
@@ -270,7 +379,7 @@ export const InputBar: FunctionComponent<InputBarProps> = ({
             }}
           >
             {locale.poweredByPrefix}{' '}
-            <span style={{ fontWeight: 600, color: tokens.colorPrimary }}>{locale.poweredByBrand}</span>
+            <span style={{ fontWeight: 600, color: AGENT_RED_BRAND_COLOR }}>{locale.poweredByBrand}</span>
           </a>
         </div>
       )}

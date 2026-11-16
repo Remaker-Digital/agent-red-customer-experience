@@ -51,7 +51,7 @@ export const Launcher: FunctionComponent<LauncherProps> = ({
   launcherImageUrl,
   onClick,
 }) => {
-  const ringColor = focusRingColor(tokens.colorLauncher);
+  const ringColor = focusRingColor(tokens.colorLauncher) === '#000000' ? '#172554' : '#FFFFFF';
   const LauncherIconComponent = launcherIcon === 'headset' ? HeadsetIcon
     : launcherIcon === 'help' ? HelpIcon
     : ChatIcon;
@@ -62,7 +62,7 @@ export const Launcher: FunctionComponent<LauncherProps> = ({
 
   return (
     <>
-    <style>{`.ar-launcher:focus-visible { box-shadow: ${tokens.shadowLg}, 0 0 0 3px ${ringColor} !important; }`}</style>
+    <style>{`.ar-launcher:focus-visible { box-shadow: ${tokens.shadowLg}, inset 0 0 0 3px ${ringColor} !important; }`}</style>
     <button
       type="button"
       className="ar-launcher"

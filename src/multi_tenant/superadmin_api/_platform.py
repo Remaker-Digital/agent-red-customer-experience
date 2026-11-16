@@ -432,15 +432,20 @@ async def get_tenant_comparison(
     if _state._tenant_repo is not None:
         try:
             query = (
-                "SELECT c.tenant_id, c.tier, c.brand_name, c.customer_email "
+                "SELECT c.id, c.tenant_id, c.tier, c.brand_name, c.customer_email "
                 "FROM c WHERE c.status = 'active'"
             )
             async for item in _state._tenant_repo._container.query_items(
                 query=query,
                 max_item_count=500,
             ):
-                tid = item.get("tenant_id", "")
-                tenant_info[tid] = item
+                from src.multi_tenant.repositories.tenant import decrypt_tenant_row
+
+                decrypted = await decrypt_tenant_row(_state._tenant_repo, item)
+                if decrypted is None:
+                    continue
+                tid = decrypted.get("tenant_id", "")
+                tenant_info[tid] = decrypted
         except Exception as exc:
             logger.warning("Failed to list tenants for pipeline: %s", exc)
 
@@ -842,7 +847,7 @@ async def _resolve_service_message_recipients(
 
     where_clause = " AND ".join(conditions)
     query = (
-        f"SELECT c.tenant_id, c.customer_email, c.tier, c.status "
+        f"SELECT c.id, c.tenant_id, c.customer_email, c.tier, c.status "
         f"FROM c WHERE {where_clause} "
         f"ORDER BY c.created_at DESC"
     )
@@ -853,6 +858,12 @@ async def _resolve_service_message_recipients(
         parameters=params if params else None,
         max_item_count=500,
     ):
+        from src.multi_tenant.repositories.tenant import decrypt_tenant_row
+
+        decrypted = await decrypt_tenant_row(_state._tenant_repo, item)
+        if decrypted is None:
+            continue
+        item = decrypted
         email = item.get("customer_email", "")
         if email and "@" in email:
             recipients.append(ServiceMessageRecipient(

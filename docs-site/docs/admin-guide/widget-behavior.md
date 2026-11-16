@@ -6,7 +6,7 @@ description: Configure auto-open, offline mode, pre-chat forms, chat rating, sou
 
 # Widget behavior
 
-These settings control how the widget behaves — when it opens, what happens outside business hours, and what information is collected from customers.
+These settings control how the widget behaves: when it opens, what happens outside business hours, and what information is collected from customers.
 
 ## Auto-open widget
 
@@ -34,16 +34,16 @@ When enabled, the chat panel opens automatically after a configurable delay. The
 | | |
 |---|---|
 | **Field** | `widget_auto_open_delay` |
-| **Type** | Number (1–120 seconds) |
+| **Type** | Number (1 to 120 seconds) |
 | **Default** | `5` |
 | **Affects** | Widget |
 
 How long to wait after page load before auto-opening the widget (only relevant if auto-open is enabled).
 
 **Guidance:**
-- **1–3 seconds:** Feels aggressive. The page has barely loaded.
-- **5–10 seconds:** The customer has had time to orient themselves. This is the recommended range.
-- **15–30 seconds:** Delayed enough that the customer has started engaging with the page content. Good for product detail pages.
+- **1 to 3 seconds:** Feels aggressive. The page has barely loaded.
+- **5 to 10 seconds:** The customer has had time to orient themselves. This is the recommended range.
+- **15 to 30 seconds:** Delayed enough that the customer has started engaging with the page content. Good for product detail pages.
 - **60+ seconds:** Only use for long-form content pages where the customer is expected to read for a while.
 
 ---
@@ -106,7 +106,7 @@ When enabled, customers see a form (Name and Email by default) before the conver
 
 **Email verification (OTP):**
 - When email verification is enabled, customers who provide an email receive a 6-digit one-time password to confirm their identity. This ensures the AI links conversations to the correct customer profile.
-- Shopify customers who are already logged in skip both the pre-chat form and OTP — their identity is verified automatically via Shopify's customer authentication.
+- Shopify customers who are already logged in skip both the pre-chat form and OTP: their identity is verified automatically via Shopify's customer authentication.
 
 ---
 
@@ -143,7 +143,7 @@ Custom fields for the pre-chat form. Each field has a name, type (text, email, p
 
 When enabled, customers see a thumbs up/thumbs down prompt after the conversation resolves. They can optionally leave a comment. Ratings appear in the Analytics section of the admin console.
 
-**Recommendation:** Enable this. Customer feedback is valuable for tuning your knowledge base and identifying gaps. The prompt is unobtrusive — customers can dismiss it without rating.
+**Recommendation:** Enable this. Customer feedback is valuable for tuning your knowledge base and identifying gaps. The prompt is unobtrusive: customers can dismiss it without rating.
 
 ---
 
@@ -197,7 +197,7 @@ When enabled, the chat panel opens automatically when the customer's cursor move
 
 **When to leave off:**
 - Exit-intent popups can feel aggressive, especially if your store already uses an email capture or discount popup on exit.
-- On mobile, exit-intent detection is not reliable — this feature primarily affects desktop visitors.
+- On mobile, exit-intent detection is not reliable: this feature primarily affects desktop visitors.
 
 ---
 
@@ -223,7 +223,7 @@ When enabled, the chat panel opens automatically when the customer scrolls past 
 | | |
 |---|---|
 | **Field** | `widget_panel_width` |
-| **Type** | Number (300–600 pixels) |
+| **Type** | Number (300 to 600 pixels) |
 | **Default** | `380` |
 | **Affects** | Widget |
 
@@ -236,7 +236,7 @@ The width of the chat panel in pixels. A wider panel provides more room for mess
 | | |
 |---|---|
 | **Field** | `widget_panel_height` |
-| **Type** | Number (400–800 pixels) |
+| **Type** | Number (400 to 800 pixels) |
 | **Default** | `600` |
 | **Affects** | Widget |
 
@@ -253,7 +253,7 @@ The height of the chat panel in pixels. Taller panels show more conversation his
 | **Default** | `en` (English) |
 | **Affects** | Widget |
 
-The language used for the widget's built-in UI elements — button labels, placeholder text, system messages, and error messages. This is independent of the AI agent's response language (configured in [Languages](./languages.md)).
+The language used for the widget's built-in UI elements: button labels, placeholder text, system messages, and error messages. This is independent of the AI agent's response language (configured in [Languages](./languages.md)).
 
 ---
 

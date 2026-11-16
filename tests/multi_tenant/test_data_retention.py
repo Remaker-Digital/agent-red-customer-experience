@@ -69,7 +69,7 @@ def _make_repos(
         (tenant_repo, conversation_repo, profile_repo, vector_repo, audit_repo)
     """
     tenant_repo = AsyncMock()
-    tenant_repo.query.return_value = tenant_query_results if tenant_query_results is not None else []
+    tenant_repo.list_archival_tenants.return_value = tenant_query_results if tenant_query_results is not None else []
 
     conversation_repo = AsyncMock()
     conversation_repo.query.return_value = conversation_query_results if conversation_query_results is not None else []
@@ -141,11 +141,7 @@ class TestRetentionEnforcement:
 
         assert isinstance(result, RetentionScanResult)
         assert result.tenants_scanned == 3
-        tenant_repo.query.assert_awaited_once()
-        # Verify the query fetches active/past_due tenants
-        query_arg = tenant_repo.query.call_args.kwargs.get("query") or tenant_repo.query.call_args[1].get("query") or tenant_repo.query.call_args[0][0]
-        assert "active" in query_arg
-        assert "past_due" in query_arg
+        tenant_repo.list_archival_tenants.assert_awaited_once_with()
 
     async def test_dr_02_trial_tier_uses_fallback_cutoff(self):
         """DR-02: Trial tier uses fallback retention cutoff (90 days) since
@@ -205,7 +201,7 @@ class TestRetentionEnforcement:
         assert conversation_repo.delete.await_count == 3
         # Verify each doc was deleted with the correct tenant_id
         for call_item in conversation_repo.delete.call_args_list:
-            assert call_item[0][1] == _TENANT_STARTER
+            assert call_item.kwargs["tenant_id"] == _TENANT_STARTER
 
     async def test_dr_07_conversations_newer_than_cutoff_preserved(self):
         """DR-07: When no conversations are older than cutoff, none are deleted."""
@@ -241,7 +237,10 @@ class TestRetentionEnforcement:
     async def test_dr_09_stale_customer_profiles_purged(self):
         """DR-09: Stale customer profiles are purged (fields cleared, not deleted)."""
         starter_tenant = _make_tenant_doc(_TENANT_STARTER, TenantTier.STARTER.value)
-        stale_profiles = [{"id": "prof-1"}, {"id": "prof-2"}]
+        stale_profiles = [
+            {"id": "prof-1", "_etag": "etag-1", "has_history": True},
+            {"id": "prof-2", "_etag": "etag-2", "has_history": True},
+        ]
 
         service, repos = _make_service(
             tenant_query_results=[starter_tenant],
@@ -278,20 +277,13 @@ class TestRetentionEnforcement:
         assert log_call.kwargs["tenant_id"] == _TENANT_STARTER
         assert log_call.kwargs["event_type"] == AuditEventType.DATA_DELETED
         assert log_call.kwargs["actor"] == "system"
-        assert log_call.kwargs["details"]["reason"] == "retention_policy"
-        assert log_call.kwargs["details"]["tier"] == TenantTier.STARTER.value
-        assert log_call.kwargs["details"]["retention_days"] == 90
-        assert log_call.kwargs["details"]["conversations_deleted"] == 1
+        assert log_call.kwargs["payload"]["reason"] == "retention_policy"
+        assert log_call.kwargs["payload"]["tier"] == TenantTier.STARTER.value
+        assert log_call.kwargs["payload"]["count"] == 1
+        assert log_call.kwargs["payload"]["conversations_deleted"] == 1
 
     async def test_dr_11_errors_for_one_tenant_dont_stop_others(self):
-        """DR-11: Error processing one tenant does not stop other tenants.
-
-        The error must escape _enforce_for_tenant to increment the errors
-        counter. Internal methods (_delete_old_documents, _purge_stale_profile_data)
-        catch their own exceptions. The audit_repo.log_event call inside
-        _enforce_for_tenant is NOT wrapped in try/except, so making it raise
-        for a specific tenant (which has deletions) triggers the error path.
-        """
+        """DR-11: An audit write failure leaves the other tenants in the scan."""
         good_tenant = _make_tenant_doc(_TENANT_STARTER, TenantTier.STARTER.value)
         bad_tenant = _make_tenant_doc("t-bad-001", TenantTier.STARTER.value)
         good_tenant_2 = _make_tenant_doc(_TENANT_PRO, TenantTier.PROFESSIONAL.value)
@@ -368,7 +360,7 @@ class TestRetentionEnforcement:
                 if p.get("name") == "@tid":
                     tenant_id = p["value"]
             if tenant_id == _TENANT_STARTER:
-                return [{"id": "p1"}]
+                return [{"id": "p1", "_etag": "etag-1", "has_history": True}]
             return []
 
         conversation_repo.query.side_effect = _conv_query

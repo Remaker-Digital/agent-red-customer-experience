@@ -727,8 +727,8 @@ class TestReportIssue:
         assert resp.status_code == 404
 
     @pytest.mark.asyncio
-    async def test_report_issue_persist_failure_still_succeeds(self, mock_ctx, mock_session):
-        """Issue report should succeed even if Cosmos DB persist fails."""
+    async def test_report_issue_returns_failure_when_persistence_fails(self, mock_ctx, mock_session):
+        """A report the service did not save cannot be accepted."""
         import src.chat.endpoints as ep
         ep._session = mock_session
 
@@ -750,8 +750,9 @@ class TestReportIssue:
                     json={"issue_type": "rude_response", "details": "Not nice"},
                 )
 
-        assert resp.status_code == 200
-        assert resp.json()["accepted"] is True
+        assert resp.status_code == 503
+        assert resp.json()["detail"] == "Could not save issue report"
+        MockAR.return_value.log_event.assert_not_awaited()
 
 
 # ---------------------------------------------------------------------------

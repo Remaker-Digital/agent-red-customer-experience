@@ -174,8 +174,8 @@ class TestShopDomainValidation:
     def test_mcp_08_case_insensitive(self) -> None:
         """MCP-08: Domain comparison is case-insensitive."""
         assert validate_shop_domain(
-            "https://example-store.Myshopify.Com/api/mcp",
-            "EXAMPLE-STORE.MYSHOPIFY.COM",
+            "https://example-shop-9939.Myshopify.Com/api/mcp",
+            "example-shop-9939.MYSHOPIFY.COM",
         ) is True
 
 

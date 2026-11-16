@@ -1182,6 +1182,9 @@ class PreferencesDocument(BaseModel):
     # Visual
     widget_primary_color: str | None = Field(default=None, description="Hex color for widget header/buttons (#RRGGBB)")
     widget_background_color: str | None = Field(default=None, description="Hex color for conversation panel background")
+    widget_dark_background_color: str | None = Field(
+        default=None, pattern=r"^#[0-9a-fA-F]{6}$", description="Hex color for the conversation panel in dark mode"
+    )
     widget_position: str | None = Field(default=None, description="bottom-right | bottom-left")
     widget_offset_x: int | None = Field(default=None, description="Horizontal offset from screen edge (px)")
     widget_offset_y: int | None = Field(default=None, description="Vertical offset from bottom edge (px)")
@@ -1262,11 +1265,7 @@ class PreferencesDocument(BaseModel):
     )
     approved_widget_origins: list[str] = Field(
         default_factory=list,
-        description=(
-            "SPEC-1840: Approved origins for widget key authentication. "
-            "Widget requests from unapproved origins are rejected (403). "
-            "Empty list = allow all origins (backward-compatible migration period)."
-        ),
+        description="Legacy saved widget origins. Current widget requests do not use this field.",
     )
     widget_header_text: str | None = Field(default=None, description="Custom widget header/title text")
     widget_input_placeholder: str | None = Field(default=None, description="Message input placeholder text")

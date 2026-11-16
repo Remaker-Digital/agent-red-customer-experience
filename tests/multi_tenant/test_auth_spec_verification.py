@@ -407,8 +407,7 @@ class TestSpec1618SingleTenantEmail:
 
         assert send_mock.call_count == 1
         email_html = send_mock.call_args[0][1]
-        # Single member → no "Account:" label (per SPEC-1618)
-        assert "Account:" not in email_html
+        assert "Account: <strong>Store A</strong>" in email_html
 
     @pytest.mark.asyncio
     async def test_multiple_members_get_separate_emails(self):
@@ -594,11 +593,11 @@ class TestSpec1635NoOtherTenancyReferences:
         )
 
     def test_email_template_uses_single_magic_link_url(self):
-        """Email body uses exactly one {magic_link_url} placeholder."""
+        """The button and copyable fallback repeat the same account-scoped URL."""
         from src.multi_tenant.magic_link_auth import _MAGIC_LINK_EMAIL_BODY
 
         url_count = _MAGIC_LINK_EMAIL_BODY.count("{magic_link_url}")
-        assert url_count == 1
+        assert url_count == 2
 
 
 # ---------------------------------------------------------------------------

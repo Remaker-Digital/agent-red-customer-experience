@@ -6,6 +6,10 @@ Tenant repository — tenants collection CRUD + lookup by channel ID.
 
 from __future__ import annotations
 
+import hashlib
+import hmac
+import inspect
+import logging
 from datetime import UTC, datetime
 from typing import Any
 
@@ -14,6 +18,89 @@ from src.multi_tenant.cosmos_schema import (
     TenantStatus,
 )
 from src.multi_tenant.repositories.base import TenantScopedRepository
+
+logger = logging.getLogger(__name__)
+
+# Platform Key Vault secret. Michael stores it. A missing key falls back
+# to the plaintext email query, which cannot match ciphertext.
+CUSTOMER_EMAIL_LOOKUP_KEY = "customer-email-lookup-key"
+
+
+async def decrypt_tenant_row(repo: Any, item: dict[str, Any]) -> dict[str, Any] | None:
+    """Decrypt one tenant row. A stand-in repo is left as it is.
+
+    Returns None when a real decrypt fails, so one bad row does not stop
+    the caller.
+    """
+    tenant_id = item.get("tenant_id") or ""
+    decrypt = getattr(repo, "_decrypt_copy", None)
+    if not callable(decrypt):
+        return item
+    try:
+        decrypted = decrypt(dict(item), tenant_id)
+        if inspect.isawaitable(decrypted):
+            decrypted = await decrypted
+    except Exception:
+        logger.warning(
+            "Could not decrypt %s/%s for tenant=%s. The row was left out.",
+            getattr(repo, "_collection_name", "tenants"),
+            item.get("id", ""),
+            tenant_id,
+        )
+        return None
+    return decrypted if isinstance(decrypted, dict) else item
+
+
+class OwnerEmailLookupKeyUnavailableError(Exception):
+    """The lookup key could not be read. A missing key is not this error."""
+
+
+async def _lookup_key() -> str | None:
+    """The lookup key, or None when it is absent.
+
+    A vault that was never opened is the same as an absent key. A failed
+    read of an opened vault raises. Nothing creates or writes the secret.
+    """
+    from src.multi_tenant.tenant_secret_service import get_secret_service
+
+    service = get_secret_service()
+    if service is None or not getattr(service, "_initialized", False):
+        logger.warning("Owner email lookup key is not stored")
+        return None
+    try:
+        key = await service.get_secret_raw(CUSTOMER_EMAIL_LOOKUP_KEY)
+    except Exception as exc:
+        raise OwnerEmailLookupKeyUnavailableError(CUSTOMER_EMAIL_LOOKUP_KEY) from exc
+    if not key:
+        logger.warning("Owner email lookup key is not stored")
+        return None
+    return key
+
+
+async def customer_email_lookup_hash(email: str) -> str | None:
+    """HMAC-SHA256 of the normalized email. None when the key is absent."""
+    key = await _lookup_key()
+    if key is None:
+        return None
+    normalized = email.strip().lower().encode("utf-8")
+    return hmac.new(key.encode("utf-8"), normalized, hashlib.sha256).hexdigest()
+
+
+# The domain hash uses the same key with a prefix, so it never equals an email hash.
+_SHOP_DOMAIN_HASH_PREFIX = b"shopify_shop_domain:"
+
+
+async def shop_domain_lookup_hash(domain: str) -> str | None:
+    """HMAC-SHA256 of the normalized Shopify shop domain. None when the key is absent.
+
+    ``shopify_shop_domain`` is encrypted, so a plaintext query cannot match it.
+    The hash is stored next to the ciphertext and is what the lookup queries.
+    """
+    key = await _lookup_key()
+    if key is None:
+        return None
+    normalized = _SHOP_DOMAIN_HASH_PREFIX + domain.strip().lower().encode("utf-8")
+    return hmac.new(key.encode("utf-8"), normalized, hashlib.sha256).hexdigest()
 
 
 class TenantRepository(TenantScopedRepository):
@@ -35,6 +122,32 @@ class TenantRepository(TenantScopedRepository):
 
     def __init__(self) -> None:
         super().__init__(COLLECTION_TENANTS)
+
+    async def _pre_write(self, body: dict[str, Any], tenant_id: str) -> dict[str, Any]:
+        """Store keyed hashes of a plaintext owner email and shop domain before encryption.
+
+        A cleared or empty value drops its hash so the old value no longer
+        finds the tenant.
+        """
+        domain = body.get("shopify_shop_domain")
+        if isinstance(domain, str) and "." in domain:
+            domain_digest = await shop_domain_lookup_hash(domain)
+            if domain_digest is not None:
+                body["shopify_shop_domain_hash"] = domain_digest
+            else:
+                body.pop("shopify_shop_domain_hash", None)
+        else:
+            body.pop("shopify_shop_domain_hash", None)
+        email = body.get("customer_email")
+        if isinstance(email, str) and "@" in email:
+            digest = await customer_email_lookup_hash(email)
+            if digest is not None:
+                body["customer_email_hash"] = digest
+            else:
+                body.pop("customer_email_hash", None)
+        else:
+            body.pop("customer_email_hash", None)
+        return await super()._pre_write(body, tenant_id)
 
     async def _decrypt_row(self, item: dict[str, Any]) -> dict[str, Any]:
         """Decrypt a tenant row found by a field that is not itself encrypted."""
@@ -101,20 +214,28 @@ class TenantRepository(TenantScopedRepository):
         Args:
             shopify_shop_domain: *.myshopify.com domain.
 
+        The domain is encrypted at rest, so the keyed hash is queried first.
+        A row written before encryption has the plain domain and no hash,
+        so the plaintext query follows. A lookup key that cannot be read
+        raises, so a caller does not mistake the failure for "not found".
+
         Returns:
             The tenant document, or None if not found.
         """
-        items: list[dict[str, Any]] = []
-        async for item in self._container.query_items(
-            query="SELECT * FROM c WHERE c.shopify_shop_domain = @domain",
-            parameters=[{"name": "@domain", "value": shopify_shop_domain}],
-            # Cross-partition query (default in SDK v4+)
-            max_item_count=1,
-        ):
-            items.append(await self._decrypt_row(item))
-            break
-
-        return items[0] if items else None
+        digest = await shop_domain_lookup_hash(shopify_shop_domain)
+        if digest is not None:
+            found = await self._first_email_match(
+                "SELECT * FROM c WHERE c.shopify_shop_domain_hash = @domain_hash",
+                "@domain_hash",
+                digest,
+            )
+            if found is not None:
+                return found
+        return await self._first_email_match(
+            "SELECT * FROM c WHERE c.shopify_shop_domain = @domain",
+            "@domain",
+            shopify_shop_domain,
+        )
 
     async def verify_key_hash(
         self,
@@ -143,6 +264,20 @@ class TenantRepository(TenantScopedRepository):
             return doc
         return None
 
+    async def _first_email_match(
+        self,
+        query: str,
+        parameter_name: str,
+        value: str,
+    ) -> dict[str, Any] | None:
+        async for item in self._container.query_items(
+            query=query,
+            parameters=[{"name": parameter_name, "value": value}],
+            max_item_count=1,
+        ):
+            return await self._decrypt_row(item)
+        return None
+
     async def find_by_customer_email(
         self,
         email: str,
@@ -159,17 +294,31 @@ class TenantRepository(TenantScopedRepository):
         Returns:
             The tenant document, or None if not found.
         """
-        items: list[dict[str, Any]] = []
-        async for item in self._container.query_items(
-            query="SELECT * FROM c WHERE c.customer_email = @email",
-            parameters=[{"name": "@email", "value": email}],
-            # Cross-partition query (default in SDK v4+)
-            max_item_count=1,
-        ):
-            items.append(await self._decrypt_row(item))
-            break
-
-        return items[0] if items else None
+        try:
+            digest = await customer_email_lookup_hash(email)
+        except OwnerEmailLookupKeyUnavailableError:
+            logger.warning(
+                "Owner email lookup key could not be read. Using the plaintext email."
+            )
+            digest = None
+            key_unreadable = True
+        else:
+            key_unreadable = False
+        if digest is not None:
+            found = await self._first_email_match(
+                "SELECT * FROM c WHERE c.customer_email_hash = @email_hash",
+                "@email_hash",
+                digest,
+            )
+            if found is not None:
+                return found
+        elif not key_unreadable:
+            logger.warning("Owner email lookup key is not stored. Using the plaintext email.")
+        return await self._first_email_match(
+            "SELECT * FROM c WHERE c.customer_email = @email",
+            "@email",
+            email,
+        )
 
     async def find_by_widget_key_hash(
         self,
@@ -226,6 +375,16 @@ class TenantRepository(TenantScopedRepository):
                 ids.append(tid)
         return ids
 
+    async def list_archival_tenants(self) -> list[dict[str, Any]]:
+        """List active and past-due tenant IDs and tiers for data lifecycle jobs."""
+        return [
+            item
+            async for item in self._container.query_items(
+                query="SELECT c.tenant_id, c.tier FROM c WHERE c.status IN ('active', 'past_due')",
+                max_item_count=100,
+            )
+        ]
+
     async def list_active_contactless_tenants(self) -> list[dict[str, Any]]:
         """List active tenants missing both superadmin contact fields.
 
@@ -242,7 +401,12 @@ class TenantRepository(TenantScopedRepository):
             ),
             max_item_count=100,
         ):
-            results.append(await self._decrypt_row(item))
+            row = await self._take_listed_row(
+                item,
+                item.get("tenant_id") or item.get("id") or "",
+            )
+            if row is not None:
+                results.append(row)
         return results
 
     async def list_expired_trials(self) -> list[dict[str, Any]]:
@@ -267,7 +431,12 @@ class TenantRepository(TenantScopedRepository):
             parameters=[{"name": "@now", "value": now_iso}],
             max_item_count=100,
         ):
-            results.append(await self._decrypt_row(item))
+            row = await self._take_listed_row(
+                item,
+                item.get("tenant_id") or item.get("id") or "",
+            )
+            if row is not None:
+                results.append(row)
         return results
 
     async def list_expiring_trials(self, within_iso: str) -> list[dict[str, Any]]:
@@ -300,7 +469,12 @@ class TenantRepository(TenantScopedRepository):
             ],
             max_item_count=100,
         ):
-            results.append(await self._decrypt_row(item))
+            row = await self._take_listed_row(
+                item,
+                item.get("tenant_id") or item.get("id") or "",
+            )
+            if row is not None:
+                results.append(row)
         return results
 
     # ------------------------------------------------------------------
@@ -331,7 +505,12 @@ class TenantRepository(TenantScopedRepository):
             parameters=[{"name": "@now", "value": now_iso}],
             max_item_count=100,
         ):
-            results.append(await self._decrypt_row(item))
+            row = await self._take_listed_row(
+                item,
+                item.get("tenant_id") or item.get("id") or "",
+            )
+            if row is not None:
+                results.append(row)
         return results
 
     async def list_expiring_tenants(self, within_iso: str) -> list[dict[str, Any]]:
@@ -366,7 +545,12 @@ class TenantRepository(TenantScopedRepository):
             ],
             max_item_count=100,
         ):
-            results.append(await self._decrypt_row(item))
+            row = await self._take_listed_row(
+                item,
+                item.get("tenant_id") or item.get("id") or "",
+            )
+            if row is not None:
+                results.append(row)
         return results
 
     async def update_status(

@@ -27,6 +27,7 @@ logger = logging.getLogger(__name__)
 
 async def main() -> int:
     """Run data retention enforcement and return exit code."""
+    from src.multi_tenant.cosmos_client import get_cosmos_manager
     from src.multi_tenant.data_retention import DataRetentionService
     from src.multi_tenant.repository import (
         AuditLogRepository,
@@ -46,12 +47,20 @@ async def main() -> int:
         audit_repo=AuditLogRepository(),
     )
 
-    result = await service.enforce_retention()
+    try:
+        async with get_cosmos_manager().connected():
+            result = await service.enforce_retention()
+    except Exception as exc:
+        logger.error("Retention job could not finish (%s)", type(exc).__name__)
+        return 1
 
     logger.info(
-        "Data retention job complete: tenants=%d deleted=%d errors=%d",
+        "Data retention job complete: tenants=%d conversations_deleted=%d "
+        "profiles_purged=%d vectors_deleted=%d errors=%d",
         result.tenants_scanned,
-        result.documents_deleted,
+        result.conversations_deleted,
+        result.profiles_purged,
+        result.vectors_deleted,
         result.errors,
     )
 

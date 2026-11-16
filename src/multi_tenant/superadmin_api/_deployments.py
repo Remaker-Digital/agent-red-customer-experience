@@ -54,7 +54,7 @@ AZURE_RESOURCE_GROUP = os.environ.get("AZURE_RESOURCE_GROUP", "Agent-Red")
 # Container app names per environment
 CONTAINER_APPS = {
     "staging": {
-        "gateway": "agent-red-staging",
+        "gateway": "example-gateway-stage",
         "test_host": "agent-red-test-host",
     },
     "production": {

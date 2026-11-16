@@ -454,7 +454,7 @@ class TestInboxInfoPaneWidth:
 
 
 # ---------------------------------------------------------------------------
-# 8. Email unsubscribe message — present in every email via wrapper
+# 8. Shared layout for system emails
 # ---------------------------------------------------------------------------
 
 # Modules that must use format_branded_email (not raw _EMAIL_WRAPPER.format)
@@ -474,52 +474,15 @@ _EMAIL_MODULES = [
 ]
 
 
-class TestEmailUnsubscribeMessage:
-    """Verify every branded email includes an unsubscribe message (S186)."""
+class TestSystemEmailWrapper:
+    """System emails share one wrapper without an unsubscribe claim."""
 
-    def test_wrapper_contains_unsubscribe_text(self):
-        """_EMAIL_WRAPPER must include the unsubscribe message text."""
-        from src.multi_tenant.alert_delivery import _EMAIL_WRAPPER
-
-        assert "To unsubscribe" in _EMAIL_WRAPPER, (
-            "Email wrapper must include unsubscribe text"
-        )
-
-    def test_wrapper_contains_access_your_account_link(self):
-        """Unsubscribe message must have an 'access your account' hyperlink."""
-        from src.multi_tenant.alert_delivery import _EMAIL_WRAPPER
-
-        assert "access your account" in _EMAIL_WRAPPER
-        assert "{unsubscribe_url}" in _EMAIL_WRAPPER, (
-            "Wrapper must have {unsubscribe_url} placeholder for the admin link"
-        )
-
-    def test_wrapper_contains_system_configuration_text(self):
-        """Unsubscribe message must mention system configuration."""
-        from src.multi_tenant.alert_delivery import _EMAIL_WRAPPER
-
-        assert "change your system configuration" in _EMAIL_WRAPPER
-
-    def test_format_branded_email_resolves_url(self):
-        """format_branded_email must resolve {unsubscribe_url} in the output."""
+    def test_wrapper_omits_unsubscribe_claim(self):
         from src.multi_tenant.alert_delivery import format_branded_email
 
-        html = format_branded_email("<p>Test</p>")
-        assert "{unsubscribe_url}" not in html, (
-            "format_branded_email must resolve the unsubscribe_url placeholder"
-        )
-        assert "access your account" in html
-        assert "To unsubscribe" in html
-
-    def test_format_branded_email_uses_explicit_url(self):
-        """When admin_url is passed, it appears in the unsubscribe link."""
-        from src.multi_tenant.alert_delivery import format_branded_email
-
-        custom_url = "https://example.com/admin/"
-        html = format_branded_email("<p>Test</p>", admin_url=custom_url)
-        assert custom_url in html, (
-            "Explicit admin_url must be used in the unsubscribe link"
-        )
+        rendered = format_branded_email("<p>Test</p>")
+        assert "unsubscribe" not in rendered.lower()
+        assert "Email generated:" in rendered
 
     def test_format_branded_email_preserves_body(self):
         """format_branded_email must include the body content."""
@@ -540,5 +503,5 @@ class TestEmailUnsubscribeMessage:
         source = inspect.getsource(mod)
         assert "format_branded_email" in source, (
             f"{module_path} must import and use format_branded_email "
-            f"to ensure unsubscribe message is included in all emails"
+            f"to keep system email styling consistent"
         )

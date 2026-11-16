@@ -1,7 +1,7 @@
 ---
 sidebar_position: 3
 title: Initial Setup
-description: What you need to get Agent Red running — account provisioning, API keys, Shopify connection, knowledge base, and going live.
+description: What you need to get Agent Red running, account provisioning, API keys, Shopify connection, knowledge base, and going live.
 ---
 
 # Initial Setup
@@ -44,8 +44,8 @@ After access is granted, the system provisions a dedicated tenant environment. T
 
 ### What you need to provide
 
-- **Business name** — used for tenant identification and branding
-- **Primary contact email** — for account notifications and billing
+- **Business name**: used for tenant identification and branding
+- **Primary contact email**: for account notifications and billing
 - **Plan selection:** planned prices, not on offer yet: Starter ($149/mo), Professional ($399/mo), or Enterprise ($999/mo)
 - **Billing information:** collected when a paid plan is offered. The closed beta does not use self-serve checkout.
 
@@ -63,7 +63,7 @@ sequenceDiagram
 
 ## First login
 
-Your welcome email contains a **Sign in to Dashboard** button — but it does not contain your API key. Keys are never sent via email for security. Instead, you sign in using a **magic link** (passwordless email authentication) and then retrieve your keys from the dashboard.
+Your welcome email contains a **Sign in to Dashboard** button: but it does not contain your API key. Keys are never sent via email for security. Instead, you sign in using a **magic link** (passwordless email authentication) and then retrieve your keys from the dashboard.
 
 ```mermaid
 sequenceDiagram
@@ -86,7 +86,7 @@ sequenceDiagram
 2. On the login page, click **Sign in with magic link**.
 3. Enter the email address used when your account was created.
 4. Check your inbox for a second email containing a one-time login link (expires in 15 minutes).
-5. Click the login link — you are now authenticated with an 8-hour session.
+5. Click the login link: you are now authenticated with an 8-hour session.
 6. Navigate to **Account & billing** in the sidebar to view and copy your API key and widget key.
 
 After your first login, you can use either magic link or your API key to sign in. For details on all authentication options, see [Securing Agent Red](/docs/admin-guide/mfa-security).
@@ -102,7 +102,7 @@ Each tenant receives API keys for authenticating requests to the Agent Red API. 
 ### API key security
 
 - API keys are stored in Azure Key Vault with Managed Identity access
-- Each key is scoped to a single tenant — it cannot access other tenants' data
+- Each key is scoped to a single tenant: it cannot access other tenants' data
 - Keys can be rotated from the dashboard without downtime
 - All API calls require the key in the `X-API-Key` header (for tenant/user keys) or `X-Widget-Key` header (for widget keys)
 
@@ -118,7 +118,7 @@ curl -X POST https://example.agentredcx.com/api/chat/conversations \
   -d '{"message": "Where is my order #12345?"}'
 ```
 
-**Widget key** (prefix `pk_live_`) — used by the embedded chat widget:
+**Widget key** (prefix `pk_live_`): used by the embedded chat widget:
 ```bash
 curl -X POST https://example.agentredcx.com/api/chat/conversations \
   -H "X-Widget-Key: YOUR_WIDGET_KEY" \
@@ -162,9 +162,9 @@ The Shopify integration syncs your product catalog, order data, and customer pro
 
 **Sync behavior:**
 
-- **Initial sync** — full catalog import when you connect your store (typically 5–15 minutes)
-- **Ongoing sync** — webhook-driven updates whenever products, orders, or inventory change
-- **Sync frequency** — real-time for order updates; every 15 minutes for catalog changes
+- **Initial sync**: full catalog import when you connect your store (typically 5 to 15 minutes)
+- **Ongoing sync**: webhook-driven updates whenever products, orders, or inventory change
+- **Sync frequency**: real-time for order updates; every 15 minutes for catalog changes
 
 ## 4. Knowledge base setup
 
@@ -206,8 +206,8 @@ FAQ entries are question-and-answer pairs that you create in the dashboard. They
 **Best practices:**
 
 - Write answers in the tone you want the AI to use with customers
-- Cover the 20–30 most common questions first (analytics data helps identify these after launch)
-- Update entries when policies change — the knowledge base re-indexes in minutes
+- Cover the 20 to 30 most common questions first (analytics data helps identify these after launch)
+- Update entries when policies change: the knowledge base re-indexes in minutes
 
 ### Policy documents (manual)
 
@@ -227,41 +227,41 @@ flowchart LR
     style D fill:#16A34A,color:#fff
 ```
 
-### Step 1 — Connect your store
+### Step 1: Connect your store
 
 Link your Shopify storefront so Agent Red can automatically import product catalog, policies, and page content.
 
 1. Click **Connect Shopify** in the wizard.
 2. Authorize the required permissions (read_products, read_orders, read_customers, read_inventory).
-3. Wait for the initial sync to complete (typically 5–15 minutes depending on catalog size).
-4. The wizard shows a summary of imported content — product count, policy pages found, and custom pages.
+3. Wait for the initial sync to complete (typically 5 to 15 minutes depending on catalog size).
+4. The wizard shows a summary of imported content: product count, policy pages found, and custom pages.
 
 If you are using Agent Red without Shopify (standalone mode), click **Skip** to proceed to Step 2 and add knowledge base content manually.
 
-### Step 2 — Review your knowledge base
+### Step 2: Review your knowledge base
 
 Browse the articles that were imported from your storefront and optionally apply an industry template.
 
-1. Review imported articles — they appear as **drafts**. Edit titles and content for clarity.
-2. Optionally click **Apply template** to add industry-specific FAQ articles (11 categories available — Electronics, Apparel, Beauty, Food, Health, Home, Jewelry, Pet, Sports, Toys, General).
+1. Review imported articles: they appear as **drafts**. Edit titles and content for clarity.
+2. Optionally click **Apply template** to add industry-specific FAQ articles (11 categories available: Electronics, Apparel, Beauty, Food, Health, Home, Jewelry, Pet, Sports, Toys, General).
 3. **Publish** the articles you want the AI to use. Only published articles are searchable.
 4. Add any additional FAQ entries or policy documents that were not covered by the import.
 
 :::tip
-Spend 10–15 minutes reviewing imported articles. Auto-imported content may need editing for tone, accuracy, or completeness. This step has the single biggest impact on response quality.
+Spend 10 to 15 minutes reviewing imported articles. Auto-imported content may need editing for tone, accuracy, or completeness. This step has the single biggest impact on response quality.
 :::
 
-### Step 3 — Configure your agent
+### Step 3: Configure your agent
 
 Review AI-generated configuration suggestions and customize your agent's personality and behavior.
 
-1. **Brand name** — pre-filled from your store name. Edit if needed.
-2. **Brand voice** — AI analyzes your content and suggests a personality description. Accept or write your own.
-3. **Formality** — choose Casual, Professional, or Formal.
-4. **Response length** — choose Concise, Moderate, or Detailed.
-5. **Policies** — review the return window (days), refund policy, and shipping policy. AI suggestions appear as badges — click to preview and apply.
-6. **Escalation threshold** — a slider from 0.0 (aggressive AI) to 1.0 (conservative). Start with your tier's default.
-7. **Custom instructions** — optional free-form instructions for the AI (e.g., "Always mention our free shipping over $50").
+1. **Brand name**: pre-filled from your store name. Edit if needed.
+2. **Brand voice**: AI analyzes your content and suggests a personality description. Accept or write your own.
+3. **Formality**: choose Casual, Professional, or Formal.
+4. **Response length**: choose Concise, Moderate, or Detailed.
+5. **Policies**: review the return window (days), refund policy, and shipping policy. AI suggestions appear as badges: click to preview and apply.
+6. **Escalation threshold**: a slider from 0.0 (aggressive AI) to 1.0 (conservative). Start with your tier's default.
+7. **Custom instructions**: optional free-form instructions for the AI (e.g., "Always mention our free shipping over $50").
 
 Configuration inputs with AI suggestions show a colored badge. Click the badge to preview the suggestion, then click **Apply** to accept it.
 
@@ -291,17 +291,17 @@ flowchart TB
     style G fill:#16A34A,color:#fff
 ```
 
-- **Knowledge base populated** — product catalog synced, FAQ entries created, policy documents uploaded
-- **Escalation rules configured** — define which situations should route to a human agent (e.g., refund requests over a dollar threshold, complaints, VIP customers)
-- **Brand voice configured** — set the tone, greeting style, and sign-off that match your brand
-- **Test conversations completed** — run 10–20 test conversations covering common intents to verify response quality
-- **Monitoring configured** — set up alert thresholds for escalation rate, response latency, and error rate
+- **Knowledge base populated**: product catalog synced, FAQ entries created, policy documents uploaded
+- **Escalation rules configured**: define which situations should route to a human agent (e.g., refund requests over a dollar threshold, complaints, VIP customers)
+- **Brand voice configured**: set the tone, greeting style, and sign-off that match your brand
+- **Test conversations completed**: run 10 to 20 test conversations covering common intents to verify response quality
+- **Monitoring configured**: set up alert thresholds for escalation rate, response latency, and error rate
 
 ### Deployment options
 
 | Option | Description | Recommended for |
 |---|---|---|
-| Shadow mode | Agent Red processes messages but does not deliver responses. Human agents see AI-suggested replies for review. | First 1–2 weeks. Build confidence before full automation. |
+| Shadow mode | Agent Red processes messages but does not deliver responses. Human agents see AI-suggested replies for review. | First 1 to 2 weeks. Build confidence before full automation. |
 | Hybrid mode | Agent Red handles low-risk intents (product questions, order status) automatically. Complex intents route to humans. | Ongoing. Most customers use this mode. |
 | Full automation | Agent Red handles all intents, with escalation as the safety net. | High-volume stores with well-tuned knowledge bases. |
 
@@ -309,16 +309,16 @@ flowchart TB
 
 The Agent Red dashboard provides real-time visibility into:
 
-- **Conversation volume** — messages handled per hour/day/week
-- **Automation rate** — percentage of conversations resolved without human intervention
-- **Escalation rate** — percentage routed to human agents (target: under 15%)
-- **Response quality scores** — Critic validation pass rate
-- **Customer satisfaction** — inferred from conversation outcomes and explicit feedback
+- **Conversation volume**: messages handled per hour/day/week
+- **Automation rate**: percentage of conversations resolved without human intervention
+- **Escalation rate**: percentage routed to human agents (target: under 15%)
+- **Response quality scores**: Critic validation pass rate
+- **Customer satisfaction**: inferred from conversation outcomes and explicit feedback
 
 ## Next steps
 
-- [Shopify Integration](/docs/integrations/shopify) — Detailed Shopify connection guide.
-- [How It Works](./how-it-works) — Deep dive into the agent pipeline and communication protocols.
+- [Shopify Integration](/docs/integrations/shopify): Detailed Shopify connection guide.
+- [How It Works](./how-it-works): Deep dive into the agent pipeline and communication protocols.
 
 ---
 

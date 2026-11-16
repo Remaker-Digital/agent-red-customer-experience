@@ -104,18 +104,18 @@ def test_every_value_is_tokenized_in_place_and_repeats_share_a_token(monkeypatch
 @pytest.mark.parametrize(
     ("names", "text", "tokenized_text"),
     [
-        (["John Smith", "John"], "Please write to smith.john@gmail.com", "Please write to pii-email-aaaaaaaaaaa1"),
+        (["John Smith", "John"], "Please write to smith.john@example.com", "Please write to pii-email-aaaaaaaaaaa1"),
         (["Jo Smith", "Jo"], "Please write to smith.jo@example.com.", "Please write to pii-email-aaaaaaaaaaa1."),
-        (["Ann Lee", "Ann"], "Please write to joann.lee@gmail.com.", "Please write to pii-email-aaaaaaaaaaa1."),
+        (["Ann Lee", "Ann"], "Please write to joann.lee@example.com.", "Please write to pii-email-aaaaaaaaaaa1."),
         (["Ed Jones", "Ed"], "Please write to fred.jones@example.com.", "Please write to pii-email-aaaaaaaaaaa1."),
         (["John Smith", "John"], "Please write to info+john@shop.example.", "Please write to pii-email-aaaaaaaaaaa1."),
-        (["John Smith", "John"], "Please write to john.smith@gmail.com.", "Please write to pii-email-aaaaaaaaaaa1."),
+        (["John Smith", "John"], "Please write to john.smith@example.com.", "Please write to pii-email-aaaaaaaaaaa1."),
         (["Jo"], "Please write to alice@example.jo.", "Please write to pii-email-aaaaaaaaaaa1."),
         (["Jo Smith", "Jo"], "Please write to alice@smith.jo", "Please write to pii-email-aaaaaaaaaaa1"),
         (["Mary Ann"], "Please write to mary ann@shop.example.", "Please write to pii-email-aaaaaaaaaaa1."),
         (
             ["John Smith", "John"],
-            "John, please write to smith.john@gmail.com.",
+            "John, please write to smith.john@example.com.",
             "pii-name-aaaaaaaaaaa1, please write to pii-email-bbbbbbbbbbb2.",
         ),
     ],
@@ -304,12 +304,12 @@ def test_an_accented_email_is_not_left_in_clear(monkeypatch):
     """S23. An accented letter is part of the address. It is not a word boundary that leaves the start in clear."""
     _issue_token_ids(monkeypatch, "aaaaaaaaaaa1")
     tokenizer = PiiTokenizer()
-    text = "Write to jos\u00e9.garcia@gmail.com today."
+    text = "Write to jos\u00e9.garcia@example.com today."
     tokenized, restored = _round_trip(tokenizer, text)
     assert "jos\u00e9" not in tokenized
     assert "pii-email-" in tokenized
     assert restored == text
-    assert _originals(tokenizer) == ["jos\u00e9.garcia@gmail.com"]
+    assert _originals(tokenizer) == ["jos\u00e9.garcia@example.com"]
 
 
 def test_values_written_against_cjk_text_are_not_left_in_clear(monkeypatch):
@@ -463,7 +463,7 @@ def test_a_decomposed_email_is_not_left_in_clear(monkeypatch):
     """A combining mark is part of the address, not a place where the mailbox stays in clear."""
     _issue_token_ids(monkeypatch, "aaaaaaaaaaa1")
     tokenizer = PiiTokenizer()
-    address = "jose\u0301.garcia@gmail.com"
+    address = "jose\u0301.garcia@example.com"
     text = f"Write to {address} today."
     tokenized, restored = _round_trip(tokenizer, text)
     assert "jose" not in tokenized

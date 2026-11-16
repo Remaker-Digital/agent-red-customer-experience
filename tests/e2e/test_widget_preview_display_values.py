@@ -270,14 +270,12 @@ class TestColorModeRoundTrip:
 
 
 class TestWidgetAgentAvatarField:
-    """Verify Agent avatar section renders for empty avatar URL."""
+    """Verify the chat header icon section renders for an empty avatar URL."""
 
-    def test_avatar_label_visible(self, admin_widget_page: Page) -> None:
-        """'Agent avatar' label is visible on the page."""
-        admin_widget_page.wait_for_timeout(500)
-        label = admin_widget_page.get_by_text("Agent avatar", exact=True)
-        label.first.scroll_into_view_if_needed()
-        expect(label.first).to_be_visible()
+    def test_chat_header_icon_label_visible(self, admin_widget_page: Page) -> None:
+        """The chat header icon or logo label is visible."""
+        label = admin_widget_page.get_by_text("Chat header icon or logo", exact=True)
+        expect(label).to_be_visible()
 
     def test_avatar_upload_zone_when_no_avatar(self, admin_widget_page: Page) -> None:
         """When agentAvatarUrl is empty, the drop zone is shown."""

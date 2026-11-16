@@ -151,45 +151,71 @@ async def _verify_webhook_request(request: Request) -> dict[str, Any]:
 # ---------------------------------------------------------------------------
 
 
+class TenantLookupFailedError(Exception):
+    """A lookup raised, so a missing tenant cannot be told apart from a failure."""
+
+
 async def _resolve_tenant_id(shop_domain: str) -> str | None:
     """Resolve a Shopify shop domain to a tenant_id.
 
     Uses the DomainIndexRepository for O(1) point-read lookup (no
-    cross-partition query).  Falls back to TenantRepository if
-    domain index is not configured.
+    cross-partition query), then TenantRepository.find_by_shopify_domain,
+    which matches the encrypted domain by its keyed hash.
 
     Returns:
         The tenant_id, or None if the shop is not recognised.
+
+    Raises:
+        TenantLookupFailedError: A lookup raised and no tenant was found.
+            A tenant indexed without a lookup hash would be missed by the
+            fallback, so a failed index read is not a clean "not found".
     """
+    failed = False
     # Prefer domain index — single-partition point read
     if _domain_index_repo is not None:
         try:
-            tenant_id = await _domain_index_repo.lookup(shop_domain)
+            tenant_id = await _domain_index_repo.lookup(shop_domain, strict=True)
             if tenant_id is not None:
                 return tenant_id
         except Exception:
+            failed = True
             logger.exception(
                 "Domain index lookup failed for shop=%s, trying fallback",
                 shop_domain,
             )
 
-    # Fallback to cross-partition query (legacy path)
+    # Fallback: cross-partition query by the domain's keyed hash
     if _tenant_repo is not None:
         try:
             tenant_doc = await _tenant_repo.find_by_shopify_domain(shop_domain)
             if tenant_doc is not None:
                 return tenant_doc.get("id") or tenant_doc.get("tenant_id")
         except Exception:
+            failed = True
             logger.exception(
                 "Error resolving shop domain to tenant: shop=%s",
                 shop_domain,
             )
+
+    if failed:
+        raise TenantLookupFailedError(shop_domain)
 
     logger.warning(
         "Cannot resolve shop %s to tenant — no repo configured",
         shop_domain,
     )
     return None
+
+
+def _not_done(webhook: str, shop_domain: str, reason: str) -> JSONResponse:
+    """Answer a redact that was not carried out so Shopify retries it."""
+    logger.error(
+        "Shopify GDPR %s not done: shop=%s reason=%s. Answering 503 so Shopify retries.",
+        webhook,
+        shop_domain,
+        reason,
+    )
+    return JSONResponse(status_code=503, content={"status": "retry", "reason": reason})
 
 
 # ---------------------------------------------------------------------------
@@ -255,7 +281,10 @@ async def customers_data_request(request: Request) -> JSONResponse:
     )
 
     # Resolve tenant and export data if services are available
-    tenant_id = await _resolve_tenant_id(shop_domain)
+    try:
+        tenant_id = await _resolve_tenant_id(shop_domain)
+    except TenantLookupFailedError:
+        tenant_id = None
 
     if tenant_id and _export_service is not None:
         try:
@@ -310,6 +339,7 @@ async def customers_data_request(request: Request) -> JSONResponse:
     responses={
         400: {"description": "Invalid JSON payload"},
         401: {"description": "Missing or invalid HMAC signature"},
+        503: {"description": "Tenant lookup or deletion failed; Shopify retries"},
     },
 )
 async def customers_redact(request: Request) -> JSONResponse:
@@ -347,7 +377,10 @@ async def customers_redact(request: Request) -> JSONResponse:
     )
 
     # Resolve tenant and delete customer data if services are available
-    tenant_id = await _resolve_tenant_id(shop_domain)
+    try:
+        tenant_id = await _resolve_tenant_id(shop_domain)
+    except TenantLookupFailedError:
+        return _not_done("customers/redact", shop_domain, "tenant lookup failed")
 
     if tenant_id and _deletion_service is not None:
         try:
@@ -365,6 +398,7 @@ async def customers_redact(request: Request) -> JSONResponse:
                 shop_domain,
                 customer_id,
             )
+            return _not_done("customers/redact", shop_domain, "deletion failed")
     elif tenant_id is None:
         logger.info(
             "Shopify GDPR customers/redact: shop=%s not found in tenants "
@@ -399,6 +433,7 @@ async def customers_redact(request: Request) -> JSONResponse:
     responses={
         400: {"description": "Invalid JSON payload"},
         401: {"description": "Missing or invalid HMAC signature"},
+        503: {"description": "Tenant lookup or deletion failed; Shopify retries"},
     },
 )
 async def shop_redact(request: Request) -> JSONResponse:
@@ -433,7 +468,10 @@ async def shop_redact(request: Request) -> JSONResponse:
     )
 
     # Resolve tenant and delete ALL shop data
-    tenant_id = await _resolve_tenant_id(shop_domain)
+    try:
+        tenant_id = await _resolve_tenant_id(shop_domain)
+    except TenantLookupFailedError:
+        return _not_done("shop/redact", shop_domain, "tenant lookup failed")
 
     if tenant_id and _deletion_service is not None:
         try:
@@ -453,6 +491,7 @@ async def shop_redact(request: Request) -> JSONResponse:
                 shop_domain,
                 tenant_id,
             )
+            return _not_done("shop/redact", shop_domain, "deletion failed")
     elif tenant_id is None:
         logger.info(
             "Shopify GDPR shop/redact: shop=%s not found in tenants "

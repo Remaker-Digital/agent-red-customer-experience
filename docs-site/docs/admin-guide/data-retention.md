@@ -29,7 +29,7 @@ When enabled, the system automatically detects and redacts personally identifiab
 - Email addresses
 - Phone numbers
 
-Detected PII is replaced with `[REDACTED]` in stored transcripts. Live responses delivered to the customer during the conversation are not affected — PII scrubbing operates at the storage layer only, so the customer experience is unchanged while stored data is cleaned for privacy compliance.
+Detected PII is replaced with `[REDACTED]` in stored transcripts. Live responses delivered to the customer during the conversation are not affected: PII scrubbing operates at the storage layer only, so the customer experience is unchanged while stored data is cleaned for privacy compliance.
 
 Enable PII scrubbing from the **Memory & Privacy** page in the admin console.
 
@@ -45,8 +45,8 @@ When disabled, deletion requests are queued for manual review by an admin before
 
 ## Related Settings
 
-- [Customer Memory](/docs/admin-guide/customer-memory) — Controls what the AI remembers about customers across sessions
-- [Billable Conversation Spec](/docs/billing/billable-conversation-spec) — How conversations are counted for billing
+- [Customer Memory](/docs/admin-guide/customer-memory): Controls what the AI remembers about customers across sessions
+- [Billable Conversation Spec](/docs/billing/billable-conversation-spec): How conversations are counted for billing
 
 ---
 

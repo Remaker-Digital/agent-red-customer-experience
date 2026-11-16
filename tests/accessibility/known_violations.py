@@ -23,8 +23,6 @@ Baseline semantics (per suite, per page):
   - Remove entries as violations are fixed, in the suite that reports them.
     Never copy an entry from the other suite to silence a NEW violation.
 
-Owner acceptance: Mike accepted count-based baseline 2026-04-12 (S282).
-Decision cited in bridge/axe-core-ci-enforcement-013.md.
 Remediation tracked as follow-up work.
 
 Expiry: All entries must be eliminated before next production release.

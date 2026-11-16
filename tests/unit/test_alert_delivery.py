@@ -10,10 +10,13 @@ email rendering, and module singleton management.
 from __future__ import annotations
 
 import os
+import re
+from contextlib import nullcontext
 from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
 
+from src.multi_tenant import smtp_tls
 from src.multi_tenant.alert_delivery import (
     Alert,
     AlertDeliveryService,
@@ -304,7 +307,7 @@ class TestEmailRendering:
     def test_render_usage_80_email(self):
         alert = _make_alert(alert_type=AlertType.USAGE_80_PCT)
         subject, html = _render_email(alert)
-        assert "[Agent Red]" in subject
+        assert subject.startswith("Agent Red: ")
         assert "html" in html.lower()
         assert "Agent Red" in html
 
@@ -354,6 +357,36 @@ class TestEmailRendering:
 
 
 class TestEmailAlertChannel:
+    async def test_invite_smtp_parts_use_the_same_timestamp_and_account_link(self, monkeypatch):
+        url = "https://example.invalid/admin/standalone/?source=invite&tenant=demo-account"
+        recipient = "invitee@example.invalid"
+        alert = _make_alert(AlertType.TEAM_INVITE, metadata={"invitee_email": recipient, "admin_url": url})
+        monkeypatch.setenv("SMTP_HOST", "smtp.example.invalid")
+        monkeypatch.setenv("SMTP_PORT", "587")
+        monkeypatch.setenv("SMTP_FROM", "mailer@example.invalid")
+        monkeypatch.setenv("SMTP_USERNAME", "")
+        monkeypatch.setenv("SMTP_PASSWORD", "")
+        monkeypatch.delenv("AZURE_COMM_CONNECTION_STRING", raising=False)
+        server = MagicMock()
+        monkeypatch.setattr(smtp_tls, "open_verified_smtp", lambda *args, **kwargs: nullcontext(server))
+
+        result = await EmailAlertChannel(preferences_repo=MagicMock(), tenant_repo=MagicMock()).deliver(alert)
+
+        assert result.success
+        server.send_message.assert_called_once()
+        message = server.send_message.call_args.args[0]
+        assert message["To"] == recipient
+        assert message["Subject"] == f"Agent Red: {alert.title}"
+        plain, html = [part.get_payload(decode=True).decode() for part in message.get_payload()]
+        assert f"Or paste this link into your browser:\n{url}" in plain
+        html_url = url.replace("&", "&amp;")
+        assert f'href="{html_url}"' in html
+        assert f"{html_url}</span>" in html
+        timestamp_pattern = r"Email generated: \d{4}-\d\d-\d\d \d\d:\d\d:\d\d UTC"
+        plain_timestamps = re.findall(timestamp_pattern, plain)
+        assert len(plain_timestamps) == 1
+        assert re.findall(timestamp_pattern, html) == plain_timestamps
+
     @pytest.mark.asyncio
     async def test_no_recipient(self):
         prefs = MagicMock()

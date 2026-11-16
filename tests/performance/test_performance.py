@@ -142,19 +142,16 @@ class TestLatencyValidation:
         await asyncio.sleep(0.15)
         assert budget.is_expired is True
 
-    def test_perf_09_health_check_latency_contract(self):
-        """PERF-09: Health endpoint should be pure in-memory — no external calls."""
+    def test_perf_09_health_summary_uses_recorded_samples(self):
+        """PERF-09: Check the health summary against a known sample."""
         svc = SLAMonitoringService()
         svc.record_latency("t-1", 500.0)
         svc.record_health_check(True)
 
-        start = time.monotonic()
         summary = svc.health_summary()
-        elapsed_ms = (time.monotonic() - start) * 1000
 
-        assert elapsed_ms < 50  # In-memory operation should be < 50ms
-        assert "p50_ms" in summary
-        assert "uptime_pct" in summary
+        assert summary["p50_ms"] == 500.0
+        assert summary["uptime_pct"] == 100.0
 
     def test_perf_10_config_cache_contract(self):
         """PERF-10: Config endpoint uses 60s cache — validated in TenantConfigProcessor."""

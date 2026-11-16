@@ -28,11 +28,11 @@ The public source is [agent-red-customer-experience](https://github.com/Remaker-
 
 ## What you'll find here
 
-- **[Getting started](/docs/getting-started/overview)** — Understand what Agent Red does, how it works, and how to set up your first deployment.
-- **[Admin guide](/docs/admin-guide)** — Complete reference for every setting in the admin console — what each input does, how changing it affects system behavior, and best practices.
-- **[Integrations](/docs/integrations/shopify)** — Connect Agent Red to Shopify and other platforms.
-- **[Billing](/docs/billing/billable-conversation-spec)** — How conversations are metered and billed.
-- **[Changelog](/docs/changelog)** — What's new in each release.
+- **[Getting started](/docs/getting-started/overview)**: Understand what Agent Red does, how it works, and how to set up your first deployment.
+- **[Admin guide](/docs/admin-guide)**: Complete reference for every setting in the admin console: what each input does, how changing it affects system behavior, and best practices.
+- **[Integrations](/docs/integrations/shopify)**: Connect Agent Red to Shopify and other platforms.
+- **[Billing](/docs/billing/billable-conversation-spec)**: How conversations are metered and billed.
+- **[Changelog](/docs/changelog)**: What's new in each release.
 
 ## Key capabilities
 

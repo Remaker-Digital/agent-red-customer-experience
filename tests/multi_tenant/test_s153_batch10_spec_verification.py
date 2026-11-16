@@ -27,7 +27,7 @@ ROOT = Path(__file__).resolve().parents[2]
 # ═══════════════════════════════════════════════════════════════════════
 
 class TestSpec0092OwnerPersonalityHonestFeedback:
-    """SPEC-0092: Owner personality note — Mike values honest feedback."""
+    """SPEC-0092: Project feedback guidance."""
 
     def test_honest_feedback_in_project(self):
         src = (ROOT / "CLAUDE.md").read_text(encoding="utf-8")
@@ -383,20 +383,6 @@ class TestSpec0419FaviconExists:
             has_favicon = any("favicon" in f.lower() or "icon-master" in f.lower()
                              for f in files)
             assert has_favicon, f"Must have favicon files in public/ (found: {files})"
-
-
-class TestSpec0450EnvLocalUpToDate:
-    """SPEC-0450: .env.local file MUST be kept up-to-date for production deployment."""
-
-    def test_env_local_exists(self):
-        assert (ROOT / ".env.local").exists(), ".env.local must exist"
-
-    def test_env_local_has_production_keys(self):
-        src = (ROOT / ".env.local").read_text(encoding="utf-8")
-        assert "PROD_URL" in src or "API_URL" in src, \
-            "Must have production URL configured"
-        assert "COSMOS_DB" in src or "cosmos" in src.lower(), \
-            "Must have Cosmos DB configuration"
 
 
 class TestSpec0668ScheduleMdGroupings:

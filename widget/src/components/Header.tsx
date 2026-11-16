@@ -17,6 +17,7 @@
 import { FunctionComponent } from 'preact';
 import type { DesignTokens } from '@/theme/tokens';
 import { focusRingColor } from '@/theme/tokens';
+import { useState } from 'preact/hooks';
 import type { Locale } from '@/locale/en';
 
 // ---------------------------------------------------------------------------
@@ -57,6 +58,8 @@ export const Header: FunctionComponent<HeaderProps> = ({
   onClose,
   onDragStart,
 }) => {
+  const imageUrl = logoUrl || agentAvatarUrl;
+  const [failedImageUrl, setFailedImageUrl] = useState<string | null>(null);
   const displayTitle = headerText || locale.headerTitle;
   const displaySubtitle = headerSubtitle || locale.headerSubtitleDefault;
   // Avatar initials: first 2 chars of agent name (WI-0872 consistency fix)
@@ -66,6 +69,11 @@ export const Header: FunctionComponent<HeaderProps> = ({
   const headerBg = gradientEnd
     ? `linear-gradient(135deg, ${tokens.colorPrimary} 0%, ${gradientEnd} 100%)`
     : tokens.colorPrimary;
+
+  const closeTint = tokens.colorPrimaryText === '#FFFFFF' ? '28, 25, 23' : '255, 255, 255';
+  const closeFocusRing = gradientEnd
+    ? '0 0 0 2px #000000, 0 0 0 4px #FFFFFF'
+    : `0 0 0 2px ${focusRingColor(tokens.colorPrimary)}`;
 
   return (
     <div
@@ -90,10 +98,13 @@ export const Header: FunctionComponent<HeaderProps> = ({
     >
       {/* Agent avatar */}
       <div
+        className="ar-header-avatar"
         style={{
           width: tokens.avatarSize,
           height: tokens.avatarSize,
           borderRadius: tokens.borderRadiusFull,
+          border: '1px solid ' + tokens.colorPrimaryText,
+          boxSizing: 'border-box',
           backgroundColor: 'rgba(255,255,255,0.2)',
           display: 'flex',
           alignItems: 'center',
@@ -102,17 +113,19 @@ export const Header: FunctionComponent<HeaderProps> = ({
           flexShrink: 0,
           fontSize: '12px',
           fontWeight: 700,
-          color: '#fff',
+          color: tokens.colorPrimaryText,
         }}
       >
-        {agentAvatarUrl ? (
+        {imageUrl && imageUrl !== failedImageUrl ? (
           <img
-            src={agentAvatarUrl}
-            alt={agentName}
+            key={imageUrl}
+            src={imageUrl}
+            alt={logoUrl ? locale.logoAlt : agentName}
+            onError={() => setFailedImageUrl(imageUrl)}
             style={{
               width: '100%',
               height: '100%',
-              objectFit: 'cover',
+              objectFit: 'contain',
             }}
           />
         ) : (
@@ -187,24 +200,18 @@ export const Header: FunctionComponent<HeaderProps> = ({
         </div>
       </div>
 
-      {/* Logo (if provided) */}
-      {logoUrl && (
-        <img
-          src={logoUrl}
-          alt={locale.logoAlt}
-          style={{
-            height: '24px',
-            width: 'auto',
-            marginRight: tokens.space2,
-            opacity: 0.9,
-          }}
-        />
-      )}
-
-      <style>{gradientEnd
-        ? `.ar-header-close:focus-visible { box-shadow: 0 0 0 2px #000000, 0 0 0 4px #FFFFFF !important; }`
-        : `.ar-header-close:focus-visible { box-shadow: 0 0 0 2px ${focusRingColor(tokens.colorPrimary)} !important; }`
-      }</style>
+      <style>{`
+        .ar-header-close { background: transparent; border-color: transparent; color: inherit; }
+        .ar-header-close:hover, .ar-header-close:active {
+          background-color: rgba(${closeTint}, 0.22);
+          border-color: currentColor;
+        }
+        .ar-header-close:active { background-color: rgba(${closeTint}, 0.34); }
+        .ar-header-close:focus-visible {
+          outline: 2px solid transparent;
+          box-shadow: ${closeFocusRing};
+        }
+      `}</style>
 
       {/* Close button */}
       <button
@@ -213,9 +220,8 @@ export const Header: FunctionComponent<HeaderProps> = ({
         aria-label={locale.closeWidget}
         onClick={onClose}
         style={{
-          background: 'none',
-          border: 'none',
-          color: 'inherit',
+          borderWidth: '1px',
+          borderStyle: 'solid',
           cursor: 'pointer',
           padding: tokens.space2,
           margin: `0 -${tokens.space2} 0 0`,
@@ -223,15 +229,7 @@ export const Header: FunctionComponent<HeaderProps> = ({
           alignItems: 'center',
           justifyContent: 'center',
           borderRadius: tokens.borderRadiusSm,
-          transition: `background-color ${tokens.transitionFast}, box-shadow ${tokens.transitionFast}`,
-          outline: 'none',
-          opacity: 0.9,
-        }}
-        onMouseEnter={(e) => {
-          (e.currentTarget as HTMLElement).style.backgroundColor = 'rgba(255,255,255,0.15)';
-        }}
-        onMouseLeave={(e) => {
-          (e.currentTarget as HTMLElement).style.backgroundColor = 'transparent';
+          transition: `background-color ${tokens.transitionFast}, border-color ${tokens.transitionFast}`,
         }}
       >
         <CloseIcon size={18} />

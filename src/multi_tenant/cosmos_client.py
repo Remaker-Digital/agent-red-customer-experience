@@ -26,6 +26,8 @@ from __future__ import annotations
 
 import logging
 import os
+from collections.abc import AsyncIterator
+from contextlib import asynccontextmanager
 from typing import Any
 
 from azure.cosmos.aio import CosmosClient
@@ -51,6 +53,7 @@ class CosmosManager:
 
     def __init__(self) -> None:
         self._client: CosmosClient | None = None
+        self._managed_credential: Any = None
         self._database: Any = None  # DatabaseProxy
         self._containers: dict[str, Any] = {}  # name -> ContainerProxy
         self._initialized: bool = False
@@ -71,7 +74,8 @@ class CosmosManager:
 
         if use_managed_id:
             from azure.identity.aio import DefaultAzureCredential
-            credential = DefaultAzureCredential()
+            self._managed_credential = DefaultAzureCredential()
+            credential = self._managed_credential
             logger.info("Cosmos DB: using Managed Identity authentication")
         else:
             credential = os.environ.get("COSMOS_DB_KEY", "")
@@ -91,6 +95,21 @@ class CosmosManager:
 
         self._database = self._client.get_database_client(database_name)
         logger.info("Cosmos DB client initialized: endpoint=%s db=%s", endpoint, database_name)
+
+    @asynccontextmanager
+    async def connected(self) -> AsyncIterator[None]:
+        """Provide an existing database proxy without provisioning resources."""
+        owns_connection = self._client is None
+        try:
+            await self._ensure_client()
+            if owns_connection:
+                assert self._client is not None
+                # Enter the async SDK before any repository query to load account metadata.
+                await self._client.__aenter__()
+            yield
+        finally:
+            if owns_connection:
+                await self.close()
 
     async def initialize(self) -> dict[str, Any]:
         """Initialize the database and create all containers.
@@ -162,13 +181,20 @@ class CosmosManager:
 
         Call during application shutdown.
         """
-        if self._client is not None:
-            await self._client.close()
-            self._client = None
-            self._database = None
-            self._containers.clear()
-            self._initialized = False
-            logger.info("Cosmos DB client closed")
+        client = self._client
+        managed_credential = self._managed_credential
+        self._client = None
+        self._managed_credential = None
+        self._database = None
+        self._containers.clear()
+        self._initialized = False
+        try:
+            if client is not None:
+                await client.close()
+                logger.info("Cosmos DB client closed")
+        finally:
+            if managed_credential is not None:
+                await managed_credential.close()
 
 
 # ---------------------------------------------------------------------------

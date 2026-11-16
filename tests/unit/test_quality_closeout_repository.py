@@ -49,6 +49,10 @@ async def test_closeout_persists_the_aggregate(monkeypatch: pytest.MonkeyPatch) 
         "src.multi_tenant.repositories.base.get_cosmos_manager",
         lambda: _Manager(container),
     )
+    monkeypatch.setattr(
+        "src.multi_tenant.envelope_encryption.get_envelope_encryption_service",
+        lambda: None,
+    )
     await evaluate_quality_and_alert("tenant-q", "conv-q", ConversationRepository())
     assert container.operations == [
         {

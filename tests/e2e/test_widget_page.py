@@ -429,9 +429,9 @@ class TestWidgetContent:
         )
         expect(desc).to_be_visible()
 
-    def test_agent_avatar_label(self, admin_widget_page: Page) -> None:
-        """Agent avatar section label is visible."""
-        label = admin_widget_page.get_by_text("Agent avatar", exact=True)
+    def test_chat_header_icon_label(self, admin_widget_page: Page) -> None:
+        """The chat header icon or logo label is visible."""
+        label = admin_widget_page.get_by_text("Chat header icon or logo", exact=True)
         expect(label).to_be_visible()
 
     def test_avatar_upload_drop_zone(self, admin_widget_page: Page) -> None:

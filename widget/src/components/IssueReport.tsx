@@ -18,6 +18,7 @@ import { FunctionComponent } from 'preact';
 import { useState, useCallback } from 'preact/hooks';
 import type { DesignTokens } from '@/theme/tokens';
 import type { Locale } from '@/locale/en';
+import type { IssueReportStatus } from '@/transport/http';
 
 // ---------------------------------------------------------------------------
 // Props
@@ -26,7 +27,7 @@ import type { Locale } from '@/locale/en';
 interface IssueReportProps {
   tokens: DesignTokens;
   locale: Locale;
-  onSubmit: (issueType: string, details: string) => Promise<void>;
+  onSubmit: (issueType: string, details: string) => Promise<IssueReportStatus>;
   onCancel: () => void;
   isLoading: boolean;
 }
@@ -55,22 +56,22 @@ export const IssueReport: FunctionComponent<IssueReportProps> = ({
 }) => {
   const [selectedType, setSelectedType] = useState<string>('');
   const [details, setDetails] = useState('');
-  const [submitted, setSubmitted] = useState(false);
+  const [status, setStatus] = useState<IssueReportStatus | 'idle'>('idle');
 
   const handleSubmit = useCallback(async () => {
     if (!selectedType || isLoading) return;
 
+    setStatus('idle');
     try {
-      await onSubmit(selectedType, details);
-      setSubmitted(true);
+      setStatus(await onSubmit(selectedType, details));
     } catch {
-      // Error handling is done by the parent
+      setStatus('failed');
     }
   }, [selectedType, details, isLoading, onSubmit]);
 
   // ---- Success state -------------------------------------------------------
 
-  if (submitted) {
+  if (status === 'delivered' || status === 'saved') {
     return (
       <div
         style={{
@@ -112,6 +113,7 @@ export const IssueReport: FunctionComponent<IssueReportProps> = ({
         </div>
 
         <p
+          role={status === 'saved' ? 'alert' : 'status'}
           style={{
             fontSize: tokens.fontSizeMd,
             fontWeight: tokens.fontWeightMedium,
@@ -119,7 +121,7 @@ export const IssueReport: FunctionComponent<IssueReportProps> = ({
             margin: 0,
           }}
         >
-          {locale.issueSubmitSuccess}
+          {status === 'delivered' ? locale.issueSubmitSuccess : locale.issueNotificationUnconfirmed}
         </p>
 
         <button
@@ -257,6 +259,12 @@ export const IssueReport: FunctionComponent<IssueReportProps> = ({
         }}
       />
 
+      {status === 'failed' && (
+        <p role="alert" style={{ margin: 0, color: tokens.colorText, fontSize: tokens.fontSizeSm }}>
+          {locale.issueSubmitFailure}
+        </p>
+      )}
+
       {/* Actions */}
       <div
         style={{
@@ -269,6 +277,7 @@ export const IssueReport: FunctionComponent<IssueReportProps> = ({
         <button
           type="button"
           onClick={onCancel}
+          disabled={isLoading}
           style={{
             flex: 1,
             padding: `${tokens.space3} ${tokens.space4}`,

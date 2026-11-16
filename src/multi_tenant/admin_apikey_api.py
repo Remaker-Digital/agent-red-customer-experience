@@ -181,32 +181,32 @@ async def _send_api_key_email(
     from src.multi_tenant.alert_delivery import format_branded_email
 
     name_display = f" ({tenant_name})" if tenant_name else ""
-    subject = "Your Agent Red API Key Has Been Reset"
+    subject = "Agent Red: Your API Key Has Been Reset"
 
     body_html = f"""\
-<h2 style="margin:0 0 16px;color:#111827;font-size:20px">API Key Reset</h2>
-<p style="color:#374151;font-size:14px;line-height:1.6;margin:0 0 24px">
+<h2 style="margin:0 0 16px;color:#fafaf9;font-size:20px">API Key Reset</h2>
+<p style="color:#f5f5f4;font-size:14px;line-height:1.6;margin:0 0 24px">
   A new API key was generated for your account{name_display}. Your previous key
   has been invalidated and will no longer work.
 </p>
 
-<div style="background:#f3f4f6;border:1px solid #d1d5db;padding:16px;margin:16px 0">
-  <p style="margin:0 0 8px;color:#6b7280;font-size:12px;font-weight:600;
+<div style="background:#1c1917;border:1px solid #57534e;border-radius:8px;padding:16px;margin:16px 0">
+  <p style="margin:0 0 8px;color:#d6d3d1;font-size:12px;font-weight:600;
        text-transform:uppercase;letter-spacing:0.05em">Your New API Key</p>
-  <code style="word-break:break-all;color:#111827;font-size:14px;
+  <code style="word-break:break-all;color:#fafaf9;font-size:14px;
        font-family:'JetBrains Mono',SFMono-Regular,ui-monospace,monospace">{raw_key}</code>
-  <p style="margin:8px 0 0;color:#6b7280;font-size:12px;line-height:1.4">
+  <p style="margin:8px 0 0;color:#d6d3d1;font-size:12px;line-height:1.4">
     Copy this key and use it to sign in to your admin dashboard.
     This key will not be shown again.
   </p>
 </div>
 
-<div style="background:#fef3c7;border:1px solid #fcd34d;padding:16px;margin:16px 0">
-  <strong style="color:#92400e">Did not request this?</strong>
-  <p style="color:#92400e;margin:8px 0 0;font-size:13px">
+<div style="background:#422006;border:1px solid #a16207;border-radius:8px;padding:16px;margin:16px 0">
+  <strong style="color:#fde68a">Did not request this?</strong>
+  <p style="color:#fde68a;margin:8px 0 0;font-size:13px">
     If you did not request a key reset, someone may have access to your email.
     <a href="{admin_login_url or 'mailto:support@agentred.com'}"
-       style="color:#ff3621;font-weight:600">Request a new API key</a>
+       style="color:#93c5fd;font-weight:600">Request a new API key</a>
     immediately to invalidate this one and secure your account.
   </p>
 </div>"""
@@ -216,7 +216,6 @@ async def _send_api_key_email(
     # --- Provider 1: SMTP (Titan or other SMTP provider) ---
     smtp_host = os.environ.get("SMTP_HOST", "")
     if smtp_host:
-        import smtplib
         from email.mime.multipart import MIMEMultipart
         from email.mime.text import MIMEText
 
@@ -234,20 +233,19 @@ async def _send_api_key_email(
             msg["Subject"] = subject
             msg.attach(MIMEText(full_html, "html"))
 
+            from src.multi_tenant.smtp_tls import open_verified_smtp
+
             def _smtp_send() -> None:
-                if smtp_port == 465:
-                    with smtplib.SMTP_SSL(smtp_host, smtp_port, timeout=15) as server:
-                        if smtp_user and smtp_pass:
-                            server.login(smtp_user, smtp_pass)
-                        server.send_message(msg)
-                else:
-                    with smtplib.SMTP(smtp_host, smtp_port, timeout=15) as server:
-                        server.ehlo()
-                        if smtp_port != 25:
-                            server.starttls()
-                        if smtp_user and smtp_pass:
-                            server.login(smtp_user, smtp_pass)
-                        server.send_message(msg)
+                with open_verified_smtp(
+                    smtp_host,
+                    smtp_port,
+                    timeout=15,
+                    username=smtp_user,
+                    password=smtp_pass,
+                ) as server:
+                    if smtp_user and smtp_pass:
+                        server.login(smtp_user, smtp_pass)
+                    server.send_message(msg)
 
             await asyncio.to_thread(_smtp_send)  # SPEC-1622: non-blocking SMTP
             logger.info("API key reset email sent via SMTP to %s", to_email)

@@ -1,12 +1,12 @@
 ---
 sidebar_position: 1
 title: Shopify Integration
-description: Connect your Shopify store to Agent Red — OAuth setup, product catalog sync, order lookups, webhook configuration, and troubleshooting.
+description: Connect your Shopify store to Agent Red, OAuth setup, product catalog sync, order lookups, webhook configuration, and troubleshooting.
 ---
 
 # Shopify Integration
 
-The Shopify integration connects your store's product catalog, order data, and customer profiles to Agent Red's knowledge base. Once connected, the AI agents can answer product questions, look up order status, and reference your inventory — all using live data from your store.
+The Shopify integration connects your store's product catalog, order data, and customer profiles to Agent Red's knowledge base. Once connected, the AI agents can answer product questions, look up order status, and reference your inventory: all using live data from your store.
 
 Shopify is included in all Agent Red plans. No add-on purchase is required.
 
@@ -14,7 +14,7 @@ Shopify is included in all Agent Red plans. No add-on purchase is required.
 
 Before connecting Shopify, confirm you have:
 
-- An active Shopify store (any plan — Basic, Shopify, Advanced, or Plus)
+- An active Shopify store (any plan: Basic, Shopify, Advanced, or Plus)
 - Shopify admin access (you need permission to approve app installations)
 - An active Agent Red account with your API key
 
@@ -85,10 +85,10 @@ The initial sync imports your complete catalog and recent order history. Timing 
 
 | Catalog size | Approximate sync time |
 |---|---|
-| Under 500 products | 2–5 minutes |
-| 500–5,000 products | 5–15 minutes |
-| 5,000–50,000 products | 15–45 minutes |
-| Over 50,000 products | 45–90 minutes (batched) |
+| Under 500 products | 2 to 5 minutes |
+| 500 to 5,000 products | 5 to 15 minutes |
+| 5,000 to 50,000 products | 15 to 45 minutes |
+| Over 50,000 products | 45 to 90 minutes (batched) |
 
 During the initial sync, the system:
 
@@ -100,7 +100,7 @@ During the initial sync, the system:
 
 You can start handling conversations as soon as the initial sync completes. You do not need to wait for any manual step after sync finishes.
 
-All synced customer data — profiles, order history, and product interactions — is automatically indexed into Agent Red's Persistent Customer Memory system, enabling personalized responses from the very first conversation.
+All synced customer data: profiles, order history, and product interactions: is automatically indexed into Agent Red's Persistent Customer Memory system, enabling personalized responses from the very first conversation.
 
 ### Ongoing sync (webhooks)
 
@@ -118,8 +118,8 @@ After the initial import, Shopify sends webhook notifications to Agent Red whene
 
 For data that does not trigger webhooks (bulk imports, metafield changes), Agent Red runs a scheduled catalog reconciliation:
 
-- **Every 15 minutes** — lightweight check for products modified since last sync
-- **Daily (02:00 UTC)** — full catalog reconciliation to catch any missed updates
+- **Every 15 minutes**: lightweight check for products modified since last sync
+- **Daily (02:00 UTC)**: full catalog reconciliation to catch any missed updates
 
 ## Product catalog mapping
 
@@ -253,10 +253,10 @@ After the initial sync completes, verify the integration by running test convers
 
 ### What to check
 
-- **Accuracy** — Do product names, prices, and availability match your Shopify admin?
-- **Freshness** — Change a product price in Shopify. Does the AI reflect the new price within 60 seconds?
-- **Completeness** — Are all products searchable, including recently added ones?
-- **Variant handling** — Does the AI distinguish between sizes and colors correctly?
+- **Accuracy**: Do product names, prices, and availability match your Shopify admin?
+- **Freshness**: Change a product price in Shopify. Does the AI reflect the new price within 60 seconds?
+- **Completeness**: Are all products searchable, including recently added ones?
+- **Variant handling**: Does the AI distinguish between sizes and colors correctly?
 
 ## Troubleshooting
 
@@ -282,15 +282,15 @@ Shopify provides a webhook health dashboard in your Shopify admin under **Settin
 
 The Agent Red dashboard shows real-time sync status:
 
-- **Last successful sync** — timestamp of the most recent data update
-- **Products indexed** — count of products in the knowledge base vs. total active products in Shopify
-- **Webhook delivery rate** — percentage of webhooks received successfully (target: 99.9%)
-- **Index health** — vector search index status (healthy, rebuilding, or error)
+- **Last successful sync**: timestamp of the most recent data update
+- **Products indexed**: count of products in the knowledge base vs. total active products in Shopify
+- **Webhook delivery rate**: percentage of webhooks received successfully (target: 99.9%)
+- **Index health**: vector search index status (healthy, rebuilding, or error)
 
 ## Next steps
 
-- [How It Works](/docs/getting-started/how-it-works) — Understand the full agent pipeline that uses Shopify data.
-- [Initial Setup](/docs/getting-started/setup) — Complete setup guide including knowledge base and go-live steps.
+- [How It Works](/docs/getting-started/how-it-works): Understand the full agent pipeline that uses Shopify data.
+- [Initial Setup](/docs/getting-started/setup): Complete setup guide including knowledge base and go-live steps.
 
 ---
 

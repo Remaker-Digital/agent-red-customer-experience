@@ -1,7 +1,7 @@
 ---
 sidebar_position: 12
 title: Custom instructions
-description: Advanced — inject specific behavioral rules directly into the AI's system prompt. Use with care.
+description: Advanced, inject specific behavioral rules directly into the AI's system prompt. Use with care.
 ---
 
 # Custom instructions
@@ -18,7 +18,7 @@ This field is located in the **Agent identity** section of the Configuration pag
 | **Required** | No |
 | **Affects** | Response generator |
 
-Custom instructions are injected directly into the response generator's system prompt, in a clearly delimited section. This is the most powerful configuration option — and the most likely to cause problems if used carelessly.
+Custom instructions are injected directly into the response generator's system prompt, in a clearly delimited section. This is the most powerful configuration option: and the most likely to cause problems if used carelessly.
 
 :::caution
 Custom instructions are sandboxed with a disclaimer that platform safety rules take precedence. However, poorly written instructions can still degrade response quality. Read this entire page before using this feature.
@@ -80,11 +80,11 @@ Tell the AI what to do, not just what not to do.
 
 ### Keep it concise
 
-Each instruction should be 1–2 sentences. The more text you add, the more the AI has to balance competing priorities. Fewer, clearer rules produce better results than a long list of detailed instructions.
+Each instruction should be 1 to 2 sentences. The more text you add, the more the AI has to balance competing priorities. Fewer, clearer rules produce better results than a long list of detailed instructions.
 
 ### Test after changing
 
-After updating custom instructions, run 5–10 test conversations that exercise the new rules. Check:
+After updating custom instructions, run 5 to 10 test conversations that exercise the new rules. Check:
 1. Does the AI follow the instruction?
 2. Did the instruction break anything else? (e.g., a rule about returns accidentally affecting exchange discussions)
 3. Is the AI interpreting the instruction literally in ways you did not intend?

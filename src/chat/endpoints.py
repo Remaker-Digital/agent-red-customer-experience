@@ -981,71 +981,71 @@ async def report_issue(
         },
     )
 
-    # Persist via conversation repository (best-effort — don't fail the request)
-    # SPEC-1843: Use append_message (read-modify-write) to preserve encryption.
-    try:
-        if session.conversation_repo:
-            await session.conversation_repo.append_message(
-                ctx.tenant_id,
-                conversation_id,
-                issue_message.model_dump(mode="json"),
-            )
-    except Exception:
-        logger.warning(
-            "Failed to persist issue report: conv=%s issue=%s",
-            conversation_id,
-            issue_id,
-        )
+    # Use the conversation repository to encrypt and persist the report.
+    repository = session.conversation_repo
+    if repository is None:
+        raise HTTPException(status_code=503, detail="Could not save issue report")
 
-    # Audit log entry
+    try:
+        await repository.append_message(
+            ctx.tenant_id,
+            conversation_id,
+            issue_message.model_dump(mode="json"),
+        )
+    except Exception as exc:
+        logger.warning("Failed to persist issue report: issue=%s", issue_id)
+        raise HTTPException(status_code=503, detail="Could not save issue report") from exc
+
     try:
         from src.multi_tenant.cosmos_schema import AuditEventType
         from src.multi_tenant.repository import AuditLogRepository
 
-        audit_repo = AuditLogRepository()
-        await audit_repo.log_event(
+        await AuditLogRepository().log_event(
             tenant_id=ctx.tenant_id,
             event_type=AuditEventType.SECURITY_EVENT,
-            actor_id=f"customer:{conversation_id}",
-            resource_type="conversation",
-            resource_id=conversation_id,
-            details={
+            actor="customer",
+            actor_type="user",
+            conversation_id=conversation_id,
+            payload={
                 "action": "issue_reported",
                 "issue_id": issue_id,
                 "issue_type": request.issue_type,
-                "details": request.details[:500],
             },
         )
     except Exception:
-        logger.warning(
-            "Failed to write audit log for issue report: conv=%s",
-            conversation_id,
-        )
+        logger.warning("Failed to write issue report audit log: issue=%s", issue_id)
 
-    # SPEC-1611: Issue reports are handled as escalation requests.
-    # Fire-and-forget — delivery failure must not block the response.
-    try:
-        import asyncio
+    async def deliver_notification() -> bool:
+        try:
+            from src.multi_tenant.alert_delivery import send_escalation_alert
 
-        from src.multi_tenant.alert_delivery import send_escalation_alert
-
-        _issue_label = request.issue_type.replace("_", " ").title()
-        asyncio.ensure_future(
-            send_escalation_alert(
+            issue_label = request.issue_type.replace("_", " ").title()
+            delivery = await send_escalation_alert(
                 tenant_id=ctx.tenant_id,
                 conversation_id=conversation_id,
-                reason=f"Customer issue report: {_issue_label}",
+                reason=f"Customer issue report: {issue_label}",
                 urgency="medium",
-                context_summary=request.details[:500] if request.details else "",
+                context_summary=request.details[:500],
             )
-        )
-    except Exception:
-        logger.debug("Issue-report escalation alert skipped (alert service not configured)")
+            return delivery is not None and delivery.notification_channels_succeeded > 0
+        except Exception:
+            logger.warning("Issue report notification failed: issue=%s", issue_id)
+            return False
+
+    # Wait for confirmation without cancelling the remaining channels at the deadline.
+    notification = asyncio.create_task(deliver_notification())
+    _background_tasks.add(notification)
+    notification.add_done_callback(_background_tasks.discard)
+    completed, _ = await asyncio.wait((notification,), timeout=10)
+    notification_delivered = bool(completed) and notification.result()
+    if not completed:
+        logger.warning("Issue report notification not confirmed: issue=%s", issue_id)
 
     return IssueReportResponse(
         conversation_id=conversation_id,
         issue_id=issue_id,
         accepted=True,
+        notification_delivered=notification_delivered,
     )
 
 

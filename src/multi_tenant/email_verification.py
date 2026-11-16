@@ -24,7 +24,7 @@ from fastapi import APIRouter, Query, Request
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel, Field
 
-from src.multi_tenant.alert_delivery import format_branded_email
+from src.multi_tenant.alert_delivery import email_action_template, format_branded_email
 
 logger = logging.getLogger(__name__)
 
@@ -99,18 +99,15 @@ class VerifyEmailResponse(BaseModel):
 # ---------------------------------------------------------------------------
 
 _VERIFY_EMAIL_BODY = """
-<h2 style="margin:0 0 16px;color:#111827;font-size:20px">Verify Your Email Address</h2>
-<p style="color:#374151;font-size:14px;line-height:1.6;margin:0 0 24px">
+<h2 style="margin:0 0 16px;color:#fafaf9;font-size:20px">Verify Your Email Address</h2>
+<p style="color:#f5f5f4;font-size:14px;line-height:1.6;margin:0 0 24px">
   Click the button below to verify your email address for Agent Red Customer Experience.
   This link will expire in 10 minutes.
 </p>
 <div style="text-align:center;margin:24px 0">
-  <a href="{verify_url}" style="display:inline-block;padding:12px 32px;background:#ff3621;
-     color:#ffffff;font-size:14px;font-weight:600;text-decoration:none;border-radius:6px">
-    Verify Email
-  </a>
+  """ + email_action_template("{verify_url}", "Verify Email") + """
 </div>
-<p style="color:#9ca3af;font-size:12px;line-height:1.5;margin:16px 0 0">
+<p style="color:#d6d3d1;font-size:12px;line-height:1.5;margin:16px 0 0">
   If you did not request this verification, you can safely ignore this email.
 </p>
 """
@@ -239,9 +236,9 @@ async def request_verification(
         verify_url = f"{scheme}://{host}/api/auth/verify-email/confirm?token={token_id}"
 
         # Render and send email
-        html_body = _VERIFY_EMAIL_BODY.format(verify_url=verify_url)
+        html_body = _VERIFY_EMAIL_BODY.format(verify_url=html.escape(verify_url))
         full_html = format_branded_email(html_body)
-        subject = "[Agent Red] Verify Your Email Address"
+        subject = "Agent Red: Verify Your Email Address"
 
         await _send_verification_email(body.email, subject, full_html)
 
@@ -426,9 +423,10 @@ async def _send_verification_email(
     smtp_host = os.environ.get("SMTP_HOST", "")
     if smtp_host:
         import asyncio
-        import smtplib
         from email.mime.multipart import MIMEMultipart
         from email.mime.text import MIMEText
+
+        from src.multi_tenant.smtp_tls import send_verified_smtp
 
         smtp_port = int(os.environ.get("SMTP_PORT", "587"))
         smtp_user = os.environ.get("SMTP_USERNAME", "")
@@ -441,19 +439,7 @@ async def _send_verification_email(
             msg["To"] = to_email
             msg["Subject"] = subject
             msg.attach(MIMEText(html_body, "html"))
-            if smtp_port == 465:
-                with smtplib.SMTP_SSL(smtp_host, smtp_port, timeout=10) as server:
-                    if smtp_user and smtp_pass:
-                        server.login(smtp_user, smtp_pass)
-                    server.send_message(msg)
-            else:
-                with smtplib.SMTP(smtp_host, smtp_port, timeout=10) as server:
-                    server.ehlo()
-                    if smtp_port != 25:
-                        server.starttls()
-                    if smtp_user and smtp_pass:
-                        server.login(smtp_user, smtp_pass)
-                    server.send_message(msg)
+            send_verified_smtp(msg, smtp_host, smtp_port, timeout=10, username=smtp_user, password=smtp_pass)
 
         try:
             await asyncio.to_thread(_smtp_send)  # SPEC-1622: non-blocking SMTP

@@ -14,8 +14,11 @@ messages reference contacting the service provider to renew access.
 
 from __future__ import annotations
 
+from html import escape
 import logging
 import os
+
+from src.multi_tenant.alert_delivery import email_action_template
 
 logger = logging.getLogger(__name__)
 
@@ -25,8 +28,8 @@ logger = logging.getLogger(__name__)
 # ---------------------------------------------------------------------------
 
 _ACCESS_EXPIRY_BODY = """
-<h2 style="margin:0 0 16px;color:#111827;font-size:20px">Your Access {urgency_intro}</h2>
-<p style="color:#374151;font-size:14px;line-height:1.6;margin:0 0 24px">
+<h2 style="margin:0 0 16px;color:#fafaf9;font-size:20px">Your Access {urgency_intro}</h2>
+<p style="color:#f5f5f4;font-size:14px;line-height:1.6;margin:0 0 24px">
   Your Agent Red access has <strong>{days_remaining}</strong> remaining.
   {urgency_message}
 </p>
@@ -39,23 +42,19 @@ _ACCESS_EXPIRY_BODY = """
   </div>
 </div>
 
-<h3 style="margin:24px 0 12px;color:#111827;font-size:16px">What happens next?</h3>
-<ul style="color:#374151;font-size:14px;line-height:1.8;margin:0;padding-left:20px">
+<h3 style="margin:24px 0 12px;color:#fafaf9;font-size:16px">What happens next?</h3>
+<ul style="color:#f5f5f4;font-size:14px;line-height:1.8;margin:0;padding-left:20px">
   <li>When your access expires, your widget will stop accepting new conversations</li>
   <li>Your configuration and conversation history are preserved</li>
   <li>Contact your service provider to renew or extend access</li>
 </ul>
 
 <div style="text-align:center;margin:24px 0">
-  <a href="{admin_login_url}" style="display:inline-block;padding:12px 32px;background:#3B82F6;
-       color:#ffffff;border-radius:6px;font-size:14px;font-weight:600;
-       text-decoration:none">
-    Sign in to Dashboard
-  </a>
+  """ + email_action_template("{admin_login_url}", "Sign in to Dashboard") + """
 </div>
 
-<p style="color:#9ca3af;font-size:12px;line-height:1.5;margin:16px 0 0">
-  Tenant ID: <code style="font-size:11px">{tenant_id}</code>
+<p style="color:#d6d3d1;font-size:12px;line-height:1.5;margin:16px 0 0">
+  Account ID: <code style="font-size:11px">{tenant_id}</code>
 </p>
 """
 
@@ -67,7 +66,7 @@ _URGENCY_CONFIG = {
         "badge_bg": "#eff6ff",
         "badge_border": "#93c5fd",
         "badge_color": "#1e40af",
-        "subject": "Your Agent Red access expires in 7 days",
+        "subject": "Agent Red: Your access expires in 7 days",
     },
     "3d": {
         "urgency_intro": "Is Almost Over",
@@ -75,7 +74,7 @@ _URGENCY_CONFIG = {
         "badge_bg": "#fef3c7",
         "badge_border": "#fcd34d",
         "badge_color": "#92400e",
-        "subject": "Your Agent Red access expires in 3 days",
+        "subject": "Agent Red: Your access expires in 3 days",
     },
     "1d": {
         "urgency_intro": "Ends Tomorrow",
@@ -83,7 +82,7 @@ _URGENCY_CONFIG = {
         "badge_bg": "#fee2e2",
         "badge_border": "#fca5a5",
         "badge_color": "#991b1b",
-        "subject": "Your Agent Red access expires tomorrow",
+        "subject": "Agent Red: Your access expires tomorrow",
     },
 }
 
@@ -134,7 +133,7 @@ async def send_access_expiry_warning(
         badge_border=config["badge_border"],
         badge_color=config["badge_color"],
         tenant_id=tenant_id,
-        admin_login_url=_build_admin_login_url(tenant_slug=slug),
+        admin_login_url=escape(_build_admin_login_url(tenant_slug=slug)),
     )
     full_html = format_branded_email(html_body)
     subject = config["subject"]
@@ -143,9 +142,10 @@ async def send_access_expiry_warning(
     smtp_host = os.environ.get("SMTP_HOST", "")
     if smtp_host:
         import asyncio
-        import smtplib
         from email.mime.multipart import MIMEMultipart
         from email.mime.text import MIMEText
+
+        from src.multi_tenant.smtp_tls import send_verified_smtp
 
         smtp_port = int(os.environ.get("SMTP_PORT", "587"))
         smtp_user = os.environ.get("SMTP_USERNAME", "")
@@ -158,19 +158,7 @@ async def send_access_expiry_warning(
             msg["To"] = to_email
             msg["Subject"] = subject
             msg.attach(MIMEText(full_html, "html"))
-            if smtp_port == 465:
-                with smtplib.SMTP_SSL(smtp_host, smtp_port, timeout=10) as server:
-                    if smtp_user and smtp_pass:
-                        server.login(smtp_user, smtp_pass)
-                    server.send_message(msg)
-            else:
-                with smtplib.SMTP(smtp_host, smtp_port, timeout=10) as server:
-                    server.ehlo()
-                    if smtp_port != 25:
-                        server.starttls()
-                    if smtp_user and smtp_pass:
-                        server.login(smtp_user, smtp_pass)
-                    server.send_message(msg)
+            send_verified_smtp(msg, smtp_host, smtp_port, timeout=10, username=smtp_user, password=smtp_pass)
 
         try:
             await asyncio.to_thread(_smtp_send)  # SPEC-1622: non-blocking SMTP

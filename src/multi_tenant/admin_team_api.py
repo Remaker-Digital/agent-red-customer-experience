@@ -47,6 +47,7 @@ from src.multi_tenant.cosmos_schema import (
     ConversationStatus,
     TeamMemberRole,
 )
+from src.multi_tenant.log_safety import loggable
 from src.multi_tenant.middleware import get_tenant_context
 from src.multi_tenant.repository import (
     AuditLogRepository,
@@ -528,17 +529,17 @@ async def create_team_member(
                 status_code=400,
                 detail="escalation_categories can only be set for the 'escalation_agent' role.",
             )
-    # Check for duplicate email within tenant
+    # One address for the id and the stored email. A second spelling is a duplicate.
+    canonical_email = request.email.strip().lower()
     existing = await repo.find_by_email(ctx.tenant_id, request.email)
     if existing is not None:
         raise HTTPException(
             status_code=409,
-            detail=f"A team member with email '{request.email}' already exists",
+            detail=f"A team member with email '{canonical_email}' already exists",
         )
 
     now = datetime.now(UTC).isoformat()
-    # Document ID = tenant_id:email for deterministic lookup
-    member_id = f"{ctx.tenant_id}:{request.email}"
+    member_id = f"{ctx.tenant_id}:{canonical_email}"
 
     # Generate per-user API key
     raw_api_key = generate_user_api_key(ctx.tenant_id)
@@ -550,7 +551,7 @@ async def create_team_member(
     doc = TeamMemberDocument(
         id=member_id,
         tenant_id=ctx.tenant_id,
-        email=request.email,
+        email=canonical_email,
         display_name=request.display_name,
         role=request.role,
         is_active=True,
@@ -568,9 +569,9 @@ async def create_team_member(
 
     logger.info(
         "Team member created: email=%s role=%s tenant=%s key_prefix=%s",
-        request.email,
-        request.role,
-        ctx.tenant_id[:8],
+        loggable(canonical_email),
+        loggable(request.role),
+        loggable(ctx.tenant_id[:8]),
         key_prefix,
     )
 
@@ -578,7 +579,7 @@ async def create_team_member(
         AuditEventType.TEAM_MEMBER_ADDED,
         tenant_id=ctx.tenant_id,
         actor=getattr(ctx, "team_member_email", "admin"),
-        payload={"email": request.email, "role": request.role, "display_name": request.display_name or ""},
+        payload={"email": canonical_email, "role": request.role, "display_name": request.display_name or ""},
     )
 
     # Fire-and-forget: send team invitation email to the invitee
@@ -591,7 +592,7 @@ async def create_team_member(
         asyncio.ensure_future(
             send_team_invite_alert(
                 tenant_id=ctx.tenant_id,
-                invitee_email=request.email,
+                invitee_email=canonical_email,
                 inviter_name=inviter,
                 role=request.role,
             )
@@ -1333,18 +1334,18 @@ async def provision_customer_admin(
     """
     repo = _get_repo()
 
-    # Guard: check duplicate
+    canonical_email = customer_email.strip().lower()
     existing = await repo.find_by_email(tenant_id, customer_email)
     if existing is not None:
         return {
             "member_id": existing.get("id", ""),
-            "email": customer_email,
+            "email": existing.get("email") or canonical_email,
             "api_key": "(already exists)",
             "created": False,
         }
 
     now = datetime.now(UTC).isoformat()
-    member_id = f"{tenant_id}:{customer_email}"
+    member_id = f"{tenant_id}:{canonical_email}"
 
     raw_api_key = generate_user_api_key(tenant_id)
     key_hash = hash_api_key(raw_api_key)
@@ -1355,7 +1356,7 @@ async def provision_customer_admin(
     doc = TeamMemberDocument(
         id=member_id,
         tenant_id=tenant_id,
-        email=customer_email,
+        email=canonical_email,
         display_name=display_name,
         role=TeamMemberRole.ADMIN,
         is_active=True,
@@ -1373,13 +1374,13 @@ async def provision_customer_admin(
     logger.info(
         "Customer admin provisioned: tenant=%s email=%s member_id=%s",
         tenant_id,
-        customer_email,
+        canonical_email,
         member_id,
     )
 
     return {
         "member_id": member_id,
-        "email": customer_email,
+        "email": canonical_email,
         "api_key": raw_api_key,
         "created": True,
     }

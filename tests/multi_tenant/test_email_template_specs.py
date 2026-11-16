@@ -18,9 +18,47 @@ Covers 19 specs across 6 email modules:
 from __future__ import annotations
 
 import os
+from datetime import UTC, datetime
+from importlib import import_module
+from string import Formatter
 from unittest.mock import MagicMock, patch
 
 import pytest
+
+
+@pytest.mark.parametrize(
+    ("module", "template"),
+    [
+        ("access_expiry_email", "_ACCESS_EXPIRY_BODY"),
+        ("email_change", "_CONFIRM_EMAIL_BODY"),
+        ("email_verification", "_VERIFY_EMAIL_BODY"),
+        ("login_notification", "_LOGIN_NOTIFICATION_BODY"),
+        ("magic_link_auth", "_MAGIC_LINK_EMAIL_BODY"),
+        ("spa_recovery", "_RECOVERY_EMAIL_BODY"),
+        ("tenant_recovery", "_RECOVERY_AUTH_EMAIL_BODY"),
+        ("trial_expiry_email", "_EXPIRY_WARNING_BODY"),
+        ("welcome_email", "_WELCOME_EMAIL_BODY"),
+    ],
+)
+def test_primary_email_actions_use_the_brand_palette(module, template):
+    body = getattr(import_module(f"src.multi_tenant.{module}"), template)
+    assert "background:#3b82f6;color:#ffffff;" in body
+    assert "font-size:19px;font-weight:700;" in body
+    fields = {field: "https://example.invalid/action?x=1&amp;y=2"
+              for _, field, _, _ in Formatter().parse(body) if field}
+    rendered = body.format(**fields)
+    assert "Or paste this link into your browser:" in rendered
+    assert 'href="https://example.invalid/action?x=1&amp;y=2"' in rendered
+    assert "https://example.invalid/action?x=1&amp;y=2</span>" in rendered
+
+
+def test_shared_wrapper_shows_generation_time_without_unsubscribe_claim():
+    from src.multi_tenant.alert_delivery import format_branded_email
+
+    generated_at = datetime(2026, 11, 14, 17, 5, 3, tzinfo=UTC)
+    body = format_branded_email("<p>Example</p>", generated_at=generated_at)
+    assert body.count("Email generated: 2026-11-14 17:05:03 UTC") == 1
+    assert "unsubscribe" not in body.lower()
 
 
 # ---------------------------------------------------------------------------
@@ -75,7 +113,7 @@ class TestEmailVerificationSpecs:
         assert "#e03131" in html
 
     def test_spec_1304_verification_email_subject(self):
-        """SPEC-1304: Subject is '[Agent Red] Verify Your Email Address'."""
+        """SPEC-1304: Subject is 'Agent Red: Verify Your Email Address'."""
         # The subject is hardcoded in the request_verification function.
         # We verify the string constant matches.
         # Read the source to confirm the subject is used
@@ -125,10 +163,12 @@ class TestWelcomeEmailSpecs:
             admin_login_url="https://example.com/admin",
         )
         assert "Professional" in rendered
+        assert "Account ID:" in rendered
+        assert "Tenant ID:" not in rendered
         assert "t-pro-test-001" in rendered
 
     def test_spec_1309_welcome_email_subject(self):
-        """SPEC-1309: Subject 'Welcome to Agent Red - Your account is ready'."""
+        """SPEC-1309: Subject 'Agent Red: Your Account Is Ready'."""
         # The subject is set inline in send_welcome_email(). We verify the
         # template body is consistent, and test via a mock SMTP send below.
         from src.multi_tenant.welcome_email import _WELCOME_EMAIL_BODY
@@ -160,8 +200,7 @@ class TestWelcomeEmailSpecs:
                 # Verify send_message was called and the subject is correct
                 if mock_server.send_message.called:
                     msg = mock_server.send_message.call_args[0][0]
-                    assert "Welcome to Agent Red" in msg["Subject"]
-                    assert "Your account is ready" in msg["Subject"]
+                    assert msg["Subject"] == "Agent Red: Your Account Is Ready"
 
 
 # ---------------------------------------------------------------------------
@@ -298,9 +337,13 @@ class TestSmtpConfigSpecs:
         from src.multi_tenant import email_verification
 
         source = inspect.getsource(email_verification._send_verification_email)
-        # Verify the code checks for port 465 and uses SMTP_SSL
-        assert "smtp_port == 465" in source
-        assert "SMTP_SSL" in source
+        from src.multi_tenant.smtp_tls import open_verified_smtp
+
+        helper = inspect.getsource(open_verified_smtp)
+        assert "send_verified_smtp" in source
+        assert "port == 465" in helper
+        assert "SMTP_SSL" in helper
+        assert "context=" in helper
 
     def test_spec_1300_starttls_on_other_ports(self):
         """SPEC-1300: STARTTLS on ports other than 465."""
@@ -308,7 +351,12 @@ class TestSmtpConfigSpecs:
         from src.multi_tenant import email_verification
 
         source = inspect.getsource(email_verification._send_verification_email)
-        assert "starttls" in source
+        from src.multi_tenant.smtp_tls import open_verified_smtp
+
+        helper = inspect.getsource(open_verified_smtp)
+        assert "send_verified_smtp" in source
+        assert "starttls" in helper
+        assert "context=" in helper
 
     def test_spec_1302_from_address_format(self):
         """SPEC-1302: From address as 'Agent Red <{smtp_from}>'."""
@@ -336,12 +384,12 @@ class TestMagicLinkAuthSpecs:
     """Specs for magic_link_auth.py email subject and multi-tenant support."""
 
     def test_spec_1319_magic_link_subject(self):
-        """SPEC-1319: Magic link subject '[Agent Red] Sign In Link'."""
+        """SPEC-1319: Magic link subject 'Agent Red: Sign In Link'."""
         import inspect
         from src.multi_tenant.magic_link_auth import _send_magic_link_email
 
         source = inspect.getsource(_send_magic_link_email)
-        assert "[Agent Red] Sign In Link" in source
+        assert "Agent Red: Sign In Link" in source
 
     def test_spec_1618_multi_tenant_templates_removed(self):
         """SPEC-1618: Multi-tenant combined email templates must not exist.
@@ -358,31 +406,18 @@ class TestMagicLinkAuthSpecs:
         assert "_MULTI_TENANT_EMAIL_BODY" not in source
         assert "_TENANT_BUTTON_TEMPLATE" not in source
 
-    def test_spec_1618_single_email_template_supports_tenant_context(self):
-        """SPEC-1618: The standard email template includes a {tenant_context}
-        placeholder so multi-account users see which account the email is for.
-        """
-        from src.multi_tenant.magic_link_auth import _MAGIC_LINK_EMAIL_BODY
+    @pytest.mark.parametrize("account_name", ["Shop A", "Shop B"])
+    def test_spec_1618_sign_in_email_names_only_the_requesting_account(self, account_name):
+        """SPEC-1618: Each sign-in email shows the account tied to its token."""
+        from src.multi_tenant.magic_link_auth import _render_sign_in_email
 
-        assert "{tenant_context}" in _MAGIC_LINK_EMAIL_BODY
-        assert "{magic_link_url}" in _MAGIC_LINK_EMAIL_BODY
-        assert "{sign_in_code}" in _MAGIC_LINK_EMAIL_BODY
-
-        # Renders cleanly with empty tenant context (single-tenant case)
-        html = _MAGIC_LINK_EMAIL_BODY.format(
-            magic_link_url="https://example.com/verify?token=tok",
-            tenant_context="",
-            sign_in_code="123456",
+        html = _render_sign_in_email(
+            {"display_name": account_name},
+            "sample-account",
+            "123456",
+            "https://example.invalid/verify?token=sample&tenant=sample-account",
         )
+        assert f"Account: <strong>{account_name}</strong>" in html
         assert "Sign In" in html
-        assert "https://example.com/verify?token=tok" in html
         assert "123456" in html
-
-        # Renders cleanly with tenant context (multi-account case)
-        html = _MAGIC_LINK_EMAIL_BODY.format(
-            magic_link_url="https://example.com/verify?token=tok",
-            tenant_context='<p>Account: <strong>Shop A</strong></p>',
-            sign_in_code="654321",
-        )
-        assert "Shop A" in html
-        assert "Sign In" in html
+        assert "https://example.invalid/verify?token=sample&amp;tenant=sample-account" in html

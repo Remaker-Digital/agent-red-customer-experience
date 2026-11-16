@@ -179,7 +179,7 @@ class TestDisplayNameGeneration:
 
     @pytest.mark.asyncio
     async def test_display_name_from_email(self):
-        """display_name defaults to {email}-001."""
+        """No merchant name: display_name is "Tenant <short id>", never the email (decision 93)."""
         from src.integrations.provisioning import (
             BillingChannel,
             configure_provisioning_repo,
@@ -201,13 +201,14 @@ class TestDisplayNameGeneration:
             # Read the tenant doc from the fake repo
             doc = repo.store.get(result.tenant_id)
             assert doc is not None
-            assert doc.get("display_name") == "merchant@example.com-001"
+            assert doc.get("display_name") == f"Tenant {result.tenant_id[:8]}"
+            assert "merchant@example.com" not in doc.get("display_name")
         finally:
             configure_provisioning_repo(None, team_repo=None, domain_index_repo=None)
 
     @pytest.mark.asyncio
     async def test_display_name_from_phone(self):
-        """display_name defaults to {phone}-001 when no email."""
+        """No merchant name and only a phone: still "Tenant <short id>", never the phone."""
         from src.integrations.provisioning import (
             BillingChannel,
             configure_provisioning_repo,
@@ -228,7 +229,8 @@ class TestDisplayNameGeneration:
 
             doc = repo.store.get(result.tenant_id)
             assert doc is not None
-            assert doc.get("display_name") == "+15551234567-001"
+            assert doc.get("display_name") == f"Tenant {result.tenant_id[:8]}"
+            assert "+15551234567" not in doc.get("display_name")
         finally:
             configure_provisioning_repo(None, team_repo=None, domain_index_repo=None)
 

@@ -17,9 +17,50 @@
 import { defineConfig } from 'vite';
 import preact from '@preact/preset-vite';
 import { resolve } from 'path';
+import type { WidgetConfig } from './src/theme/tokens';
+
+const devBackendUrl = process.env.WIDGET_DEV_BACKEND_URL;
+const devBackendKey = process.env.WIDGET_DEV_BACKEND_KEY?.trim() ?? '';
+const demoWidgetKeyAttribute = 'data-widget-key="widget-dev-fixture"';
+const demoWidgetConfig = {
+  widget_agent_display_name: 'Agent Red',
+  widget_greeting_enabled: true,
+  widget_greeting_message: 'Hi there! How can I help you today?',
+  widget_sound_enabled: false,
+} satisfies WidgetConfig;
 
 export default defineConfig({
-  plugins: [preact()],
+  plugins: [
+    preact(),
+    {
+      name: 'widget-dev-config',
+      apply: 'serve',
+      transformIndexHtml(html, context) {
+        if (context.path !== '/dev.html' || !devBackendUrl) return;
+
+        const escapedKey = devBackendKey
+          .replaceAll('&', '&amp;')
+          .replaceAll('"', '&quot;')
+          .replaceAll('<', '&lt;')
+          .replaceAll('>', '&gt;');
+        return html.replace(demoWidgetKeyAttribute, () => `data-widget-key="${escapedKey}"`);
+      },
+      configureServer(server) {
+        if (devBackendUrl) return;
+
+        server.middlewares.use((request, response, next) => {
+          if (request.method !== 'GET' || request.url?.split('?')[0] !== '/api/config') {
+            next();
+            return;
+          }
+
+          response.setHeader('Content-Type', 'application/json');
+          response.setHeader('Cache-Control', 'no-store');
+          response.end(JSON.stringify({ config: demoWidgetConfig }));
+        });
+      },
+    },
+  ],
   resolve: {
     alias: {
       '@': resolve(__dirname, 'src'),
@@ -67,10 +108,10 @@ export default defineConfig({
     // remote backends reject for localhost origins. The proxy makes requests
     // server-to-server, bypassing the browser's same-origin policy.
     // Set WIDGET_DEV_BACKEND_URL to point at staging or local backend.
-    proxy: process.env.WIDGET_DEV_BACKEND_URL
+    proxy: devBackendUrl
       ? {
           '/api': {
-            target: process.env.WIDGET_DEV_BACKEND_URL,
+            target: devBackendUrl,
             changeOrigin: true,
             secure: true,
           },

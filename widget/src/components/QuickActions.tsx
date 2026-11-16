@@ -12,7 +12,7 @@
  *   │   [❓ Help with my order]   │
  *   └─────────────────────────────┘
  *
- * Buttons use `colorSurface` background with `colorText`, hover to
+ * Buttons choose label contrast from their surface, including hover.
  * `colorSurfaceHover`. Subtle fade-in animation via CSS class `ar-fade-in`.
  *
  * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
@@ -20,8 +20,7 @@
 
 import { FunctionComponent } from 'preact';
 import { useState } from 'preact/hooks';
-import type { DesignTokens } from '@/theme/tokens';
-import type { QuickActionButton } from '@/theme/tokens';
+import { focusRingColor, type DesignTokens, type QuickActionButton } from '@/theme/tokens';
 
 // ---------------------------------------------------------------------------
 // Props
@@ -50,6 +49,8 @@ export const QuickActions: FunctionComponent<QuickActionsProps> = ({
 
   // Show max 2 buttons (enforced server-side, but safeguard here)
   const visibleActions = actions.slice(0, 2);
+  const surfaceText = focusRingColor(tokens.colorSurface);
+  const surfaceHoverText = focusRingColor(tokens.colorSurfaceHover);
 
   return (
     <div
@@ -81,7 +82,7 @@ export const QuickActions: FunctionComponent<QuickActionsProps> = ({
               hoveredId === action.id
                 ? tokens.colorSurfaceHover
                 : tokens.colorSurface,
-            color: tokens.colorAgentBubbleText,
+            color: hoveredId === action.id ? surfaceHoverText : surfaceText,
             border: `${tokens.borderWidth} solid ${tokens.colorBorder}`,
             borderRadius: '16px',
             cursor: disabled ? 'not-allowed' : 'pointer',

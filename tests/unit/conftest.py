@@ -27,6 +27,25 @@ _MODULES: dict[str, str] = {
 
 # Test functions, by module and by the path each one needs.
 _TESTS: dict[str, dict[str, tuple[str, ...]]] = {
+    "test_pre_auth_limiter.py": {
+        "admin/standalone/dist/index.html": (
+            "test_wrong_admin_passwords_block_the_client_ip",
+            "test_other_successful_requests_do_not_reset_password_failures",
+            "test_exempt_ips_keep_their_exemption_at_the_password_gate",
+            "test_the_blocked_page_pairs_its_form_token_with_a_cookie",
+            "test_the_password_gate_enforces_even_when_ip_blocks_are_record_only",
+        ),
+    },
+    "test_integration_tests_workflow.py": {
+        ".github/workflows/integration-tests.yml": (
+            "test_runs_on_every_pull_request_without_filters",
+            "test_runs_the_same_paths_as_the_release_pipeline_shard",
+            "test_keeps_the_release_shard_marker_and_live_suite_ignores",
+            "test_a_failing_test_fails_the_check",
+            "test_needs_no_secrets_and_reads_only",
+            "test_python_version_matches_the_release_pipeline",
+        ),
+    },
     "test_ado_pipeline.py": {
         "azure-pipelines.yml": (
             "test_build_runs_deploy_pipeline_build_only_on_windows_with_the_service_connection",

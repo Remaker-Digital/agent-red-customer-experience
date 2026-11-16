@@ -23,6 +23,7 @@ Endpoints:
 
 from __future__ import annotations
 
+from html import escape
 import logging
 import os
 import secrets
@@ -34,6 +35,8 @@ from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field
 
 from src.multi_tenant.api_models import CamelCaseModel
+
+from src.multi_tenant.alert_delivery import email_action_template
 
 logger = logging.getLogger(__name__)
 
@@ -400,30 +403,21 @@ async def verify_recovery_token(
 # ---------------------------------------------------------------------------
 
 _RECOVERY_AUTH_EMAIL_BODY = """
-<h2 style="margin:0 0 16px;color:#111827;font-size:20px">
+<h2 style="margin:0 0 16px;color:#fafaf9;font-size:20px">
   Account Recovery Access
 </h2>
-<p style="color:#374151;font-size:14px;line-height:1.6;margin:0 0 16px">
-  Your Agent Red platform administrator has initiated account recovery
-  for tenant <strong>{tenant_id}</strong>.
+<p style="color:#f5f5f4;font-size:14px;line-height:1.6;margin:0 0 16px">
+  A platform administrator started recovery for your Agent Red account.
 </p>
-<p style="color:#374151;font-size:14px;line-height:1.6;margin:0 0 24px">
+<p style="color:#f5f5f4;font-size:14px;line-height:1.6;margin:0 0 24px">
   Click the link below to access the admin dashboard. This link expires
   in 15 minutes and can only be used once.
 </p>
 <div style="text-align:center;margin:0 0 24px">
-  <a href="{recovery_link}"
-     style="display:inline-block;padding:12px 32px;background:#ff3621;
-            color:#ffffff;text-decoration:none;border-radius:6px;
-            font-size:14px;font-weight:600">
-    Access Admin Dashboard
-  </a>
+  """ + email_action_template("{recovery_link}", "Access Admin Dashboard") + """
 </div>
-<p style="color:#9ca3af;font-size:12px;line-height:1.5;margin:0 0 8px">
+<p style="color:#d6d3d1;font-size:12px;line-height:1.5;margin:0 0 8px">
   If you did not request this, you can safely ignore this email.
-</p>
-<p style="color:#9ca3af;font-size:12px;line-height:1.5;margin:0">
-  Link: {recovery_link}
 </p>
 """
 
@@ -441,15 +435,14 @@ async def _send_recovery_auth_email(
             return
 
         body_html = _RECOVERY_AUTH_EMAIL_BODY.format(
-            recovery_link=recovery_link,
-            tenant_id=tenant_id,
+            recovery_link=escape(recovery_link),
         )
         full_html = format_branded_email(body_html)
 
         await send_acs_email(
             conn_str=conn_str,
             to_email=to_email,
-            subject="Agent Red — Account Recovery Access",
+            subject="Agent Red: Account Recovery Access",
             html_body=full_html,
         )
         logger.info("Recovery auth email sent to %s for tenant %s", to_email, tenant_id)

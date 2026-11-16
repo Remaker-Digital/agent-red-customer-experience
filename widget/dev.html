@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Agent Red Widget — Development</title>
+  <title>Agent Red Widget Development</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -47,6 +47,8 @@
       margin-bottom: 24px;
     }
     .controls h2 { font-size: 16px; font-weight: 600; margin-bottom: 16px; }
+    .controls fieldset { border: 0; min-width: 0; }
+    #widget-status { margin-bottom: 12px; }
     .control-row {
       display: flex;
       gap: 12px;
@@ -70,6 +72,7 @@
       border-color: #ff3621;
     }
     .control-row button.primary:hover { background: #a3171f; }
+    .control-row button:disabled { cursor: default; opacity: 0.55; }
   </style>
 </head>
 <body>
@@ -84,21 +87,24 @@
     <!-- SDK controls -->
     <div class="controls">
       <h2>Widget SDK Controls</h2>
-      <div class="control-row">
-        <button class="primary" onclick="window.AgentRed?.open()">Open Widget</button>
-        <button onclick="window.AgentRed?.close()">Close Widget</button>
-        <button onclick="window.AgentRed?.toggle()">Toggle</button>
-      </div>
-      <div class="control-row">
-        <button onclick="window.AgentRed?.setUnreadCount(3)">Set 3 Unread</button>
-        <button onclick="window.AgentRed?.setUnreadCount(0)">Clear Unread</button>
-        <button onclick="window.AgentRed?.hide()">Hide</button>
-        <button onclick="window.AgentRed?.show()">Show</button>
-      </div>
-      <div class="control-row">
-        <button onclick="alert('isOpen: ' + window.AgentRed?.isOpen())">Check isOpen</button>
-        <button onclick="window.AgentRed?.destroy()" style="color:#ff3621">Destroy</button>
-      </div>
+      <p id="widget-status" role="status">Loading the widget...</p>
+      <fieldset id="widget-controls" aria-label="Widget SDK Controls" disabled>
+        <div class="control-row">
+          <button class="primary" onclick="window.AgentRed?.open()">Open Widget</button>
+          <button onclick="window.AgentRed?.close()">Close Widget</button>
+          <button onclick="window.AgentRed?.toggle()">Toggle</button>
+        </div>
+        <div class="control-row">
+          <button onclick="window.AgentRed?.setUnreadCount(3)">Set 3 Unread</button>
+          <button onclick="window.AgentRed?.setUnreadCount(0)">Clear Unread</button>
+          <button onclick="window.AgentRed?.hide()">Hide</button>
+          <button onclick="window.AgentRed?.show()">Show</button>
+        </div>
+        <div class="control-row">
+          <button id="check-widget-state">Check isOpen</button>
+          <button id="destroy-widget" style="color:#ff3621">Destroy</button>
+        </div>
+      </fieldset>
     </div>
 
     <!-- Fake product grid -->
@@ -128,8 +134,8 @@
     <div class="controls" style="font-size:13px; color:#666">
       <strong>Dev notes:</strong>
       <ul style="margin-top:8px; padding-left:20px">
-        <li>Widget loads via the script tag below with a mock widget key</li>
-        <li>API calls will fail (no backend running) — this is for UI development only</li>
+        <li>Vite serves demo settings for the launcher and SDK controls.</li>
+        <li>Sending chat messages requires a configured backend.</li>
         <li>The widget uses Shadow DOM for the launcher and iframe for the panel</li>
         <li>Use the SDK controls above to test programmatic widget control</li>
         <li>Check the browser console for [AgentRed] messages</li>
@@ -139,16 +145,43 @@
 
   <!-- Agent Red Widget embed (development build) -->
   <script
+    id="widget-embed"
     type="module"
     src="/src/index.ts"
-    data-widget-key="pk_live_000000000000_exampleplaceholderkeynotreal0000"
-    data-api-url="http://localhost:3100"
+    data-widget-key="widget-dev-fixture"
   ></script>
 
-  <!-- Listen for the widget ready event -->
   <script>
-    window.addEventListener('agentred:ready', function(e) {
-      console.log('[Dev] Widget ready!', e.detail.sdk);
+    const embed = document.getElementById('widget-embed');
+    const controls = document.getElementById('widget-controls');
+    const widgetStatus = document.getElementById('widget-status');
+    embed.dataset.apiUrl = window.location.origin;
+
+    if (embed.dataset.widgetKey) {
+      const loadTimeout = window.setTimeout(() => {
+        widgetStatus.textContent = 'The widget is taking too long to load. Check the browser console and reload.';
+      }, 15_000);
+      embed.addEventListener('error', () => {
+        window.clearTimeout(loadTimeout);
+        widgetStatus.textContent = 'The widget script failed to load. Check the browser console and reload.';
+      }, { once: true });
+      window.addEventListener('agentred:ready', () => {
+        window.clearTimeout(loadTimeout);
+        controls.disabled = false;
+        widgetStatus.textContent = 'Widget ready.';
+      }, { once: true });
+    } else {
+      widgetStatus.textContent = 'Set WIDGET_DEV_BACKEND_KEY to the tenant widget key and restart Vite.';
+    }
+    document.getElementById('check-widget-state').addEventListener('click', () => {
+      widgetStatus.textContent = window.AgentRed.isOpen()
+        ? 'The widget is open.'
+        : 'The widget is closed.';
+    });
+    document.getElementById('destroy-widget').addEventListener('click', () => {
+      window.AgentRed.destroy();
+      controls.disabled = true;
+      widgetStatus.textContent = 'Widget destroyed. Reload the page to start it again.';
     });
   </script>
 </body>

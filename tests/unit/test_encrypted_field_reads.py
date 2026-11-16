@@ -17,9 +17,11 @@ from src.integrations.provisioning import (
     BillingChannel,
     TenantRecord,
     TenantStatus,
+    _LOOKUP_KEY_NOT_STORED,
     _provision_tenant_dek,
     configure_provisioning_repo,
     provision_tenant,
+    provision_trial_tenant,
     spa_provision_tenant,
 )
 from src.multi_tenant.cosmos_schema import (
@@ -36,7 +38,11 @@ from src.multi_tenant.envelope_encryption import (
 from src.multi_tenant.repositories.base import _dek_cache
 from src.multi_tenant.repositories.knowledge import KnowledgeBaseRepository
 from src.multi_tenant.repositories.memory import MemoryVectorRepository
-from src.multi_tenant.repositories.tenant import TenantRepository
+from src.multi_tenant.repositories.tenant import (
+    CUSTOMER_EMAIL_LOOKUP_KEY,
+    TenantRepository,
+    customer_email_lookup_hash,
+)
 from src.multi_tenant.tenant_secret_service import TenantSecretType
 from tests.helpers.fake_tenant_repo import FakeTenantRepo
 
@@ -46,6 +52,7 @@ _CONTENT = "The gift wrap note is printed on the receipt."
 _CHUNK = "The customer asked about gift wrap."
 _EMAIL = "owner@example.com"
 _NOW = "2026-11-05T00:00:00+00:00"
+_LOOKUP_KEY = "test-lookup-key-0123456789abcdef"
 
 
 @pytest.fixture
@@ -231,3 +238,142 @@ async def test_provision_without_encryption_service_has_no_key_warning():
         assert getattr(record, "warnings", []) == []
     finally:
         configure_provisioning_repo(None, team_repo=None)
+
+
+def _stored_tenant(mock_cosmos, tenant_id: str) -> dict:
+    from src.multi_tenant.cosmos_schema import COLLECTION_TENANTS
+
+    container = mock_cosmos.get_container(COLLECTION_TENANTS)
+    return next(item for item in container.items if item["id"] == tenant_id)
+
+
+async def _provision(mock_keyvault, *, lookup_key: bool) -> TenantRecord:
+    if lookup_key:
+        mock_keyvault._store[CUSTOMER_EMAIL_LOOKUP_KEY] = _LOOKUP_KEY
+    configure_provisioning_repo(TenantRepository(), team_repo=None)
+    try:
+        return await provision_tenant(
+            billing_channel=BillingChannel.MANUAL,
+            tier="professional",
+            customer_email=_EMAIL,
+        )
+    finally:
+        configure_provisioning_repo(None, team_repo=None)
+
+
+async def _provision_trial(mock_keyvault, *, lookup_key: bool) -> TenantRecord:
+    if lookup_key:
+        mock_keyvault._store[CUSTOMER_EMAIL_LOOKUP_KEY] = _LOOKUP_KEY
+    configure_provisioning_repo(TenantRepository(), team_repo=None)
+    try:
+        with (
+            patch(
+                "src.integrations.provisioning.auto_provision_widget_key",
+                new_callable=AsyncMock,
+                return_value="pk_live_test",
+            ),
+            patch("src.multi_tenant.welcome_email.send_welcome_email", new_callable=AsyncMock),
+        ):
+            return await provision_trial_tenant(customer_email=_EMAIL)
+    finally:
+        configure_provisioning_repo(None, team_repo=None)
+
+
+@pytest.mark.unit
+async def test_provisioned_tenant_stores_the_owner_email_encrypted(encryption, mock_cosmos, mock_keyvault):
+    """The DEK exists before the tenant document is written, so the owner email is ciphertext.
+
+    P6 run 11120552-9314 (v2.0.3, encryption on) found it in plain text on every new tenant.
+    With the lookup key stored, the hash is written and the email still finds the tenant.
+    """
+    record = await _provision(mock_keyvault, lookup_key=True)
+    assert record.warnings == []
+    stored = _stored_tenant(mock_cosmos, record.tenant_id)
+    assert stored["customer_email"] != _EMAIL
+    assert len(stored["customer_email"]) >= 40
+    assert len(stored["customer_email_hash"]) == 64
+    read_back = await TenantRepository().read(record.tenant_id, record.tenant_id)
+    assert read_back["customer_email"] == _EMAIL
+    found = await TenantRepository().find_by_customer_email(_EMAIL)
+    assert found is not None
+    assert found["tenant_id"] == record.tenant_id
+
+
+@pytest.mark.unit
+async def test_provisioned_tenant_without_the_lookup_key_has_a_warning(encryption, mock_cosmos, mock_keyvault):
+    """Codex on PR 267: without the key the email is ciphertext with no hash, so email reset cannot find it."""
+    record = await _provision(mock_keyvault, lookup_key=False)
+    assert record.warnings == [_LOOKUP_KEY_NOT_STORED]
+    stored = _stored_tenant(mock_cosmos, record.tenant_id)
+    assert stored["customer_email"] != _EMAIL
+    assert "customer_email_hash" not in stored
+
+
+@pytest.mark.unit
+async def test_trial_tenant_without_the_lookup_key_has_a_warning(encryption, mock_cosmos, mock_keyvault):
+    """The trial path warns the same way when the lookup key is missing."""
+    record = await _provision_trial(mock_keyvault, lookup_key=False)
+    assert record.warnings == [_LOOKUP_KEY_NOT_STORED]
+    stored = _stored_tenant(mock_cosmos, record.tenant_id)
+    assert stored["customer_email"] != _EMAIL
+    assert "customer_email_hash" not in stored
+
+
+@pytest.mark.unit
+async def test_trial_tenant_gets_a_dek_and_stores_the_owner_email_encrypted(encryption, mock_cosmos, mock_keyvault):
+    """A trial tenant gets its DEK before its document is written, like any other tenant."""
+    record = await _provision_trial(mock_keyvault, lookup_key=True)
+    assert record.warnings == []
+    assert len(_stored_tenant(mock_cosmos, record.tenant_id)["customer_email_hash"]) == 64
+    assert f"tenant-{record.tenant_id}-{TenantSecretType.DEK.value}" in mock_keyvault._store
+    stored = _stored_tenant(mock_cosmos, record.tenant_id)
+    assert stored["customer_email"] != _EMAIL
+    assert len(stored["customer_email"]) >= 40
+    read_back = await TenantRepository().read(record.tenant_id, record.tenant_id)
+    assert read_back["customer_email"] == _EMAIL
+
+
+_SHOP = "enc-shop.myshopify.com"
+
+
+@pytest.mark.unit
+async def test_shopify_tenant_is_found_by_its_encrypted_domain(encryption, mock_cosmos, mock_keyvault):
+    """The domain is ciphertext, so the lookup uses a keyed hash, not the plain domain.
+
+    Codex on PR 267: find_by_shopify_domain queried the plain domain, which cannot
+    match ciphertext, so the GDPR redact fallback missed new Shopify tenants.
+    """
+    mock_keyvault._store[CUSTOMER_EMAIL_LOOKUP_KEY] = _LOOKUP_KEY
+    configure_provisioning_repo(TenantRepository(), team_repo=None)
+    try:
+        record = await provision_tenant(
+            billing_channel=BillingChannel.SHOPIFY,
+            tier="professional",
+            shopify_shop_domain=_SHOP,
+            customer_email=_EMAIL,
+        )
+    finally:
+        configure_provisioning_repo(None, team_repo=None)
+    stored = _stored_tenant(mock_cosmos, record.tenant_id)
+    assert stored["shopify_shop_domain"] != _SHOP
+    assert len(stored["shopify_shop_domain_hash"]) == 64
+    assert stored["shopify_shop_domain_hash"] != await customer_email_lookup_hash(_SHOP)
+
+    found = await TenantRepository().find_by_shopify_domain(" Enc-Shop.myshopify.com ")
+    assert found is not None
+    assert found["tenant_id"] == record.tenant_id
+    assert found["shopify_shop_domain"] == _SHOP
+
+
+@pytest.mark.unit
+async def test_a_plain_domain_row_is_still_found(encryption, mock_cosmos, mock_keyvault):
+    """A row written before encryption keeps the plain domain and no hash. It is still found."""
+    mock_keyvault._store[CUSTOMER_EMAIL_LOOKUP_KEY] = _LOOKUP_KEY
+    from src.multi_tenant.cosmos_schema import COLLECTION_TENANTS
+
+    mock_cosmos.get_container(COLLECTION_TENANTS).items.append(
+        {"id": "legacy-1", "tenant_id": "legacy-1", "shopify_shop_domain": _SHOP, "status": "active"}
+    )
+    found = await TenantRepository().find_by_shopify_domain(_SHOP)
+    assert found is not None
+    assert found["tenant_id"] == "legacy-1"

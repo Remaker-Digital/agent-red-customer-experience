@@ -20,6 +20,7 @@ from __future__ import annotations
 import asyncio
 import logging
 import os
+import re
 from datetime import datetime
 from html import escape
 from typing import Any
@@ -42,8 +43,11 @@ def _format_transcript_html(messages: list[dict[str, Any]]) -> str:
         if role == "system":
             continue
 
+        if role in ("user", "customer") and re.fullmatch(r"\d{6}", content.strip()):
+            content = "[verification code]"
+
         label = "Customer" if role in ("user", "customer") else "AI Agent"
-        color = "#1a73e8" if role in ("user", "customer") else "#555555"
+        color = "#93c5fd" if role in ("user", "customer") else "#d6d3d1"
         time_str = ""
         if ts:
             try:
@@ -57,10 +61,10 @@ def _format_transcript_html(messages: list[dict[str, Any]]) -> str:
             f'<td style="padding:8px 12px;vertical-align:top;color:{color};'
             f'font-weight:600;white-space:nowrap;font-size:13px;">'
             f"{escape(label)}"
-            f"{'&nbsp;<span style=&quot;color:#999;font-weight:400;&quot;>'
+            f"{'&nbsp;<span style=&quot;color:#d6d3d1;font-weight:400;&quot;>'
               + escape(time_str) + '</span>' if time_str else ''}"
             f"</td>"
-            f'<td style="padding:8px 12px;font-size:13px;color:#333;">'
+            f'<td style="padding:8px 12px;font-size:13px;color:#f5f5f4;">'
             f"{escape(content)}"
             f"</td>"
             f"</tr>"
@@ -68,7 +72,7 @@ def _format_transcript_html(messages: list[dict[str, Any]]) -> str:
 
     return (
         '<table style="width:100%;border-collapse:collapse;'
-        'border:1px solid #e0e0e0;border-radius:8px;overflow:hidden;">'
+        'border:1px solid #44403c;border-radius:8px;overflow:hidden;">'
         f"{''.join(rows)}"
         "</table>"
     )
@@ -85,22 +89,24 @@ def _build_customer_email_html(
     response_hours: int = 24,
 ) -> str:
     """Build HTML body for the customer escalation notification."""
-    return f"""\
-<div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,
-sans-serif;max-width:600px;margin:0 auto;color:#333;">
-  <h2 style="color:#222;margin-bottom:4px;">{escape(store_name)}</h2>
-  <p style="color:#666;margin-top:0;">Your support request has been escalated</p>
-  <hr style="border:none;border-top:1px solid #e0e0e0;margin:16px 0;">
+    from src.multi_tenant.alert_delivery import format_branded_email
+
+    body = f"""\
+<div style="color:#f5f5f4;font-size:14px;line-height:1.6">
+  <h2 style="color:#fafaf9;margin:0 0 16px;font-size:20px">{escape(store_name)}</h2>
+  <p style="color:#d6d3d1;margin-top:0;">Your support request has been escalated</p>
+  <hr style="border:none;border-top:1px solid #44403c;margin:16px 0;">
   <p>A member of our team will review your request and respond directly via email
   within <strong>{response_hours} hours</strong>.</p>
-  <p style="color:#888;font-size:13px;">If you don't see a reply,
+  <p style="color:#d6d3d1;font-size:13px;">If you don't see a reply,
   please check your spam folder.</p>
-  <h3 style="color:#444;font-size:14px;margin-bottom:8px;">Conversation transcript</h3>
+  <h3 style="color:#e7e5e4;font-size:14px;margin-bottom:8px;">Conversation transcript</h3>
   {transcript_html}
-  <hr style="border:none;border-top:1px solid #e0e0e0;margin:16px 0;">
-  <p style="color:#999;font-size:11px;">This email was sent by
+  <hr style="border:none;border-top:1px solid #44403c;margin:16px 0;">
+  <p style="color:#d6d3d1;font-size:11px;">This email was sent by
   {escape(store_name)} via Agent Red Customer Experience.</p>
 </div>"""
+    return format_branded_email(body)
 
 
 # ---------------------------------------------------------------------------
@@ -118,35 +124,37 @@ def _build_agent_email_html(
     conversation_id: str,
 ) -> str:
     """Build HTML body for the agent escalation notification."""
-    urgency_color = {"high": "#d32f2f", "medium": "#f57c00", "low": "#388e3c"}.get(urgency, "#666")
-    return f"""\
-<div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,
-sans-serif;max-width:600px;margin:0 auto;color:#333;">
-  <h2 style="color:#222;margin-bottom:4px;">Escalation — {escape(store_name)}</h2>
-  <p style="color:#666;margin-top:0;">A customer conversation has been escalated to you.</p>
-  <hr style="border:none;border-top:1px solid #e0e0e0;margin:16px 0;">
+    urgency_color = {"high": "#fca5a5", "medium": "#fdba74", "low": "#86efac"}.get(urgency, "#d6d3d1")
+    from src.multi_tenant.alert_delivery import format_branded_email
+
+    body = f"""\
+<div style="color:#f5f5f4;font-size:14px;line-height:1.6">
+  <h2 style="color:#fafaf9;margin:0 0 16px;font-size:20px">Escalation: {escape(store_name)}</h2>
+  <p style="color:#d6d3d1;margin-top:0;">A customer conversation has been escalated to you.</p>
+  <hr style="border:none;border-top:1px solid #44403c;margin:16px 0;">
 
   <table style="font-size:13px;margin-bottom:16px;">
-    <tr><td style="padding:2px 12px 2px 0;color:#888;">Customer</td>
+    <tr><td style="padding:2px 12px 2px 0;color:#d6d3d1;">Customer</td>
         <td><strong>{escape(customer_email)}</strong></td></tr>
-    <tr><td style="padding:2px 12px 2px 0;color:#888;">Category</td>
+    <tr><td style="padding:2px 12px 2px 0;color:#d6d3d1;">Category</td>
         <td>{escape(category)}</td></tr>
-    <tr><td style="padding:2px 12px 2px 0;color:#888;">Urgency</td>
+    <tr><td style="padding:2px 12px 2px 0;color:#d6d3d1;">Urgency</td>
         <td style="color:{urgency_color};font-weight:600;">{escape(urgency)}</td></tr>
-    <tr><td style="padding:2px 12px 2px 0;color:#888;">Reason</td>
+    <tr><td style="padding:2px 12px 2px 0;color:#d6d3d1;">Reason</td>
         <td>{escape(reason)}</td></tr>
-    <tr><td style="padding:2px 12px 2px 0;color:#888;">Conversation</td>
+    <tr><td style="padding:2px 12px 2px 0;color:#d6d3d1;">Conversation</td>
         <td style="font-family:monospace;font-size:12px;">{escape(conversation_id[:12])}…</td></tr>
   </table>
 
   <p><strong>Reply directly to this email</strong> to respond to the customer.</p>
 
-  <h3 style="color:#444;font-size:14px;margin-bottom:8px;">Conversation transcript</h3>
+  <h3 style="color:#e7e5e4;font-size:14px;margin-bottom:8px;">Conversation transcript</h3>
   {transcript_html}
 
-  <hr style="border:none;border-top:1px solid #e0e0e0;margin:16px 0;">
-  <p style="color:#999;font-size:11px;">Agent Red Customer Experience — {escape(store_name)}</p>
+  <hr style="border:none;border-top:1px solid #44403c;margin:16px 0;">
+  <p style="color:#d6d3d1;font-size:11px;">Agent Red Customer Experience: {escape(store_name)}</p>
 </div>"""
+    return format_branded_email(body)
 
 
 # ---------------------------------------------------------------------------
@@ -183,6 +191,8 @@ def _send_smtp_sync(
     from email.mime.text import MIMEText
     from email.utils import formataddr
 
+    from src.multi_tenant.smtp_tls import open_verified_smtp
+
     message = MIMEMultipart("alternative")
     if from_name is None:
         message["From"] = f"Agent Red <{sender}>"
@@ -204,15 +214,8 @@ def _send_smtp_sync(
         else:
             server.send_message(message)
 
-    if port == 465:
-        with smtplib.SMTP_SSL(host, port, timeout=10) as server:
-            _deliver(server)
-    else:
-        with smtplib.SMTP(host, port, timeout=10) as server:
-            server.ehlo()
-            if port != 25:
-                server.starttls()
-            _deliver(server)
+    with open_verified_smtp(host, port, timeout=10, username=user, password=password) as server:
+        _deliver(server)
 
 
 async def _send_acs_with_reply(
@@ -388,13 +391,20 @@ async def send_escalation_emails(
         logger.warning("No email provider configured. Escalation emails skipped")
         return {"customer": "skipped", "agent": "skipped"}
 
-    if not _header_value_is_safe(customer_email):
+    if not _header_value_is_safe(customer_email) or not _header_value_is_safe(category):
         logger.warning(
-            "Rejected escalation emails because the customer address contains a line break: tenant=%s conv=%s",
+            "Rejected escalation emails because a header contains a line break: tenant=%s conv=%s",
             tenant_id,
             conversation_id[:8],
         )
         return {"customer": "failed", "agent": "failed"}
+    if not _header_value_is_safe(store_name):
+        logger.warning(
+            "Escalation store name contained a line break. Using Support. tenant=%s conv=%s",
+            tenant_id,
+            conversation_id[:8],
+        )
+        store_name = "Support"
 
     transcript_html = _format_transcript_html(messages)
     results: dict[str, str] = {}
@@ -411,7 +421,7 @@ async def send_escalation_emails(
             tenant_id=tenant_id,
             conversation_id=conversation_id,
             to_email=customer_email,
-            subject=f"{store_name} — Your support request has been escalated",
+            subject=f"Agent Red: Support Request Escalated ({store_name})",
             html_body=customer_html,
             reply_to=None,
             conn_str=conn_str,
@@ -449,7 +459,7 @@ async def send_escalation_emails(
                 tenant_id=tenant_id,
                 conversation_id=conversation_id,
                 to_email=agent_email,
-                subject=f"[Escalation] [{category}] — Customer: {customer_email}",
+                subject=f"Agent Red: Escalation [{category}] for {customer_email}",
                 html_body=agent_html,
                 reply_to=customer_email,
                 conn_str=conn_str,

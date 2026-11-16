@@ -622,10 +622,13 @@ class CosmosDataStoreAdapter:
             )
             result["memory_vectors"] = {"error": "deletion_failed"}
 
-        # Delete conversations
+        # Delete conversations by id. A row that cannot be decrypted is
+        # still deleted. list_by_customer stays the read path.
         try:
-            conversations = await self._repos["conversations"].list_by_customer(
-                tenant_id, customer_id,
+            conversations = await self._repos["conversations"].query(
+                tenant_id=tenant_id,
+                query_text="SELECT c.id FROM c WHERE c.customer_id = @cid",
+                parameters=[{"name": "@cid", "value": customer_id}],
             )
             deleted = 0
             for conv in conversations:

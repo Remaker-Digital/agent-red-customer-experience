@@ -798,7 +798,7 @@ async def send_test_notification(
             from src.multi_tenant.email_service import send_platform_notification
             await send_platform_notification(
                 recipients=recipients,
-                subject=f"[Agent Red Test] {body.severity.upper()}: {body.message[:50]}",
+                subject=f"Agent Red: Test {body.severity.upper()}: {body.message[:50]}",
                 body=body.message,
             )
             return NotificationTestResponse(

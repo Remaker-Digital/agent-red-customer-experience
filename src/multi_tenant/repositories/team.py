@@ -10,7 +10,7 @@ from datetime import UTC, datetime
 from typing import Any
 
 from src.multi_tenant.cosmos_schema import COLLECTION_TEAM_MEMBERS
-from src.multi_tenant.repositories.base import TenantScopedRepository
+from src.multi_tenant.repositories.base import DocumentNotFoundError, TenantScopedRepository
 
 
 class TeamMemberRepository(TenantScopedRepository):
@@ -97,14 +97,23 @@ class TeamMemberRepository(TenantScopedRepository):
     async def find_by_email(
         self, tenant_id: str, email: str,
     ) -> dict[str, Any] | None:
-        """Find a team member by email address (unique within tenant)."""
-        results = await self.query(
-            tenant_id=tenant_id,
-            query_text="SELECT * FROM c WHERE c.email = @email",
-            parameters=[{"name": "@email", "value": email}],
-            max_items=1,
-        )
-        return results[0] if results else None
+        """Find a team member by the canonical document id.
+
+        New members use ``tenant_id`` plus the address after ``strip().lower()``.
+        ``Ada@Example.com`` and ``ada@example.com`` are the same member.
+        A row stored under the address as typed is still found when the caller
+        passes that address. Email is encrypted, so a query on ``c.email``
+        cannot see it. ``read`` decrypts the row.
+        """
+        canonical = email.strip().lower()
+        typed = email.strip()
+        addresses = [canonical] if typed == canonical else [canonical, typed]
+        for address in addresses:
+            try:
+                return await self.read(tenant_id, f"{tenant_id}:{address}")
+            except DocumentNotFoundError:
+                continue
+        return None
 
     async def deactivate(
         self, tenant_id: str, document_id: str,

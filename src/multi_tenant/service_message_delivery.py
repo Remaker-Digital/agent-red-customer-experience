@@ -71,6 +71,8 @@ async def send_service_message(
 
     from src.multi_tenant.alert_delivery import format_branded_email
 
+    if not subject.startswith("Agent Red:"):
+        subject = f"Agent Red: {subject}"
     full_html = format_branded_email(body_html)
     result = ServiceMessageResult(total_recipients=len(recipient_emails))
 
@@ -149,9 +151,10 @@ async def _smtp_bcc_send(
 ) -> bool:
     """Send via SMTP with BCC — ``To`` set to service address, recipients
     receive via envelope-only addressing (SPEC-1648)."""
-    import smtplib
     from email.mime.multipart import MIMEMultipart
     from email.mime.text import MIMEText
+
+    from src.multi_tenant.smtp_tls import open_verified_smtp
 
     smtp_port = int(os.environ.get("SMTP_PORT", "587"))
     smtp_user = os.environ.get("SMTP_USERNAME", "")
@@ -165,20 +168,17 @@ async def _smtp_bcc_send(
         msg["Subject"] = subject
         msg.attach(MIMEText(full_html, "html"))
 
-        if smtp_port == 465:
-            with smtplib.SMTP_SSL(smtp_host, smtp_port, timeout=30) as server:
-                if smtp_user and smtp_pass:
-                    server.login(smtp_user, smtp_pass)
-                # sendmail envelope includes all BCC recipients
-                server.sendmail(smtp_from, recipients, msg.as_string())
-        else:
-            with smtplib.SMTP(smtp_host, smtp_port, timeout=30) as server:
-                server.ehlo()
-                if smtp_port != 25:
-                    server.starttls()
-                if smtp_user and smtp_pass:
-                    server.login(smtp_user, smtp_pass)
-                server.sendmail(smtp_from, recipients, msg.as_string())
+        with open_verified_smtp(
+            smtp_host,
+            smtp_port,
+            timeout=30,
+            username=smtp_user,
+            password=smtp_pass,
+        ) as server:
+            if smtp_user and smtp_pass:
+                server.login(smtp_user, smtp_pass)
+            # sendmail envelope includes all BCC recipients
+            server.sendmail(smtp_from, recipients, msg.as_string())
 
     await asyncio.to_thread(_send)
     return True
@@ -227,13 +227,13 @@ def render_service_message_body(body_text: str) -> str:
         Formatted inner HTML string.
     """
     return (
-        '<h2 style="margin:0 0 16px;color:#111827;font-size:20px">'
+        '<h2 style="margin:0 0 16px;color:#fafaf9;font-size:20px">'
         "Service Message</h2>\n"
-        '<div style="background:#f8fafc;border:1px solid #e2e8f0;'
+        '<div style="background:#1c1917;border:1px solid #44403c;border-radius:8px;'
         'padding:16px;margin:16px 0">\n'
         f"  {body_text}\n"
         "</div>\n"
-        '<p style="color:#9ca3af;font-size:12px;line-height:1.5;margin:16px 0 0">'
+        '<p style="color:#d6d3d1;font-size:12px;line-height:1.5;margin:16px 0 0">'
         "This is a service message from your Agent Red platform provider. "
         "Please do not reply to this email."
         "</p>"

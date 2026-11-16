@@ -245,7 +245,7 @@ class TestCampaignsAgentSpec1707:
         assert campaigns.tier_gate == "professional"
         assert campaigns.health_check == "/health"
         assert campaigns.status == "available"
-        assert campaigns.endpoint == "${AGENT_CAMPAIGNS_URL:-http://10.0.1.20:8080}"
+        assert campaigns.endpoint == "${AGENT_CAMPAIGNS_URL:-http://192.0.2.20:8080}"
         assert campaigns.resolve_endpoint() == "http://campaigns-agent.test:8080"
         assert campaigns.capabilities == CAMPAIGNS_CAPABILITIES
 
@@ -272,7 +272,7 @@ class TestCampaignsAgentSpec1707:
         }
         assert set(catalog) == set(CAMPAIGNS_CAPABILITIES)
         for tool_name in CAMPAIGNS_CAPABILITIES:
-            assert catalog[tool_name]["_endpoint"] == "${AGENT_CAMPAIGNS_URL:-http://10.0.1.20:8080}"
+            assert catalog[tool_name]["_endpoint"] == "${AGENT_CAMPAIGNS_URL:-http://192.0.2.20:8080}"
             assert catalog[tool_name]["_is_external"] is False
 
 

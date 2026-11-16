@@ -47,8 +47,12 @@ class TestSpec0588TitanSmtpPrimary:
         from src.multi_tenant import magic_link_auth
 
         source = inspect.getsource(magic_link_auth._send_magic_link_email)
-        assert "SMTP_SSL" in source
-        assert "465" in source
+        from src.multi_tenant.smtp_tls import open_verified_smtp
+
+        helper = inspect.getsource(open_verified_smtp)
+        assert "open_verified_smtp" in source
+        assert "SMTP_SSL" in helper
+        assert "465" in helper
 
 
 # ---------------------------------------------------------------------------

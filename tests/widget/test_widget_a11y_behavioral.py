@@ -88,7 +88,8 @@ class TestFocusTrap:
     def test_panel_has_tab_trap(self):
         """Panel has Tab key containment logic."""
         source = _read(WIDGET_SRC / "components" / "Panel.tsx")
-        assert "e.key === 'Tab'" in source or 'key === "Tab"' in source
+        assert 'onKeyDown={handleDialogKeyDown}' in source
+        assert "e.key !== 'Tab'" in source
 
     def test_panel_has_shift_tab_handling(self):
         """Panel handles Shift+Tab for reverse tab order."""

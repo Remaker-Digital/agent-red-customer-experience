@@ -25,7 +25,7 @@ class _Smtp:
     def ehlo(self) -> None:
         return None
 
-    def starttls(self) -> None:
+    def starttls(self, context: object = None) -> None:
         return None
 
     def login(self, user: str, password: str) -> None:
@@ -63,9 +63,9 @@ def _clear(monkeypatch: pytest.MonkeyPatch) -> None:
 def _set_smtp(monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setenv("SMTP_HOST", "smtp.example")
     monkeypatch.setenv("SMTP_PORT", "587")
-    monkeypatch.setenv("SMTP_USERNAME", "smtp-login@example.com")
+    monkeypatch.setenv("SMTP_USERNAME", "mike@example.com")
     monkeypatch.setenv("SMTP_PASSWORD", "secret")
-    monkeypatch.setenv("SMTP_FROM", "smtp-login@example.com")
+    monkeypatch.setenv("SMTP_FROM", "mike@example.com")
     monkeypatch.setattr("smtplib.SMTP", _Smtp)
 
 
@@ -83,8 +83,8 @@ async def test_code_email_uses_the_customer_from_and_the_login_envelope(
     assert sent is True
     assert len(_Smtp.messages) == 1
     assert _Smtp.messages[0]["From"] == formataddr(("Support, Team", "support@example.com"))
-    assert _Smtp.messages[0]["Sender"] == "smtp-login@example.com"
-    assert _Smtp.envelopes == ["smtp-login@example.com"]
+    assert _Smtp.messages[0]["Sender"] == "mike@example.com"
+    assert _Smtp.envelopes == ["mike@example.com"]
 
 
 @pytest.mark.asyncio
@@ -95,9 +95,9 @@ async def test_code_email_falls_back_when_customer_from_is_unset(monkeypatch: py
     _set_smtp(monkeypatch)
     sent = await _send_otp_email("ada@example.com", "123456", "tenant-a")
     assert sent is True
-    assert _Smtp.messages[0]["From"] == formataddr(("Agent Red", "smtp-login@example.com"))
-    assert _Smtp.messages[0]["Sender"] == "smtp-login@example.com"
-    assert _Smtp.envelopes == ["smtp-login@example.com"]
+    assert _Smtp.messages[0]["From"] == formataddr(("Agent Red", "mike@example.com"))
+    assert _Smtp.messages[0]["Sender"] == "mike@example.com"
+    assert _Smtp.envelopes == ["mike@example.com"]
 
 
 @pytest.mark.asyncio

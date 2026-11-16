@@ -69,7 +69,7 @@ class TestBotAgentSpec1708:
         assert bot_agent.tier_gate == "enterprise"
         assert bot_agent.health_check == "/health"
         assert bot_agent.status == "available"
-        assert bot_agent.endpoint == "${AGENT_BOT_URL:-http://10.0.1.21:8080}"
+        assert bot_agent.endpoint == "${AGENT_BOT_URL:-http://192.0.2.21:8080}"
         assert bot_agent.resolve_endpoint() == "http://bot-agent.test:8080"
         assert bot_agent.capabilities == BOT_CAPABILITIES
 
@@ -96,7 +96,7 @@ class TestBotAgentSpec1708:
         }
         assert set(catalog) == set(BOT_CAPABILITIES)
         for tool_name in BOT_CAPABILITIES:
-            assert catalog[tool_name]["_endpoint"] == "${AGENT_BOT_URL:-http://10.0.1.21:8080}"
+            assert catalog[tool_name]["_endpoint"] == "${AGENT_BOT_URL:-http://192.0.2.21:8080}"
             assert catalog[tool_name]["_is_external"] is False
 
     @pytest.mark.asyncio

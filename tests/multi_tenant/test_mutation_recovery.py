@@ -321,7 +321,7 @@ class TestTenantRecoveryVerify(MutationTestBase):
 
 
 class TestMagicLinkRequest(MutationTestBase):
-    """POST /api/auth/magic-link/request — public, rate-limited."""
+    """POST /api/auth/magic-link/request, with a uniform response for every address."""
 
     @patch("src.multi_tenant.repositories.VerificationTokenRepository")
     @patch("src.multi_tenant.repositories.TenantRepository")
@@ -359,24 +359,23 @@ class TestMagicLinkRequest(MutationTestBase):
     @patch("src.multi_tenant.repositories.VerificationTokenRepository")
     @patch("src.multi_tenant.repositories.TenantRepository")
     @patch("src.multi_tenant.repositories.TeamMemberRepository")
-    def test_rate_limit_returns_200_but_skips_email(
+    def test_repeated_requests_for_unknown_address_return_distinct_challenges(
         self, mock_team_cls, mock_tenant_cls, mock_token_cls, spa_client,
     ):
-        """After 3 attempts per 5 min, response is still 200 (enumeration safe).
-
-        The rate limiter prevents actual email sending but the response
-        remains 200 to prevent leaking rate-limit state as an oracle.
-        """
+        """Each request has the same public response shape without creating a usable token."""
         _clear_rate_limits()
         mock_team_cls.return_value.find_by_email = AsyncMock(return_value=None)
         mock_tenant_cls.return_value.read = AsyncMock(return_value=None)
+        challenges = set()
         for _ in range(4):
             resp = spa_client.raw.post(
                 MAGIC_LINK_REQUEST_URL,
                 json={"email": "x@test.com", "tenant": "t-test"},
             )
-        # Magic link always returns 200 even when rate limited
-        assert resp.status_code == 200
+            assert resp.status_code == 200
+            challenges.add(resp.json()["challenge_id"])
+        assert len(challenges) == 4
+        mock_token_cls.return_value.create_token.assert_not_called()
 
 
 class TestMagicLinkVerify(MutationTestBase):

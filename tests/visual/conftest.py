@@ -33,7 +33,7 @@ from playwright.sync_api import FrameLocator, Page, Route
 # Constants
 # ---------------------------------------------------------------------------
 
-VITE_PORT = 3100
+VITE_PORT = int(os.environ.get("AGENT_RED_WIDGET_TEST_PORT", "3100"))
 WIDGET_DIR = Path(__file__).resolve().parent.parent.parent / "widget"
 
 # Minimal WidgetConfig that exercises all visual branches: light mode,
@@ -144,8 +144,9 @@ def vite_server():
         creation_flags = subprocess.CREATE_NEW_PROCESS_GROUP
 
     proc = subprocess.Popen(
-        "npm run dev",
+        f"npm run dev -- --strictPort --port {VITE_PORT}",
         cwd=str(WIDGET_DIR),
+        env={**os.environ, "BROWSER": "none"},
         shell=True,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
@@ -286,7 +287,7 @@ def widget_panel(widget_page: Page) -> FrameLocator:
 # ---------------------------------------------------------------------------
 
 # Widget key embedded in widget/dev.html — asserted on outbound chat calls.
-DEV_WIDGET_KEY = "pk_live_000000000000_exampleplaceholderkeynotreal0000"
+DEV_WIDGET_KEY = "widget-dev-fixture"
 
 
 def _sse_body(reply_text: str, event_id_base: int = 1) -> str:

@@ -6,9 +6,6 @@
  *   2. store.ts: restoreMessages normalization + restoredMessageCount
  *   3. Restore-on-mount contract verification (Panel.tsx branching logic)
  *
- * This suite was added in response to Codex blocker
- * INSIGHTS-2026-04-03-07-00-45-S250-TRANSCRIPT-RESTORE-BLOCKER-REVALIDATION.md
- *
  * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
  */
 

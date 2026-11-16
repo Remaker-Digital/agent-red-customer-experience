@@ -13,7 +13,7 @@ Provides:
 
 Configuration (environment variables):
     AZURE_KEYVAULT_URL       — Key Vault endpoint URL
-                                (e.g., https://kv-agntcy-cs-prod-rc6vcp.vault.azure.net/)
+                                (e.g., https://example.vault.azure.net/)
     KEYVAULT_USE_MANAGED_ID  — "true" to use Managed Identity (default: true)
 
 Architecture references:

@@ -4,7 +4,7 @@ Validates that real SDK imports work, required APIs exist, and signatures
 match usage. These tests use NO mocks — they verify the actual contract
 between Agent Red code and the AGNTCY SDK / slim_bindings packages.
 
-Recovery plan reference: INSIGHTS-2026-03-27-01-00.md Phase 3, Category 1.
+Recovery plan reference: the original transport analysis Phase 3, Category 1.
 Governing decisions: ADR-001, ADR-002, DCL-002, SPEC-1802.
 
 © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.

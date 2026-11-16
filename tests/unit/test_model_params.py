@@ -150,6 +150,22 @@ class TestDefaultModeRequests:
         assert fake.params() == {"model": model, "temperature": 0.0, "max_tokens": 150, "response_format": JSON_MODE}
         assert result["intent"] == "order_status"
 
+    async def test_classifier_explains_when_a_handoff_takes_priority(self) -> None:
+        fake = FakeAzureOpenAI(content='{"intent": "escalation", "confidence": 0.9}')
+        agent = IntentClassifierAgent(openai_client=fake.client())
+        message = "Please ask someone to email me about installing the widget."
+
+        await agent.process({"message": message, "system_prompt": "IC prompt"}, {})
+
+        system, customer = fake.bodies()[0]["messages"]
+        assert system["role"] == "system"
+        assert system["content"].startswith("IC prompt\n")
+        assert "Classify an explicit request for a human handoff as escalation" in system["content"]
+        assert "even when the request includes a support topic" in system["content"]
+        assert "A request for contact information alone is not a handoff" in system["content"]
+        assert customer["role"] == "user"
+        assert customer["content"].endswith(f"Customer message: {message}")
+
     async def test_escalation_handler_request_is_unchanged(self) -> None:
         fake = FakeAzureOpenAI(content='{"reason": "Wants a person", "urgency": "high"}')
         result = await _escalate(fake)

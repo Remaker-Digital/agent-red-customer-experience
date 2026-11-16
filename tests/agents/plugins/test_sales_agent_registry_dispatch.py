@@ -71,7 +71,7 @@ class TestSalesAgentSpec1709:
         assert sales_agent.tier_gate == "professional"
         assert sales_agent.health_check == "/health"
         assert sales_agent.status == "available"
-        assert sales_agent.endpoint == "${AGENT_SALES_URL:-http://10.0.1.22:8080}"
+        assert sales_agent.endpoint == "${AGENT_SALES_URL:-http://192.0.2.22:8080}"
         assert sales_agent.resolve_endpoint() == "http://sales-agent.test:8080"
         assert sales_agent.capabilities == SALES_CAPABILITIES
 
@@ -98,7 +98,7 @@ class TestSalesAgentSpec1709:
         }
         assert set(catalog) == set(SALES_CAPABILITIES)
         for tool_name in SALES_CAPABILITIES:
-            assert catalog[tool_name]["_endpoint"] == ("${AGENT_SALES_URL:-http://10.0.1.22:8080}")
+            assert catalog[tool_name]["_endpoint"] == ("${AGENT_SALES_URL:-http://192.0.2.22:8080}")
             assert catalog[tool_name]["_is_external"] is False
 
     @pytest.mark.asyncio

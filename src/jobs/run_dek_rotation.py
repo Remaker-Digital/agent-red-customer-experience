@@ -27,7 +27,8 @@ DEK_ROTATION_INTERVAL_DAYS = 90
 
 # Same collection map as migration job — MUST stay in sync with repository _encryption_fields.
 ENCRYPTED_COLLECTIONS: dict[str, list[str]] = {
-    "conversations": ["messages", "customer_intent", "escalation_reason", "transcript"],
+    "conversations": ["messages", "customer_intent", "escalation_reason", "transcript",
+                      "identity_email", "identity_phone"],
     "knowledge_bases": ["content", "title", "description", "source_text"],
     "customer_profiles": ["name", "email", "phone", "address", "notes", "preferences"],
     "memory_vectors": ["chunk_text", "source_conversation_id"],

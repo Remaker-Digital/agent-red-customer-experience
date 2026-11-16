@@ -8,8 +8,6 @@ description: Monitor, filter, and manage customer conversations in real time fro
 
 The Inbox provides a real-time view of all customer conversations, with tools to filter, assign, escalate, and resolve them.
 
-![Conversation Inbox showing active and escalated conversations](/img/admin/conversation-inbox.png)
-
 ## Inbox workflow map
 
 ```mermaid
@@ -29,20 +27,20 @@ flowchart LR
 
 The left panel shows all conversations, sorted by most recent activity. Each entry displays:
 
-- **Customer identity** — Displayed using the best available identification: Shopify customer name (verified), asserted name from conversation (unverified, shown with badge), or session ID as fallback
-- **Status badge** — Active, Escalated, or Resolved
-- **Unread indicator** — Red dot for conversations with unread messages
+- **Customer identity**: Displayed using the best available identification: Shopify customer name (verified), asserted name from conversation (unverified, shown with badge), or session ID as fallback
+- **Status badge**: Active, Escalated, or Resolved
+- **Unread indicator**: Red dot for conversations with unread messages
 - **Message count** and last activity timestamp
 
 ### Filtering
 
 Use the filter tabs to view conversations by status:
 
-- **All** — Every conversation regardless of status
-- **Active** — Currently open conversations with recent customer activity
-- **Esc** — Conversations escalated to a human team member
-- **Resolved** — Conversations that have been resolved (by agent action, customer ending the chat, or reaching max conversation turns)
-- **Archived** — Conversations that have been archived for long-term storage
+- **All**: Every conversation regardless of status
+- **Active**: Currently open conversations with recent customer activity
+- **Esc**: Conversations escalated to a human team member
+- **Resolved**: Conversations that have been resolved (by agent action, customer ending the chat, or reaching max conversation turns)
+- **Archived**: Conversations that have been archived for long-term storage
 
 ### Search
 
@@ -60,10 +58,10 @@ Select a conversation to view the full message thread. The detail panel shows:
 
 ### Actions
 
-- **Escalate** — Hand off to a human team member. You can optionally select a category (service, support, sales, account, technical assistance, or general inquiry) and a specific team member. When a category is selected without a specific agent, Agent Red automatically assigns the conversation to the escalation agent with the fewest unresolved escalations in that category. Email notification is sent to the assigned agent (or all escalation agents if no specific assignment). The conversation status changes to Escalated.
-- **Resolve** — Mark the conversation as resolved and close it. The conversation status changes to Resolved.
-- **Archive** — Move a resolved or timed-out conversation to the archive for long-term storage. Archived conversations no longer appear in the default list view but remain accessible via the Archived filter tab.
-- **Unarchive** — Restore an archived conversation back to the main list.
+- **Escalate**: Hand off to a human team member. You can optionally select a category (service, support, sales, account, technical assistance, or general inquiry) and a specific team member. When a category is selected without a specific agent, Agent Red automatically assigns the conversation to the escalation agent with the fewest unresolved escalations in that category. Email notification is sent to the assigned agent (or all escalation agents if no specific assignment). The conversation status changes to Escalated.
+- **Resolve**: Mark the conversation as resolved and close it. The conversation status changes to Resolved.
+- **Archive**: Move a resolved or timed-out conversation to the archive for long-term storage. Archived conversations no longer appear in the default list view but remain accessible via the Archived filter tab.
+- **Unarchive**: Restore an archived conversation back to the main list.
 
 ### AI-Initiated Escalation
 
@@ -73,8 +71,8 @@ When the AI pipeline detects that a conversation should be escalated (based on c
 
 For escalated conversations, the detail panel shows:
 
-- **Escalation category** — Displayed as a badge (e.g., "support", "sales", "technical assistance")
-- **Assigned to** — The team member assigned to handle the escalation, shown by display name
+- **Escalation category**: Displayed as a badge (e.g., "support", "sales", "technical assistance")
+- **Assigned to**: The team member assigned to handle the escalation, shown by display name
 
 ## Customer Profile
 
@@ -100,7 +98,7 @@ Each stage shows its duration in milliseconds and a trace ID for debugging.
 
 ---
 
-## Managing the inbox — daily workflow
+## Managing the inbox: daily workflow
 
 Follow this routine to stay on top of customer conversations:
 
@@ -115,21 +113,21 @@ Follow this routine to stay on top of customer conversations:
 
 1. **Check Active conversations.** Switch to the **Active** filter tab periodically. These are conversations the AI is currently handling. Spot-check a few to verify response quality.
 2. **Search for specific customers.** Use the search bar to find conversations by customer name or message content. Search matches across message text and customer identity.
-3. **Review the pipeline trace** for any conversation where the AI gave a poor response. The Retrieve stage shows which knowledge base articles were used — if the wrong articles were retrieved, improve your article titles or content.
+3. **Review the pipeline trace** for any conversation where the AI gave a poor response. The Retrieve stage shows which knowledge base articles were used: if the wrong articles were retrieved, improve your article titles or content.
 
 ### End-of-day cleanup
 
 1. **Archive old conversations.** Switch to the **Resolved** filter tab. Archive conversations that are fully completed to keep the inbox clean. Archived conversations remain accessible via the **Archived** filter.
-2. **Check for idle conversations.** Look for Active conversations with no recent customer activity — these may have been abandoned. The idle timeout setting (configured in [Escalation rules](./escalation-rules.md)) auto-resolves inactive conversations.
+2. **Check for idle conversations.** Look for Active conversations with no recent customer activity: these may have been abandoned. The idle timeout setting (configured in [Escalation rules](./escalation-rules.md)) auto-resolves inactive conversations.
 
 ### Handling escalated conversations step by step
 
 1. Click an escalated conversation in the left panel.
-2. Read the full message thread — the AI's handoff message explains the escalation reason.
-3. Review the **customer profile** in the right panel — check order history, email, and previous interactions.
+2. Read the full message thread: the AI's handoff message explains the escalation reason.
+3. Review the **customer profile** in the right panel: check order history, email, and previous interactions.
 4. If the issue requires action outside Agent Red (e.g., processing a refund in Shopify), handle it in the external system and then return to update the conversation.
 5. Click the **Resolve** button (checkmark icon) to close the conversation.
-6. If the customer contacts again, a new conversation starts — the AI has access to the previous conversation history through the memory layer.
+6. If the customer contacts again, a new conversation starts: the AI has access to the previous conversation history through the memory layer.
 
 ### Manually escalating a conversation
 

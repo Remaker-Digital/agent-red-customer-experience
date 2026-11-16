@@ -835,6 +835,23 @@ fields:
     pii_classification: none
     injected_in_prompt: false
 
+  - field_name: widget_dark_background_color
+    display_name: Dark conversation background
+    field_type: string
+    validation:
+      pattern: "^#[0-9a-fA-F]{6}$"
+    platform_default: null
+    tier_gate: all
+    onboarding_step: 9
+    step_order: 1.5
+    tooltip: Background color of the conversation panel in dark mode.
+    description: Set a dark brand color for the conversation area. Leave blank to use the dark theme default.
+    placeholder: "#1c1917"
+    doc_link: "https://agentredcx.com/docs/admin-guide/widget-appearance"
+    affects_agents: []
+    pii_classification: none
+    injected_in_prompt: false
+
   - field_name: widget_position
     display_name: Widget position
     field_type: enum
@@ -1565,15 +1582,15 @@ fields:
     injected_in_prompt: false
 
   - field_name: widget_file_upload_enabled
-    display_name: File uploads
+    display_name: Text attachments
     field_type: boolean
     validation: {}
     platform_default: true
     tier_gate: all
     onboarding_step: 9
     step_order: 20
-    tooltip: Allow visitors to attach images and files.
-    description: "When enabled, visitors can attach files (images, PDFs, documents) to their messages. Maximum file size: 10MB. Supported formats: PNG, JPG, GIF, PDF, DOC, DOCX, TXT. Disable if file attachments are not relevant to your support workflow."
+    tooltip: Allow visitors to attach UTF-8 text files to chat messages.
+    description: "When enabled, the widget can include the contents of a UTF-8 .txt attachment in a chat message. The attachment and message together must fit within 2,000 characters."
     doc_link: "https://agentredcx.com/docs/configuration/widget-appearance#files"
     affects_agents: []
     pii_classification: none

@@ -126,6 +126,7 @@ class CustomerProfileRepository(TenantScopedRepository):
             tenant_id=tenant_id,
             query_text="SELECT * FROM c WHERE c.canonical_id = @cid",
             parameters=[{"name": "@cid", "value": canonical_id}],
+            require_decryption=True,
         )
         return results[0] if results else None
 

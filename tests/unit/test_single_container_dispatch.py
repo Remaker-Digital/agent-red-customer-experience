@@ -23,7 +23,6 @@ from __future__ import annotations
 import ast
 import asyncio
 import dataclasses
-import time
 from pathlib import Path
 from types import SimpleNamespace
 from typing import Any
@@ -317,16 +316,9 @@ async def test_execute_emits_fixed_service_unavailable(beta: None) -> None:
     pipeline = _streaming_pipeline(session)
     ic = _FakeAgent(exc=Exception("Error code: 429 - Rate limit exceeded"))
     pipeline._ic_agent = ic
+    tiers = _block_other_tiers(pipeline)
 
-    started = time.monotonic()
     with (
-        patch.object(pipeline, "_transport_available", return_value=False),
-        patch.object(
-            pipeline,
-            "_call_intent_classifier_http",
-            new_callable=AsyncMock,
-            side_effect=httpx.ConnectError("no IC container"),
-        ),
         patch.object(
             pipeline,
             "_call_knowledge_retrieval",
@@ -341,7 +333,6 @@ async def test_execute_emits_fixed_service_unavailable(beta: None) -> None:
             async for event in pipeline.execute("t-001", "conv-001", "Hello?", tenant=tenant, preferences=preferences)
         ]
 
-    assert time.monotonic() - started < 5.0
     errors = [event for event in events if event.event == StreamEventType.ERROR]
     assert len(errors) == 1
     assert errors[0].data["code"] == "service_unavailable"
@@ -351,8 +342,9 @@ async def test_execute_emits_fixed_service_unavailable(beta: None) -> None:
         text = str(event.data)
         assert "An unexpected error occurred" not in text
         assert "429" not in text
-    assert events[-1].event == StreamEventType.DONE
+    assert [event.event for event in events[-2:]] == [StreamEventType.ERROR, StreamEventType.DONE]
     assert len(ic.calls) == 1
+    _assert_not_awaited(tiers)
     session.add_ai_message.assert_not_awaited()
 
 

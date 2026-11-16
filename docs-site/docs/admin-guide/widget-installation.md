@@ -36,7 +36,7 @@ The Widget page displays a ready-to-use HTML snippet. Click **Copy snippet** to 
 ></script>
 ```
 
-The snippet you copy from the Widget page includes your actual widget key and API URL — no manual editing is needed.
+The snippet you copy from the Widget page includes your actual widget key and API URL: no manual editing is needed.
 
 ---
 
@@ -65,7 +65,7 @@ For Shopify stores, the widget is installed automatically through the Agent Red 
 4. Paste the snippet just before the `</body>` tag.
 5. Click **Update File**.
 
-**Alternative — using a plugin:**
+**Alternative: using a plugin:**
 If you prefer not to edit theme files directly, use a plugin like "Insert Headers and Footers" or "WPCode":
 
 1. Install and activate the plugin.
@@ -99,7 +99,7 @@ The widget appears on all pages of your Squarespace site immediately.
 2. In your Wix dashboard, go to **Settings → Custom Code** (under Advanced).
 3. Click **Add Custom Code**.
 4. Paste the Agent Red snippet into the code field.
-5. Set the placement to **Body - end**.
+5. Set the placement to **Body: end**.
 6. Choose **All pages** under "Add Code to Pages."
 7. Click **Apply**.
 
@@ -118,7 +118,7 @@ The widget appears on all pages of your Squarespace site immediately.
 
 **Webflow-specific notes:**
 - Custom Code is available on all paid Webflow plans.
-- The snippet must be republished to appear on the live site — saving alone is not sufficient.
+- The snippet must be republished to appear on the live site: saving alone is not sufficient.
 
 ### Static HTML / custom website
 
@@ -188,7 +188,7 @@ export default function RootLayout({ children }) {
 ```
 
 **Single-page app notes:**
-- The widget handles client-side routing automatically — it persists across route changes without reloading.
+- The widget handles client-side routing automatically: it persists across route changes without reloading.
 - The widget SDK is available on `window.AgentRed` for programmatic control (open, close, send messages).
 - The widget renders in a closed Shadow DOM to prevent CSS conflicts with your application styles.
 
@@ -201,7 +201,7 @@ After adding the snippet to your website:
 1. Visit your website in a browser (use an incognito/private window to avoid caching issues).
 2. Look for the chat launcher icon in the bottom-right corner (or wherever you configured the launcher position).
 3. Click the launcher to open the chat widget.
-4. Send a test message — you should receive an AI response within a few seconds.
+4. Send a test message: you should receive an AI response within a few seconds.
 5. Verify that your brand colors, agent name, and greeting message appear correctly.
 
 ## Troubleshooting
@@ -224,7 +224,7 @@ If the Installation section shows "No widget key found," your configuration has 
 2. Click **Save** to save your draft.
 3. Click **Activate** to publish your configuration.
 
-After activation, return to the Widget page — your widget key and embed snippet will be displayed.
+After activation, return to the Widget page: your widget key and embed snippet will be displayed.
 
 ---
 

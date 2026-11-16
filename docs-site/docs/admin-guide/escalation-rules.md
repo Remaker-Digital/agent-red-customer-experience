@@ -1,23 +1,21 @@
 ---
 sidebar_position: 7
 title: Escalation rules
-description: Configure when the AI agent routes conversations to human agents — confidence thresholds, trigger keywords, turn limits, and notification settings.
+description: Configure when the AI agent routes conversations to human agents, confidence thresholds, trigger keywords, turn limits, and notification settings.
 ---
 
 # Escalation rules
 
 Escalation is the process of routing a conversation from the AI agent to a human agent. These settings control when and how escalation happens.
 
-![Escalated conversation workflow in the inbox](/img/admin/conversation-inbox.png)
-
 ## How escalation works
 
 The escalation detection agent evaluates every customer message for signals that a human is needed. It considers:
 
-1. **Confidence threshold** — Is the AI confident enough in its ability to handle this conversation?
-2. **Keyword triggers** — Did the customer use a word or phrase that should always trigger escalation?
-3. **Turn limit** — Has the conversation exceeded a maximum number of back-and-forth exchanges?
-4. **Sentiment signals** — Is the customer expressing frustration, anger, or urgency? (automatic, not configurable)
+1. **Confidence threshold**: Is the AI confident enough in its ability to handle this conversation?
+2. **Keyword triggers**: Did the customer use a word or phrase that should always trigger escalation?
+3. **Turn limit**: Has the conversation exceeded a maximum number of back-and-forth exchanges?
+4. **Sentiment signals**: Is the customer expressing frustration, anger, or urgency? (automatic, not configurable)
 
 If any of these conditions trigger, the conversation is escalated.
 
@@ -45,7 +43,7 @@ flowchart TB
 | | |
 |---|---|
 | **Field** | `escalation_threshold` |
-| **Type** | Slider (0.0–1.0) |
+| **Type** | Slider (0.0 to 1.0) |
 | **Default** | Starter: `0.7`, Professional: `0.6`, Enterprise: `0.5` |
 | **Affects** | Escalation handler |
 
@@ -53,17 +51,17 @@ The confidence level below which the AI escalates instead of responding. The esc
 
 | Threshold | Behavior |
 |---|---|
-| **0.3–0.4** | Very aggressive AI. Escalates rarely. Only use if you have a very comprehensive knowledge base and accept that some customers may get suboptimal AI answers. |
-| **0.5–0.6** | Balanced. The AI handles most questions but escalates when it is unsure. Good for stores with solid knowledge bases. |
-| **0.7–0.8** | Conservative. The AI escalates more often. Good for stores that are still building their knowledge base or where customer issues tend to be complex. |
-| **0.9–1.0** | Very conservative. The AI escalates almost everything. Effectively turns Agent Red into a triage system that classifies intent and routes to humans. |
+| **0.3 to 0.4** | Very aggressive AI. Escalates rarely. Only use if you have a very comprehensive knowledge base and accept that some customers may get suboptimal AI answers. |
+| **0.5 to 0.6** | Balanced. The AI handles most questions but escalates when it is unsure. Good for stores with solid knowledge bases. |
+| **0.7 to 0.8** | Conservative. The AI escalates more often. Good for stores that are still building their knowledge base or where customer issues tend to be complex. |
+| **0.9 to 1.0** | Very conservative. The AI escalates almost everything. Effectively turns Agent Red into a triage system that classifies intent and routes to humans. |
 
 **Why tiers have different defaults:**
 - **Starter (0.7):** New merchants typically have smaller knowledge bases, so a higher threshold avoids low-quality AI responses.
 - **Professional (0.6):** Merchants on Professional are expected to have more complete knowledge bases and are comfortable with more AI autonomy.
 - **Enterprise (0.5):** Enterprise merchants have typically invested in thorough knowledge base setup and want maximum automation.
 
-**Recommendation:** Start with the default for your tier. After 1–2 weeks, review escalated conversations in the Inbox. If many escalated conversations could have been handled by the AI, lower the threshold by 0.05–0.1. If customers are getting poor AI answers, raise it.
+**Recommendation:** Start with the default for your tier. After 1 to 2 weeks, review escalated conversations in the Inbox. If many escalated conversations could have been handled by the AI, lower the threshold by 0.05 to 0.1. If customers are getting poor AI answers, raise it.
 
 ---
 
@@ -131,7 +129,7 @@ When a conversation is escalated, Agent Red sends email notifications to team me
 | | |
 |---|---|
 | **Field** | `max_ai_turns_before_escalation` |
-| **Type** | Number (1–50) |
+| **Type** | Number (1 to 50) |
 | **Default** | `10` |
 | **Affects** | Escalation handler |
 
@@ -144,11 +142,11 @@ Forces escalation after the conversation reaches this many back-and-forth exchan
 
 | Value | Use case |
 |---|---|
-| **3–5** | For stores where AI is primarily a triage tool and humans should handle extended conversations. |
-| **8–12** | Standard range. Most product and policy questions resolve within 5–8 turns. |
-| **15–50** | For stores with extensive knowledge bases where complex, multi-step conversations are expected (e.g., troubleshooting technical products). |
+| **3 to 5** | For stores where AI is primarily a triage tool and humans should handle extended conversations. |
+| **8 to 12** | Standard range. Most product and policy questions resolve within 5 to 8 turns. |
+| **15 to 50** | For stores with extensive knowledge bases where complex, multi-step conversations are expected (e.g., troubleshooting technical products). |
 
-**Recommendation:** Start with `10`. Review the Inbox after the first week — if most conversations resolve in 3–4 turns, lowering to `6–8` gives customers a faster path to a human when needed.
+**Recommendation:** Start with `10`. Review the Inbox after the first week: if most conversations resolve in 3 to 4 turns, lowering to `6–8` gives customers a faster path to a human when needed.
 
 ---
 
@@ -165,31 +163,31 @@ Forces escalation after the conversation reaches this many back-and-forth exchan
 
 Before going live, verify that escalation triggers work as expected. Follow this testing workflow:
 
-### Step 1 — Test keyword triggers
+### Step 1: Test keyword triggers
 
 1. Open the chat widget on your website (or the widget preview).
 2. Type a message containing one of your escalation keywords (e.g., "I want to speak to a person").
 3. Verify that the AI responds with an escalation handoff message.
-4. Check the Inbox — the conversation should appear with an **Escalated** status badge.
+4. Check the Inbox: the conversation should appear with an **Escalated** status badge.
 5. Verify that the escalation agent assigned to the matching category received an email notification.
 
 Repeat for each keyword in your list. If a keyword does not trigger escalation, check that it matches exactly (escalation keywords are case-insensitive but must match as a substring).
 
-### Step 2 — Test threshold behavior
+### Step 2: Test threshold behavior
 
 1. Start a new conversation with a question outside your knowledge base coverage (something the AI should not be confident about).
 2. Continue the conversation for several turns, asking progressively more specific questions that the AI cannot answer.
 3. The AI should escalate when its confidence drops below your threshold setting.
-4. If the AI does not escalate when it should, lower the threshold by 0.05–0.1.
+4. If the AI does not escalate when it should, lower the threshold by 0.05 to 0.1.
 
-### Step 3 — Test turn limits
+### Step 3: Test turn limits
 
 1. Start a new conversation.
 2. Continue chatting until you reach the maximum turn count (default: 10 turns).
 3. After reaching the limit, the AI should escalate the conversation automatically.
 4. Verify the escalation appears in the Inbox.
 
-### Step 4 — Test notification routing
+### Step 4: Test notification routing
 
 1. Ensure you have at least one escalation agent configured in [Team management](./team-management.md) with assigned categories.
 2. Trigger an escalation (using any of the methods above).
@@ -198,7 +196,7 @@ Repeat for each keyword in your list. If a keyword does not trigger escalation, 
 
 ### Tuning after launch
 
-After your first 1–2 weeks of live traffic:
+After your first 1 to 2 weeks of live traffic:
 
 | Metric to check | Where to find it | Action |
 |---|---|---|

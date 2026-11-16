@@ -907,7 +907,10 @@ class AdminApiMocker:
             route.fulfill(
                 status=200,
                 content_type="application/json",
-                body=json.dumps({"message": "If an account exists, a sign-in link has been sent."}),
+                body=json.dumps({
+                    "message": "If an account exists, a sign-in link has been sent.",
+                    "challenge_id": "mock-sign-in-challenge",
+                }),
             )
         elif "/api/tenants/lookup" in url or "/api/admin/context" in url:
             route.fulfill(status=200, content_type="application/json",

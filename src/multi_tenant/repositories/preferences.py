@@ -56,6 +56,7 @@ class PreferencesRepository(TenantScopedRepository):
                 "ORDER BY c.version DESC"
             ),
             max_items=1,
+            require_decryption=True,
         )
         return results[0] if results else None
 
@@ -86,6 +87,7 @@ class PreferencesRepository(TenantScopedRepository):
                 "ORDER BY c.version DESC"
             ),
             max_items=max_items,
+            require_decryption=True,
         )
 
     async def get_previous(self, tenant_id: str) -> dict[str, Any] | None:

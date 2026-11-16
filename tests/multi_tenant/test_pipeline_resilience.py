@@ -21,9 +21,11 @@ from __future__ import annotations
 
 import asyncio
 import time
+from types import SimpleNamespace
 
 import pytest
 
+from src.multi_tenant import pipeline_resilience
 from src.multi_tenant.pipeline_resilience import (
     CIRCUIT_BREAKER_CONFIGS,
     PIPELINE_DEADLINE_MS,
@@ -120,18 +122,27 @@ class TestPipelineTimeoutBudget:
         assert exc_info.value.stage == "stage-a"
 
     @pytest.mark.asyncio
-    async def test_pr_08_expired_budget_immediate_reject(self) -> None:
+    async def test_pr_08_expired_budget_immediate_reject(self, monkeypatch) -> None:
         """PR-08 supplement: Already-expired budget rejects without executing."""
-        budget = PipelineTimeoutBudget(total_deadline_ms=1)
-        # Ensure the budget expires
-        await asyncio.sleep(0.01)
-
+        now = 10.0
+        monkeypatch.setattr(pipeline_resilience, "time", SimpleNamespace(monotonic=lambda: now))
+        budget = PipelineTimeoutBudget(total_deadline_ms=1000)
+        now = 10.5
+        assert not budget.is_expired
+        now = 11.0
+        assert budget.is_expired
+        now = 11.5
         assert budget.is_expired
 
-        coro = _fast_coroutine()
-        with pytest.raises(PipelineTimeoutError) as exc_info:
-            await budget.execute_with_budget("stage-late", coro)
-        coro.close()
+        async def must_not_run():
+            pytest.fail("An expired budget ran the stage.")
+
+        coro = must_not_run()
+        try:
+            with pytest.raises(PipelineTimeoutError) as exc_info:
+                await budget.execute_with_budget("stage-late", coro)
+        finally:
+            coro.close()
 
         assert exc_info.value.stage == "stage-late"
         assert exc_info.value.budget_ms == 0

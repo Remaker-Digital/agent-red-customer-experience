@@ -16,12 +16,13 @@ export const MOCK_VALID_BACKUP = "ABCD1234";
 export const MOCK_VALID_SMS = "654321";
 export const MOCK_2FA_PENDING_TOKEN = "pending-2fa-token";
 export const MOCK_SESSION_TOKEN = "mock-session-token-after-2fa";
+const MOCK_CODE_CHALLENGE = "mock-sign-in-challenge";
 
 export function registerAuthHandlers() {
   // Magic-link request — always 200 (anti-enumeration), same as production.
   POST("/api/auth/magic-link/request", () => ({
     status: 200,
-    body: { message: "If an account exists, a sign-in link has been sent." },
+    body: { message: "If an account exists, a sign-in link has been sent.", challenge_id: MOCK_CODE_CHALLENGE },
   }));
 
   // Magic-link verify (URL token path used by App mount effect).
@@ -57,7 +58,10 @@ export function registerAuthHandlers() {
 
   // 6-digit sign-in code (alternative to clicking the email link).
   POST("/api/auth/magic-link/verify-code", (req) => {
-    const body = (req.body || {}) as { code?: string; tenant?: string };
+    const body = (req.body || {}) as { code?: string; tenant?: string; challenge_id?: string };
+    if (body.challenge_id !== MOCK_CODE_CHALLENGE) {
+      return { status: 400, body: { message: "Request a new sign-in code to continue." } };
+    }
     const code = (body.code || "").trim();
     if (code === "222222") {
       return {

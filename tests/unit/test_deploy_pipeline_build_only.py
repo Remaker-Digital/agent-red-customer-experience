@@ -12,7 +12,7 @@ What these tests pin down:
 - ``--build-only`` runs phases 0 to 7 and stops: no snapshot, no phase 8
   deploy, no phase 15 scaling, no verification, no az query, exit 0.
 - ``--env staging`` without ``--dry-run`` and without ``--build-only`` reads
-  SINGLE_CONTAINER_MODE from agent-red-staging (deploy.single_container_enabled,
+  SINGLE_CONTAINER_MODE from example-gateway-stage (deploy.single_container_enabled,
   PR12) after phase 7 and before phase 8. On (True) or unknown (None, the query
   failed) refuses with exit 1 and nothing deployed; off or absent proceeds.
 - Dry runs and production deploys never run that query.
@@ -38,7 +38,7 @@ PROJECT_ROOT = Path(__file__).resolve().parents[2]
 DEPLOY_PIPELINE = PROJECT_ROOT / "scripts" / "deploy_pipeline.py"
 DEPLOY_SCRIPT = PROJECT_ROOT / "scripts" / "deploy.py"
 VERSION = "v1.2.3"
-STAGING_GATEWAY = "agent-red-staging"
+STAGING_GATEWAY = "example-gateway-stage"
 
 # Every phase function main() calls, with the number its PhaseResult carries.
 PHASES: dict[str, int] = {

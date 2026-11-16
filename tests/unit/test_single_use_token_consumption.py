@@ -28,6 +28,7 @@ import copy
 import json
 import logging
 from collections.abc import Callable
+from datetime import UTC, datetime, timedelta
 from typing import Any
 from unittest.mock import AsyncMock, MagicMock, patch
 
@@ -66,6 +67,7 @@ from src.multi_tenant.widget_otp_verification import verify_sms_otp as widget_ve
 TOKEN_TYPE = "magic_link"
 TOKEN_ID = "Zt8kQ2vN5xR7pL0mW3yB6cD9fH1jK4sA"
 SIGN_IN_CODE = "482913"
+CHALLENGE_ID = "independent-code-challenge"
 TENANT_ID = "tenant-s13"
 MEMBER_ID = "member-admin"
 ADMIN_EMAIL = "admin@example.com"
@@ -120,16 +122,18 @@ class EtagContainer:
         snapshot = copy.deepcopy(doc)
         if self.after_read is not None:
             self.after_read(doc["id"])
-        if self.read_barrier is not None:
-            await self.read_barrier.wait()
+        barrier = self.read_barrier
+        if barrier is not None:
+            await barrier.wait()
+            self.read_barrier = None
         return snapshot
 
     async def read_item(self, item: str, partition_key: str, **_: Any) -> dict[str, Any]:
         return await self._hand_over(self._find(item, partition_key))
 
     def query_items(self, query: str, parameters: list[dict[str, Any]], partition_key: str, **_: Any):
-        """Only the sign-in code query: tenant, code and unused."""
-        fields = {"@tid": "tenant_id", "@code": "sign_in_code"}
+        """Only the sign-in code query: tenant, challenge and unused."""
+        fields = {"@tid": "tenant_id", "@challenge": "code_challenge_id"}
         wanted = {fields[p["name"]]: p["value"] for p in parameters}
         assert "c.used = false" in query
 
@@ -209,6 +213,9 @@ def _token(**overrides: Any) -> dict[str, Any]:
         "email": ADMIN_EMAIL,
         "used": False,
         "sign_in_code": SIGN_IN_CODE,
+        "code_challenge_id": CHALLENGE_ID,
+        "code_attempts": 0,
+        "code_expires_at": (datetime.now(UTC) + timedelta(minutes=10)).isoformat(),
         "ttl": 600,
         **overrides,
     }
@@ -229,7 +236,7 @@ def _by_id(repo: VerificationTokenRepository):
 
 
 def _by_code(repo: VerificationTokenRepository):
-    return repo.consume_token_by_code(TENANT_ID, SIGN_IN_CODE, TOKEN_TYPE)
+    return repo.consume_token_by_code(TENANT_ID, SIGN_IN_CODE, TOKEN_TYPE, challenge_id=CHALLENGE_ID)
 
 
 CONSUMERS = [pytest.param(_by_id, id="consume_token"), pytest.param(_by_code, id="consume_token_by_code")]
@@ -307,9 +314,63 @@ class TestVerificationTokenConsumption:
         with caplog.at_level(logging.DEBUG, logger=VERIFICATION_LOGGER):
             assert await consume(VerificationTokenRepository()) is None
 
-        assert "Failed to mark token as used" in caplog.text
+        assert "Failed to mark token as used" in caplog.text or "Failed to record sign-in code attempt" in caplog.text
         assert TOKEN_ID not in caplog.text
         assert SIGN_IN_CODE not in caplog.text
+
+
+async def test_sign_in_code_has_three_attempts_per_challenge(tokens):
+    tokens.put(_token())
+    tokens.put(_token(id="fresh-link-token", code_challenge_id="fresh-challenge", sign_in_code="774120"))
+    repo = VerificationTokenRepository()
+
+    for attempt_count in range(1, 4):
+        assert await repo.consume_token_by_code(TENANT_ID, "000001", TOKEN_TYPE, challenge_id=CHALLENGE_ID) is None
+        assert tokens.stored(TOKEN_ID)["code_attempts"] == attempt_count
+
+    assert await _by_code(repo) is None
+    assert tokens.stored(TOKEN_ID)["code_attempts"] == 3
+    assert await repo.consume_token_by_code(TENANT_ID, "774120", TOKEN_TYPE, challenge_id="fresh-challenge") is not None
+
+
+async def test_failed_challenge_lookup_does_not_spend_an_attempt(tokens, caplog):
+    tokens.put(_token())
+    repo = VerificationTokenRepository()
+
+    with patch.object(tokens, "query_items", side_effect=CosmosHttpResponseError(status_code=503)):
+        assert await _by_code(repo) is None
+
+    assert "Error looking up sign-in challenge" in caplog.text
+    assert tokens.patch_calls == []
+    assert tokens.stored(TOKEN_ID)["code_attempts"] == 0
+    assert await _by_code(repo) is not None
+
+
+async def test_correct_third_attempt_signs_in_and_consumes_the_email_link(tokens):
+    tokens.put(_token(code_attempts=2))
+    repo = VerificationTokenRepository()
+
+    assert await repo.consume_token_by_code("other-tenant", SIGN_IN_CODE, TOKEN_TYPE, challenge_id=CHALLENGE_ID) is None
+    assert tokens.stored(TOKEN_ID)["code_attempts"] == 2
+    assert await _by_code(repo) is not None
+    assert await _by_id(repo) is None
+
+
+async def test_concurrent_wrong_codes_cannot_exceed_three_attempts(tokens):
+    tokens.put(_token())
+    repo = VerificationTokenRepository()
+    await _concurrently(
+        tokens,
+        *(repo.consume_token_by_code(TENANT_ID, "000001", TOKEN_TYPE, challenge_id=CHALLENGE_ID) for _ in range(5)),
+    )
+    assert tokens.stored(TOKEN_ID)["code_attempts"] == 3
+    assert await _by_code(repo) is None
+
+
+async def test_expired_code_cannot_be_redeemed_even_if_the_document_is_present(tokens):
+    tokens.put(_token(code_expires_at=(datetime.now(UTC) - timedelta(seconds=1)).isoformat()))
+    assert await _by_code(VerificationTokenRepository()) is None
+    assert tokens.patch_calls == []
 
 
 # ---------------------------------------------------------------------------

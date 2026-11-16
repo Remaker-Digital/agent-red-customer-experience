@@ -419,7 +419,7 @@ class TestPhaseASnapshotJSON:
 _FAKE_ENVIRONMENTS = {
     "staging": {
         "fqdn": "staging.example.test",
-        "container_app": "agent-red-staging",
+        "container_app": "example-gateway-stage",
         "tenant_id": "example-tenant-001",
         "api_key": "test-primary-api-key",
         "widget_key": "test-primary-widget-key",

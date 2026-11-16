@@ -94,13 +94,13 @@ flowchart TB
 
 **3. Escalation Detection runs in parallel.** While the main pipeline processes the message, the escalation agent independently evaluates whether the conversation requires a human. It assesses customer sentiment, issue complexity, account value, and conversation history. If escalation triggers, the system routes the conversation to a human agent in your help desk (Zendesk, or another connected platform) and notifies the customer that a person is taking over.
 
-Escalation rules are configurable per tenant — you control which situations trigger a handoff to a human agent.
+Escalation rules are configurable per tenant: you control which situations trigger a handoff to a human agent.
 
-**4. Knowledge Retrieval searches your data.** The retrieval agent takes the classified intent and customer message and runs a **hybrid search** against your knowledge base — combining semantic vector similarity with keyword matching for maximum recall. The knowledge base includes:
+**4. Knowledge Retrieval searches your data.** The retrieval agent takes the classified intent and customer message and runs a **hybrid search** against your knowledge base: combining semantic vector similarity with keyword matching for maximum recall. The knowledge base includes:
 
-- **Product catalog** — synced from Shopify (names, descriptions, prices, availability)
-- **FAQ database** — your custom question-and-answer pairs
-- **Policy documents** — return policies, shipping rules, warranty terms
+- **Product catalog**: synced from Shopify (names, descriptions, prices, availability)
+- **FAQ database**: your custom question-and-answer pairs
+- **Policy documents**: return policies, shipping rules, warranty terms
 
 ```mermaid
 flowchart LR
@@ -148,7 +148,7 @@ When you publish a knowledge base article, Agent Red immediately generates a vec
 **How articles are prepared for embedding:**
 
 1. The article's **entry type** label, **title**, **tags**, and **content** are combined into a single text block.
-2. The title appears first because positional importance affects semantic encoding — the embedding model gives more weight to earlier text.
+2. The title appears first because positional importance affects semantic encoding: the embedding model gives more weight to earlier text.
 3. Content is truncated at 8,000 characters to stay within the model's token budget.
 4. The resulting text is sent to OpenAI and the 3,072-dimension vector is stored directly on the Cosmos DB document alongside the article content.
 
@@ -181,12 +181,12 @@ flowchart TB
 
 | Signal | Weight | What it captures |
 |--------|--------|-----------------|
-| **Vector similarity** | 70% | Semantic meaning — understands that "Where's my package?" and "shipping status" are related even though they share no keywords |
-| **BM25 keyword score** | 30% | Exact term matching — ensures that a search for "SKU-4521" finds the article containing that exact string |
+| **Vector similarity** | 70% | Semantic meaning: understands that "Where's my package?" and "shipping status" are related even though they share no keywords |
+| **BM25 keyword score** | 30% | Exact term matching: ensures that a search for "SKU-4521" finds the article containing that exact string |
 
-**Why hybrid matters:** Pure vector search can miss exact identifiers (order numbers, SKUs, policy names). Pure keyword search misses paraphrased questions. The hybrid approach captures both — and the title receives a 3x keyword boost so articles with relevant titles rank higher.
+**Why hybrid matters:** Pure vector search can miss exact identifiers (order numbers, SKUs, policy names). Pure keyword search misses paraphrased questions. The hybrid approach captures both: and the title receives a 3x keyword boost so articles with relevant titles rank higher.
 
-**Reciprocal Rank Fusion (RRF)** merges the two ranked lists using the formula: `score(d) = Σ(weight / (k + rank))` with a smoothing constant of k=60. This produces a single score normalized to the 0–1 range. Results scoring below **0.1** are excluded. A score of **0.7 or above** indicates a strong match.
+**Reciprocal Rank Fusion (RRF)** merges the two ranked lists using the formula: `score(d) = Σ(weight / (k + rank))` with a smoothing constant of k=60. This produces a single score normalized to the 0 to 1 range. Results scoring below **0.1** are excluded. A score of **0.7 or above** indicates a strong match.
 
 #### Retrieval parameters
 
@@ -203,8 +203,8 @@ flowchart TB
 
 #### What this means for your knowledge base
 
-- **Write clear, specific titles.** Titles are boosted 3x in keyword scoring. "Return Policy — Physical Products" retrieves better than "Policy Document #3."
-- **Use the exact terms your customers use.** If customers ask about "shipping times," include that phrase in your article — BM25 rewards exact matches.
+- **Write clear, specific titles.** Titles are boosted 3x in keyword scoring. "Return Policy: Physical Products" retrieves better than "Policy Document #3."
+- **Use the exact terms your customers use.** If customers ask about "shipping times," include that phrase in your article: BM25 rewards exact matches.
 - **Keep articles focused on one topic.** A single embedding per article means a sprawling article covering returns, shipping, AND warranties produces a diluted vector. Three focused articles retrieve more precisely.
 - **Tags help retrieval.** Tags are included in the embedding text, so adding tags like "returns," "refund," "30-day" gives the vector model more signal.
 
@@ -212,18 +212,18 @@ flowchart TB
 
 Repeated or similar queries are accelerated by three caching layers:
 
-1. **Exact query cache** — identical queries return cached results instantly.
-2. **Semantic cache** — queries that are semantically similar to recent queries reuse the same embedding, skipping the OpenAI API call.
-3. **Embedding cache** — prevents re-embedding the same query text within a session.
+1. **Exact query cache**: identical queries return cached results instantly.
+2. **Semantic cache**: queries that are semantically similar to recent queries reuse the same embedding, skipping the OpenAI API call.
+3. **Embedding cache**: prevents re-embedding the same query text within a session.
 
 #### Fallback behavior
 
 If the primary hybrid search is unavailable (for example, if the embedding API is temporarily unreachable), the system degrades gracefully:
 
-1. **Hybrid** (default) — vector + BM25 with RRF fusion
-2. **Vector-only** fallback — if BM25 index is unavailable
-3. **BM25-only** fallback — if embedding generation fails
-4. **Empty result** — if all search paths fail, the response generator works without retrieved context and is more likely to escalate
+1. **Hybrid** (default): vector + BM25 with RRF fusion
+2. **Vector-only** fallback: if BM25 index is unavailable
+3. **BM25-only** fallback: if embedding generation fails
+4. **Empty result**: if all search paths fail, the response generator works without retrieved context and is more likely to escalate
 
 **5. Response Generator composes the reply.** The response generator receives the classified intent, retrieved knowledge, and the current conversation. Customer memory is off for the closed beta, so it does not use earlier conversations. It uses a language model to compose a natural-language reply that:
 
@@ -236,9 +236,9 @@ Response generation is usually the largest portion of per-conversation AI cost b
 
 **6. Critic / Supervisor validates before delivery.** The critic agent is the final gate before the customer sees a response. It checks:
 
-- **Factual accuracy** — Does the response match the retrieved knowledge? Are product names, prices, and policies correct?
-- **Policy compliance** — Does the response follow your configured business rules?
-- **Content safety** — Does the response contain inappropriate, harmful, or off-brand content?
+- **Factual accuracy**: Does the response match the retrieved knowledge? Are product names, prices, and policies correct?
+- **Policy compliance**: Does the response follow your configured business rules?
+- **Content safety**: Does the response contain inappropriate, harmful, or off-brand content?
 
 If validation fails, the critic returns the response to the generator with a specific rejection reason, and the generator revises it. This feedback loop runs until the response passes or reaches a maximum retry count (default: 2), at which point the system escalates to a human agent.
 
@@ -337,7 +337,7 @@ flowchart TB
 | Policy compliance | Response follows business rules (refund limits, warranty terms) | Regenerate with policy context |
 | Content safety | No inappropriate, harmful, or off-brand content | Regenerate or escalate |
 
-The safety pipeline catches issues before they reach customers. The system uses a fail-closed policy — responses are blocked unless the critic explicitly approves them.
+The safety pipeline catches issues before they reach customers. The system uses a fail-closed policy: responses are blocked unless the critic explicitly approves them.
 
 ## Scaling behavior
 
@@ -419,13 +419,13 @@ sequenceDiagram
     RG-->>C: "Hi Sarah — your return for Order #4521 has been received and a refund of $89 is processing. Should arrive in 3-5 business days."
 ```
 
-**Layer 1: Customer Context (all tiers)** — A structured profile assembled from Shopify data, integration sources, and plan metadata. Injected into every conversation automatically. The response generator knows the customer's name, plan tier, active integrations, and communication preferences from the first message.
+**Layer 1: Customer Context (all tiers)**: A structured profile assembled from Shopify data, integration sources, and plan metadata. Injected into every conversation automatically. The response generator knows the customer's name, plan tier, active integrations, and communication preferences from the first message.
 
-**Layer 2: Conversation Memory (all tiers)** — After each conversation, the transcript is cleansed of PII and transient data (session tokens, temporary URLs), chunked, and embedded into Cosmos DB's vector store. When a customer returns, the response generator retrieves semantically relevant prior conversations — no need for the customer to repeat themselves.
+**Layer 2: Conversation Memory (all tiers)**: After each conversation, the transcript is cleansed of PII and transient data (session tokens, temporary URLs), chunked, and embedded into Cosmos DB's vector store. When a customer returns, the response generator retrieves semantically relevant prior conversations: no need for the customer to repeat themselves.
 
-**Layer 3: Cross-Session Learning (Professional and Enterprise)** — A memory framework analyzes accumulated conversations to extract durable patterns: preferred communication style, recurring issues, escalation triggers, and product preferences. These learned insights are injected alongside the customer profile, enabling the AI to adapt its tone and proactively address known issues.
+**Layer 3: Cross-Session Learning (Professional and Enterprise)**: A memory framework analyzes accumulated conversations to extract durable patterns: preferred communication style, recurring issues, escalation triggers, and product preferences. These learned insights are injected alongside the customer profile, enabling the AI to adapt its tone and proactively address known issues.
 
-**Layer 4: Dedicated Model Training (Enterprise add-on)** — After a customer accumulates 1,000+ interactions, Agent Red can create a fine-tuned AI model specifically for that customer. The fine-tuning pipeline trains on the customer's historical data via Azure OpenAI, producing a per-customer model that delivers maximum personalization. Models are periodically re-trained as new interactions accumulate.
+**Layer 4: Dedicated Model Training (Enterprise add-on)**: After a customer accumulates 1,000+ interactions, Agent Red can create a fine-tuned AI model specifically for that customer. The fine-tuning pipeline trains on the customer's historical data via Azure OpenAI, producing a per-customer model that delivers maximum personalization. Models are periodically re-trained as new interactions accumulate.
 
 ### Memory by tier
 
@@ -433,12 +433,12 @@ sequenceDiagram
 |-------|---------|-------------|------------|
 | Customer Context (L1) | Included | Included | Included |
 | Conversation Memory (L2) | Included | Included | Included |
-| Cross-Session Learning (L3) | — | Included | Included |
-| Dedicated Model Training (L4) | — | — | Add-on |
+| Cross-Session Learning (L3) |: | Included | Included |
+| Dedicated Model Training (L4) |: |: | Add-on |
 
 ### Privacy and data handling
 
-- Layers 1–3 operate under GDPR/CCPA legitimate interest — no additional consent required
+- Layers 1 to 3 operate under GDPR/CCPA legitimate interest: no additional consent required
 - All memory data is tenant-isolated (customer A's memory never appears in customer B's context)
 - Customers can request deletion of their memory profile and all associated data
 - Conversation transcripts are cleansed of PII before vectorization
@@ -447,8 +447,8 @@ See the [Privacy Policy](https://www.iubenda.com/privacy-policy/51316355) for fu
 
 ## Next steps
 
-- [Initial Setup](./setup) — What you need to get Agent Red running for your store.
-- [Shopify Integration](/docs/integrations/shopify) — Connect your product catalog and order data.
+- [Initial Setup](./setup): What you need to get Agent Red running for your store.
+- [Shopify Integration](/docs/integrations/shopify): Connect your product catalog and order data.
 
 ---
 

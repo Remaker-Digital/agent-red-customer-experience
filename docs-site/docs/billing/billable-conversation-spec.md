@@ -1,7 +1,7 @@
 ---
 sidebar_position: 1
 title: Billable Conversation Definition
-description: How Agent Red defines, counts, and bills conversations — the binding reference for usage metering.
+description: How Agent Red defines, counts, and bills conversations, the binding reference for usage metering.
 ---
 
 # Billable Conversation Definition
@@ -84,7 +84,7 @@ The included allowance resets at the start of each billing period. Unused conver
 
 ### Conversation packs
 
-Pre-purchased conversation packs are consumed after the included allowance is exhausted. Packs are consumed FIFO (first-in, first-out) — the oldest pack is drawn from first. Packs expire 90 days after purchase.
+Pre-purchased conversation packs are consumed after the included allowance is exhausted. Packs are consumed FIFO (first-in, first-out): the oldest pack is drawn from first. Packs expire 90 days after purchase.
 
 | Pack size | Price | Effective rate |
 |-----------|-------|----------------|
@@ -141,13 +141,13 @@ If you believe a conversation was incorrectly billed, contact support@remakerdig
 
 ## Billing examples
 
-**Example 1 — Within allowance:**
+**Example 1: Within allowance:**
 Starter tier merchant uses 800 conversations in a month. All 800 are covered by the 1,000 included allowance. No additional charges.
 
-**Example 2 — Pack consumption:**
+**Example 2: Pack consumption:**
 Starter tier merchant uses 1,200 conversations with a 1,000 pack purchased. First 1,000 from included allowance, next 200 from the pack. No overage charges.
 
-**Example 3 — Overage:**
+**Example 3: Overage:**
 Starter tier merchant uses 1,500 conversations with no packs. First 1,000 from included allowance, remaining 500 billed as overage at $0.04 each = $20.00 overage charge.
 
 ---

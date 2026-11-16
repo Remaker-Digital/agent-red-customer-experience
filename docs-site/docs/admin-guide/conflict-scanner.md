@@ -1,12 +1,12 @@
 ---
 sidebar_position: 14
 title: Conflict and duplication scanner
-description: Scan your knowledge base for duplicate articles, conflicting information, and topical overlaps — with resolution guidance for each issue.
+description: Scan your knowledge base for duplicate articles, conflicting information, and topical overlaps, with resolution guidance for each issue.
 ---
 
 # Conflict and duplication scanner
 
-As your knowledge base grows, duplicate and conflicting articles can slip in unnoticed — especially when multiple team members create content or when documents are imported from external sources. The conflict scanner identifies these issues so you can resolve them before they affect customer-facing answers.
+As your knowledge base grows, duplicate and conflicting articles can slip in unnoticed: especially when multiple team members create content or when documents are imported from external sources. The conflict scanner identifies these issues so you can resolve them before they affect customer-facing answers.
 
 ## Why it matters
 
@@ -25,7 +25,7 @@ A clean knowledge base directly improves answer quality.
 3. Wait for the scan to complete (typically a few seconds)
 4. Review the results panel that appears below the toolbar
 
-The scanner examines every active article in your knowledge base. Results are cached for five minutes — clicking "Scan" again within that window returns the cached result instantly. Click **Re-scan** to force a fresh analysis.
+The scanner examines every active article in your knowledge base. Results are cached for five minutes: clicking "Scan" again within that window returns the cached result instantly. Click **Re-scan** to force a fresh analysis.
 
 ## Understanding the results
 
@@ -53,13 +53,13 @@ Two articles contain nearly identical content. This usually happens when:
 
 #### Conflicting (high severity)
 
-Two articles cover the same topic but contain different factual claims. The scanner highlights specific contradictions it finds — for example, different return windows, prices, or contact emails.
+Two articles cover the same topic but contain different factual claims. The scanner highlights specific contradictions it finds: for example, different return windows, prices, or contact emails.
 
 **Resolution:** Determine which article is authoritative (usually the most recently updated one), then update the incorrect article or archive it.
 
 #### Topical overlap (medium severity)
 
-Two articles cover similar topics. This may be intentional — for example, a general shipping policy and a separate international shipping policy. Or it may indicate content that should be consolidated.
+Two articles cover similar topics. This may be intentional: for example, a general shipping policy and a separate international shipping policy. Or it may indicate content that should be consolidated.
 
 **Resolution:** If both articles serve a distinct purpose, no action is needed. If they cover the same scope, merge them.
 
@@ -71,24 +71,24 @@ Two articles have similar titles but substantially different content. Similar ti
 
 ## What the scanner checks
 
-The scanner runs four analysis phases, all using data already in your knowledge base — no additional AI API calls are made during a scan.
+The scanner runs four analysis phases, all using data already in your knowledge base: no additional AI API calls are made during a scan.
 
-1. **Embedding similarity** — Compares the mathematical representations of your articles to find pairs that are semantically similar. Only compares articles of the same type and language.
+1. **Embedding similarity**: Compares the mathematical representations of your articles to find pairs that are semantically similar. Only compares articles of the same type and language.
 
-2. **Title similarity** — Compares article titles using text matching to catch renamed duplicates that embedding analysis might miss (e.g., "Return Policy" vs. "Returns Policy" vs. "Our Return Policy").
+2. **Title similarity**: Compares article titles using text matching to catch renamed duplicates that embedding analysis might miss (e.g., "Return Policy" vs. "Returns Policy" vs. "Our Return Policy").
 
-3. **Content overlap** — For flagged pairs, measures how much sentence-level content is shared to distinguish true duplicates from articles that merely cover related topics.
+3. **Content overlap**: For flagged pairs, measures how much sentence-level content is shared to distinguish true duplicates from articles that merely cover related topics.
 
-4. **Factual conflict detection** — Extracts specific data points (durations, prices, percentages, email addresses) and checks for contradictions between paired articles.
+4. **Factual conflict detection**: Extracts specific data points (durations, prices, percentages, email addresses) and checks for contradictions between paired articles.
 
 ## Configuration authority over knowledge base
 
-Certain configuration fields are declared **authoritative** — when set, they take precedence over any conflicting content in knowledge base articles. The authoritative fields are:
+Certain configuration fields are declared **authoritative**: when set, they take precedence over any conflicting content in knowledge base articles. The authoritative fields are:
 
-- **Brand name** — the AI always uses the configured brand name, even if a KB article references a different name
-- **Brand voice / persona** — communication style from config overrides tone guidance in KB articles
-- **Primary language** — the configured language takes precedence over language directives in KB articles
-- **Custom instructions** — behavioral rules from config override conflicting KB article content
+- **Brand name**: the AI always uses the configured brand name, even if a KB article references a different name
+- **Brand voice / persona**: communication style from config overrides tone guidance in KB articles
+- **Primary language**: the configured language takes precedence over language directives in KB articles
+- **Custom instructions**: behavioral rules from config override conflicting KB article content
 
 When the system prompt is built for the response generator, an authority block is injected that declares these config fields as the single source of truth. If a knowledge base article contradicts an authoritative config field, the config value wins.
 
@@ -100,7 +100,7 @@ The **Configuration** and **Knowledge Base** admin pages display warning banners
 
 ## Best practices for prevention
 
-- **Use descriptive, unique titles.** "Return Policy" and "Refund Policy" may both be needed, but "Return Policy — Physical Products" and "Refund Policy — Digital Products" make the distinction clear to both the AI and your team.
+- **Use descriptive, unique titles.** "Return Policy" and "Refund Policy" may both be needed, but "Return Policy: Physical Products" and "Refund Policy: Digital Products" make the distinction clear to both the AI and your team.
 
 - **Check before importing.** Before bulk-importing articles from a document or URL, scan your existing knowledge base to see if the topic is already covered.
 

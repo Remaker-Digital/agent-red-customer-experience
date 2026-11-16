@@ -31,6 +31,7 @@ import { MessageList } from './MessageList';
 import { InputBar } from './InputBar';
 import { PreChatForm } from './PreChatForm';
 import { OtpVerification } from './OtpVerification';
+import { VisitorEmailVerification } from './VisitorEmailVerification';
 import { PhoneOtpVerification } from './PhoneOtpVerification';
 import { ChatRating } from './ChatRating';
 import { OfflineForm } from './OfflineForm';
@@ -40,6 +41,7 @@ import {
   sendMessage as apiSendMessage,
   submitRating as apiSubmitRating,
   reportIssue as apiReportIssue,
+  type IssueReportStatus,
   sendOtp as apiSendOtp,
   verifyOtp as apiVerifyOtp,
   sendPhoneOtp as apiSendPhoneOtp,
@@ -61,6 +63,7 @@ interface PanelProps {
   config: WidgetConfig;
   locale: Locale;
   onClose: () => void;
+  onDragStart?: (event: MouseEvent) => void;
 }
 
 // ---------------------------------------------------------------------------
@@ -125,6 +128,7 @@ export const Panel: FunctionComponent<PanelProps> = ({
   config,
   locale: _locale,
   onClose,
+  onDragStart,
 }) => {
   // Subscribe to store for reactive updates
   const [state, setState] = useState<WidgetState>(getStore().getState());
@@ -151,6 +155,7 @@ export const Panel: FunctionComponent<PanelProps> = ({
 
   // SSE connection ref (lives for the lifetime of the conversation)
   const sseRef = useRef<SSEConnection | null>(null);
+  const issueReturnView = useRef<'conversation' | 'prechat'>('conversation');
 
   // Derived state — use activeConfig for reactive preview
   const agentName = activeConfig.widget_agent_display_name || _locale.defaultAgentName;
@@ -161,6 +166,35 @@ export const Panel: FunctionComponent<PanelProps> = ({
   const showBranding = activeConfig.widget_show_branding !== false;
   const fileUploadEnabled = activeConfig.widget_file_upload_enabled === true;
   const quickActions = activeConfig.widget_quick_actions || [];
+  const canVerifyVisitorEmail = !state.isAdminContext
+    && !state.shopifyCustomer
+    && !state.isRestoring
+    && state.messages.length === 0
+    && (activeConfig as Record<string, unknown>).customer_email_verification !== 'disabled';
+
+  const emailVerificationControl = useRef<HTMLDivElement>(null);
+  const previousView = useRef(state.view);
+  useEffect(() => {
+    if (previousView.current === 'verify_email' && state.view === 'conversation') {
+      emailVerificationControl.current?.querySelector<HTMLElement>('button, [role="status"]')?.focus();
+    }
+    previousView.current = state.view;
+  }, [state.view]);
+
+  const closeVisitorEmailVerification = () => getStore().setState({ view: 'conversation' });
+  const completeVisitorEmailVerification = (email: string, customerToken: string) => {
+    const store = getStore();
+    if (store.getState().view !== 'verify_email') return;
+    store.setState({
+      // Only conversation creation accepts the verified token. An empty guest
+      // conversation may already exist from an issue report or attachment.
+      conversationId: null,
+      customerEmail: email,
+      customerToken,
+      isAnonymous: false,
+      view: 'conversation',
+    });
+  };
 
   // ---- Conversation lifecycle ---------------------------------------------
 
@@ -246,12 +280,14 @@ export const Panel: FunctionComponent<PanelProps> = ({
   /** Send a customer message. */
   const handleSend = useCallback(async (content: string) => {
     const store = getStore();
-    const { conversationId } = store.getState();
+    const { conversationId, customerEmail, customerToken } = store.getState();
 
     // If no conversation yet, start one first
     if (!conversationId) {
       store.setState({ isLoading: true });
-      const newId = await apiStartConversation();
+      const newId = customerToken && customerEmail
+        ? await apiStartConversation({ email: customerEmail }, customerToken)
+        : await apiStartConversation();
       if (!newId) {
         store.setState({ isLoading: false, error: _locale.errorStartConversation });
         return;
@@ -551,25 +587,41 @@ export const Panel: FunctionComponent<PanelProps> = ({
     // For now the OfflineForm handles its own success state internally.
   }, []);
 
-  /** Open the issue report form (C7). */
   const handleOpenIssueReport = useCallback(() => {
     const store = getStore();
+    issueReturnView.current = store.getState().view === 'prechat' ? 'prechat' : 'conversation';
     store.setState({ view: 'issue_report' });
   }, []);
 
-  /** Submit an issue report (C7). */
-  const handleIssueSubmit = useCallback(async (issueType: string, details: string) => {
+  const handleIssueSubmit = useCallback(async (issueType: string, details: string): Promise<IssueReportStatus> => {
     const store = getStore();
-    const { conversationId } = store.getState();
-    if (conversationId) {
-      await apiReportIssue(conversationId, issueType, details);
-    }
-  }, []);
+    const { isLoading, customerEmail, customerToken, preChatData } = store.getState();
+    if (isLoading) return 'failed';
 
-  /** Cancel issue report and return to conversation (C7). */
+    store.setState({ isLoading: true });
+    try {
+      let { conversationId } = store.getState();
+      if (!conversationId) {
+        const identityData = customerToken && customerEmail
+          ? { ...preChatData, email: customerEmail }
+          : preChatData || undefined;
+        conversationId = await apiStartConversation(identityData, customerToken);
+        if (!conversationId) return 'failed';
+
+        store.setState({ conversationId });
+        const continuity = activeConfig.widget_transcript_continuity || 'none';
+        if (issueReturnView.current === 'conversation' && continuity !== 'none') {
+          saveTranscript(getTransportConfig().widgetKey, conversationId, continuity);
+        }
+      }
+      return await apiReportIssue(conversationId, issueType, details);
+    } finally {
+      store.setState({ isLoading: false });
+    }
+  }, [activeConfig.widget_transcript_continuity]);
+
   const handleIssueCancel = useCallback(() => {
-    const store = getStore();
-    store.setState({ view: 'conversation' });
+    getStore().setState({ view: issueReturnView.current });
   }, []);
 
   /** Handle consent acceptance (WI #87). */
@@ -590,23 +642,6 @@ export const Panel: FunctionComponent<PanelProps> = ({
     if (conversationId) {
       await apiSubmitConsent(conversationId, false);
     }
-  }, []);
-
-  // ---- Drag-to-reposition (WI #253) ----------------------------------------
-
-  /**
-   * Initiate drag from the header. Posts the initial screen coordinates to the
-   * parent frame, which takes over mousemove/mouseup handling via an overlay.
-   * This avoids cross-frame coordinate feedback issues.
-   */
-  const handleDragStart = useCallback((e: MouseEvent) => {
-    e.preventDefault();
-    // Use screenX/Y which are consistent across frames
-    window.parent.postMessage({
-      type: 'ar:drag-start',
-      screenX: e.screenX,
-      screenY: e.screenY,
-    }, '*');
   }, []);
 
   // Cleanup SSE on unmount
@@ -650,7 +685,12 @@ export const Panel: FunctionComponent<PanelProps> = ({
         store.setState({ isRestoring: false, restoreError: null });
         return;
       }
-      store.restoreMessages(result.data.conversation_id, result.data.messages);
+      // Issue reports are merchant notes. Keep the conversation ID for subsequent
+      // visitor chat and keep those notes out of the restored visitor transcript.
+      const visitorMessages = result.data.messages.filter(
+        (message) => message.role !== 'system' || message.metadata?.type !== 'issue_report',
+      );
+      store.restoreMessages(result.data.conversation_id, visitorMessages);
       store.setState({ view: 'conversation', isRestoring: false, restoreError: null });
     }).catch(() => {
       // Network-level errors are transient — keep storage, show retry
@@ -699,43 +739,86 @@ export const Panel: FunctionComponent<PanelProps> = ({
     }
   }, [activeConfig.widget_prechat_form]);
 
-  // ---- Keyboard handlers (WCAG 2.1 — dialog dismissal + focus trap) -------
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      // Escape closes the dialog
-      if (e.key === 'Escape') {
-        handleCloseWidget();
-        return;
-      }
-      // Tab/Shift+Tab containment — wrap focus within the dialog.
-      // The iframe boundary already constrains Tab in most browsers, but
-      // this explicit trap ensures WCAG 2.4.3 compliance universally.
-      if (e.key === 'Tab') {
-        const focusable = document.querySelectorAll<HTMLElement>(
-          'button:not([disabled]), textarea:not([disabled]), input:not([disabled]), ' +
-          'a[href], [tabindex]:not([tabindex="-1"])'
-        );
-        if (focusable.length === 0) return;
-        const first = focusable[0];
-        const last = focusable[focusable.length - 1];
-        if (e.shiftKey && document.activeElement === first) {
-          e.preventDefault();
-          last.focus();
-        } else if (!e.shiftKey && document.activeElement === last) {
-          e.preventDefault();
-          first.focus();
-        }
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [handleCloseWidget]);
+  function handleDialogKeyDown(e: KeyboardEvent) {
+    if (e.key === 'Escape') {
+      e.preventDefault();
+      handleCloseWidget();
+      return;
+    }
+    if (e.key !== 'Tab') return;
+
+    const dialog = e.currentTarget as HTMLElement;
+    const focusable = [...dialog.querySelectorAll<HTMLElement>(
+      'button:not([disabled]), textarea:not([disabled]), input:not([disabled]), ' +
+      'a[href], [tabindex]:not([tabindex="-1"])'
+    )].filter((element) => element.getClientRects().length > 0);
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (!first || !last) return;
+
+    const active = dialog.ownerDocument.activeElement;
+    if (e.shiftKey && (active === first || active === dialog)) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && active === last) {
+      e.preventDefault();
+      first.focus();
+    }
+  }
+
+  const reportIssueControl = (
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+        padding: `${tokens.space1} ${tokens.space4}`,
+        flexShrink: 0,
+      }}
+    >
+      <button
+        type="button"
+        onClick={handleOpenIssueReport}
+        disabled={state.isLoading || state.isRestoring}
+        style={{
+          display: 'inline-flex',
+          alignItems: 'center',
+          gap: tokens.space1,
+          padding: `${tokens.space1} ${tokens.space2}`,
+          fontSize: tokens.fontSizeXs,
+          fontFamily: tokens.fontFamily,
+          color: tokens.colorTextSecondary,
+          backgroundColor: 'transparent',
+          border: 'none',
+          cursor: state.isLoading || state.isRestoring ? 'not-allowed' : 'pointer',
+        }}
+      >
+        {/* Flag icon */}
+        <svg
+          aria-hidden="true"
+          width={12}
+          height={12}
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z" />
+          <line x1="4" y1="22" x2="4" y2="15" />
+        </svg>
+        {activeLocale.reportIssue}
+      </button>
+    </div>
+  );
 
   // ---- Render -------------------------------------------------------------
 
   return (
     <div
       role="dialog"
+      tabIndex={-1}
+      onKeyDown={handleDialogKeyDown}
       aria-modal="true"
       aria-labelledby="ar-panel-heading"
       style={{
@@ -766,7 +849,7 @@ export const Panel: FunctionComponent<PanelProps> = ({
         headerSubtitle={activeConfig.widget_header_subtitle || null}
         gradientEnd={activeConfig.widget_header_gradient_enabled !== false && activeConfig.widget_header_gradient_end ? activeConfig.widget_header_gradient_end : null}
         onClose={handleCloseWidget}
-        onDragStart={handleDragStart}
+        onDragStart={onDragStart}
       />
 
       {/* Connection status banner (P3-4: enhanced with attempt counter + retry/dismiss) */}
@@ -853,8 +936,45 @@ export const Panel: FunctionComponent<PanelProps> = ({
       )}
 
       {/* Main content area — switches based on view with fade transition */}
-      {state.view === 'conversation' && (
-        <div style={{ display: 'contents', animation: 'ar-fade-in 0.2s ease-out' }}>
+      {(state.view === 'conversation' || state.view === 'verify_email') && (
+        <div
+          hidden={state.view === 'verify_email'}
+          style={{
+            display: state.view === 'verify_email' ? 'none' : 'contents',
+            animation: 'ar-fade-in 0.2s ease-out',
+          }}
+        >
+          {canVerifyVisitorEmail && (
+            <div ref={emailVerificationControl} style={{
+              flexShrink: 0,
+              padding: tokens.space1,
+              textAlign: 'center',
+              color: tokens.colorText,
+              fontSize: tokens.fontSizeSm,
+            }}>
+              {state.customerToken ? (
+                <span role="status" tabIndex={-1}>{activeLocale.emailVerified}</span>
+              ) : (
+                <button
+                  type="button"
+                  disabled={state.isLoading}
+                  onClick={() => getStore().setState({ view: 'verify_email' })}
+                  style={{
+                    minHeight: 32,
+                    padding: '0 ' + tokens.space3,
+                    color: tokens.colorText,
+                    background: 'transparent',
+                    border: 'none',
+                    font: 'inherit',
+                    textDecoration: 'underline',
+                    cursor: 'pointer',
+                  }}
+                >
+                  {activeLocale.verifyEmail}
+                </button>
+              )}
+            </div>
+          )}
           <MessageList
             tokens={tokens}
             locale={activeLocale}
@@ -868,51 +988,7 @@ export const Panel: FunctionComponent<PanelProps> = ({
             restoredMessageCount={state.restoredMessageCount}
           />
 
-          {/* Report an Issue link (C7) — shown when conversation has messages */}
-          {state.messages.length > 0 && (
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'center',
-                padding: `${tokens.space1} ${tokens.space4}`,
-                flexShrink: 0,
-              }}
-            >
-              <button
-                type="button"
-                onClick={handleOpenIssueReport}
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: tokens.space1,
-                  padding: `${tokens.space1} ${tokens.space2}`,
-                  fontSize: tokens.fontSizeXs,
-                  fontFamily: tokens.fontFamily,
-                  color: tokens.colorTextSecondary,
-                  backgroundColor: 'transparent',
-                  border: 'none',
-                  cursor: 'pointer',
-                  opacity: 0.7,
-                }}
-              >
-                {/* Flag icon */}
-                <svg
-                  width={12}
-                  height={12}
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z" />
-                  <line x1="4" y1="22" x2="4" y2="15" />
-                </svg>
-                {activeLocale.reportIssue}
-              </button>
-            </div>
-          )}
+          {reportIssueControl}
 
           <InputBar
             tokens={tokens}
@@ -927,9 +1003,19 @@ export const Panel: FunctionComponent<PanelProps> = ({
         </div>
       )}
 
+      {state.view === 'verify_email' && (
+        <VisitorEmailVerification
+          tokens={tokens}
+          locale={activeLocale}
+          onVerified={completeVisitorEmailVerification}
+          onCancel={closeVisitorEmailVerification}
+        />
+      )}
+
       {/* Pre-chat form */}
       {state.view === 'prechat' && activeConfig.widget_prechat_form && (
         <div style={{ display: 'contents', animation: 'ar-fade-in 0.2s ease-out' }}>
+          {reportIssueControl}
           <PreChatForm
             tokens={tokens}
             locale={activeLocale}

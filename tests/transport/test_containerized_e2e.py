@@ -13,7 +13,7 @@ Pipeline paths tested:
 - Widget conversation path (X-Widget-Key auth)
 - Widget streaming path (token + validated + done)
 
-Recovery plan reference: INSIGHTS-2026-03-27-01-00.md Phase 3, Category 3.
+Recovery plan reference: the original transport analysis Phase 3, Category 3.
 Governing decisions: ADR-001, ADR-002.
 
 © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.

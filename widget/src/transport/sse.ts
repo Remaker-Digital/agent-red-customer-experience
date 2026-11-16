@@ -245,11 +245,11 @@ export class SSEConnection {
 
     switch (event.type) {
       case 'stage': {
-        // Pipeline stage progress — when response-generator starts,
-        // create the empty agent message bubble for token streaming.
+        // Both response stages emit tokens that need a reply bubble.
         try {
           const parsed = JSON.parse(event.data);
-          if (parsed.stage === 'response-generator' && parsed.status === 'started') {
+          const startsReply = parsed.stage === 'response-generator' || parsed.stage === 'co-pilot';
+          if (startsReply && parsed.status === 'started') {
             this.currentStreamContent = '';
             const msg: Message = {
               id: `msg_${Date.now()}_agent`,

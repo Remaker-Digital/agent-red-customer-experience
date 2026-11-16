@@ -95,7 +95,7 @@ async def test_paid_provisioning_normalizes_email_before_persisting(fake_tenant_
     stored = fake_tenant_repo.store[record.tenant_id]
     assert record.customer_email == "info@remakerdigital.com"
     assert stored["customer_email"] == "info@remakerdigital.com"
-    assert stored["display_name"] == "info@remakerdigital.com-001"
+    assert stored["display_name"] == f"Tenant {record.tenant_id[:8]}"
 
 
 @pytest.mark.asyncio
@@ -111,7 +111,7 @@ async def test_paid_provisioning_accepts_phone_only_contact(fake_tenant_repo):
     assert record.customer_email is None
     assert record.customer_phone == "+15555550123"
     assert stored["customer_phone"] == "+15555550123"
-    assert stored["display_name"] == "+15555550123-001"
+    assert stored["display_name"] == f"Tenant {record.tenant_id[:8]}"
 
 
 @pytest.mark.asyncio

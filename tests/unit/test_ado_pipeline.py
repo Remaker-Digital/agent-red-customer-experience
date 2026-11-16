@@ -295,7 +295,7 @@ def test_staging_deploys_the_single_container_profile_on_request_only():
     assert "eq('${{ parameters.deployStaging }}', true)" in condition
     assert "ne(variables['Build.Reason'], 'PullRequest')" in condition
     job = staging["jobs"][0]
-    assert job["deployment"] and job["environment"] == "agent-red-staging"
+    assert job["deployment"] and job["environment"] == "example-gateway-stage"
     commands = _python_commands(staging)
     assert len(commands) == 1
     script, tokens = commands[0]
@@ -336,7 +336,7 @@ def test_production_depends_on_staging_and_requires_deploy_production():
     assert "eq('${{ parameters.deployProduction }}', true)" in condition
     assert "eq('${{ parameters.deployStaging }}', true)" in condition
     job = production["jobs"][0]
-    assert job["deployment"] and job["environment"] == "agent-red-production"
+    assert job["deployment"] and job["environment"] == "example-gateway-production"
     commands = _python_commands(production)
     assert len(commands) == 1
     script, tokens = commands[0]
@@ -583,7 +583,7 @@ def test_no_secret_literal_in_the_pipeline():
 def test_mapped_variables_are_read_by_the_scripts_and_documented_in_the_runbook():
     deploy_source = (REPO_ROOT / "scripts" / "deploy.py").read_text(encoding="utf-8")
     runbook = RUNBOOK.read_text(encoding="utf-8")
-    for name in ("agent-red-azure", "agent-red-staging", "agent-red-production", "azure-pipelines.yml"):
+    for name in ("agent-red-azure", "example-gateway-stage", "example-gateway-production", "azure-pipelines.yml"):
         assert name in runbook
     for env in _env_maps(_pipeline()):
         for name, value in env.items():
@@ -624,9 +624,9 @@ def test_runbook_containerapp_commands_never_print_the_whole_app():
 
 def test_the_quiet_output_check_catches_bare_commands():
     for command in (
-        "az containerapp stop --name agent-red-staging --resource-group Agent-Red",
-        "az containerapp update --name agent-red-staging --remove-env-vars SINGLE_CONTAINER_MODE",
-        "az containerapp logs show --name agent-red-staging --tail 300",
+        "az containerapp stop --name example-gateway-stage --resource-group Agent-Red",
+        "az containerapp update --name example-gateway-stage --remove-env-vars SINGLE_CONTAINER_MODE",
+        "az containerapp logs show --name example-gateway-stage --tail 300",
     ):
         assert _containerapp_commands(f"```powershell\n{command}\n```\n")[1] == [command]
     assert _containerapp_commands("Prose: `az containerapp start` is not a command.\n") == (0, [])

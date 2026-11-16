@@ -18,7 +18,7 @@ const config = {
   baseUrl: '/',
 
   organizationName: 'Remaker-Digital',
-  projectName: 'agent-red-customer-engagement',
+  projectName: 'agent-red-customer-experience',
   trailingSlash: false,
   deploymentBranch: 'gh-pages',
 

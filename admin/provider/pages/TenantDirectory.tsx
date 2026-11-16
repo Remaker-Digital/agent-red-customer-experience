@@ -729,7 +729,7 @@ export function TenantDirectoryPage() {
           <Stack gap="md">
             <TextInput
               label="Merchant Name"
-              placeholder="Example Corporation"
+              placeholder="Example Merchant"
               required
               value={createForm.merchantName}
               onChange={(e) => setCreateForm(f => ({ ...f, merchantName: e.currentTarget.value }))}

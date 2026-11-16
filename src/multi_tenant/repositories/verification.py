@@ -13,7 +13,9 @@ uses ``token_type`` as partition key (e.g. "email_verification",
 from __future__ import annotations
 
 import logging
-from datetime import UTC
+from datetime import UTC, datetime, timedelta
+from math import ceil
+from secrets import compare_digest
 from typing import Any
 
 from azure.core import MatchConditions
@@ -34,6 +36,7 @@ logger = logging.getLogger(__name__)
 # Cosmos DB item ids are at most 1,023 bytes and may not contain "/" or a backslash.
 # https://learn.microsoft.com/azure/cosmos-db/concepts-limits#per-item-limits
 _MAX_ID_BYTES = 1023
+_MAX_CODE_ATTEMPTS = 3
 
 
 def _is_storable_id(token_id: str) -> bool:
@@ -76,6 +79,7 @@ class VerificationTokenRepository:
         *,
         member_id: str | None = None,
         sign_in_code: str | None = None,
+        code_challenge_id: str | None = None,
     ) -> dict[str, Any]:
         """Persist a verification token document.
 
@@ -95,21 +99,24 @@ class VerificationTokenRepository:
         Raises:
             DocumentConflictError: If token_id already exists.
         """
-        from datetime import datetime
-
+        now = datetime.now(UTC)
         doc = {
             "id": token_id,
             "token_type": token_type,
             "tenant_id": tenant_id,
             "email": email,
             "used": False,
-            "created_at": datetime.now(UTC).isoformat(),
+            "created_at": now.isoformat(),
             "ttl": ttl,
         }
         if member_id is not None:
             doc["member_id"] = member_id
         if sign_in_code is not None:
             doc["sign_in_code"] = sign_in_code
+        if code_challenge_id is not None:
+            doc["code_challenge_id"] = code_challenge_id
+            doc["code_attempts"] = 0
+            doc["code_expires_at"] = (now + timedelta(seconds=ttl)).isoformat()
         try:
             result = await self._container.create_item(body=doc)
             logger.info(
@@ -190,43 +197,51 @@ class VerificationTokenRepository:
         tenant_id: str,
         sign_in_code: str,
         token_type: str,
+        *,
+        challenge_id: str,
     ) -> dict[str, Any] | None:
-        """Look up and consume a token by its 6-digit sign-in code.
+        """Spend one of this challenge's three attempts and consume a matching code."""
+        query = (
+            "SELECT TOP 1 * FROM c WHERE c.tenant_id = @tid "
+            "AND c.code_challenge_id = @challenge AND c.used = false"
+        )
+        params = [{"name": "@tid", "value": tenant_id}, {"name": "@challenge", "value": challenge_id}]
+        # An ETag conflict can mean a concurrent attempt spent a slot or the link won redemption.
+        for _ in range(_MAX_CODE_ATTEMPTS):
+            try:
+                doc = await anext(aiter(self._container.query_items(
+                    query=query, parameters=params, partition_key=token_type, max_item_count=1,
+                )), None)
+            except Exception:
+                logger.exception("Error looking up sign-in challenge: tenant=%s", tenant_id)
+                return None
 
-        SPEC-0429: Alternative to link-based verification. Queries within
-        the token_type partition for a matching tenant + code + unused token.
-        Returns the token document if found and valid, or None. Marking it
-        used is conditional on the read ETag, as in ``consume_token``.
-        """
-        try:
-            query = (
-                "SELECT * FROM c WHERE c.tenant_id = @tid "
-                "AND c.sign_in_code = @code AND c.used = false"
-            )
-            params = [
-                {"name": "@tid", "value": tenant_id},
-                {"name": "@code", "value": sign_in_code},
+            if not doc or doc.get("used") or not doc.get("_etag") or doc["code_attempts"] >= _MAX_CODE_ATTEMPTS:
+                return None
+            remaining = (datetime.fromisoformat(doc["code_expires_at"]) - datetime.now(UTC)).total_seconds()
+            if remaining <= 0:
+                return None
+            correct = compare_digest(sign_in_code.encode(), doc["sign_in_code"].encode())
+            operations = [
+                {"op": "set", "path": "/code_attempts", "value": doc["code_attempts"] + 1},
+                # Cosmos resets TTL whenever a document is patched.
+                {"op": "set", "path": "/ttl", "value": ceil(remaining)},
             ]
-            items = [
-                item async for item in self._container.query_items(
-                    query=query,
-                    parameters=params,
-                    partition_key=token_type,
-                    max_item_count=1,
+            if correct:
+                operations.append({"op": "set", "path": "/used", "value": True})
+            try:
+                await self._container.patch_item(
+                    item=doc["id"], partition_key=token_type, patch_operations=operations,
+                    etag=doc["_etag"], match_condition=MatchConditions.IfNotModified,
                 )
-            ]
-        except Exception:
-            logger.exception("Error querying token by code: tenant=%s", tenant_id)
-            return None
-
-        if not items:
-            return None
-
-        doc = items[0]
-        if doc.get("used") or not await self._mark_used(doc, token_type):
-            return None
-
-        return doc
+            except CosmosAccessConditionFailedError:
+                logger.info("Sign-in challenge already changed since read")
+                continue
+            except Exception:
+                logger.warning("Failed to record sign-in code attempt")
+                return None
+            return doc if correct else None
+        return None
 
     async def delete_token(
         self,

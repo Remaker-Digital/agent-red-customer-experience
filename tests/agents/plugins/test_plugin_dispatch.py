@@ -13,8 +13,11 @@ Tests cover:
 
 from __future__ import annotations
 
+from types import SimpleNamespace
+
 import pytest
 
+from src.agents.plugins import dispatch as dispatch_module
 from src.agents.plugins.dispatch import PluginDispatcher, PluginDispatchResult
 from src.agents.plugins.registry import PluginAgentRegistry
 
@@ -95,13 +98,17 @@ def dispatcher(registry) -> PluginDispatcher:
 
 
 class TestDispatch:
+    @pytest.mark.parametrize("end_time, elapsed_ms", [(1.0, 0.0), (1.125, 125.0)])
     @pytest.mark.asyncio
-    async def test_dispatch_internal(self, dispatcher: PluginDispatcher):
+    async def test_dispatch_internal(self, dispatcher: PluginDispatcher, monkeypatch, end_time, elapsed_ms):
+        clock = iter((1.0, end_time))
+        monkeypatch.setattr(dispatch_module, "time", SimpleNamespace(monotonic=lambda: next(clock)))
+
         result = await dispatcher.dispatch("test.do_thing", {"query": "hello"}, tenant_id="t-1")
         assert result.success is True
         assert result.agent_id == "test_agent"
         assert result.tool_name == "test.do_thing"
-        assert result.elapsed_ms > 0
+        assert result.elapsed_ms == elapsed_ms
 
     @pytest.mark.asyncio
     async def test_dispatch_unknown_tool(self, dispatcher: PluginDispatcher):

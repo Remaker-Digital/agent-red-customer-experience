@@ -18,7 +18,7 @@ Total: 12 tests
 from __future__ import annotations
 
 from typing import Any
-from unittest.mock import AsyncMock, MagicMock, patch
+from unittest.mock import AsyncMock, MagicMock
 
 import pytest
 
@@ -78,7 +78,6 @@ def mock_tenant_repo():
         "status": "active",
         "tier": "professional",
         "widget_key": "wk_test",
-        "widget_allowed_origin": "https://example.com",
         "abuse_flagged": False,
     })
     return repo
@@ -108,25 +107,6 @@ def superadmin_ctx():
     ctx.team_member_role = "superadmin"
     ctx.team_member_email = "admin@remaker.com"
     return ctx
-
-
-@pytest.fixture(autouse=True)
-def _origins_follow_the_tenant_fixture(mock_tenant_repo):
-    """Approved origins are read from the active preferences (S14, #139).
-
-    Each test states its origin as ``widget_allowed_origin`` on the tenant
-    fixture; the preferences stand-in returns it from there.
-    """
-    import src.multi_tenant.middleware as middleware
-
-    async def get_active(self, tenant_id):
-        origin = (mock_tenant_repo.read.return_value or {}).get("widget_allowed_origin")
-        return {"approved_widget_origins": [origin] if origin else []}
-
-    middleware._widget_origins_cache.clear()
-    with patch("src.multi_tenant.repositories.preferences.PreferencesRepository.get_active", get_active):
-        yield
-    middleware._widget_origins_cache.clear()
 
 
 @pytest.fixture(autouse=True)
@@ -166,7 +146,6 @@ class TestSignalScan:
             "tenant_id": "tenant-001",
             "status": "active",
             "widget_key": "",
-            "widget_allowed_origin": "",
             "abuse_flagged": False,
         })
 
@@ -186,10 +165,10 @@ class TestSignalScan:
         assert len(result.high_risk_tenants) == 0
 
     @pytest.mark.asyncio
-    async def test_scan_detects_widget_abuse(
+    async def test_scan_does_not_flag_public_widgets(
         self, mock_tenant_repo, mock_conv_repo, mock_usage_repo, superadmin_ctx,
     ):
-        """Scan detects widget abuse when widget key present but no origin."""
+        """An active widget alone does not produce an abuse signal."""
         mock_tenant_repo.list_active_tenant_ids = AsyncMock(
             return_value=["tenant-001"],
         )
@@ -197,7 +176,6 @@ class TestSignalScan:
             "tenant_id": "tenant-001",
             "status": "active",
             "widget_key": "wk_test_key",
-            "widget_allowed_origin": "",  # No origin configured
             "abuse_flagged": False,
         })
 
@@ -212,11 +190,8 @@ class TestSignalScan:
         result = await scan_abuse_signals()
 
         assert result.total_tenants_scanned == 1
-        assert len(result.high_risk_tenants) == 1
-        profile = result.high_risk_tenants[0]
-        assert profile.tenant_id == "tenant-001"
-        assert any(s.signal_type == "widget_abuse" for s in profile.signals)
-        assert result.signals_by_type.get("widget_abuse", 0) == 1
+        assert result.high_risk_tenants == []
+        assert result.signals_by_type.get("widget_abuse", 0) == 0
 
     @pytest.mark.asyncio
     async def test_scan_empty_tenants(
@@ -243,15 +218,14 @@ class TestTenantProfile:
     """Tests for GET /api/superadmin/abuse/tenant/{tenant_id}."""
 
     @pytest.mark.asyncio
-    async def test_profile_with_signals(
+    async def test_profile_preserves_manual_flag(
         self, mock_tenant_repo, mock_conv_repo, mock_usage_repo, superadmin_ctx,
     ):
-        """Profile with detected widget abuse signal."""
+        """Manual flags remain visible without current signals."""
         mock_tenant_repo.read = AsyncMock(return_value={
             "tenant_id": "tenant-001",
             "status": "active",
             "widget_key": "wk_active_key",
-            "widget_allowed_origin": "",  # Triggers widget_abuse
             "abuse_flagged": True,
             "abuse_flagged_at": "2026-02-18T00:00:00Z",
             "abuse_flagged_by": "admin@remaker.com",
@@ -273,8 +247,8 @@ class TestTenantProfile:
         assert result.tenant_id == "tenant-001"
         assert result.is_flagged is True
         assert result.flagged_by == "admin@remaker.com"
-        assert len(result.signals) >= 1
-        assert result.risk_score > 0
+        assert result.signals == []
+        assert result.risk_score == 0
 
     @pytest.mark.asyncio
     async def test_profile_with_volume_spike(
@@ -285,7 +259,6 @@ class TestTenantProfile:
             "tenant_id": "tenant-001",
             "status": "active",
             "widget_key": "",
-            "widget_allowed_origin": "",
             "abuse_flagged": False,
         })
 
@@ -332,7 +305,6 @@ class TestTenantProfile:
             "tenant_id": "tenant-001",
             "status": "active",
             "widget_key": "",
-            "widget_allowed_origin": "",
             "abuse_flagged": False,
         })
 

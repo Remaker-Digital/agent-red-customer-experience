@@ -37,6 +37,7 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
 from datetime import UTC, datetime
 from enum import Enum
+from html import escape
 from typing import Any
 
 logger = logging.getLogger(__name__)
@@ -267,6 +268,7 @@ class DeliveryResult:
         channels_succeeded: Number of channels that succeeded.
         channels_failed: Number of channels that failed.
         errors: Per-channel error details for failed deliveries.
+        notification_channels_succeeded: Successful channels other than the log fallback.
     """
 
     alert_id: str
@@ -274,6 +276,7 @@ class DeliveryResult:
     channels_succeeded: int
     channels_failed: int
     errors: list[ChannelResult] = field(default_factory=list)
+    notification_channels_succeeded: int = 0
 
 
 # ---------------------------------------------------------------------------
@@ -508,35 +511,53 @@ class WebhookAlertChannel(AlertChannel):
 # Email templates (WI-G)
 # ---------------------------------------------------------------------------
 
+_EMAIL_PRIMARY_ACTION_STYLE = (
+    "display:inline-block;padding:12px 24px;background:#3b82f6;color:#ffffff;"
+    "border-radius:8px;font-size:19px;font-weight:700;text-decoration:none"
+)
+
+
+def email_action_template(escaped_url: str, label: str) -> str:
+    """Render a button and copyable URL using escaped values or template fields."""
+    return (
+        f'<a href="{escaped_url}" style="{_EMAIL_PRIMARY_ACTION_STYLE}">{label}</a>'
+        '<p style="margin:12px 0 0;color:#d6d3d1;font-size:12px;line-height:1.5">'
+        'Or paste this link into your browser:<br>'
+        f'<span style="word-break:break-all;overflow-wrap:anywhere">{escaped_url}</span></p>'
+    )
+
+
+def email_generation_time(generated_at: datetime) -> str:
+    return generated_at.astimezone(UTC).strftime("Email generated: %Y-%m-%d %H:%M:%S UTC")
+
+
 # Shared email wrapper with Agent Red branding
 _EMAIL_WRAPPER = """<!DOCTYPE html>
-<html>
+<html lang="en">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
-<body style="margin:0;padding:0;background:#141414;
+<body bgcolor="#0c0a09" style="margin:0;padding:0;background:#0c0a09;color:#fafaf9;
 font-family:Inter,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif">
-<table width="100%" cellpadding="0" cellspacing="0" style="background:#141414;padding:32px 0">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" bgcolor="#0c0a09"
+       style="background:#0c0a09;padding:32px 16px">
 <tr><td align="center">
-<table width="600" cellpadding="0" cellspacing="0">
-<tr><td style="padding:24px 32px 16px">
+<table width="600" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;max-width:600px">
+<tr><td>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" bgcolor="#292524"
+       style="background:#292524;border:1px solid #44403c;border-radius:10px">
+<tr><td align="center" style="padding:32px 24px 8px">
   <img src="https://agentredcx.com/img/email-logo-light.png?v=2"
-       alt="Agent Red Customer Experience" width="220" height="auto"
+       alt="Agent Red Customer Experience" width="220"
        style="display:block;max-width:220px;height:auto;border:0" />
 </td></tr>
-<tr><td>
-<table width="100%" cellpadding="0" cellspacing="0" style="background:#ffffff;overflow:hidden">
-<tr><td style="padding:32px">{body}</td></tr>
+<tr><td style="padding:24px 32px 32px;color:#f5f5f4;overflow-wrap:anywhere">{body}</td></tr>
 </table>
 </td></tr>
 <tr><td style="padding:16px 32px">
-  <p style="margin:0;color:#9ca3af;font-size:12px;text-align:center">
+  <p style="margin:0 0 8px;color:#d6d3d1;font-size:12px;text-align:center">{generation_time}</p>
+  <p style="margin:0;color:#d6d3d1;font-size:12px;text-align:center">
     Agent Red Customer Experience &mdash; a product of
-    <a href="https://remakerdigital.com" style="color:#ff3621;
-    text-decoration:none">Remaker Digital</a>
-  </p>
-  <p style="margin:8px 0 0;color:#6b7280;font-size:11px;text-align:center">
-    This is a system message. To unsubscribe, please
-    <a href="{unsubscribe_url}" style="color:#ff3621;text-decoration:none">access your account</a>
-    and change your system configuration.
+    <a href="https://remakerdigital.com" style="color:#93c5fd;
+    text-decoration:underline">Remaker Digital</a>
   </p>
 </td></tr>
 </table>
@@ -546,45 +567,12 @@ font-family:Inter,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif"
 </html>"""
 
 
-def _resolve_admin_url(admin_url: str | None = None) -> str:
-    """Resolve the admin console URL for unsubscribe links.
-
-    Priority: explicit admin_url > STANDALONE_ADMIN_URL env > PROD_URL env > fallback.
-    """
-    import os
-
-    if admin_url:
-        return admin_url
-    standalone = os.environ.get("STANDALONE_ADMIN_URL", "")
-    if standalone:
-        return standalone
-    prod = os.environ.get("PROD_URL", "")
-    if prod:
-        return f"{prod.rstrip('/')}/admin/standalone/"
-    # Derive from CONTAINER_APP_FQDN (set on all envs) — no hardcoded FQDN.
-    fqdn = os.environ.get("CONTAINER_APP_FQDN", "")
-    if fqdn:
-        scheme = "" if fqdn.startswith("http") else "https://"
-        return f"{scheme}{fqdn}/admin/standalone/"
-    return "/admin/standalone/"  # relative fallback
-
-
-def format_branded_email(body: str, admin_url: str | None = None) -> str:
-    """Format email body into the branded HTML wrapper with unsubscribe link.
-
-    Resolves the admin console URL for the unsubscribe link. Call sites
-    that already have a tenant-specific admin URL can pass it explicitly;
-    otherwise the generic admin login URL is resolved from environment.
-
-    Args:
-        body: Inner HTML content for the email.
-        admin_url: Optional explicit admin URL for the unsubscribe link.
-
-    Returns:
-        Full HTML email string with branding and unsubscribe footer.
-    """
-    resolved_url = _resolve_admin_url(admin_url)
-    return _EMAIL_WRAPPER.format(body=body, unsubscribe_url=resolved_url)
+def format_branded_email(body: str, *, generated_at: datetime | None = None) -> str:
+    """Render a system email with shared branding and its UTC generation time."""
+    return _EMAIL_WRAPPER.format(
+        body=body,
+        generation_time=email_generation_time(generated_at or datetime.now(UTC)),
+    )
 
 
 def _severity_color(severity: AlertSeverity) -> str:
@@ -596,101 +584,101 @@ def _severity_color(severity: AlertSeverity) -> str:
     }.get(severity, "#6b7280")
 
 
-def _render_email(alert: Alert) -> tuple[str, str]:
+def _render_email(alert: Alert, *, generated_at: datetime | None = None) -> tuple[str, str]:
     """Render an alert into (subject, html_body).
 
     Returns a plain subject line and full HTML email body using the
     branded wrapper template. Uses alert-type-specific body content
     with a generic fallback.
     """
-    subject = f"[Agent Red] {alert.title}"
+    subject = f"Agent Red: {alert.title}"
     badge_color = _severity_color(alert.severity)
 
     # Alert-type-specific body templates
     body_templates: dict[str, str] = {
         # Usage alerts
         AlertType.USAGE_80_PCT: (
-            '<h2 style="margin:0 0 16px;color:#111827;font-size:20px">Approaching Usage Limit</h2>'
+            '<h2 style="margin:0 0 16px;color:#fafaf9;font-size:20px">Approaching Usage Limit</h2>'
             '<div style="display:inline-block;padding:4px 12px;'
-            f'background:{badge_color};color:#fff;font-size:12px;font-weight:600">'
+            f'background:{badge_color};border-radius:8px;color:#0c0a09;font-size:12px;font-weight:600">'
             "{severity}</div>"
-            '<p style="color:#374151;line-height:1.6;margin:16px 0">{message}</p>'
-            '<div style="background:#fef3c7;border:1px solid #fcd34d;padding:16px;margin:16px 0">'
-            '<strong style="color:#92400e">Recommendation:</strong>'
-            '<p style="color:#92400e;margin:8px 0 0">Purchase a conversation pack to avoid overage charges '
+            '<p style="color:#f5f5f4;line-height:1.6;margin:16px 0">{message}</p>'
+            '<div style="background:#422006;border:1px solid #a16207;border-radius:8px;padding:16px;margin:16px 0">'
+            '<strong style="color:#fde68a">Recommendation:</strong>'
+            '<p style="color:#fde68a;margin:8px 0 0">Purchase a conversation pack to avoid overage charges '
             "and ensure uninterrupted service.</p></div>"
         ),
         AlertType.USAGE_100_PCT: (
-            '<h2 style="margin:0 0 16px;color:#111827;font-size:20px">Conversation Allowance Exhausted</h2>'
+            '<h2 style="margin:0 0 16px;color:#fafaf9;font-size:20px">Conversation Allowance Exhausted</h2>'
             '<div style="display:inline-block;padding:4px 12px;'
-            f'background:{badge_color};color:#fff;font-size:12px;font-weight:600">'
+            f'background:{badge_color};border-radius:8px;color:#0c0a09;font-size:12px;font-weight:600">'
             "{severity}</div>"
-            '<p style="color:#374151;line-height:1.6;margin:16px 0">{message}</p>'
-            '<div style="background:#fee2e2;border:1px solid #fca5a5;padding:16px;margin:16px 0">'
-            '<strong style="color:#991b1b">Action Required:</strong>'
-            '<p style="color:#991b1b;margin:8px 0 0">Your included conversations are exhausted. '
+            '<p style="color:#f5f5f4;line-height:1.6;margin:16px 0">{message}</p>'
+            '<div style="background:#450a0a;border:1px solid #b91c1c;border-radius:8px;padding:16px;margin:16px 0">'
+            '<strong style="color:#fecaca">Action Required:</strong>'
+            '<p style="color:#fecaca;margin:8px 0 0">Your included conversations are exhausted. '
             "Additional conversations will draw from pack balance or incur per-conversation overage charges.</p></div>"
         ),
         # Trial expiry
         AlertType.TRIAL_EXPIRING: (
-            '<h2 style="margin:0 0 16px;color:#111827;font-size:20px">Trial Expiring Soon</h2>'
+            '<h2 style="margin:0 0 16px;color:#fafaf9;font-size:20px">Trial Expiring Soon</h2>'
             '<div style="display:inline-block;padding:4px 12px;'
-            f'background:{badge_color};color:#fff;font-size:12px;font-weight:600">'
+            f'background:{badge_color};border-radius:8px;color:#0c0a09;font-size:12px;font-weight:600">'
             "{severity}</div>"
-            '<p style="color:#374151;line-height:1.6;margin:16px 0">{message}</p>'
-            '<div style="background:#eff6ff;border:1px solid #93c5fd;padding:16px;margin:16px 0">'
-            '<strong style="color:#1e40af">Upgrade to keep your setup:</strong>'
-            '<p style="color:#1e40af;margin:8px 0 0">Your AI configuration, knowledge base, and conversation '
+            '<p style="color:#f5f5f4;line-height:1.6;margin:16px 0">{message}</p>'
+            '<div style="background:#172554;border:1px solid #93c5fd;border-radius:8px;padding:16px;margin:16px 0">'
+            '<strong style="color:#bfdbfe">Upgrade to keep your setup:</strong>'
+            '<p style="color:#bfdbfe;margin:8px 0 0">Your AI configuration, knowledge base, and conversation '
             "history will be preserved when you subscribe to any paid plan.</p></div>"
         ),
         # API key delivery
         AlertType.API_KEY_GENERATED: (
-            '<h2 style="margin:0 0 16px;color:#111827;font-size:20px">API Key Generated</h2>'
+            '<h2 style="margin:0 0 16px;color:#fafaf9;font-size:20px">API Key Generated</h2>'
             '<div style="display:inline-block;padding:4px 12px;'
-            f'background:{badge_color};color:#fff;font-size:12px;font-weight:600">'
+            f'background:{badge_color};border-radius:8px;color:#0c0a09;font-size:12px;font-weight:600">'
             "{severity}</div>"
-            '<p style="color:#374151;line-height:1.6;margin:16px 0">{message}</p>'
-            '<div style="background:#f3f4f6;border:1px solid #d1d5db;'
+            '<p style="color:#f5f5f4;line-height:1.6;margin:16px 0">{message}</p>'
+            '<div style="background:#1c1917;border:1px solid #57534e;border-radius:8px;'
             "padding:16px;margin:16px 0;font-family:'JetBrains Mono',monospace\">"
-            '<code style="word-break:break-all;color:#111827;font-size:14px">{api_key}</code></div>'
-            '<div style="background:#fef3c7;border:1px solid #fcd34d;padding:16px;margin:16px 0">'
-            '<strong style="color:#92400e">Security Notice:</strong>'
-            '<p style="color:#92400e;margin:8px 0 0">Store this key securely. It will not be shown again. '
+            '<code style="word-break:break-all;color:#fafaf9;font-size:14px">{api_key}</code></div>'
+            '<div style="background:#422006;border:1px solid #a16207;border-radius:8px;padding:16px;margin:16px 0">'
+            '<strong style="color:#fde68a">Security Notice:</strong>'
+            '<p style="color:#fde68a;margin:8px 0 0">Store this key securely. It will not be shown again. '
             "If lost, generate a new key from the admin dashboard.</p></div>"
         ),
         # Team invite
         AlertType.TEAM_INVITE: (
-            '<h2 style="margin:0 0 16px;color:#111827;font-size:20px">Team Invitation</h2>'
-            '<p style="color:#374151;line-height:1.6;margin:16px 0">{message}</p>'
+            '<h2 style="margin:0 0 16px;color:#fafaf9;font-size:20px">Team Invitation</h2>'
+            '<p style="color:#f5f5f4;line-height:1.6;margin:16px 0">{message}</p>'
             "{admin_link_block}"
-            '<div style="background:#eff6ff;border:1px solid #93c5fd;padding:16px;margin:16px 0">'
-            '<strong style="color:#1e40af">Getting Started:</strong>'
-            '<p style="color:#1e40af;margin:8px 0 0">Log in with your '
+            '<div style="background:#172554;border:1px solid #93c5fd;border-radius:8px;padding:16px;margin:16px 0">'
+            '<strong style="color:#bfdbfe">Getting Started:</strong>'
+            '<p style="color:#bfdbfe;margin:8px 0 0">Log in with your '
             "email address to access your team workspace.</p></div>"
         ),
         # Escalation
         AlertType.ESCALATION: (
-            '<h2 style="margin:0 0 16px;color:#111827;font-size:20px">Customer Escalation</h2>'
+            '<h2 style="margin:0 0 16px;color:#fafaf9;font-size:20px">Customer Escalation</h2>'
             '<div style="display:inline-block;padding:4px 12px;'
-            f'background:{badge_color};color:#fff;font-size:12px;font-weight:600">'
+            f'background:{badge_color};border-radius:8px;color:#0c0a09;font-size:12px;font-weight:600">'
             "{severity}</div>"
-            '<p style="color:#374151;line-height:1.6;margin:16px 0">{message}</p>'
-            '<div style="background:#fef3c7;border:1px solid #fcd34d;padding:16px;margin:16px 0">'
-            '<strong style="color:#92400e">Action Required:</strong>'
-            '<p style="color:#92400e;margin:8px 0 0">'
+            '<p style="color:#f5f5f4;line-height:1.6;margin:16px 0">{message}</p>'
+            '<div style="background:#422006;border:1px solid #a16207;border-radius:8px;padding:16px;margin:16px 0">'
+            '<strong style="color:#fde68a">Action Required:</strong>'
+            '<p style="color:#fde68a;margin:8px 0 0">'
             "A customer conversation has been escalated and needs your attention. "
             "Log in to the Agent Red admin dashboard to view the conversation.</p></div>"
         ),
         # Outage / SLA
         AlertType.OUTAGE_NOTIFICATION: (
-            '<h2 style="margin:0 0 16px;color:#111827;font-size:20px">Service Notification</h2>'
+            '<h2 style="margin:0 0 16px;color:#fafaf9;font-size:20px">Service Notification</h2>'
             '<div style="display:inline-block;padding:4px 12px;'
-            f'background:{badge_color};color:#fff;font-size:12px;font-weight:600">'
+            f'background:{badge_color};border-radius:8px;color:#0c0a09;font-size:12px;font-weight:600">'
             "{severity}</div>"
-            '<p style="color:#374151;line-height:1.6;margin:16px 0">{message}</p>'
-            '<div style="background:#fee2e2;border:1px solid #fca5a5;padding:16px;margin:16px 0">'
-            '<strong style="color:#991b1b">Status:</strong>'
-            '<p style="color:#991b1b;margin:8px 0 0">Our team is actively investigating. '
+            '<p style="color:#f5f5f4;line-height:1.6;margin:16px 0">{message}</p>'
+            '<div style="background:#450a0a;border:1px solid #b91c1c;border-radius:8px;padding:16px;margin:16px 0">'
+            '<strong style="color:#fecaca">Status:</strong>'
+            '<p style="color:#fecaca;margin:8px 0 0">Our team is actively investigating. '
             "You will receive a follow-up notification when the issue is resolved.</p></div>"
         ),
     }
@@ -699,11 +687,11 @@ def _render_email(alert: Alert) -> tuple[str, str]:
     body_tmpl = body_templates.get(
         alert.alert_type,
         (
-            '<h2 style="margin:0 0 16px;color:#111827;font-size:20px">{title}</h2>'
+            '<h2 style="margin:0 0 16px;color:#fafaf9;font-size:20px">{title}</h2>'
             '<div style="display:inline-block;padding:4px 12px;'
-            f'background:{badge_color};color:#fff;font-size:12px;font-weight:600">'
+            f'background:{badge_color};border-radius:8px;color:#0c0a09;font-size:12px;font-weight:600">'
             "{severity}</div>"
-            '<p style="color:#374151;line-height:1.6;margin:16px 0">{message}</p>'
+            '<p style="color:#f5f5f4;line-height:1.6;margin:16px 0">{message}</p>'
         ),
     )
 
@@ -712,9 +700,7 @@ def _render_email(alert: Alert) -> tuple[str, str]:
     if admin_url:
         admin_link_block = (
             '<div style="text-align:center;margin:24px 0">'
-            f'<a href="{admin_url}" style="display:inline-block;padding:12px 32px;'
-            "background:#3B82F6;color:#fff;text-decoration:none;font-weight:600;"
-            'font-size:16px;border-radius:6px">Open Admin Dashboard</a></div>'
+            f'{email_action_template(escape(admin_url), "Open Admin Dashboard")}</div>'
         )
     else:
         admin_link_block = ""
@@ -728,7 +714,7 @@ def _render_email(alert: Alert) -> tuple[str, str]:
         "admin_link_block": admin_link_block,
     }
     body_html = body_tmpl.format(**format_kwargs)
-    full_html = format_branded_email(body_html)
+    full_html = format_branded_email(body_html, generated_at=generated_at)
 
     return subject, full_html
 
@@ -850,6 +836,8 @@ class EmailAlertChannel(AlertChannel):
         subject: str,
         html_body: str,
         alert: Alert,
+        *,
+        generated_at: datetime | None = None,
     ) -> ChannelResult:
         """Send email using SMTP (SendGrid, Mailgun, generic SMTP)."""
         import os
@@ -880,25 +868,28 @@ class EmailAlertChannel(AlertChannel):
             msg["Subject"] = subject
             msg["X-Alert-Id"] = alert.alert_id
             msg["X-Alert-Type"] = alert.alert_type.value
-            msg.attach(MIMEText(alert.message, "plain"))
+            plain_body = alert.message
+            if alert.alert_type == AlertType.TEAM_INVITE and (admin_url := alert.metadata.get("admin_url")):
+                plain_body += f"\n\nOr paste this link into your browser:\n{admin_url}"
+            plain_body += f"\n\n{email_generation_time(generated_at or datetime.now(UTC))}"
+            msg.attach(MIMEText(plain_body, "plain"))
             msg.attach(MIMEText(html_body, "html"))
 
             timeout = self.TIMEOUT_SECONDS
 
+            from src.multi_tenant.smtp_tls import open_verified_smtp
+
             def _smtp_send() -> None:
-                if smtp_port == 465:
-                    with smtplib.SMTP_SSL(smtp_host, smtp_port, timeout=timeout) as server:
-                        if smtp_user and smtp_pass:
-                            server.login(smtp_user, smtp_pass)
-                        server.send_message(msg)
-                else:
-                    with smtplib.SMTP(smtp_host, smtp_port, timeout=timeout) as server:
-                        server.ehlo()
-                        if smtp_port != 25:
-                            server.starttls()
-                        if smtp_user and smtp_pass:
-                            server.login(smtp_user, smtp_pass)
-                        server.send_message(msg)
+                with open_verified_smtp(
+                    smtp_host,
+                    smtp_port,
+                    timeout=timeout,
+                    username=smtp_user,
+                    password=smtp_pass,
+                ) as server:
+                    if smtp_user and smtp_pass:
+                        server.login(smtp_user, smtp_pass)
+                    server.send_message(msg)
 
             await asyncio.to_thread(_smtp_send)  # SPEC-1622: non-blocking SMTP
 
@@ -950,7 +941,8 @@ class EmailAlertChannel(AlertChannel):
             )
 
         # Render email content
-        subject, html_body = _render_email(alert)
+        generated_at = datetime.now(UTC)
+        subject, html_body = _render_email(alert, generated_at=generated_at)
 
         # Try SMTP first (Titan or other SMTP provider)
         if os.environ.get("SMTP_HOST"):
@@ -959,6 +951,7 @@ class EmailAlertChannel(AlertChannel):
                 subject,
                 html_body,
                 alert,
+                generated_at=generated_at,
             )
             if result.success:
                 return result
@@ -1093,6 +1086,9 @@ class AlertDeliveryService:
             channels_succeeded=succeeded,
             channels_failed=failed,
             errors=errors,
+            notification_channels_succeeded=sum(
+                1 for result in results if result.success and result.channel_name != self._log_channel.name
+            ),
         )
 
 
@@ -1229,7 +1225,7 @@ async def send_throttle_alert(
         alert_type=AlertType.THROTTLE_ACTIVATED,
         title=f"Rate limiting active — escalation level: {level}",
         message=(
-            f"Tenant has been escalated to '{level}' due to elevated resource "
+            f"Your account has been escalated to '{level}' due to elevated resource "
             "consumption. Request rate limits have been reduced to protect "
             "platform stability."
         ),

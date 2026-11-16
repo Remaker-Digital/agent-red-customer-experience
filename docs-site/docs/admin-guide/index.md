@@ -1,14 +1,12 @@
 ---
 sidebar_position: 1
 title: Admin guide overview
-description: Complete reference for every setting in the Agent Red admin console — what each input does, how changing it affects system behavior, and best practices.
+description: Complete reference for every setting in the Agent Red admin console, what each input does, how changing it affects system behavior, and best practices.
 ---
 
 # Admin guide
 
 This guide documents every configurable setting in the Agent Red admin console. Each page explains what the setting controls, what the system does when you change it, and how to get the best results.
-
-![Agent Red admin dashboard showing conversation analytics, resolution rate, and setup checklist](/img/admin/dashboard.png)
 
 ## Who this is for
 
@@ -18,9 +16,9 @@ This guide is for merchants who have installed Agent Red and want to understand 
 
 Agent Red uses a layered configuration system:
 
-1. **Platform defaults** — Sensible starting values that work for most stores.
-2. **Tier defaults** — Adjusted defaults based on your subscription tier (Starter, Professional, Enterprise).
-3. **Your overrides** — Any value you change in the admin console.
+1. **Platform defaults**: Sensible starting values that work for most stores.
+2. **Tier defaults**: Adjusted defaults based on your subscription tier (Starter, Professional, Enterprise).
+3. **Your overrides**: Any value you change in the admin console.
 
 When you change a setting, your value takes priority over the platform and tier defaults. If you reset a field, it reverts to your tier's default.
 
@@ -58,12 +56,12 @@ Configuration changes use a two-phase commit model. When you save a setting, it 
 
 ## Settings that affect AI prompts
 
-Many configuration values are injected directly into the AI's system prompt — the instructions that guide how it responds. Fields marked with "Affects: response generator" in this guide are inserted into the prompt before every response is generated.
+Many configuration values are injected directly into the AI's system prompt: the instructions that guide how it responds. Fields marked with "Affects: response generator" in this guide are inserted into the prompt before every response is generated.
 
 Changing these values changes the AI's behavior immediately for new conversations. The change does not retroactively alter past conversations.
 
 :::caution
-The **custom instructions** field gives you direct access to the system prompt. Use it carefully — poorly written instructions can degrade response quality. See [Custom instructions](./custom-instructions.md) for guidance.
+The **custom instructions** field gives you direct access to the system prompt. Use it carefully: poorly written instructions can degrade response quality. See [Custom instructions](./custom-instructions.md) for guidance.
 :::
 
 ---

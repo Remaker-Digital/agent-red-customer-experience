@@ -158,7 +158,7 @@ class TestTriggerTestRun:
         ), patch.dict(
             "os.environ",
             {
-                "STAGING_FQDN": "agent-red-staging.test.local",
+                "STAGING_FQDN": "example-gateway-stage.test.local",
                 "ENVIRONMENT": "staging",
                 "INTERNAL_VERIFICATION_SECRET": "test-secret-for-unit-tests",
             },

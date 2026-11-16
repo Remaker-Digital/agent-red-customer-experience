@@ -1,14 +1,12 @@
 ---
 sidebar_position: 15
 title: Team management
-description: Invite team members, assign roles, and manage access to the Agent Red admin console — superadmin, admin, escalation agent, and viewer roles.
+description: Invite team members, assign roles, and manage access to the Agent Red admin console, superadmin, admin, escalation agent, and viewer roles.
 ---
 
 # Team management
 
 Team management lets you invite colleagues to the Agent Red admin console and control what each person can see and do.
-
-![Team management page showing team members, roles, and escalation assignments](/img/admin/team-members.png)
 
 ## Team operations workflow
 
@@ -120,13 +118,13 @@ When you start receiving escalated conversations, you need at least one team mem
 2. Click **Invite member**.
 3. Enter the team member's email address and optionally their name.
 4. Select **Escalation agent** as the role.
-5. Select one or more **escalation categories** — choose the categories that match this person's expertise:
-   - **Service** — general customer service questions
-   - **Support** — technical support and troubleshooting
-   - **Sales** — product recommendations, pricing, upselling
-   - **Account** — account management, billing inquiries
-   - **Technical Assistance** — complex technical issues
-   - **General Inquiry** — catch-all for unclassified escalations
+5. Select one or more **escalation categories**: choose the categories that match this person's expertise:
+   - **Service**: general customer service questions
+   - **Support**: technical support and troubleshooting
+   - **Sales**: product recommendations, pricing, upselling
+   - **Account**: account management, billing inquiries
+   - **Technical Assistance**: complex technical issues
+   - **General Inquiry**: catch-all for unclassified escalations
 6. Click **Send invite**.
 7. The team member receives an email with their API key for logging in.
 
@@ -143,7 +141,7 @@ The Team page displays an **Escalations** column for each escalation agent, show
 1. Find the team member in the table.
 2. Click the **role dropdown** in their row.
 3. Select the new role.
-4. The change takes effect immediately — no save button required.
+4. The change takes effect immediately: no save button required.
 
 If changing from Escalation agent to another role, any pending escalation assignments for that member will need to be reassigned.
 
@@ -152,7 +150,7 @@ If changing from Escalation agent to another role, any pending escalation assign
 Use the **Active/Disabled** toggle to suspend a team member's access without deleting them:
 
 1. Toggle the switch in the Status column to **Disabled**.
-2. The member's API key is immediately invalidated — they cannot log in.
+2. The member's API key is immediately invalidated: they cannot log in.
 3. Toggle back to **Active** to restore access. The same API key works again.
 
 This is useful for temporary absences (vacation, leave) where you want to preserve the member's record and role.
@@ -163,17 +161,17 @@ This is useful for temporary absences (vacation, leave) where you want to preser
 
 | Page | Superadmin | Admin | Escalation agent | Viewer |
 |---|---|---|---|---|
-| Dashboard | Full | Full | — | Read-only |
+| Dashboard | Full | Full |: | Read-only |
 | Inbox | Full | Full | Own categories (read-only) | Read-only |
-| Team | Full (sees self) | Full (no superadmin) | — | — |
-| Agent identity | Full | Full | — | Read-only |
-| Knowledge base | Full | Full | — | Read-only |
-| Quick actions | Full | Full | — | — |
-| Widget configuration | Full | Full | — | — |
-| Integrations | Full | Full | — | — |
-| Memory & privacy | Full | Full | — | Read-only |
-| Account & billing | Full | Full | — | Read-only |
-| Setup wizard | Full | Full | — | — |
+| Team | Full (sees self) | Full (no superadmin) |: |: |
+| Agent identity | Full | Full |: | Read-only |
+| Knowledge base | Full | Full |: | Read-only |
+| Quick actions | Full | Full |: |: |
+| Widget configuration | Full | Full |: |: |
+| Integrations | Full | Full |: |: |
+| Memory & privacy | Full | Full |: | Read-only |
+| Account & billing | Full | Full |: | Read-only |
+| Setup wizard | Full | Full |: |: |
 
 ---
 

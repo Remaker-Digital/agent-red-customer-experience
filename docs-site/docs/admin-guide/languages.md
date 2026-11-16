@@ -31,7 +31,7 @@ The main language for AI responses. The intent classifier uses this to optimize 
 **What happens when you change it:**
 - New conversations immediately use the new primary language.
 - The intent classifier re-optimizes for the new language's patterns.
-- If you have FAQ entries written in the old language, they still work — the knowledge retrieval agent uses semantic search, which is language-aware. However, responses will sound more natural if your knowledge base content matches the primary language.
+- If you have FAQ entries written in the old language, they still work: the knowledge retrieval agent uses semantic search, which is language-aware. However, responses will sound more natural if your knowledge base content matches the primary language.
 
 ---
 

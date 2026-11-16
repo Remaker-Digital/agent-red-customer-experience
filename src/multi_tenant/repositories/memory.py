@@ -86,7 +86,10 @@ class MemoryVectorRepository(TenantScopedRepository):
             parameters=params,
             partition_key=tenant_id,
         ):
-            items.append(await self._decrypt_copy(item, tenant_id))
+            row = await self._take_list_row(item, tenant_id)
+            if row is None:
+                continue
+            items.append(row)
             if len(items) >= top_k:
                 break
 

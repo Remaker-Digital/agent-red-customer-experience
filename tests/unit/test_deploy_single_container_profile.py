@@ -48,7 +48,7 @@ from src.chat.models import (
 
 DEPLOY_SCRIPT = Path(__file__).resolve().parents[2] / "scripts" / "deploy.py"
 TAG = "v1.2.3"
-STAGING_GATEWAY = "agent-red-staging"
+STAGING_GATEWAY = "example-gateway-stage"
 GUARD_QUERY = "properties.template.containers[0].env[?name=='SINGLE_CONTAINER_MODE'].value | [0]"
 
 
@@ -373,9 +373,9 @@ def test_deploy_container_default_command_is_unchanged(deploy, monkeypatch):
     commands: list[str] = []
     monkeypatch.setattr(deploy, "_run", lambda cmd, timeout=120: (commands.append(cmd), (0, ""))[1])
     monkeypatch.setattr(deploy, "log", lambda msg: None)
-    assert deploy.deploy_container("agent-red-staging", "repo/api-gateway:v1.2.3") is True
+    assert deploy.deploy_container("example-gateway-stage", "repo/api-gateway:v1.2.3") is True
     assert commands == [
-        "az containerapp update --name agent-red-staging --resource-group Agent-Red "
+        "az containerapp update --name example-gateway-stage --resource-group Agent-Red "
         "--image repo/api-gateway:v1.2.3 --output none"
     ]
 

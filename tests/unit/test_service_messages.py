@@ -97,6 +97,7 @@ class TestServiceMessageDelivery:
         batch_sizes: list[int] = []
 
         async def mock_send_batch(subject, html, batch):
+            assert subject == "Agent Red: Test"
             batch_sizes.append(len(batch))
             return True
 

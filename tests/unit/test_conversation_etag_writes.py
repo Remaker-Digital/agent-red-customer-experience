@@ -25,6 +25,7 @@ from unittest.mock import AsyncMock, MagicMock, PropertyMock, patch
 import pytest
 from azure.core import MatchConditions
 from azure.cosmos.exceptions import CosmosAccessConditionFailedError
+from fastapi import HTTPException
 
 from src.chat import endpoints
 from src.chat.models import IssueReportRequest, MessageFeedbackRequest, SendMessageRequest, StreamEventType
@@ -211,16 +212,17 @@ async def test_a_message_appended_during_feedback_survives(session, container) -
 # -- a conflict that outlasts the retries ---------------------------------------------
 
 
-async def test_an_issue_report_that_keeps_conflicting_changes_nothing_and_still_answers(
+async def test_an_issue_report_that_keeps_conflicting_returns_failure_without_changes(
     session, container, caplog
 ) -> None:
     container.always_conflict = True
     before = copy.deepcopy(container.doc["messages"])
 
     with caplog.at_level(logging.WARNING, logger="src.chat.endpoints"):
-        response = await _report_issue()
+        with pytest.raises(HTTPException) as error:
+            await _report_issue()
 
-    assert response.accepted is True
+    assert error.value.status_code == 503
     assert container.doc["messages"] == before
     assert container.doc["message_count"] == 2
     assert len(container.replace_etags) == ATTEMPTS

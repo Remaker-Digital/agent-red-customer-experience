@@ -74,17 +74,21 @@ def _make_repos(
     """
     tenant_repo = AsyncMock()
     tenant_repo.query.return_value = tenant_query_results if tenant_query_results is not None else []
+    tenant_repo.list_archival_tenants.return_value = tenant_repo.query.return_value
 
     conversation_repo = AsyncMock()
     conversation_repo.query.return_value = conversation_query_results if conversation_query_results is not None else []
+    conversation_repo.query_count.return_value = len(conversation_repo.query.return_value)
     conversation_repo.delete.return_value = None
 
     profile_repo = AsyncMock()
     profile_repo.query.return_value = profile_query_results if profile_query_results is not None else []
+    profile_repo.query_count.return_value = len(profile_repo.query.return_value)
     profile_repo.delete.return_value = None
 
     vector_repo = AsyncMock()
     vector_repo.query.return_value = vector_query_results if vector_query_results is not None else []
+    vector_repo.query_count.return_value = len(vector_repo.query.return_value)
     vector_repo.delete.return_value = None
 
     audit_repo = AsyncMock()
@@ -164,10 +168,8 @@ class TestArchivalScan:
 
         assert isinstance(result, ArchivalScanResult)
         assert result.tenants_scanned == 3
-        tenant_repo.query.assert_awaited_once()
-        query_arg = tenant_repo.query.call_args.kwargs.get("query") or tenant_repo.query.call_args[0][0]
-        assert "active" in query_arg
-        assert "past_due" in query_arg
+        tenant_repo.list_archival_tenants.assert_awaited_once_with()
+        tenant_repo.query.assert_not_awaited()
 
     async def test_ap_02_trial_tier_returns_none_after_removal(self):
         """AP-02: Trial tier archival returns None since history_depth_days
@@ -192,6 +194,7 @@ class TestArchivalScan:
         service, repos = _make_service(
             tenant_query_results=[ent_tenant],
             conversation_query_results=old_convs,
+            blob_client=_make_blob_client(),
         )
         conversation_repo = repos[1]
 
@@ -369,9 +372,9 @@ class TestBlobUpload:
 
         result = await service.run_archival_scan()
 
-        # Documents are still counted as archived in dry-run
-        assert result.documents_archived == 2
-        assert result.bytes_written > 0  # Serialization still produces bytes
+        assert result.candidate_documents == 2
+        assert result.documents_archived == 0
+        assert result.bytes_written == 0
 
     async def test_ap_11b_blob_client_upload_called(self):
         """AP-11b: When blob client is provided, upload_blob is called.
@@ -416,6 +419,7 @@ class TestErrorIsolation:
 
         service, repos = _make_service(
             tenant_query_results=[good_tenant, bad_tenant, good_tenant_2],
+            blob_client=_make_blob_client(),
         )
         conversation_repo = repos[1]
         audit_repo = repos[4]
@@ -459,38 +463,38 @@ class TestResultAggregation:
         conversation_repo = repos[1]
         profile_repo = repos[2]
 
-        async def _conv_query(**kwargs):
+        async def _conv_count(**kwargs):
             params = kwargs.get("parameters", [])
             tenant_id = None
             for p in params:
                 if p.get("name") == "@tid":
                     tenant_id = p["value"]
             if tenant_id == _TENANT_ENT:
-                return [{"id": "c1"}, {"id": "c2"}]
+                return 2
             if tenant_id == _TENANT_ENT + "-2":
-                return [{"id": "c3"}]
-            return []
+                return 1
+            return 0
 
-        async def _prof_query(**kwargs):
+        async def _prof_count(**kwargs):
             params = kwargs.get("parameters", [])
             tenant_id = None
             for p in params:
                 if p.get("name") == "@tid":
                     tenant_id = p["value"]
             if tenant_id == _TENANT_ENT + "-2":
-                return [{"id": "p1"}]
-            return []
+                return 1
+            return 0
 
-        conversation_repo.query.side_effect = _conv_query
-        profile_repo.query.side_effect = _prof_query
+        conversation_repo.query_count.side_effect = _conv_count
+        profile_repo.query_count.side_effect = _prof_count
 
         result = await service.run_archival_scan()
 
         # 2 convs from ent + 1 conv from ent-2 + 1 profile from ent-2 = 4
-        assert result.documents_archived == 4
+        assert result.candidate_documents == 4
         assert result.tenants_scanned == 2
         assert len(result.tenant_details) == 2
-        assert result.bytes_written > 0
+        assert result.bytes_written == 0
         assert result.errors == 0
 
     async def test_ap_13b_empty_tenant_list_returns_zero_counts(self):

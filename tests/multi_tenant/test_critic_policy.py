@@ -43,7 +43,7 @@ _TENANT_ID = "t-critic-001"
 _CONVERSATION_ID = "conv-critic-001"
 _RESPONSE_TEXT = "Here is our return policy: you can return items within 30 days."
 _CUSTOMER_MESSAGE = "What is your return policy?"
-_CRITIC_URLS = ["http://10.0.1.7:8080", "http://10.0.1.7b:8080"]
+_CRITIC_URLS = ["http://192.0.2.7:8080", "http://10.0.1.7b:8080"]
 
 
 def _make_policy(
@@ -76,7 +76,7 @@ def _mock_httpx_response(
     resp = httpx.Response(
         status_code=status_code,
         json=json_body,
-        request=httpx.Request("POST", "http://10.0.1.7:8080/validate"),
+        request=httpx.Request("POST", "http://192.0.2.7:8080/validate"),
     )
     return resp
 
@@ -416,7 +416,7 @@ class TestCriticResultDataClass:
             flags=[],
             modified_response=None,
             latency_ms=50.0,
-            critic_instance="http://10.0.1.7:8080",
+            critic_instance="http://192.0.2.7:8080",
             request_id="req-001",
         )
 
@@ -433,7 +433,7 @@ class TestCriticResultDataClass:
             flags=[],
             modified_response=None,
             latency_ms=123.45,
-            critic_instance="http://10.0.1.7:8080",
+            critic_instance="http://192.0.2.7:8080",
             request_id="req-002",
         )
 
@@ -459,7 +459,7 @@ class TestHealthCheck:
             # Both replicas healthy
             client.get.return_value = httpx.Response(
                 200,
-                request=httpx.Request("GET", "http://10.0.1.7:8080/health"),
+                request=httpx.Request("GET", "http://192.0.2.7:8080/health"),
             )
             mock_client.return_value = client
 

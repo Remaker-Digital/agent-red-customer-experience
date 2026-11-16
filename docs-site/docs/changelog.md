@@ -7,9 +7,15 @@ title: Changelog
 
 All notable changes to Agent Red Customer Experience are documented here.
 
-The product is in a closed beta at v2.0.2. Access is by request. Email support@remakerdigital.com. There is no self-serve sign-up and no free trial. Published prices are planned and are not on offer yet.
+The product is in a closed beta at v2.0.20. Access is by request. Email support@remakerdigital.com. There is no self-serve sign-up and no free trial. Published prices are planned and are not on offer yet.
 
 ---
+
+## v2.0.20 (closed beta)
+
+- Visitors can attach UTF-8 text, verify email before chat, and report an issue on first open.
+- A dragged chat panel reopens inside the current viewport.
+- The source snapshot includes retention and archival code and its offline tests.
 
 ## v2.0.2 (closed beta)
 
@@ -42,62 +48,62 @@ What this beta hides, and what it still sends in clear:
 
 ---
 
-## v1.98.91 — Phone Identity, Canonical Identity & Production Hardening (Staging, 2026-04-09)
+## v1.98.91: Phone Identity, Canonical Identity & Production Hardening (Staging, 2026-04-09)
 
 ### Phone identity channel (SPEC-1879)
 
 Full SMS OTP verification flow for customer identity.
 
-- **Phone OTP endpoints** — send-sms / verify-sms with E.164 validation, SHA-256 hashed tokens
-- **Conversation-scoped verification** — phone_verified separate from customer_verified
-- **Widget integration** — PhoneOtpVerification component, pre-chat phone field, 8 locale files
-- **Admin inbox** — phone display in identity panel, escalation gate for unverified phones
-- **Tier gate** — professional+ tier required for phone identity features
-- **Azure Communication Services** — toll-free SMS via ACS (verification submitted)
+- **Phone OTP endpoints**: send-sms / verify-sms with E.164 validation, SHA-256 hashed tokens
+- **Conversation-scoped verification**: phone_verified separate from customer_verified
+- **Widget integration**: PhoneOtpVerification component, pre-chat phone field, 8 locale files
+- **Admin inbox**: phone display in identity panel, escalation gate for unverified phones
+- **Tier gate**: professional+ tier required for phone identity features
+- **Azure Communication Services**: toll-free SMS via ACS (verification submitted)
 
 ### Canonical identity (ADR-004)
 
 Internal stable customer identity replacing contact-means-as-key.
 
-- **Canonical ID** — `cid_<uuid>` as primary key, contact means as mutable attributes
-- **Contact attributes** — array-based contact_attributes replacing flat email fields
-- **Session find-or-create** — automatic identity resolution on conversation start
-- **Admin APIs** — identity lookup, merge, and contact attribute management
-- **Migration script** — production-safe migration with rollback capability
+- **Canonical ID**, `cid_<uuid>` as primary key, contact means as mutable attributes
+- **Contact attributes**: array-based contact_attributes replacing flat email fields
+- **Session find-or-create**: automatic identity resolution on conversation start
+- **Admin APIs**: identity lookup, merge, and contact attribute management
+- **Migration script**: production-safe migration with rollback capability
 
 ### Production hardening
 
-- **Envelope encryption** — P0 incident closed; DEK recovery, field restoration, safety gates
-- **Deploy procedure** — 5 work packages: approval gate, rollback, unified config, structured logging, canonical paths
-- **Tenant provisioning** — display_name (auto-generated), hard contact gate on provision_tenant()
-- **CI stability** — lint zero errors (E/F) in `src/`, 9/11 test shards green, ~50 test fixes
+- **Envelope encryption**: P0 incident closed; DEK recovery, field restoration, safety gates
+- **Deploy procedure**: 5 work packages: approval gate, rollback, unified config, structured logging, canonical paths
+- **Tenant provisioning**: display_name (auto-generated), hard contact gate on provision_tenant()
+- **CI stability**: lint zero errors (E/F) in `src/`, 9/11 test shards green, ~50 test fixes
 
 ### Code quality improvements
 
-- **Lint remediation** — 1,446 ruff errors resolved to zero (E/F rules) in `src/`; non-`src/` directories (tests, admin, scripts) retain pre-existing violations
-- **Import cycle detection** — automated detector, 0 real cycles across 281 modules
-- **GitHub hygiene** — README refresh, branch protection, issue templates
+- **Lint remediation**: 1,446 ruff errors resolved to zero (E/F rules) in `src/`; non-`src/` directories (tests, admin, scripts) retain pre-existing violations
+- **Import cycle detection**: automated detector, 0 real cycles across 281 modules
+- **GitHub hygiene**: README refresh, branch protection, issue templates
 - **Evaluation reports**: Agent Red technical assessment documents
 
 ---
 
-## v1.98.16 — Self-Service Deployment Pipeline & Dashboard Overhaul (Production, 2026-03-23)
+## v1.98.16: Self-Service Deployment Pipeline & Dashboard Overhaul (Production, 2026-03-23)
 
 ### Self-service deployment pipeline (SPEC-1825)
 
 Build, deploy, and verify directly from internal operations tooling without CLI access.
 
-- **Trigger Pipeline** — one-click build, deploy, and verify for any version tag
-- **Pipeline actions** — full pipeline, build-only, or deploy-only
-- **GitHub Actions integration** — builds trigger `workflow_dispatch` events, with real-time status polling
-- **Deployment history** — every pipeline run recorded with status, duration, and outcome
-- **Environment isolation** — each environment can only deploy to itself (auto-detected from FQDN, SPEC-0058)
+- **Trigger Pipeline**: one-click build, deploy, and verify for any version tag
+- **Pipeline actions**: full pipeline, build-only, or deploy-only
+- **GitHub Actions integration**: builds trigger `workflow_dispatch` events, with real-time status polling
+- **Deployment history**: every pipeline run recorded with status, duration, and outcome
+- **Environment isolation**: each environment can only deploy to itself (auto-detected from FQDN, SPEC-0058)
 
 ### Dashboard health overhaul (SPEC-1851)
 
 Simplified the Platform Dashboard to show only operational infrastructure:
 
-- **4 health cards** — Cosmos DB, Redis, Key Vault, API Version
+- **4 health cards**: Cosmos DB, Redis, Key Vault, API Version
 - Removed decommissioned NATS card (was always showing "Disconnected")
 - Removed non-functional Circuit Breakers card (was always showing "Unknown")
 - Key Vault probe now reflects actual status instead of always "Degraded"
@@ -120,16 +126,16 @@ Complete separation of staging and production:
 
 ---
 
-## v1.98.0 — Quality Guardrails & Automated Testing Infrastructure (Production, 2026-03-21)
+## v1.98.0: Quality Guardrails & Automated Testing Infrastructure (Production, 2026-03-21)
 
 ### Quality guardrails
 
 4 pre-commit hooks that run automatically on every code change:
 
-- **Test deletion guard** — prevents accidental test removal
-- **Assertion ratchet** — ensures test count never decreases
-- **Architectural guards** — enforces module boundaries and import rules
-- **Credential scan** — blocks secrets from entering the repository
+- **Test deletion guard**: prevents accidental test removal
+- **Assertion ratchet**: ensures test count never decreases
+- **Architectural guards**: enforces module boundaries and import rules
+- **Credential scan**: blocks secrets from entering the repository
 
 ### Fuzzing suite (SPEC-1839)
 
@@ -150,7 +156,7 @@ Cloud-native test container running 9,200+ tests across 12 suites:
 
 ---
 
-## v1.96.0 — Test Execution Console & Cloud-Native Verification (Production, 2026-03-19)
+## v1.96.0: Test Execution Console & Cloud-Native Verification (Production, 2026-03-19)
 
 ### Test execution tooling (SPEC-1826)
 
@@ -165,7 +171,7 @@ Full test management from internal operations tooling:
 
 ### Verification runner improvements
 
-- Shared HTTP client — single TLS handshake per run
+- Shared HTTP client: single TLS handshake per run
 - TOCTOU-safe concurrent run guard (sentinel-based)
 - Progressive Cosmos updates for real-time status polling
 - Proper duration tracking on error and cancel paths
@@ -173,18 +179,18 @@ Full test management from internal operations tooling:
 
 ---
 
-## v1.93.5 — Cloud-Native Verification Runner & Code Review Hardening (Staging, 2026-03-18)
+## v1.93.5: Cloud-Native Verification Runner & Code Review Hardening (Staging, 2026-03-18)
 
 ### Cloud-native verification runner (SPEC-1845/1846)
 
 Tooling-triggered end-to-end health checks that run entirely within the Azure environment:
 
 - **4 verification suites:** Smoke (8 health probes, ~5s), Regression (25 checks, ~3min), E2E (31 checks, ~8min), Full (36 checks, ~12min)
-- **Progressive Cosmos updates** — real-time progress polling with pass/fail counts
-- **Shared HTTP client** — single TLS handshake per run instead of per-check
-- **GOV-10 compliance** — all health checks use live HTTP interfaces, not internal imports
-- **TOCTOU-safe concurrent run guard** — sentinel-based protection prevents duplicate runs
-- **Fail-closed FQDN resolution** — cross-environment runs require explicit env var config
+- **Progressive Cosmos updates**: real-time progress polling with pass/fail counts
+- **Shared HTTP client**: single TLS handshake per run instead of per-check
+- **GOV-10 compliance**: all health checks use live HTTP interfaces, not internal imports
+- **TOCTOU-safe concurrent run guard**: sentinel-based protection prevents duplicate runs
+- **Fail-closed FQDN resolution**: cross-environment runs require explicit env var config
 
 ### Test execution tooling (SPEC-1826)
 
@@ -199,22 +205,22 @@ Tooling-triggered end-to-end health checks that run entirely within the Azure en
 - Environment allowlist validation on `list_test_runs` filter
 - Key Vault probe honestly labeled as config-only check
 - `started_at` timestamp captured once (no drift across progressive updates)
-- Stale `detailRun` modal fixed — derived from `runs` array via ID
+- Stale `detailRun` modal fixed: derived from `runs` array via ID
 - Null date guard prevents "Invalid Date" rendering
 
 ---
 
-## v1.91.0 — Operational Control Plane (Production, 2026-03-17)
+## v1.91.0: Operational Control Plane (Production, 2026-03-17)
 
 ### Operational Control Plane
 
 Complete data-driven runtime configuration system replacing all hardcoded tier constants:
 
-- **EntitlementService** — 3-tier cache (LRU 5s, Redis 60s, Cosmos DB) with frozen fallback values
-- **39 Control Plane API endpoints** — entitlement CRUD, feature flags, blocklists, rate limits, alerts, diagnostics, maintenance mode
-- **Internal operations workflows expanded** — control-plane coverage increased across runtime management flows
-- **Configuration audit trail** — old/new key snapshots, diff summaries, and change reasons on every config change
-- **Build & deploy orchestrators** — deterministic scripts replacing conversation workflows
+- **EntitlementService**: 3-tier cache (LRU 5s, Redis 60s, Cosmos DB) with frozen fallback values
+- **39 Control Plane API endpoints**: entitlement CRUD, feature flags, blocklists, rate limits, alerts, diagnostics, maintenance mode
+- **Internal operations workflows expanded**: control-plane coverage increased across runtime management flows
+- **Configuration audit trail**: old/new key snapshots, diff summaries, and change reasons on every config change
+- **Build & deploy orchestrators**: deterministic scripts replacing conversation workflows
 
 ### Infrastructure
 
@@ -224,16 +230,16 @@ Complete data-driven runtime configuration system replacing all hardcoded tier c
 
 ---
 
-## v1.89.0 — Transport Hierarchy & Sign-In Codes (Staging, 2026-03-16)
+## v1.89.0: Transport Hierarchy & Sign-In Codes (Staging, 2026-03-16)
 
 ### AGNTCY transport hierarchy
 
 Completed the 4-tier transport hierarchy for agent communication:
 
-- **Tier 1 — SLIM** (primary): SLIM routing service with HTTP/2 ingress and shared secret auth
-- **Tier 2 — NATS JetStream** (fallback): WebSocket mode to work within Azure Container Apps Envoy proxy
-- **Tier 3 — HTTP Containers**: Direct internal HTTP dispatch
-- **Tier 4 — In-process**: Python method call for development
+- **Tier 1: SLIM** (primary): SLIM routing service with HTTP/2 ingress and shared secret auth
+- **Tier 2: NATS JetStream** (fallback): WebSocket mode to work within Azure Container Apps Envoy proxy
+- **Tier 3: HTTP Containers**: Direct internal HTTP dispatch
+- **Tier 4: In-process**: Python method call for development
 
 ### AGNTCY Directory integration
 
@@ -249,7 +255,7 @@ Completed the 4-tier transport hierarchy for agent communication:
 
 ---
 
-## v1.88.1 — Spec Verification Hotfix (Production, 2026-03-16)
+## v1.88.1: Spec Verification Hotfix (Production, 2026-03-16)
 
 - Verified all 2,009 specifications against source code
 - Fixed SPEC-0429: login now magic-link-primary when `?tenant=` parameter present
@@ -258,7 +264,7 @@ Completed the 4-tier transport hierarchy for agent communication:
 
 ---
 
-## v1.88.0 — Bug Fixes & Email Refactor (Production, 2026-03-15)
+## v1.88.0: Bug Fixes & Email Refactor (Production, 2026-03-15)
 
 ### Bug fixes
 
@@ -275,22 +281,22 @@ Completed the 4-tier transport hierarchy for agent communication:
 
 ---
 
-## v1.87.0 — Data-Driven Rate Limiting & Agent Containerization (Production, 2026-03-15)
+## v1.87.0: Data-Driven Rate Limiting & Agent Containerization (Production, 2026-03-15)
 
 ### Data-driven rate limiting
 
 Rate limits are now derived from empirical load testing rather than arbitrary values. A ramp-to-overload test (10→150 concurrent users) established the safe throughput ceiling at **1,380 requests per minute per replica**.
 
-- **300 RPM per tenant** — derived from production capacity (2,760 RPM at min=2 replicas ÷ 9 safety margin for concurrent max-rate tenants). Down from the previous 500 RPM.
-- **10 RPM minimum floor** — prevents any configuration path (per-tenant override, tier default, or misconfiguration) from setting a tenant to 0 RPM. Admin authentication always works.
-- **Uniform across all tiers** — rate limits are a platform safety mechanism, not a monetization lever. Starter, Professional, and Enterprise all share the same 300 RPM limit.
-- **Per-tenant override** — individual tenants can be assigned custom RPM values, subject to the 10 RPM floor.
+- **300 RPM per tenant**: derived from production capacity (2,760 RPM at min=2 replicas ÷ 9 safety margin for concurrent max-rate tenants). Down from the previous 500 RPM.
+- **10 RPM minimum floor**: prevents any configuration path (per-tenant override, tier default, or misconfiguration) from setting a tenant to 0 RPM. Admin authentication always works.
+- **Uniform across all tiers**: rate limits are a platform safety mechanism, not a monetization lever. Starter, Professional, and Enterprise all share the same 300 RPM limit.
+- **Per-tenant override**: individual tenants can be assigned custom RPM values, subject to the 10 RPM floor.
 
 ### Agent containerization (staging)
 
 The closed beta does not run agents as separate container apps. See v2.0.0 above. This entry records an earlier layout: all six AI agents plus the Co-Pilot ran as independent Azure Container Apps with HTTP dispatch:
 
-- **7 agent containers:** Intent Classifier, Knowledge Retrieval, Response Generator, Escalation Handler, Analytics Collector, Critic Supervisor, and Co-Pilot — each independently scalable.
+- **7 agent containers:** Intent Classifier, Knowledge Retrieval, Response Generator, Escalation Handler, Analytics Collector, Critic Supervisor, and Co-Pilot: each independently scalable.
 - **3-tier dispatch architecture:** NATS transport (Tier 1) → HTTP containers (Tier 2) → in-process fallback (Tier 3). Production currently uses Tier 3; staging uses Tier 2.
 - **AGNTCY SDK integration:** Protocol negotiation working with A2A, MCP, and FastMCP protocols. NATS transport initialized but blocked by Azure Container Apps TCP routing limitation.
 
@@ -302,7 +308,7 @@ The closed beta does not run agents as separate container apps. See v2.0.0 above
 
 ---
 
-## v1.83.0 — 680-Tenant Infrastructure Scaling (Production, 2026-03-13)
+## v1.83.0: 680-Tenant Infrastructure Scaling (Production, 2026-03-13)
 
 ### Distributed rate limiting with Redis
 
@@ -329,9 +335,9 @@ Attempts to exceed tier limits return a clear `403 Forbidden` with the specific 
 
 ### Scaling infrastructure
 
-- **4 uvicorn workers per replica** (up from 1) — at minimum 2 replicas, production runs 8 concurrent workers.
+- **4 uvicorn workers per replica** (up from 1): at minimum 2 replicas, production runs 8 concurrent workers.
 - **Global SSE connection limit** (5,000) prevents connection exhaustion under load.
-- **LRU-bounded data structures** — pre-auth IP tracker (10,000 max) and TOCTOU locks (1,000 max) prevent unbounded memory growth.
+- **LRU-bounded data structures**: pre-auth IP tracker (10,000 max) and TOCTOU locks (1,000 max) prevent unbounded memory growth.
 - **Tenant metadata cache** with 300-second TTL reduces Cosmos DB reads by ~80% for repeated requests.
 
 ### Health metrics endpoint
@@ -345,7 +351,7 @@ New `GET /health/metrics` endpoint (platform admin only) reports real-time opera
 
 ---
 
-## v1.82.1 — Rate Limiter Fix, Superadmin API Refactor, Config Authority (Production, 2026-03-12)
+## v1.82.1: Rate Limiter Fix, Superadmin API Refactor, Config Authority (Production, 2026-03-12)
 
 ### Configuration authority over knowledge base
 
@@ -375,7 +381,7 @@ The administrative API monolith (5,085 lines) has been split into five domain su
 
 ---
 
-## v1.82.0 — Mock Dev Environment and Admin UI Polish (Staging, 2026-03-11)
+## v1.82.0: Mock Dev Environment and Admin UI Polish (Staging, 2026-03-11)
 
 ### Mock development environment
 
@@ -391,7 +397,7 @@ The administrative API monolith (5,085 lines) has been split into five domain su
 
 ---
 
-## v1.81.0 — Auth Hardening, Rate Limit Backend, and CI/CD (Production, 2026-03-10)
+## v1.81.0: Auth Hardening, Rate Limit Backend, and CI/CD (Production, 2026-03-10)
 
 ### Authentication hardening
 
@@ -414,7 +420,7 @@ The administrative API monolith (5,085 lines) has been split into five domain su
 
 ---
 
-## v1.80.5 — Widget Config UX, Launcher Preview, and KB Freshness (Production, 2026-03-10)
+## v1.80.5: Widget Config UX, Launcher Preview, and KB Freshness (Production, 2026-03-10)
 
 ### Widget configuration improvements
 
@@ -436,7 +442,7 @@ The administrative API monolith (5,085 lines) has been split into five domain su
 
 ---
 
-## v1.80.0 — Privileged Authentication Isolation, Key Recovery, and Login Notifications (Production, 2026-03-09)
+## v1.80.0: Privileged Authentication Isolation, Key Recovery, and Login Notifications (Production, 2026-03-09)
 
 ### Platform admin isolation
 
@@ -457,7 +463,7 @@ The administrative API monolith (5,085 lines) has been split into five domain su
 
 ---
 
-## v1.79.2 — Rate Limit Exemption and Hotfix (Production, 2026-03-08)
+## v1.79.2: Rate Limit Exemption and Hotfix (Production, 2026-03-08)
 
 ### Platform admin rate limit exemption
 
@@ -465,11 +471,11 @@ The administrative API monolith (5,085 lines) has been split into five domain su
 
 ### Hotfix
 
-- Fixed `replace_item()` in Cosmos SDK leaking `partition_key` through `**kwargs` to aiohttp — changed to `upsert_item()`.
+- Fixed `replace_item()` in Cosmos SDK leaking `partition_key` through `**kwargs` to aiohttp: changed to `upsert_item()`.
 
 ---
 
-## v1.77.0 — Human-Readable Tenant IDs and Test Mode Removal (Production, 2026-03-08)
+## v1.77.0: Human-Readable Tenant IDs and Test Mode Removal (Production, 2026-03-08)
 
 ### Human-readable tenant IDs
 
@@ -481,7 +487,7 @@ The administrative API monolith (5,085 lines) has been split into five domain su
 
 ---
 
-## v1.76.0 — CORS Fix, Widget Resilience, and UX Improvements (Production, 2026-03-07)
+## v1.76.0: CORS Fix, Widget Resilience, and UX Improvements (Production, 2026-03-07)
 
 :::note
 Originally deployed to staging for validation. Promoted to production on 2026-03-08.
@@ -518,7 +524,7 @@ A critical fix ensures that CORS headers are present on all HTTP responses, incl
 
 ---
 
-## v1.62.0 — Co-Pilot Agent, PII Tokenization, and AGNTCY Platform (2026-03-01)
+## v1.62.0: Co-Pilot Agent, PII Tokenization, and AGNTCY Platform (2026-03-01)
 
 ### Admin Co-Pilot Agent
 
@@ -541,7 +547,7 @@ A new reversible PII tokenization layer protects customer data during AI process
 Agent Red now uses the AGNTCY SDK as its mandatory foundation for all agent-to-agent communication.
 
 - **Containerized agent deployment:** All seven specialized AI agents (Intent Classifier, Knowledge Retriever, Response Generator, Critic Supervisor, Escalation Handler, Analytics Collector, and Co-Pilot) can run as independent containers with A2A transport.
-- **Transport-first routing:** Agent dispatch uses a three-tier approach — AGNTCY transport (preferred), HTTP fallback, in-process fallback — ensuring zero downtime during infrastructure transitions.
+- **Transport-first routing:** Agent dispatch uses a three-tier approach: AGNTCY transport (preferred), HTTP fallback, in-process fallback: ensuring zero downtime during infrastructure transitions.
 - **Streaming over transport:** Response generation supports SSE streaming through the A2A transport layer for real-time customer-facing responses.
 
 ### Observability and cost attribution
@@ -560,7 +566,7 @@ Agent Red now uses the AGNTCY SDK as its mandatory foundation for all agent-to-a
 
 ---
 
-## v1.61.0 — Targeting Rules, Engagement Triggers, and Documentation Audit (2026-02-28)
+## v1.61.0: Targeting Rules, Engagement Triggers, and Documentation Audit (2026-02-28)
 
 ### Targeting rules and engagement triggers
 - **Page-level targeting rules:** Configure which pages the widget appears on using URL include/exclude patterns with `+` and `-` prefix syntax. Managed from both standalone and embedded admin UIs.
@@ -580,7 +586,7 @@ Agent Red now uses the AGNTCY SDK as its mandatory foundation for all agent-to-a
 
 ---
 
-## v1.59.0 — Unified Auth, 2FA, and RBAC (2026-02-26)
+## v1.59.0: Unified Auth, 2FA, and RBAC (2026-02-26)
 
 ### Unified authentication and 2FA
 
@@ -588,7 +594,7 @@ A comprehensive security overhaul brings multi-factor authentication and role-ba
 
 - **Team member identity in magic links:** Magic link authentication sessions now correctly identify the team member who clicked the link, preserving their role and permissions throughout the session. Multi-tenant disambiguation handles team members who belong to multiple tenants.
 - **SMS-based two-factor authentication:** Team members can enable 2FA via SMS verification. After API key login, a second challenge step requires a one-time code sent to the team member's registered phone number.
-- **MFA management API:** Six new endpoints for managing MFA enrollment — check status, enroll, confirm enrollment, disable, and grant or revoke opt-out for team members who cannot use SMS.
+- **MFA management API:** Six new endpoints for managing MFA enrollment: check status, enroll, confirm enrollment, disable, and grant or revoke opt-out for team members who cannot use SMS.
 - **Brute-force mitigation:** Failed 2FA attempts are tracked with exponential backoff and lockout after repeated failures.
 
 ### RBAC enforcement
@@ -600,7 +606,7 @@ A comprehensive security overhaul brings multi-factor authentication and role-ba
 
 ### Admin UI improvements
 
-- **Setup checklist:** A new guided checklist helps merchants track onboarding progress — configure brand, add knowledge, customize widget, and activate.
+- **Setup checklist:** A new guided checklist helps merchants track onboarding progress: configure brand, add knowledge, customize widget, and activate.
 - **Named configuration delete:** Merchants can now delete saved configuration snapshots.
 - **Configuration timestamps:** Saved configurations display their creation and last-modified timestamps.
 - **Favicon and PWA manifest:** The standalone admin now has proper favicons and a Progressive Web App manifest for installability.
@@ -622,7 +628,7 @@ A comprehensive security overhaul brings multi-factor authentication and role-ba
 
 ---
 
-## v1.57.20 — Staging environment and email polish (2026-02-24)
+## v1.57.20: Staging environment and email polish (2026-02-24)
 
 ### Parallel staging environment
 
@@ -636,7 +642,7 @@ A complete parallel staging environment has been provisioned for validating the 
 
 ---
 
-## v1.57.19 — Email architecture overhaul (2026-02-24)
+## v1.57.19: Email architecture overhaul (2026-02-24)
 
 ### SMTP-first email delivery
 
@@ -660,13 +666,13 @@ All nine email modules have been restructured to use Titan SMTP as the primary d
 
 ---
 
-## v1.57.12 — Widget key rotation fix (2026-02-24)
+## v1.57.12: Widget key rotation fix (2026-02-24)
 
 ### Critical fixes
 
 - **Widget key rotation:** Fixed a document ID format issue where the rotation endpoint used an incorrect ID pattern to locate the preferences document. The endpoint now correctly discovers the document ID before patching, ensuring rotated keys are immediately reflected in the admin UI.
 - **Cache invalidation:** Direct Cosmos DB patches now trigger config cache invalidation, preventing stale data from being served for up to 60 seconds after key rotation.
-- **Resend welcome email:** Fixed false-success toast notifications — the frontend now checks both HTTP status and delivery confirmation flag before showing success.
+- **Resend welcome email:** Fixed false-success toast notifications: the frontend now checks both HTTP status and delivery confirmation flag before showing success.
 
 ### Email improvements
 
@@ -674,7 +680,7 @@ All nine email modules have been restructured to use Titan SMTP as the primary d
 
 ---
 
-## v1.57.7 — Widget key display and welcome email branding (2026-02-24)
+## v1.57.7: Widget key display and welcome email branding (2026-02-24)
 
 ### Widget key display and rotation
 
@@ -696,7 +702,7 @@ The avatar upload size limit has been increased from 500 characters (intended fo
 
 ---
 
-## v1.57.4 — Beta verification and quality hardening (2026-02-23)
+## v1.57.4: Beta verification and quality hardening (2026-02-23)
 
 ### Beta readiness (v1.57.0)
 
@@ -716,7 +722,7 @@ An independent assessment review identified four items, all resolved:
 
 ### Critical path verification (v1.57.4)
 
-The full 21-test critical path (CP.1–CP.21) has been verified against production, covering tenant provisioning, setup wizard, activation, all admin pages, live chat pipeline, dashboard, inbox, and configuration persistence. All 21 tests pass.
+The full 21-test critical path (CP.1, CP.21) has been verified against production, covering tenant provisioning, setup wizard, activation, all admin pages, live chat pipeline, dashboard, inbox, and configuration persistence. All 21 tests pass.
 
 ### Tests
 
@@ -724,11 +730,11 @@ The full 21-test critical path (CP.1–CP.21) has been verified against producti
 
 ---
 
-## v1.56.0 — Identity pipeline and tenant provisioning (2026-02-22)
+## v1.56.0: Identity pipeline and tenant provisioning (2026-02-22)
 
 ### Identity preprocessor pipeline
 
-A new centralized identity preprocessing stage has been added to the chat pipeline. Before the AI orchestrator processes a message, the identity preprocessor extracts verified customer identity from all available sources — OTP tokens, Shopify HMAC, pre-chat form data, and session context — and injects it into the conversation. This ensures every AI response has access to the customer's verified identity regardless of how they authenticated.
+A new centralized identity preprocessing stage has been added to the chat pipeline. Before the AI orchestrator processes a message, the identity preprocessor extracts verified customer identity from all available sources: OTP tokens, Shopify HMAC, pre-chat form data, and session context: and injects it into the conversation. This ensures every AI response has access to the customer's verified identity regardless of how they authenticated.
 
 - **Centralized extraction:** Identity resolution is now a single pipeline stage instead of being scattered across multiple components. The preprocessor runs before the orchestrator and populates customer identity fields (name, email, verification status) on the session and conversation records.
 - **Session identity persistence:** Verified customer identity is stored on the chat session, so subsequent messages in the same conversation automatically carry the customer's identity without re-verification.
@@ -741,11 +747,11 @@ A new centralized identity preprocessing stage has been added to the chat pipeli
 
 ### Tests
 
-- 57 new tests across 5 test files — identity preprocessor (14), pipeline wiring (5), system prompt identity (12), tenant provisioning (12), superadmin creation (8), plus 6 test drift fixes for new schema values
+- 57 new tests across 5 test files: identity preprocessor (14), pipeline wiring (5), system prompt identity (12), tenant provisioning (12), superadmin creation (8), plus 6 test drift fixes for new schema values
 
 ---
 
-## v1.55.1 — Hotfix (2026-02-22)
+## v1.55.1: Hotfix (2026-02-22)
 
 ### Bug fix
 
@@ -753,10 +759,10 @@ A new centralized identity preprocessing stage has been added to the chat pipeli
 
 ---
 
-## v1.55.0 — Cycles 15-19 (2026-02-22)
+## v1.55.0: Cycles 15-19 (2026-02-22)
 
 ### Onboarding polish (Cycle 19)
-- **Automatic widget key generation (WI-E1):** Widget keys are now generated automatically when a tenant is provisioned — no manual setup required. Keys are created during Stripe checkout, Shopify billing confirmation, and trial provisioning. The rotation endpoint now correctly updates both the authentication hash and the admin-visible raw key.
+- **Automatic widget key generation (WI-E1):** Widget keys are now generated automatically when a tenant is provisioned: no manual setup required. Keys are created during Stripe checkout, Shopify billing confirmation, and trial provisioning. The rotation endpoint now correctly updates both the authentication hash and the admin-visible raw key.
 - **Welcome email (WI-E2):** New merchants receive a branded welcome email upon account creation containing their API key and widget key credentials, security notices, and getting-started steps. Sent via Azure Communication Services with SMTP fallback.
 - **Trial expiry warning emails (WI-E3):** Trial tenants receive automated warning emails at 7 days, 3 days, and 1 day before expiry. Each tier has distinct urgency styling (blue/info, amber/warning, red/critical). Deduplication prevents repeat sends. Background task runs every 12 hours.
 - **Setup wizard re-trigger (WI-E4):** The onboarding wizard now re-appears on each new browser session for merchants who haven't completed activation, instead of being permanently dismissed after the first viewing.
@@ -769,13 +775,13 @@ A new centralized identity preprocessing stage has been added to the chat pipeli
 - **Trial expiry scanner (WI-D1):** Proactively marks expired trial tenants as `trial_expired` in the database. Runs hourly as a background task. Defense-in-depth: the middleware already rejects expired trials at request time; the scanner ensures status accuracy for dashboards and reports.
 
 ### Customer authentication (Cycle 16)
-- **OTP email verification (AUTH-3):** Customers entering their email in the pre-chat form can verify their identity via a 6-digit one-time password sent to their email. Verified customers unlock full Persistent Customer Memory — the AI remembers them across conversations. OTP codes have a 10-minute TTL with rate limiting (3 per 5 minutes).
-- **Shopify customer passthrough (AUTH-4):** Logged-in Shopify customers are automatically identified via HMAC-SHA256 verification — zero-friction identity that skips the pre-chat form entirely. Configure your Customer Identity Secret in the Shopify theme settings.
+- **OTP email verification (AUTH-3):** Customers entering their email in the pre-chat form can verify their identity via a 6-digit one-time password sent to their email. Verified customers unlock full Persistent Customer Memory: the AI remembers them across conversations. OTP codes have a 10-minute TTL with rate limiting (3 per 5 minutes).
+- **Shopify customer passthrough (AUTH-4):** Logged-in Shopify customers are automatically identified via HMAC-SHA256 verification: zero-friction identity that skips the pre-chat form entirely. Configure your Customer Identity Secret in the Shopify theme settings.
 - **Profile linkage (AUTH-5):** Verified customer identity (via OTP or Shopify HMAC) is now linked to the conversation record, enabling the AI to retrieve purchase history, preferences, and past interactions. A critical transport bug was fixed where non-Shopify customers' email addresses were not transmitted to the backend.
 
 ### Pre-chat identification gate (Cycle 15)
 - **Pre-chat form default ON (AUTH-1):** The pre-chat form (Name + Email) is now enabled by default for all new tenants. Existing tenants are unaffected.
-- **Guest access with warning:** Customers can skip identification ("Continue as guest"), but the AI immediately warns about limited capabilities — order lookups, account management, loyalty programs, and personalized recommendations are unavailable without identification. Customers must confirm they want to proceed anonymously.
+- **Guest access with warning:** Customers can skip identification ("Continue as guest"), but the AI immediately warns about limited capabilities: order lookups, account management, loyalty programs, and personalized recommendations are unavailable without identification. Customers must confirm they want to proceed anonymously.
 - **Anonymous session AI rules:** The AI prompts anonymous customers for their email when they ask about identity-gated topics (orders, account, loyalty, rewards).
 
 ### Activation and backend improvements (Cycle 15)
@@ -786,20 +792,20 @@ A new centralized identity preprocessing stage has been added to the chat pipeli
 - **Knowledge base filter labels (WI-A6):** Filter dropdowns on the Knowledge Base page now have explicit labels for accessibility.
 
 ### Tests
-- 99 new unit tests across Cycles 15-19 (9 + 35 + 20 + 35) — all pass, 0 new failures
+- 99 new unit tests across Cycles 15-19 (9 + 35 + 20 + 35): all pass, 0 new failures
 
 ---
 
-## v1.54.7 — 2026-02-21
+## v1.54.7: 2026-02-21
 
 ### Light/dark color mode
 - **CSS custom property theming:** All surface, text, and overlay tokens in `styles.ts` now reference CSS custom properties (`var(--ar-*)`) instead of hardcoded hex values. The browser resolves these at paint time, enabling instant theme switching without React re-renders.
-- **Light mode override:** New `html[data-mantine-color-scheme="light"]` block in `tokens.css` redefines all mode-dependent tokens — surfaces become white, text becomes dark, borders and overlays lighten.
+- **Light mode override:** New `html[data-mantine-color-scheme="light"]` block in `tokens.css` redefines all mode-dependent tokens: surfaces become white, text becomes dark, borders and overlays lighten.
 - **Auto color mode default:** The widget `colorMode` setting defaults to `Auto`, which follows the visitor's OS preference via `prefers-color-scheme`.
 - **Header always dark:** The admin header retains its dark chrome in both modes via hardcoded CSS rules.
 - **Widget preview isolation:** The widget preview panel always renders with a dark background using hardcoded hex values, independent of the admin's active color scheme.
 - **Toggle persistence:** Color mode selection persists across page reloads via Mantine's `localStorage` mechanism.
-- **10th verification dimension:** New "Color Mode Consistency" test dimension (CM.1–CM.4) added to both UI test procedures — verifying light mode rendering, dark mode regression, widget preview isolation, and toggle persistence.
+- **10th verification dimension:** New "Color Mode Consistency" test dimension (CM.1, CM.4) added to both UI test procedures: verifying light mode rendering, dark mode regression, widget preview isolation, and toggle persistence.
 
 ### Light-mode palette
 
@@ -815,12 +821,12 @@ A new centralized identity preprocessing stage has been added to the chat pipeli
 
 ---
 
-## v1.54.0 — 2026-02-20
+## v1.54.0: 2026-02-20
 
 ### Knowledge automation
 - **Storefront content ingestion (KA-1):** Automatic extraction of product titles, descriptions, collections, and policies from your Shopify storefront. Ingested content is stored as knowledge base articles with `storefront` source attribution.
 - **Industry template library (KA-2):** 11 industry-specific knowledge base templates (Electronics, Fashion, Beauty, Food, Health, Home, Jewelry, Pet, Sports, Toys, General) with pre-written FAQ articles, shipping policies, and return procedures.
-- **Config suggestion engine (KA-3):** Analyzes ingested knowledge base content to suggest optimal values for brand name, brand voice, greeting message, escalation keywords, and display name — with confidence scores and source attribution.
+- **Config suggestion engine (KA-3):** Analyzes ingested knowledge base content to suggest optimal values for brand name, brand voice, greeting message, escalation keywords, and display name: with confidence scores and source attribution.
 - **Suggestion badges (KA-4):** Visual badges on configuration inputs indicating when an AI-generated suggestion is available. Click to preview and apply the suggested value.
 - **Onboarding wizard (KA-5):** Three-step setup wizard (Connect Store → Review Knowledge → Configure Agent) that guides new merchants through initial activation, with progress tracking and skip-ahead navigation.
 - **Document parser (KA-6):** Expanded document parsing to extract meaningful content from Shopify HTML pages, handling product descriptions, policy pages, and collection metadata.
@@ -828,7 +834,7 @@ A new centralized identity preprocessing stage has been added to the chat pipeli
 
 ---
 
-## v1.51.1 — 2026-02-19
+## v1.51.1: 2026-02-19
 
 ### Chat pipeline reliability
 - **AGNTCY SDK import resilience:** All imports from the agntcy-app-sdk package are now wrapped in try/except with local stub fallbacks. This prevents pipeline initialization failures when the SDK removes or renames exported classes (as occurred when SDK 0.5.x removed `BaseAgentProtocol`).
@@ -841,7 +847,7 @@ A new centralized identity preprocessing stage has been added to the chat pipeli
 
 ---
 
-## v1.51.0 — 2026-02-19
+## v1.51.0: 2026-02-19
 
 ### UI improvements
 - **Contact Us feature:** New Contact Us page accessible from the admin navigation, providing support contact information and feedback form.
@@ -852,7 +858,7 @@ A new centralized identity preprocessing stage has been added to the chat pipeli
 
 ---
 
-## v1.50.0 — 2026-02-19
+## v1.50.0: 2026-02-19
 
 ### Design system centralization
 - **CSS custom properties:** New `tokens.css` file defines 30+ design tokens (colors, spacing, borders) as CSS custom properties, replacing hardcoded hex values.
@@ -863,7 +869,7 @@ A new centralized identity preprocessing stage has been added to the chat pipeli
 
 ---
 
-## v1.49.2 — 2026-02-19
+## v1.49.2: 2026-02-19
 
 ### SKIP resolution
 - **Avatar upload UI:** File upload zone for agent avatar with circular preview and remove button, integrated into the Widget Appearance page.
@@ -874,13 +880,13 @@ A new centralized identity preprocessing stage has been added to the chat pipeli
 
 ---
 
-## v1.48.0 — 2026-02-18
+## v1.48.0: 2026-02-18
 
 ### Conversation quality infrastructure
 - **Golden dataset (CQ-1):** 25 test scenarios across 10 categories (product inquiry, returns, shipping, billing, escalation, multilingual, edge cases, memory recall, policy enforcement, and multi-turn) for automated response quality evaluation.
 - **Quality pilot framework (CQ-2):** Phase 0 heuristic evaluation framework that scores AI responses on completeness, tone, accuracy, and context retention without requiring external LLM-as-judge dependencies.
 - **Critic rule hardening (CQ-3):** Expanded Critic rule #7 into three sub-rules covering jailbreak prompt detection, role-play manipulation, and instruction override attempts.
-- **DeepEval scaffold (CQ-4):** Graceful degradation adapter for the DeepEval evaluation framework — runs quality tests when DeepEval is installed, skips gracefully when unavailable.
+- **DeepEval scaffold (CQ-4):** Graceful degradation adapter for the DeepEval evaluation framework: runs quality tests when DeepEval is installed, skips gracefully when unavailable.
 
 ### Test coverage expansion
 - **4 parallel coverage agents** wrote 879 new tests targeting repositories, security/config, chat/integrations, and knowledge/pipeline modules.
@@ -889,7 +895,7 @@ A new centralized identity preprocessing stage has been added to the chat pipeli
 
 ---
 
-## v1.47.0 — 2026-02-18
+## v1.47.0: 2026-02-18
 
 ### New capabilities
 - **Chunking preview (C5):** Knowledge base articles now show a chunk visualization, letting merchants see exactly how their content will be split for AI retrieval.
@@ -898,15 +904,15 @@ A new centralized identity preprocessing stage has been added to the chat pipeli
 - **Tier upgrade flow (D30):** Self-service plan upgrade via Stripe Checkout with preview (prorated cost, feature comparison) before committing.
 - **Add-on checkout (WI#138):** Purchase add-on modules (e.g., Custom Model Training, Advanced Analytics) through Stripe Checkout sessions.
 - **Memory dashboard (WI#139):** Persistent customer memory dashboard showing memory statistics, per-customer memory details, and memory deletion controls.
-- **First-contact resolution (CQ-5):** FCR proxy metric tracks conversations resolved in a single interaction — visible in the Analytics API summary.
+- **First-contact resolution (CQ-5):** FCR proxy metric tracks conversations resolved in a single interaction: visible in the Analytics API summary.
 
 ### Verification
-- 7 new upgrade verification assertions (C.26–C.32)
+- 7 new upgrade verification assertions (C.26, C.32)
 - 3,231 tests (up from 2,994)
 
 ---
 
-## v1.46.0 — 2026-02-18
+## v1.46.0: 2026-02-18
 
 ### Platform monitoring
 - **Cost analytics:** Unit economics dashboard with per-tenant cost breakdown, resource consumption trends, and cost-per-conversation metrics.
@@ -917,10 +923,10 @@ A new centralized identity preprocessing stage has been added to the chat pipeli
 
 ---
 
-## v1.45.0 — 2026-02-18
+## v1.45.0: 2026-02-18
 
 ### Magic link authentication (WI#295)
-- **Passwordless login:** Team members can sign in via a magic link emailed to their registered address — no password required.
+- **Passwordless login:** Team members can sign in via a magic link emailed to their registered address: no password required.
 - **Token security:** HMAC-signed, single-use tokens with 15-minute expiry and rate limiting.
 - **Seamless flow:** Click the link → auto-authenticated → redirected to the admin dashboard.
 
@@ -936,7 +942,7 @@ A new centralized identity preprocessing stage has been added to the chat pipeli
 
 ---
 
-## v1.44.0 — 2026-02-18
+## v1.44.0: 2026-02-18
 
 ### UI consistency and accessibility
 - **Shared icon library:** SVG icon components replace emoji characters across all admin surfaces for consistent, accessible rendering.
@@ -953,10 +959,10 @@ A new centralized identity preprocessing stage has been added to the chat pipeli
 
 ---
 
-## v1.43.0 — 2026-02-17
+## v1.43.0: 2026-02-17
 
 ### Platform capabilities
-- **Incident management:** Full incident lifecycle — create, acknowledge, update, resolve. Public status page at `/api/status` (no authentication required) shows overall system health and active incidents.
+- **Incident management:** Full incident lifecycle: create, acknowledge, update, resolve. Public status page at `/api/status` (no authentication required) shows overall system health and active incidents.
 - **Alerting engine:** Background alert evaluation loop (5-minute interval) with 6 metric collectors, configurable threshold rules, cooldown enforcement, and severity auto-derivation.
 
 ### UI quality
@@ -966,11 +972,11 @@ A new centralized identity preprocessing stage has been added to the chat pipeli
 
 ### Tests
 - 2,994 unit tests passed, 0 failures (up from 2,941)
-- Regression: C.15–C.19 assertions added
+- Regression: C.15, C.19 assertions added
 
 ---
 
-## v1.42.0 — 2026-02-17
+## v1.42.0: 2026-02-17
 
 ### CI/CD pipeline
 - **Parallel test matrix:** GitHub Actions CI runs tests in parallel shards for faster feedback.
@@ -990,13 +996,13 @@ A new centralized identity preprocessing stage has been added to the chat pipeli
 
 ---
 
-## v1.39.0 — 2026-02-17
+## v1.39.0: 2026-02-17
 
 ### Stripe MCP integration
 - **AI-powered payment queries:** Agent Red can now answer customer questions about payments, subscriptions, invoices, and refund status by connecting to your Stripe account via the Model Context Protocol (MCP).
 - **Secure credential management:** Stripe API keys are stored in Azure Key Vault with an in-memory credential cache (5-minute TTL) for low-latency access.
-- **Admin UI configuration:** New MCP configuration panel on the Integrations page — enter your Stripe restricted API key, test the connection, and see the available tools.
-- **Read-only safety:** All Stripe queries are read-only. The mutation safety architecture (MutationPolicy, MutationExecutor) is built and tested but not activated — no write operations are permitted.
+- **Admin UI configuration:** New MCP configuration panel on the Integrations page: enter your Stripe restricted API key, test the connection, and see the available tools.
+- **Read-only safety:** All Stripe queries are read-only. The mutation safety architecture (MutationPolicy, MutationExecutor) is built and tested but not activated: no write operations are permitted.
 
 ### Shopify Storefront MCP integration
 - **Live product data:** The Knowledge Retrieval agent can now augment knowledge base results with real-time product data from your Shopify storefront via the Storefront MCP server.
@@ -1023,7 +1029,7 @@ A new centralized identity preprocessing stage has been added to the chat pipeli
 
 ---
 
-## v1.35.0 — 2026-02-17
+## v1.35.0: 2026-02-17
 
 ### Category-routed escalation
 - **AI category detection:** The escalation pipeline now classifies conversations into categories (service, support, sales, account, technical assistance, general inquiry) using AI analysis.
@@ -1051,7 +1057,7 @@ A new centralized identity preprocessing stage has been added to the chat pipeli
 
 ---
 
-## v1.34.0 — 2026-02-16
+## v1.34.0: 2026-02-16
 
 ### Knowledge base improvements
 - **Category filter fix:** Article categories now match correctly between the table and filter dropdown. Previously, filtering by "Products" returned no results because internal mappings used singular forms.
@@ -1061,7 +1067,7 @@ A new centralized identity preprocessing stage has been added to the chat pipeli
 
 ### Quick actions improvements
 - **Auto-open toggle fixed:** The auto-open toggle on page assignments now correctly persists its state. Previously, the API response was missing the auto-open fields, causing the toggle to reset.
-- **Status badge display:** Status badges ("Active", "Inactive") are no longer truncated — the column width has been increased.
+- **Status badge display:** Status badges ("Active", "Inactive") are no longer truncated: the column width has been increased.
 
 ### Conversation management
 - **Status consolidation:** The "Completed" conversation status has been renamed to "Resolved" for consistency with the "Resolve" action button. The Inbox filter tabs now show All / Active / Esc / Resolved (replacing the "Idle" tab).
@@ -1083,15 +1089,15 @@ A new centralized identity preprocessing stage has been added to the chat pipeli
 
 ---
 
-## v1.32.7-agntcy — 2026-02-16
+## v1.32.7-agntcy: 2026-02-16
 
 ### AGNTCY Platform Phase 2: Pipeline Decomposition
 The monolithic AI pipeline has been decomposed into six independent agent modules following the AGNTCY Agent-to-Agent (A2A) protocol. This is an internal architecture improvement with no customer-visible behavior change.
 
 - **Six agent modules** extracted from the monolithic pipeline: Intent Classifier, Knowledge Retrieval, Response Generator, Escalation Handler, Analytics Collector, and Critic/Supervisor
 - **Agent base class** (`AgentRedBaseAgent`) extends the AGNTCY SDK's `BaseAgentProtocol` with standardized message handling, error wrapping, and metadata injection
-- **Container-ready deployment** — each agent has its own Dockerfile and FastAPI app with health/ready probes, enabling independent scaling and fault isolation
-- **Pipeline orchestrator rewrite** — the main pipeline now delegates to agent instances via the A2A protocol interface instead of inline Azure OpenAI calls
+- **Container-ready deployment**: each agent has its own Dockerfile and FastAPI app with health/ready probes, enabling independent scaling and fault isolation
+- **Pipeline orchestrator rewrite**: the main pipeline now delegates to agent instances via the A2A protocol interface instead of inline Azure OpenAI calls
 - **101 new agent tests** covering all six agents plus the container app factory
 - **2,360 total unit tests** passed, 0 failures (up from 2,330)
 
@@ -1101,7 +1107,7 @@ The monolithic AI pipeline has been decomposed into six independent agent module
 
 ---
 
-## v1.32.7 — 2026-02-16
+## v1.32.7: 2026-02-16
 
 ### Widget activation gate
 - **Conversation creation gate:** The chat widget endpoint now returns 403 when the tenant configuration is not active. This prevents phantom conversations from being created before the merchant has completed setup and activated their configuration.
@@ -1110,14 +1116,14 @@ The monolithic AI pipeline has been decomposed into six independent agent module
 
 ### Three-disposition activation control
 The sidebar activation button now uses three color-coded states:
-- **Green (Activate)** — All required fields present, ready to go live
-- **Yellow (Activate, blocked)** — Required fields missing, activation blocked until resolved
-- **Red (Deactivate)** — System is active with no pending changes, click to take offline
+- **Green (Activate)**: All required fields present, ready to go live
+- **Yellow (Activate, blocked)**: Required fields missing, activation blocked until resolved
+- **Red (Deactivate)**: System is active with no pending changes, click to take offline
 
 ### Three-state sidebar badge
-- **Active (green)** — Configuration is live and serving customers
-- **Pending (yellow)** — Changes are pending or setup is incomplete
-- **Inactive (red)** — Configuration was deactivated, widget is offline
+- **Active (green)**: Configuration is live and serving customers
+- **Pending (yellow)**: Changes are pending or setup is incomplete
+- **Inactive (red)**: Configuration was deactivated, widget is offline
 
 ### Configuration controls
 - **Discard** now refreshes all form fields across configuration pages immediately (previously required manual page reload)
@@ -1142,7 +1148,7 @@ The sidebar activation button now uses three color-coded states:
 
 ---
 
-## v1.25.0 — 2026-02-13
+## v1.25.0: 2026-02-13
 
 ### Inbox content search
 - Search conversations by message content, not just customer name
@@ -1164,53 +1170,53 @@ The sidebar activation button now uses three color-coded states:
 
 ---
 
-## v1.23.0 — 2026-02-12 (unreleased)
+## v1.23.0: 2026-02-12 (unreleased)
 
 ### Admin UI polish
-- **Integrations page:** Redesigned with horizontal card layout — 180×180 logo containers, light-mode card styling, hover effects on all action buttons, per-integration tooltips with documentation links
+- **Integrations page:** Redesigned with horizontal card layout: 180×180 logo containers, light-mode card styling, hover effects on all action buttons, per-integration tooltips with documentation links
 - **Button hover effects:** All primary buttons across BillingPortal (Manage billing, Purchase packs, Upgrade tier) now have visual hover feedback
-- **Sidebar logo:** Dark and light mode variants — the footer logo now switches between `NEW-BLOCK-LOGO-HORIZONTAL-DARK.svg` and `NEW-BLOCK-LOGO-HORIZONTAL-LIGHT.svg` based on the active color scheme
+- **Sidebar logo:** Dark and light mode variants: the footer logo now switches between `NEW-BLOCK-LOGO-HORIZONTAL-DARK.svg` and `NEW-BLOCK-LOGO-HORIZONTAL-LIGHT.svg` based on the active color scheme
 - **Dashboard:** Removed stale All/Production/Test segmented control (test mode was removed in v1.22.0)
 
 ### Tooltip audit (71 tooltips)
 Every HelpTooltip in the admin UI now includes both contextual help text and a "Learn more" link to the relevant documentation page with a section anchor. Updated across 10 component files.
 
 ### Documentation
-- **Analytics Dashboard** (`/admin-guide/analytics`) — Key metrics, conversation volume chart, top intents, intent breakdown, knowledge gaps
-- **Conversation Inbox** (`/admin-guide/conversations`) — Conversation list, detail view, customer profile panel, billable conversation indicator
-- **Data Retention & Privacy** (`/admin-guide/data-retention`) — Retention period, PII scrubbing, consent, automatic deletion
-- **Billing & Usage** (`/billing/overview`) — Subscription plans, billing tiers, conversation packs, usage dashboard, subscription management
+- **Analytics Dashboard** (`/admin-guide/analytics`): Key metrics, conversation volume chart, top intents, intent breakdown, knowledge gaps
+- **Conversation Inbox** (`/admin-guide/conversations`): Conversation list, detail view, customer profile panel, billable conversation indicator
+- **Data Retention & Privacy** (`/admin-guide/data-retention`): Retention period, PII scrubbing, consent, automatic deletion
+- **Billing & Usage** (`/billing/overview`): Subscription plans, billing tiers, conversation packs, usage dashboard, subscription management
 
 ---
 
-## v1.22.0 — 2026-02-12 (unreleased)
+## v1.22.0: 2026-02-12 (unreleased)
 
 ### Save and activate
 
-Configuration changes now use a two-phase commit model. Saving a setting writes to a draft — the live AI agent is unaffected until you explicitly activate.
+Configuration changes now use a two-phase commit model. Saving a setting writes to a draft: the live AI agent is unaffected until you explicitly activate.
 
 - **Draft layer:** All configuration saves go to a draft. Multiple pages can be edited before activation.
 - **Activation banner:** Persistent banner in the admin console shows when draft changes are pending, with Activate and Discard actions.
 - **Activation dialog:** Review all pending changes grouped by category, see validation results, and go live with one click.
-- **Restore:** One-level undo — swap the active configuration with the previous activation snapshot.
+- **Restore:** One-level undo: swap the active configuration with the previous activation snapshot.
 - **Atomic activation:** Agent Configuration, Quick Actions, and Widget Configuration activate together. Knowledge Base is validated but not snapshotted.
 - **Validation:** Brand name and widget key are required. Activation is blocked if validation fails.
 
 ### New frontend components
-- `ActivationBanner` — polls activation status every 30 seconds, shows Activate/Discard actions
-- `ActivationDialog` — validation display, change summary, activate confirmation
-- `RestoreDialog` — previous configuration details and restore confirmation
+- `ActivationBanner`, polls activation status every 30 seconds, shows Activate/Discard actions
+- `ActivationDialog`, validation display, change summary, activate confirmation
+- `RestoreDialog`, previous configuration details and restore confirmation
 
 ### API endpoints
-- `GET /api/config/activation-status` — lightweight activation state for the banner
-- `GET /api/config/draft` — full draft state with change diff for the activation dialog
-- `POST /api/config/draft/activate` — validate and promote draft to active
-- `POST /api/config/draft/discard` — delete all draft changes
-- `POST /api/config/restore` — swap active with previous activation snapshot
+- `GET /api/config/activation-status`, lightweight activation state for the banner
+- `GET /api/config/draft`, full draft state with change diff for the activation dialog
+- `POST /api/config/draft/activate`, validate and promote draft to active
+- `POST /api/config/draft/discard`, delete all draft changes
+- `POST /api/config/restore`, swap active with previous activation snapshot
 
 ### Removed
-- **Onboarding wizard** — replaced by direct page editing combined with the activation workflow
-- **Test mode A/B routing** — replaced by the draft/activate model (edit freely, activate when ready)
+- **Onboarding wizard**: replaced by direct page editing combined with the activation workflow
+- **Test mode A/B routing**: replaced by the draft/activate model (edit freely, activate when ready)
 - `OnboardingWizard.tsx` and `Onboarding.tsx` deleted
 - `test_mode_service.py` and its test suite deleted
 
@@ -1223,7 +1229,7 @@ Configuration changes now use a two-phase commit model. Saving a setting writes 
 
 ---
 
-## v1.21.0 — 2026-02-12 (unreleased)
+## v1.21.0: 2026-02-12 (unreleased)
 
 ### Team management and role-based access
 - 4-role system: superadmin, admin, escalation agent, and viewer
@@ -1249,7 +1255,7 @@ Configuration changes now use a two-phase commit model. Saving a setting writes 
 
 ---
 
-## v1.20.1 — 2026-02-12
+## v1.20.1: 2026-02-12
 
 ### Admin dashboard
 - 46 UX work items: sidebar renames, page reordering, tooltips, widget controls
@@ -1260,7 +1266,7 @@ Configuration changes now use a two-phase commit model. Saving a setting writes 
 
 ---
 
-## v1.20.0 — 2026-02-11
+## v1.20.0: 2026-02-11
 
 ### Admin dashboard
 - Test mode A/B rollout engine with 7-priority implementation
@@ -1270,7 +1276,7 @@ Configuration changes now use a two-phase commit model. Saving a setting writes 
 
 ---
 
-## v1.18.2 — 2026-02-11
+## v1.18.2: 2026-02-11
 
 ### Admin security
 - Immutable HMAC signing key for multi-replica password reset tokens
@@ -1279,7 +1285,7 @@ Configuration changes now use a two-phase commit model. Saving a setting writes 
 
 ---
 
-## v1.18.0 — 2026-02-11
+## v1.18.0: 2026-02-11
 
 ### Admin security
 - Email-based forgot-password flow replaces the old change-password endpoint
@@ -1307,7 +1313,7 @@ Configuration changes now use a two-phase commit model. Saving a setting writes 
 
 ---
 
-## v1.15.2 — 2026-02-10
+## v1.15.2: 2026-02-10
 
 ### Bug fixes
 - Fixed FastAPI route ordering: static routes (`/stale`, `/export`, `/staleness`) now registered before the `/{entry_id}` catch-all in the knowledge base API
@@ -1320,7 +1326,7 @@ Configuration changes now use a two-phase commit model. Saving a setting writes 
 
 ---
 
-## v1.14.0 — 2026-02-09
+## v1.14.0: 2026-02-09
 
 ### Bug fixes
 - Fixed hybrid search score filtering: `rrf_score` key mismatch caused all search results to be filtered out by the minimum score check
@@ -1336,7 +1342,7 @@ Configuration changes now use a two-phase commit model. Saving a setting writes 
 
 ---
 
-## v1.0.0 — 2026-02-09
+## v1.0.0: 2026-02-09
 
 **Initial release**
 
@@ -1346,10 +1352,10 @@ Configuration changes now use a two-phase commit model. Saving a setting writes 
 - Stream-then-validate pattern: AI responses stream in real-time, Critic validates post-stream
 
 ### Persistent customer memory
-- **Layer 1 — Customer context:** Structured profiles with purchase history, geography, preferences, and account state injected into every interaction
-- **Layer 2 — Conversation memory:** Vectorized transcripts with semantic search across full interaction history (Cosmos DB DiskANN)
-- **Layer 3 — Cross-session learning:** Pattern extraction with confidence scoring and monthly decay (Professional and Enterprise tiers)
-- **Layer 4 — Dedicated model training:** Per-customer fine-tuning on 1,000+ interactions (Enterprise add-on)
+- **Layer 1: Customer context:** Structured profiles with purchase history, geography, preferences, and account state injected into every interaction
+- **Layer 2: Conversation memory:** Vectorized transcripts with semantic search across full interaction history (Cosmos DB DiskANN)
+- **Layer 3: Cross-session learning:** Pattern extraction with confidence scoring and monthly decay (Professional and Enterprise tiers)
+- **Layer 4: Dedicated model training:** Per-customer fine-tuning on 1,000+ interactions (Enterprise add-on)
 
 ### Knowledge base
 - Hybrid retrieval: BM25 keyword matching + vector similarity with Reciprocal Rank Fusion

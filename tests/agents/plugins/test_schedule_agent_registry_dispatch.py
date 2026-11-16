@@ -71,7 +71,7 @@ class TestScheduleAgentSpec1711:
         assert schedule_agent.tier_gate == "professional"
         assert schedule_agent.health_check == "/health"
         assert schedule_agent.status == "available"
-        assert schedule_agent.endpoint == "${AGENT_SCHEDULE_URL:-http://10.0.1.24:8080}"
+        assert schedule_agent.endpoint == "${AGENT_SCHEDULE_URL:-http://192.0.2.24:8080}"
         assert schedule_agent.resolve_endpoint() == "http://schedule-agent.test:8080"
         assert schedule_agent.capabilities == SCHEDULE_CAPABILITIES
 
@@ -98,7 +98,7 @@ class TestScheduleAgentSpec1711:
         }
         assert set(catalog) == set(SCHEDULE_CAPABILITIES)
         for tool_name in SCHEDULE_CAPABILITIES:
-            assert catalog[tool_name]["_endpoint"] == ("${AGENT_SCHEDULE_URL:-http://10.0.1.24:8080}")
+            assert catalog[tool_name]["_endpoint"] == ("${AGENT_SCHEDULE_URL:-http://192.0.2.24:8080}")
             assert catalog[tool_name]["_is_external"] is False
 
     @pytest.mark.asyncio

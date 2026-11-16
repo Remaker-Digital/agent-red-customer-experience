@@ -38,6 +38,35 @@ if TYPE_CHECKING:
 logger = logging.getLogger(__name__)
 
 
+async def _lookup_store_name(tenant_id: str) -> str:
+    """Read store_name, name, then display_name. A failed lookup is logged and uses Support.
+
+    A display_name written before decision 93 can be the owner's email with an
+    ordinal ("<email>-030"). It is not used, so the email does not reach a subject
+    or a preview.
+    """
+    from src.multi_tenant.repository import TenantRepository
+
+    try:
+        tenant_doc = await TenantRepository().read(tenant_id, tenant_id)
+        display_name = tenant_doc.get("display_name") or ""
+        if "@" in display_name:
+            display_name = ""
+        return (
+            tenant_doc.get("store_name")
+            or tenant_doc.get("name")
+            or display_name
+            or "Support"
+        )
+    except Exception:
+        logger.warning(
+            "Store name lookup failed for tenant=%s",
+            tenant_id,
+            exc_info=True,
+        )
+        return "Support"
+
+
 def _restore_pii(tokenizer: Any | None, value: Any, conversation_id: str, tenant_id: str) -> Any:
     """Restore tokens in model text. A missing tokenizer leaves the value as it is."""
     if tokenizer is None or not isinstance(value, str):
@@ -260,15 +289,8 @@ class CriticEscalationMixin:
         email_bridge_sent = False
         try:
             from src.chat.escalation_email import send_escalation_emails
-            from src.multi_tenant.repository import TenantRepository
 
-            store_name = "Support"
-            try:
-                tenant_repo = TenantRepository()
-                tenant_doc = await tenant_repo.read(tenant_id)
-                store_name = tenant_doc.get("store_name") or tenant_doc.get("name") or "Support"
-            except Exception:
-                pass
+            store_name = await _lookup_store_name(tenant_id)
 
             messages = conv_doc.get("messages", []) if conv_doc else []
             agent_email = recipient_emails[0] if recipient_emails else ""

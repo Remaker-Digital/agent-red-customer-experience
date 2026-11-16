@@ -135,7 +135,7 @@ class TestRunBuildMocked:
             stdout = ""
             # ACR show → name
             if "acr" in cmd and "show" in cmd:
-                stdout = "exampleacr\n"
+                stdout = "example-registryeastus\n"
             # ACR build
             elif "acr" in cmd and "build" in cmd:
                 stdout = "Build succeeded\n"
@@ -181,7 +181,7 @@ class TestRunBuildMocked:
             # First call: acr show → success
             if call_count[0] == 1:
                 return subprocess.CompletedProcess(
-                    args=cmd, returncode=0, stdout="exampleacr\n", stderr=""
+                    args=cmd, returncode=0, stdout="example-registryeastus\n", stderr=""
                 )
             # Second call: acr build → returns ok
             if call_count[0] == 2:

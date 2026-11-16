@@ -8,8 +8,9 @@ per-edge, and per-tenant metric computation. Time windowing and caching.
 from __future__ import annotations
 
 import time
+from types import SimpleNamespace
 
-
+from src.multi_tenant import pipeline_metrics
 from src.multi_tenant.pipeline_metrics import (
     AgentMetrics,
     EdgeMetrics,
@@ -101,10 +102,17 @@ class TestMetricsCache:
         cache = _MetricsCache(ttl_seconds=60)
         assert cache.get("missing") is None
 
-    def test_expired_entry_returns_none(self):
-        cache = _MetricsCache(ttl_seconds=0)  # Immediate expiry
+    def test_expired_entry_returns_none(self, monkeypatch):
+        now = 100.0
+        monkeypatch.setattr(pipeline_metrics, "time", SimpleNamespace(time=lambda: now))
+        cache = _MetricsCache(ttl_seconds=60)
         cache.set("key1", "value")
-        # Entry expires immediately
+
+        now = 159.999
+        assert cache.get("key1") == "value"
+        now = 160.0
+        assert cache.get("key1") == "value"
+        now = 160.001
         assert cache.get("key1") is None
 
     def test_clear(self):

@@ -1,7 +1,7 @@
 ---
 sidebar_position: 5
 title: Knowledge base configuration
-description: Tune how the AI searches your knowledge base — retrieval depth, hybrid search weighting, relevance thresholds, source citation, and intent routing.
+description: Tune how the AI searches your knowledge base, retrieval depth, hybrid search weighting, relevance thresholds, source citation, and intent routing.
 ---
 
 # Knowledge base configuration
@@ -41,7 +41,7 @@ Controls which types of knowledge the AI can search.
 | | |
 |---|---|
 | **Field** | `retrieval_top_k` |
-| **Type** | Number (1–20) |
+| **Type** | Number (1 to 20) |
 | **Default** | `5` |
 | **Affects** | Knowledge retrieval, response generator |
 
@@ -49,10 +49,10 @@ How many knowledge base results the retrieval agent passes to the response gener
 
 | Value | Trade-off |
 |---|---|
-| **1–3** | Fastest responses. Risk: may miss relevant context if the best answer is split across multiple articles. |
-| **4–6** | Good balance for most stores. The response generator has enough context without being overwhelmed. |
-| **7–10** | Use for stores with large, overlapping knowledge bases where the answer may come from combining multiple sources. |
-| **11–20** | Rarely needed. Only for very large catalogs (10,000+ products) or highly specialized domains. Increases latency. |
+| **1 to 3** | Fastest responses. Risk: may miss relevant context if the best answer is split across multiple articles. |
+| **4 to 6** | Good balance for most stores. The response generator has enough context without being overwhelmed. |
+| **7 to 10** | Use for stores with large, overlapping knowledge bases where the answer may come from combining multiple sources. |
+| **11 to 20** | Rarely needed. Only for very large catalogs (10,000+ products) or highly specialized domains. Increases latency. |
 
 **Recommendation:** Start with `5`. If you notice the AI missing information that exists in your knowledge base, increase to `7–8`. If responses are slow, decrease to `3`.
 
@@ -63,14 +63,14 @@ How many knowledge base results the retrieval agent passes to the response gener
 | | |
 |---|---|
 | **Field** | `retrieval_vector_weight` |
-| **Type** | Slider (0.0–1.0) |
+| **Type** | Slider (0.0 to 1.0) |
 | **Default** | `0.7` |
 | **Affects** | Knowledge retrieval |
 
-The weight given to semantic (vector) search results when combining with keyword search results. Semantic search finds articles based on *meaning* — a customer asking "Can I send this back?" will match an article titled "Return Policy" even though no words overlap.
+The weight given to semantic (vector) search results when combining with keyword search results. Semantic search finds articles based on *meaning*: a customer asking "Can I send this back?" will match an article titled "Return Policy" even though no words overlap.
 
-- **Higher values (0.7–1.0):** Prioritize meaning-based matching. Better for natural language questions where exact keywords may not appear in the knowledge base.
-- **Lower values (0.0–0.3):** Prioritize exact keyword matching. Better for stores where customers use specific product names, SKU numbers, or technical terms.
+- **Higher values (0.7 to 1.0):** Prioritize meaning-based matching. Better for natural language questions where exact keywords may not appear in the knowledge base.
+- **Lower values (0.0 to 0.3):** Prioritize exact keyword matching. Better for stores where customers use specific product names, SKU numbers, or technical terms.
 
 **The keyword weight is the complement:** If semantic weight is 0.7, keyword weight is automatically 0.3. The two always sum to 1.0.
 
@@ -81,11 +81,11 @@ The weight given to semantic (vector) search results when combining with keyword
 | | |
 |---|---|
 | **Field** | `retrieval_bm25_weight` |
-| **Type** | Slider (0.0–1.0) |
+| **Type** | Slider (0.0 to 1.0) |
 | **Default** | `0.3` |
 | **Affects** | Knowledge retrieval |
 
-The weight given to BM25 keyword search results. BM25 finds articles based on *exact term matching* — it rewards articles that contain the same words the customer used, especially rare words.
+The weight given to BM25 keyword search results. BM25 finds articles based on *exact term matching*: it rewards articles that contain the same words the customer used, especially rare words.
 
 **When to increase keyword weight:**
 - Your knowledge base uses specific product names, model numbers, or technical terms that customers type exactly.
@@ -102,21 +102,21 @@ The weight given to BM25 keyword search results. BM25 finds articles based on *e
 | | |
 |---|---|
 | **Field** | `retrieval_min_score` |
-| **Type** | Slider (0.0–1.0) |
+| **Type** | Slider (0.0 to 1.0) |
 | **Default** | `0.1` |
 | **Affects** | Knowledge retrieval |
 
 The minimum combined relevance score a knowledge base result must have to be included in the context sent to the response generator. Results below this threshold are filtered out.
 
 **How scoring works:**
-Each knowledge base result gets a combined score from the hybrid search (semantic + keyword, weighted by the settings above). Scores are normalized to a 0–1 range using Reciprocal Rank Fusion (RRF).
+Each knowledge base result gets a combined score from the hybrid search (semantic + keyword, weighted by the settings above). Scores are normalized to a 0 to 1 range using Reciprocal Rank Fusion (RRF).
 
 | Threshold | Behavior |
 |---|---|
-| **0.0–0.1** | Very permissive. Almost all results pass. May include loosely relevant articles. |
-| **0.2–0.4** | Moderate filtering. Good balance of recall and precision. |
-| **0.5–0.7** | Strict. Only highly relevant results pass. Risk: the AI may not find context for niche questions. |
-| **0.8–1.0** | Very strict. Only near-exact matches. Most stores should not use this. |
+| **0.0 to 0.1** | Very permissive. Almost all results pass. May include loosely relevant articles. |
+| **0.2 to 0.4** | Moderate filtering. Good balance of recall and precision. |
+| **0.5 to 0.7** | Strict. Only highly relevant results pass. Risk: the AI may not find context for niche questions. |
+| **0.8 to 1.0** | Very strict. Only near-exact matches. Most stores should not use this. |
 
 **Recommendation:** Start with `0.1` (the default). If the AI is frequently citing irrelevant articles, increase to `0.2–0.3`. If the AI cannot find answers that exist in your knowledge base, decrease to `0.05`.
 
@@ -138,7 +138,7 @@ Setting this too high is a common mistake. A threshold of 0.5 will filter out ma
 When enabled, the AI appends the titles of the knowledge base articles it used to generate the response. This appears at the end of the message, formatted as a source list.
 
 **Example with citation enabled:**
-> Your order typically ships within 2 business days. Standard delivery takes 5–7 business days, and express delivery takes 2–3 business days.
+> Your order typically ships within 2 business days. Standard delivery takes 5 to 7 business days, and express delivery takes 2 to 3 business days.
 >
 > *Sources: Shipping Policy, Delivery Timeframes*
 

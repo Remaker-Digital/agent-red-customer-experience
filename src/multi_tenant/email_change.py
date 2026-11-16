@@ -22,6 +22,7 @@ Endpoints:
 
 from __future__ import annotations
 
+from html import escape
 import logging
 import os
 import secrets
@@ -31,7 +32,7 @@ from fastapi import APIRouter, Depends, Query, Request
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel, Field
 
-from src.multi_tenant.alert_delivery import format_branded_email
+from src.multi_tenant.alert_delivery import email_action_template, format_branded_email
 from src.multi_tenant.auth import TenantContext
 from src.multi_tenant.middleware import get_tenant_context
 
@@ -92,59 +93,52 @@ class EmailChangeResponse(BaseModel):
 # ---------------------------------------------------------------------------
 
 _CONFIRM_EMAIL_BODY = """
-<h2 style="margin:0 0 16px;color:#111827;font-size:20px">
+<h2 style="margin:0 0 16px;color:#fafaf9;font-size:20px">
   Confirm Your New Email Address
 </h2>
-<p style="color:#374151;font-size:14px;line-height:1.6;margin:0 0 16px">
+<p style="color:#f5f5f4;font-size:14px;line-height:1.6;margin:0 0 16px">
   A request was made to change your Agent Red platform admin email
   address to this address.
 </p>
-<p style="color:#374151;font-size:14px;line-height:1.6;margin:0 0 24px">
+<p style="color:#f5f5f4;font-size:14px;line-height:1.6;margin:0 0 24px">
   Click the button below to confirm. This link expires in 15 minutes.
 </p>
 <div style="text-align:center;margin:24px 0">
-  <a href="{confirm_url}" style="display:inline-block;padding:12px 32px;background:#ff3621;
-     color:#ffffff;font-size:14px;font-weight:600;text-decoration:none;border-radius:6px">
-    Confirm Email Change
-  </a>
+  """ + email_action_template("{confirm_url}", "Confirm Email Change") + """
 </div>
-<p style="color:#9ca3af;font-size:12px;line-height:1.5;margin:16px 0 0">
+<p style="color:#d6d3d1;font-size:12px;line-height:1.5;margin:16px 0 0">
   If you did not request this change, you can safely ignore this email.
   Your current email will remain unchanged.
-</p>
-<p style="color:#9ca3af;font-size:11px;line-height:1.5;margin:8px 0 0">
-  Or paste this URL into your browser:<br/>
-  <span style="word-break:break-all">{confirm_url}</span>
 </p>
 """
 
 _SECURITY_ALERT_BODY = """
-<h2 style="margin:0 0 16px;color:#111827;font-size:20px">
+<h2 style="margin:0 0 16px;color:#fafaf9;font-size:20px">
   Email Change Requested
 </h2>
-<p style="color:#374151;font-size:14px;line-height:1.6;margin:0 0 16px">
+<p style="color:#f5f5f4;font-size:14px;line-height:1.6;margin:0 0 16px">
   A request was made to change the email address on your Agent Red
   platform admin account from <strong>{old_email}</strong> to
   <strong>{new_email}</strong>.
 </p>
-<p style="color:#374151;font-size:14px;line-height:1.6;margin:0 0 24px">
+<p style="color:#f5f5f4;font-size:14px;line-height:1.6;margin:0 0 24px">
   If you did not make this request, rotate your API key and
   generate new backup codes immediately.
 </p>
-<p style="color:#9ca3af;font-size:12px;line-height:1.5;margin:0">
+<p style="color:#d6d3d1;font-size:12px;line-height:1.5;margin:0">
   Time: {timestamp}
 </p>
 """
 
 _COMPLETION_ALERT_BODY = """
-<h2 style="margin:0 0 16px;color:#111827;font-size:20px">
+<h2 style="margin:0 0 16px;color:#fafaf9;font-size:20px">
   Email Address Changed
 </h2>
-<p style="color:#374151;font-size:14px;line-height:1.6;margin:0 0 16px">
+<p style="color:#f5f5f4;font-size:14px;line-height:1.6;margin:0 0 16px">
   Your Agent Red platform admin email has been changed from
   <strong>{old_email}</strong> to <strong>{new_email}</strong>.
 </p>
-<p style="color:#374151;font-size:14px;line-height:1.6;margin:0 0 24px">
+<p style="color:#f5f5f4;font-size:14px;line-height:1.6;margin:0 0 24px">
   If you did not authorize this change, contact support immediately.
 </p>
 """
@@ -221,9 +215,10 @@ async def _send_email(to_email: str, subject: str, html_body: str) -> bool:
     smtp_host = os.environ.get("SMTP_HOST", "")
     if smtp_host:
         import asyncio
-        import smtplib
         from email.mime.multipart import MIMEMultipart
         from email.mime.text import MIMEText
+
+        from src.multi_tenant.smtp_tls import send_verified_smtp
 
         smtp_port = int(os.environ.get("SMTP_PORT", "587"))
         smtp_user = os.environ.get("SMTP_USERNAME", "")
@@ -236,19 +231,7 @@ async def _send_email(to_email: str, subject: str, html_body: str) -> bool:
             msg["To"] = to_email
             msg["Subject"] = subject
             msg.attach(MIMEText(html_body, "html"))
-            if smtp_port == 465:
-                with smtplib.SMTP_SSL(smtp_host, smtp_port, timeout=10) as server:
-                    if smtp_user and smtp_pass:
-                        server.login(smtp_user, smtp_pass)
-                    server.send_message(msg)
-            else:
-                with smtplib.SMTP(smtp_host, smtp_port, timeout=10) as server:
-                    server.ehlo()
-                    if smtp_port != 25:
-                        server.starttls()
-                    if smtp_user and smtp_pass:
-                        server.login(smtp_user, smtp_pass)
-                    server.send_message(msg)
+            send_verified_smtp(msg, smtp_host, smtp_port, timeout=10, username=smtp_user, password=smtp_pass)
 
         try:
             await asyncio.to_thread(_smtp_send)
@@ -364,11 +347,11 @@ async def request_email_change(
         timestamp = datetime.now(UTC).strftime("%Y-%m-%d %H:%M:%S UTC")
 
         # 1. Send confirmation email to NEW address
-        confirm_html = _CONFIRM_EMAIL_BODY.format(confirm_url=confirm_url)
+        confirm_html = _CONFIRM_EMAIL_BODY.format(confirm_url=escape(confirm_url))
         full_confirm = format_branded_email(confirm_html)
         await _send_email(
             new_email,
-            "[Agent Red] Confirm Your New Email Address",
+            "Agent Red: Confirm Your New Email Address",
             full_confirm,
         )
 
@@ -382,7 +365,7 @@ async def request_email_change(
             full_alert = format_branded_email(alert_html)
             await _send_email(
                 old_email,
-                "[Agent Red] Email Change Requested",
+                "Agent Red: Email Change Requested",
                 full_alert,
             )
 
@@ -522,7 +505,7 @@ async def confirm_email_change(
                 full_html = format_branded_email(completion_html)
                 await _send_email(
                     old_email,
-                    "[Agent Red] Email Address Changed",
+                    "Agent Red: Email Address Changed",
                     full_html,
                 )
 

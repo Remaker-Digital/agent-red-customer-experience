@@ -81,6 +81,7 @@ export const ApiKeyLogin: React.FC<ApiKeyLoginProps> = ({
   const [apiKey, setApiKey] = useState('');
   const [email, setEmail] = useState('');
   const [magicEmail, setMagicEmail] = useState('');
+  const [magicLinkChallenge, setMagicLinkChallenge] = useState('');
   const [signInCode, setSignInCode] = useState('');
   const [error, setError] = useState<string | null>(verifyError ?? null);
   const [loading, setLoading] = useState(false);
@@ -225,12 +226,18 @@ export const ApiKeyLogin: React.FC<ApiKeyLoginProps> = ({
           body: JSON.stringify({ email: trimmed, tenant: tenantId }),
         });
 
-        if (resp.status === 429) {
-          setError('Too many requests. Please wait a few minutes and try again.');
+        if (!resp.ok) {
+          setError('Unable to request a sign-in code. Please try again.');
           return;
         }
 
-        // Always show success (the server returns 200 regardless)
+        const data = await resp.json();
+        if (typeof data.challenge_id !== 'string' || !data.challenge_id) {
+          setError('Unable to start code sign-in. Please request a new code.');
+          return;
+        }
+        setMagicLinkChallenge(data.challenge_id);
+        setSignInCode('');
         setView('magic-link-sent');
       } catch {
         setError('Unable to connect. Please check your network and try again.');
@@ -238,7 +245,7 @@ export const ApiKeyLogin: React.FC<ApiKeyLoginProps> = ({
         setLoading(false);
       }
     },
-    [magicEmail],
+    [magicEmail, tenantId],
   );
 
   // SPEC-0429 S188: Verify 6-digit sign-in code (alternative to clicking link)
@@ -255,6 +262,10 @@ export const ApiKeyLogin: React.FC<ApiKeyLoginProps> = ({
         setError('Tenant context required. Use the link from your welcome email.');
         return;
       }
+      if (!magicLinkChallenge) {
+        setError('Request a new sign-in code to continue.');
+        return;
+      }
 
       setLoading(true);
       setError(null);
@@ -263,13 +274,8 @@ export const ApiKeyLogin: React.FC<ApiKeyLoginProps> = ({
         const resp = await fetch(`${API_BASE_URL}/api/auth/magic-link/verify-code`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ code, tenant: tenantId }),
+          body: JSON.stringify({ code, tenant: tenantId, challenge_id: magicLinkChallenge }),
         });
-
-        if (resp.status === 429) {
-          setError('Too many attempts. Please wait a few minutes and try again.');
-          return;
-        }
 
         const data = await resp.json();
 
@@ -292,7 +298,7 @@ export const ApiKeyLogin: React.FC<ApiKeyLoginProps> = ({
         setLoading(false);
       }
     },
-    [signInCode, tenantId, onMagicLinkLogin, onRequires2fa],
+    [signInCode, tenantId, magicLinkChallenge, onMagicLinkLogin, onRequires2fa],
   );
 
   /* ---- Shared UI elements ---------------------------------------------- */
@@ -575,7 +581,7 @@ export const ApiKeyLogin: React.FC<ApiKeyLoginProps> = ({
               we've sent a sign-in code and link to that address.
             </Text>
             <Text size="xs" c="dimmed" ta="center" lh={1.5}>
-              Enter the 6-digit code from the email, or click the link. Expires in 15 minutes.
+              Enter the 6-digit code from the email, or click the link. The code expires in 15 minutes and allows 3 attempts.
             </Text>
           </Stack>
 
@@ -627,9 +633,9 @@ export const ApiKeyLogin: React.FC<ApiKeyLoginProps> = ({
               size="sm"
               component="button"
               type="button"
-              onClick={() => { setView('magic-link'); setError(null); setSignInCode(''); }}
+              onClick={() => { setView('magic-link'); setError(null); setSignInCode(''); setMagicLinkChallenge(''); }}
             >
-              Didn't receive it? Try again
+              Request a new code
             </Anchor>
           </Text>
         </Paper>

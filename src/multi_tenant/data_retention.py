@@ -65,7 +65,7 @@ class RetentionScanResult:
     conversations_deleted: int
     profiles_purged: int
     vectors_deleted: int
-    errors: int
+    errors: int  # Number of tenants with failures.
     tenant_details: list[TenantRetentionResult] = field(default_factory=list)
 
 
@@ -80,6 +80,7 @@ class TenantRetentionResult:
     conversations_deleted: int
     profiles_purged: int
     vectors_deleted: int
+    failed: bool = False
 
 
 # ---------------------------------------------------------------------------
@@ -133,11 +134,7 @@ class DataRetentionService:
         errors = 0
         details: list[TenantRetentionResult] = []
 
-        # Query all active tenants
-        all_tenants = await self._tenants.query(
-            query="SELECT * FROM c WHERE c.status IN ('active', 'past_due')",
-            parameters=[],
-        )
+        all_tenants = await self._tenants.list_archival_tenants()
 
         for tenant in all_tenants:
             tenants_scanned += 1
@@ -162,6 +159,7 @@ class DataRetentionService:
                 total_convs += result.conversations_deleted
                 total_profiles += result.profiles_purged
                 total_vectors += result.vectors_deleted
+                errors += int(result.failed)
                 if (
                     result.conversations_deleted > 0
                     or result.profiles_purged > 0
@@ -202,13 +200,13 @@ class DataRetentionService:
 
         Deletes conversations, profiles, and vectors older than the cutoff.
         """
-        convs_deleted = 0
-        profiles_purged = 0
-        vectors_deleted = 0
+        convs_deleted, conversations_failed = 0, False
+        profiles_purged, profiles_failed = 0, False
+        vectors_deleted, vectors_failed = 0, False
 
         # Delete old conversations
         if self._conversations:
-            convs_deleted = await self._delete_old_documents(
+            convs_deleted, conversations_failed = await self._delete_old_documents(
                 self._conversations,
                 tenant_id,
                 cutoff_iso,
@@ -218,7 +216,7 @@ class DataRetentionService:
 
         # Delete old memory vectors (Layer 2)
         if self._vectors:
-            vectors_deleted = await self._delete_old_documents(
+            vectors_deleted, vectors_failed = await self._delete_old_documents(
                 self._vectors,
                 tenant_id,
                 cutoff_iso,
@@ -229,7 +227,7 @@ class DataRetentionService:
         # Purge stale customer profile data (not delete entirely — just
         # clear fields that reference conversations beyond retention)
         if self._profiles:
-            profiles_purged = await self._purge_stale_profile_data(
+            profiles_purged, profiles_failed = await self._purge_stale_profile_data(
                 tenant_id, cutoff_iso,
             )
 
@@ -239,10 +237,10 @@ class DataRetentionService:
                 tenant_id=tenant_id,
                 event_type=AuditEventType.DATA_DELETED,
                 actor="system",
-                details={
+                payload={
                     "reason": "retention_policy",
                     "tier": tier,
-                    "retention_days": retention_days,
+                    "count": convs_deleted + profiles_purged + vectors_deleted,
                     "cutoff": cutoff_iso,
                     "conversations_deleted": convs_deleted,
                     "profiles_purged": profiles_purged,
@@ -258,6 +256,7 @@ class DataRetentionService:
             conversations_deleted=convs_deleted,
             profiles_purged=profiles_purged,
             vectors_deleted=vectors_deleted,
+            failed=conversations_failed or vectors_failed or profiles_failed,
         )
 
     async def _delete_old_documents(
@@ -267,15 +266,14 @@ class DataRetentionService:
         cutoff_iso: str,
         date_field: str,
         collection_name: str,
-    ) -> int:
-        """Delete documents older than cutoff from a collection.
-
-        Returns count of deleted documents.
-        """
+    ) -> tuple[int, bool]:
+        """Return the deletion count and whether any operation failed."""
         deleted = 0
+        failed = False
         try:
             old_docs = await repo.query(
-                query=f"SELECT c.id FROM c WHERE c.tenant_id = @tid AND c.{date_field} < @cutoff",
+                tenant_id=tenant_id,
+                query_text=f"SELECT c.id FROM c WHERE c.tenant_id = @tid AND c.{date_field} < @cutoff",
                 parameters=[
                     {"name": "@tid", "value": tenant_id},
                     {"name": "@cutoff", "value": cutoff_iso},
@@ -284,25 +282,27 @@ class DataRetentionService:
 
             for doc in old_docs:
                 try:
-                    await repo.delete(doc["id"], tenant_id)
+                    await repo.delete(tenant_id=tenant_id, document_id=doc["id"])
                     deleted += 1
                 except Exception:
+                    failed = True
                     logger.debug(
                         "Could not delete %s/%s for tenant %s",
                         collection_name, doc.get("id"), tenant_id,
                     )
         except Exception:
+            failed = True
             logger.warning(
                 "Could not query old %s for tenant %s", collection_name, tenant_id,
             )
 
-        return deleted
+        return deleted, failed
 
     async def _purge_stale_profile_data(
         self,
         tenant_id: str,
         cutoff_iso: str,
-    ) -> int:
+    ) -> tuple[int, bool]:
         """Purge stale fields from customer profiles.
 
         Instead of deleting profiles entirely (the customer may still be
@@ -310,16 +310,20 @@ class DataRetentionService:
         data beyond the retention period. The core profile (name, email,
         preferences) is preserved.
 
-        Fields purged: conversation_history, interaction_count,
-        last_interaction_date (if older than cutoff).
+        Selects legacy profiles by last_interaction_date. Removes
+        conversation_history when present and resets interaction_count.
 
-        Returns count of profiles updated.
+        Returns the update count and whether any operation failed.
         """
         purged = 0
+        failed = False
         try:
             stale_profiles = await self._profiles.query(
-                query=(
-                    "SELECT c.id FROM c WHERE c.tenant_id = @tid "
+                tenant_id=tenant_id,
+                query_text=(
+                    "SELECT c.id, c._etag, c.interaction_count, "
+                    "IS_DEFINED(c.conversation_history) AS has_history "
+                    "FROM c WHERE c.tenant_id = @tid "
                     "AND c.last_interaction_date < @cutoff"
                 ),
                 parameters=[
@@ -330,26 +334,37 @@ class DataRetentionService:
 
             for profile in stale_profiles:
                 try:
+                    operations: list[dict[str, Any]] = []
+                    if profile["has_history"]:
+                        operations.append({"op": "remove", "path": "/conversation_history"})
+                    if operations or profile.get("interaction_count", 0) != 0:
+                        operations.append({"op": "set", "path": "/interaction_count", "value": 0})
+                    if not operations:
+                        continue
+
+                    etag = profile.get("_etag")
+                    if not etag:
+                        raise ValueError("Legacy profile purge requires a document ETag")
                     await self._profiles.patch(
-                        profile["id"],
-                        tenant_id,
-                        operations=[
-                            {"op": "remove", "path": "/conversation_history"},
-                            {"op": "set", "path": "/interaction_count", "value": 0},
-                        ],
+                        document_id=profile["id"],
+                        tenant_id=tenant_id,
+                        operations=operations,
+                        etag=etag,
                     )
                     purged += 1
                 except Exception:
+                    failed = True
                     logger.debug(
                         "Could not purge profile %s for tenant %s",
                         profile.get("id"), tenant_id,
                     )
         except Exception:
+            failed = True
             logger.warning(
                 "Could not query stale profiles for tenant %s", tenant_id,
             )
 
-        return purged
+        return purged, failed
 
     def get_retention_days(self, tier: str) -> int | None:
         """Get the retention period for a tier.

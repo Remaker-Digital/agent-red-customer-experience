@@ -113,39 +113,39 @@ def _build_html_body(
     timestamp = datetime.now(UTC).strftime("%Y-%m-%d %H:%M:%S UTC")
     safe_message = html.escape(message).replace("\n", "<br>")
 
-    return f"""\
-<html>
-<body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #1a1a1a; max-width: 600px;">
-<h2 style="color: #ff3621; margin-bottom: 4px;">Agent Red — {html.escape(topic_label)}</h2>
-<p style="color: #666; font-size: 13px; margin-top: 0;">Received {timestamp}</p>
+    from src.multi_tenant.alert_delivery import format_branded_email
+
+    body = f"""\
+<h2 style="color:#fafaf9;margin:0 0 16px;font-size:20px">Agent Red: {html.escape(topic_label)}</h2>
+<p style="color: #d6d3d1; font-size: 13px; margin-top: 0;">Received {timestamp}</p>
 
 <table style="border-collapse: collapse; width: 100%; margin-bottom: 16px; font-size: 14px;">
-<tr><td style="padding: 6px 12px; background: #f5f5f4; font-weight: 600; width: 140px;">Tenant ID</td>
-    <td style="padding: 6px 12px; background: #f5f5f4; font-family: monospace;">{html.escape(tenant_id)}</td></tr>
+<tr><td style="padding: 6px 12px; background: #1c1917; font-weight: 600; width: 140px;">Tenant ID</td>
+    <td style="padding: 6px 12px; background: #1c1917; font-family: monospace;">{html.escape(tenant_id)}</td></tr>
 <tr><td style="padding: 6px 12px; font-weight: 600;">Tier</td>
     <td style="padding: 6px 12px;">{html.escape(tier or "unknown")}</td></tr>
-<tr><td style="padding: 6px 12px; background: #f5f5f4; font-weight: 600;">Member Email</td>
-    <td style="padding: 6px 12px; background: #f5f5f4;">{html.escape(member_email or "N/A")}</td></tr>
+<tr><td style="padding: 6px 12px; background: #1c1917; font-weight: 600;">Member Email</td>
+    <td style="padding: 6px 12px; background: #1c1917;">{html.escape(member_email or "N/A")}</td></tr>
 <tr><td style="padding: 6px 12px; font-weight: 600;">Member Role</td>
     <td style="padding: 6px 12px;">{html.escape(member_role or "N/A")}</td></tr>
-<tr><td style="padding: 6px 12px; background: #f5f5f4; font-weight: 600;">Member ID</td>
-    <td style="padding: 6px 12px; background: #f5f5f4;
+<tr><td style="padding: 6px 12px; background: #1c1917; font-weight: 600;">Member ID</td>
+    <td style="padding: 6px 12px; background: #1c1917;
     font-family: monospace;">{html.escape(member_id or "N/A")}</td></tr>
 <tr><td style="padding: 6px 12px; font-weight: 600;">Topic</td>
     <td style="padding: 6px 12px;">{html.escape(topic_label)}</td></tr>
 </table>
 
 <h3 style="margin-bottom: 8px;">Subject: {html.escape(subject)}</h3>
-<div style="background: #fafaf9; border: 1px solid #e7e5e4; border-radius: 6px; padding: 16px; line-height: 1.6;">
+<div style="background: #1c1917; border: 1px solid #44403c; border-radius: 8px; padding: 16px; line-height: 1.6;">
 {safe_message}
 </div>
 
-<p style="color: #999; font-size: 11px; margin-top: 24px;">
-This message was sent from the Agent Red admin panel. Do not reply to this email —
-respond directly to the member at {html.escape(member_email or "N/A")}.
+<p style="color: #d6d3d1; font-size: 11px; margin-top: 24px;">
+This message was sent from the Agent Red admin panel. Do not reply to this email.
+Respond directly to the member at {html.escape(member_email or "N/A")}.
 </p>
-</body>
-</html>"""
+"""
+    return format_branded_email(body)
 
 
 async def _send_contact_email(
@@ -163,9 +163,10 @@ async def _send_contact_email(
     smtp_host = _os.environ.get("SMTP_HOST", "")
     if smtp_host:
         import asyncio
-        import smtplib
         from email.mime.multipart import MIMEMultipart
         from email.mime.text import MIMEText
+
+        from src.multi_tenant.smtp_tls import send_verified_smtp
 
         smtp_port = int(_os.environ.get("SMTP_PORT", "587"))
         smtp_user = _os.environ.get("SMTP_USERNAME", "")
@@ -178,19 +179,7 @@ async def _send_contact_email(
             msg["To"] = to_email
             msg["Subject"] = subject
             msg.attach(MIMEText(html_body, "html"))
-            if smtp_port == 465:
-                with smtplib.SMTP_SSL(smtp_host, smtp_port, timeout=10) as server:
-                    if smtp_user and smtp_pass:
-                        server.login(smtp_user, smtp_pass)
-                    server.send_message(msg)
-            else:
-                with smtplib.SMTP(smtp_host, smtp_port, timeout=10) as server:
-                    server.ehlo()
-                    if smtp_port != 25:
-                        server.starttls()
-                    if smtp_user and smtp_pass:
-                        server.login(smtp_user, smtp_pass)
-                    server.send_message(msg)
+            send_verified_smtp(msg, smtp_host, smtp_port, timeout=10, username=smtp_user, password=smtp_pass)
 
         try:
             await asyncio.to_thread(_smtp_send)  # SPEC-1622: non-blocking SMTP
@@ -292,7 +281,7 @@ async def send_contact_message(
         )
 
     # ── Build and send email ────────────────────────────────────
-    email_subject = f"[Agent Red] {topic_label}: {body.subject}"
+    email_subject = f"Agent Red: {topic_label}: {body.subject}"
     html_body = _build_html_body(
         topic=body.topic,
         subject=body.subject,

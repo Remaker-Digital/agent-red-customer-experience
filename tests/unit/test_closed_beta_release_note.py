@@ -86,3 +86,71 @@ def test_the_v2_0_1_note_keeps_the_limits_and_names_the_corrections():
     assert NOTE_201 in (ROOT / "CHANGELOG.md").read_text(encoding="utf-8")
     site = ROOT / "docs-site"
     assert not any(path.name == NOTE_201 for path in site.rglob("*"))
+
+
+NOTE_204 = "closed-beta-release-note-v2.0.4.md"
+
+
+def test_the_v2_0_4_note_names_the_encryption_fixes_and_keeps_tenants_out():
+    """v2.0.4 ships the fixes P6 found on v2.0.3 with encryption on."""
+    note = ROOT / "docs" / "operations" / NOTE_204
+    text = note.read_text(encoding="utf-8")
+    assert "v2.0.0" in text
+    assert "No real tenant is admitted yet." in text
+    assert "retention" in text
+    assert "customer-email-lookup-key" in text
+    assert "shop/redact" in text
+    assert "503" in text
+    assert "plain text" in text
+    for path in ("CLOSED-BETA-RUNBOOK.md", "INDEX.md"):
+        assert NOTE_204 in (ROOT / "docs" / "operations" / path).read_text(encoding="utf-8")
+    assert NOTE_204 in (ROOT / "CHANGELOG.md").read_text(encoding="utf-8")
+    site = ROOT / "docs-site"
+    assert not any(path.name == NOTE_204 for path in site.rglob("*"))
+
+
+NOTE_205 = "closed-beta-release-note-v2.0.5.md"
+
+
+def test_the_v2_0_5_note_names_the_p6_fixes_and_keeps_tenants_out():
+    """v2.0.5 ships the two fixes P6 found on v2.0.4 (decisions 92 and 93)."""
+    note = ROOT / "docs" / "operations" / NOTE_205
+    text = note.read_text(encoding="utf-8")
+    assert "v2.0.0" in text
+    assert "No real tenant is admitted yet." in text
+    assert "retention" in text
+    assert "identity_email" in text
+    assert "identity_phone" in text
+    assert "DEK rotation" in text
+    assert "display_name" in text
+    assert "Support" in text
+    assert "plain text" in text
+    for path in ("CLOSED-BETA-RUNBOOK.md", "INDEX.md"):
+        assert NOTE_205 in (ROOT / "docs" / "operations" / path).read_text(encoding="utf-8")
+    assert NOTE_205 in (ROOT / "CHANGELOG.md").read_text(encoding="utf-8")
+    site = ROOT / "docs-site"
+    assert not any(path.name == NOTE_205 for path in site.rglob("*"))
+
+
+NOTE_206 = "closed-beta-release-note-v2.0.6.md"
+
+
+def test_the_v2_0_6_note_requires_first_request_enforcement_on_staging():
+    note = ROOT / "docs" / "operations" / NOTE_206
+    text = note.read_text(encoding="utf-8")
+    assert "GC-7" in text
+    assert "first request" in text
+    assert "HTTP 403" in text
+    assert "HTTP 201" in text
+    assert "No real tenant is admitted yet." in text
+    assert "retention" in text
+    for path in (ROOT / "CHANGELOG.md", *(note.parent / name for name in ("CLOSED-BETA-RUNBOOK.md", "INDEX.md"))):
+        assert NOTE_206 in path.read_text(encoding="utf-8")
+    assert not any(path.name == NOTE_206 for path in (ROOT / "docs-site").rglob("*"))
+
+
+def test_the_product_version_is_v2_0_20():
+    """The release pipeline refuses a tag whose version differs from PRODUCT_VERSION."""
+    from src.multi_tenant.api_versioning import PRODUCT_VERSION
+
+    assert PRODUCT_VERSION == "2.0.20"
