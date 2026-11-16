@@ -77,7 +77,7 @@ Internal stable customer identity replacing contact-means-as-key.
 - **Lint remediation** — 1,446 ruff errors resolved to zero (E/F rules) in `src/`; non-`src/` directories (tests, admin, scripts) retain pre-existing violations
 - **Import cycle detection** — automated detector, 0 real cycles across 281 modules
 - **GitHub hygiene** — README refresh, branch protection, issue templates
-- **Evaluation reports** — Agent Red and OrbaTech technical assessment documents
+- **Evaluation reports**: Agent Red technical assessment documents
 
 ---
 

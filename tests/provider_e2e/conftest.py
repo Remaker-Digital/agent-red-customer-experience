@@ -126,11 +126,11 @@ MOCK_TENANTS = [
     },
     {
         "tenantId": "example-store",
-        "displayName": "Blanco Storefront",
+        "displayName": "Example Storefront",
         "status": "active",
         "tier": "professional",
         "billingChannel": "shopify",
-        "customerEmail": "shop@blanco.com",
+        "customerEmail": "shop@example.com",
         "createdAt": "2025-09-20T15:30:00Z",
         "updatedAt": "2026-03-01T09:00:00Z",
         "deactivatedAt": None,
@@ -313,7 +313,7 @@ MOCK_PIPELINE_TENANTS = {
         },
         {
             "tenantId": "example-store",
-            "displayName": "Blanco Storefront",
+            "displayName": "Example Storefront",
             "tier": "professional",
             "totalConversations": 421,
             "billableConversations": 398,
@@ -626,7 +626,7 @@ MOCK_SERVICE_MESSAGE_RECIPIENTS = {
         },
         {
             "tenantId": "example-store",
-            "email": "shop@blanco.com",
+            "email": "shop@example.com",
             "tier": "professional",
             "status": "active",
         },

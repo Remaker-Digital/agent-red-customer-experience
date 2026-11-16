@@ -330,12 +330,12 @@ class TestSpec0832MerchantCanWatchIngestion:
             "Must show ingestion progress"
 
 
-class TestSpec0587BlancoIsTheStorefront:
+class TestSpec0587ExampleStoreIsTheStorefront:
     """SPEC-0587: example-store.myshopify.com is THE production storefront."""
 
-    def test_blanco_referenced(self):
+    def test_example_store_referenced(self):
         env = (ROOT / ".env.local").read_text(encoding="utf-8")
-        assert "example-store" in env or "blanco" in env, \
+        assert "example-store" in env, \
             "example-store must be configured as the storefront"
 
 

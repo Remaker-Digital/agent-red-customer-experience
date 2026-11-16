@@ -639,7 +639,7 @@ def generate_widget_key(tenant_id: str) -> str:
     """Generate a new publishable widget key.
 
     Format: pk_live_{tenant_hash}_{random}
-    Example: pk_live_a7f3c9e1b2c3_d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9
+    Example: pk_live_000000000000_exampleplaceholderkeynotreal0000
 
     The tenant hash prefix (first 12 hex chars of SHA-256) makes keys
     visually distinguishable per tenant. The random suffix (32 hex chars)

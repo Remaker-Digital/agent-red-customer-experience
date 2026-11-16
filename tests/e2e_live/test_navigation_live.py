@@ -108,7 +108,7 @@ class TestLayoutElements:
         header = shared_admin_page.locator("header").first
         header_text = header.text_content() or ""
         # Accept Shopify store link, brand name, or any meaningful content
-        has_store = "blanco" in header_text.lower()
+        has_store = "example-store" in header_text.lower()
         has_brand = bool(re.search(r"[A-Za-z]{2,}", header_text))
         assert has_store or has_brand, (
             f"Header has no store link or brand name. Text: {header_text[:100]}"

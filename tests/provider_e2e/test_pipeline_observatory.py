@@ -77,7 +77,7 @@ class TestTabTransitions:
         )
         pipeline_page.get_by_role("tab", name="Tenant Comparison").click()
         expect(pipeline_page.get_by_text("Acme Corporation")).to_be_visible()
-        expect(pipeline_page.get_by_text("Blanco Storefront")).to_be_visible()
+        expect(pipeline_page.get_by_text("Example Storefront")).to_be_visible()
 
 
 class TestPipelineErrorStates:

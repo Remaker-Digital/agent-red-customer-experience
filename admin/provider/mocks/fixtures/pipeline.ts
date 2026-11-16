@@ -40,9 +40,9 @@ export function createPipelineFixture() {
     tenantComparison: {
       tenants: [
         { tenantId: "acme-corp-001", displayName: "Acme Corporation", tier: "enterprise", totalConversations: 847, billableConversations: 812, avgLatencyMs: 1150, errorRate: 0.002, escalationRate: 0.03, tokenConsumption: 542100, cost: 16.26, estimatedRu: 2965, resolutionRate: 0.87 },
-        { tenantId: "example-store", displayName: "Blanco Storefront", tier: "professional", totalConversations: 421, billableConversations: 398, avgLatencyMs: 1280, errorRate: 0.003, escalationRate: 0.04, tokenConsumption: 287400, cost: 8.62, estimatedRu: 1474, resolutionRate: 0.82 },
+        { tenantId: "example-store", displayName: "Example Storefront", tier: "professional", totalConversations: 421, billableConversations: 398, avgLatencyMs: 1280, errorRate: 0.003, escalationRate: 0.04, tokenConsumption: 287400, cost: 8.62, estimatedRu: 1474, resolutionRate: 0.82 },
         { tenantId: "example-tenant-001", displayName: "Remaker Digital", tier: "enterprise", totalConversations: 218, billableConversations: 205, avgLatencyMs: 1120, errorRate: 0.001, escalationRate: 0.02, tokenConsumption: 148200, cost: 4.45, estimatedRu: 763, resolutionRate: 0.91 },
-        { tenantId: "harrison-001", displayName: "Harrison & Co", tier: "starter", totalConversations: 156, billableConversations: 142, avgLatencyMs: 1340, errorRate: 0.004, escalationRate: 0.06, tokenConsumption: 98700, cost: 2.96, estimatedRu: 546, resolutionRate: 0.78 },
+        { tenantId: "example-002", displayName: "Example & Co", tier: "starter", totalConversations: 156, billableConversations: 142, avgLatencyMs: 1340, errorRate: 0.004, escalationRate: 0.06, tokenConsumption: 98700, cost: 2.96, estimatedRu: 546, resolutionRate: 0.78 },
       ],
       total: 4,
       sortBy: "totalConversations",

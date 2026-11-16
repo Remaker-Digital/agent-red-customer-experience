@@ -286,7 +286,7 @@ def widget_panel(widget_page: Page) -> FrameLocator:
 # ---------------------------------------------------------------------------
 
 # Widget key embedded in widget/dev.html — asserted on outbound chat calls.
-DEV_WIDGET_KEY = "pk_live_c79a2bd0b3d4_43c03b0a269c138d524ceb908ad5ba00"
+DEV_WIDGET_KEY = "pk_live_000000000000_exampleplaceholderkeynotreal0000"
 
 
 def _sse_body(reply_text: str, event_id_base: int = 1) -> str:
