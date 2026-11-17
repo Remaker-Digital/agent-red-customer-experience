@@ -1,0 +1,31 @@
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
+[build-system]
+requires = ["setuptools>=77", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "agent-red-operator-console-mcp"
+version = "0.1.0"
+requires-python = ">=3.12"
+license = "MIT"
+license-files = ["LICENSE"]
+dependencies = ["agent-red-core-client==0.1.0", "mcp==1.29.0"]
+description = "Read-only operator tools for Agent Red over MCP stdio"
+authors = [{name = "Michael Palmeter"}]
+
+[project.optional-dependencies]
+test = ["agent-red-core-fakes==0.1.0", "pytest>=8,<10", "pytest-asyncio>=1,<2", "pytest-socket>=0.7,<1"]
+
+[project.scripts]
+agent-red-operator-console-mcp = "agent_red_operator_console_mcp.server:main"
+
+[project.entry-points."agent_red.modules"]
+operator-console-mcp = "agent_red_operator_console_mcp:module_metadata"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+addopts = "--disable-socket --allow-unix-socket"

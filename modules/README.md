@@ -13,4 +13,4 @@ Develop on `hfi/<feature>` branches. The module scope check rejects changes outs
 
 Record the tested package version, source commit and artifact checksum before private adoption. A module that becomes customer-driven or requires production hardening graduates to the commercial project; its public version is frozen. Existing tagged package artifacts retain their original metadata and content hashes.
 
-The first module template and generated API client will be added with the corresponding reviewed core contract. No module package is installed or enabled by this directory alone.
+The initial template is `operator-console-mcp/`, backed by the independently packaged client and synthetic API in `contracts/`. It exposes three read-only tools using the existing directory API. No module package is installed or enabled by this directory alone.
