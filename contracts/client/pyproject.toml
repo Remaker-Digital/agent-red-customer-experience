@@ -1,0 +1,20 @@
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
+[build-system]
+requires = ["setuptools>=77", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "agent-red-core-client"
+version = "0.1.0"
+description = "Generated client for the Agent Red operator read contract"
+requires-python = ">=3.12"
+license = "MIT"
+license-files = ["LICENSE"]
+dependencies = ["httpx>=0.28.1,<0.29", "attrs>=25,<27", "python-dateutil>=2.9,<3"]
+
+[tool.setuptools.packages.find]
+include = ["agent_red_core_client*"]
+
+[tool.setuptools.package-data]
+agent_red_core_client = ["py.typed"]

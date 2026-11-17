@@ -1,0 +1,21 @@
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
+name: Operator module wheels
+on:
+  push:
+    paths: ["contracts/**", "modules/operator-console-mcp/**", "tools/verify_operator_module.py", ".github/workflows/operator-module.yml"]
+  pull_request:
+    paths: ["contracts/**", "modules/operator-console-mcp/**", "tools/verify_operator_module.py", ".github/workflows/operator-module.yml"]
+permissions:
+  contents: read
+jobs:
+  disconnected-wheels:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -r contracts/requirements-tools.txt
+      - run: python -m ruff check --select E,F --ignore E501 contracts modules/operator-console-mcp tools/verify_operator_module.py
+      - run: python tools/verify_operator_module.py

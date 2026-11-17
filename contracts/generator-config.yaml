@@ -1,0 +1,4 @@
+project_name_override: agent-red-core-client
+package_name_override: agent_red_core_client
+package_version_override: 0.1.0
+post_hooks: []
