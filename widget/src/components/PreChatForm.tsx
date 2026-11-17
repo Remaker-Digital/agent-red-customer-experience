@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * PreChatForm — collects customer information before starting a chat.
  *
@@ -16,7 +16,7 @@
  * Visual reference: Zapier (form layouts, input styling, spacing).
  * Functional reference: Tidio (pre-chat form fields, validation).
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import { FunctionComponent } from 'preact';

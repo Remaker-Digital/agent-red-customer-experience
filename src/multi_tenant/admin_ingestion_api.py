@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Admin Ingestion API — Knowledge Automation (KA-2).
 
 REST endpoints for triggering and monitoring storefront ingestion jobs
@@ -13,7 +13,7 @@ Endpoints:
 
 All endpoints derive tenant_id from the authenticated TenantContext.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

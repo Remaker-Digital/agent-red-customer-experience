@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 // @ts-nocheck
 /**
  * Mock handlers — Provider contact messages.
@@ -6,7 +6,7 @@
  * Response shape matches ContactMessageListResponse in ContactMessages.tsx:
  *   { messages, total, skip, limit }
  *
- * (c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * (c) 2026 Michael Palmeter. All rights reserved.
  */
 import { GET, PATCH } from '../router';
 import { getStore } from '../store';

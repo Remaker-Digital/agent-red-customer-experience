@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """CQ-4: Automated quality regression detection (SPEC-0183).
 
 Monitors conversation quality scores over time and detects statistically
@@ -13,7 +13,7 @@ Severity levels:
 Integrates with the default alert rules engine (SPEC-1831) for
 notification delivery.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

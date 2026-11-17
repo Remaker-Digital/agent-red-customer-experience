@@ -1,7 +1,7 @@
 // @ts-nocheck
 /**
  * Memory & Privacy fixture.
- * (c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * (c) 2026 Michael Palmeter. All rights reserved.
  */
 export function createMemoryFixture() {
   return {

@@ -5,7 +5,7 @@ Tests verify algebraic properties of the tier ordering system:
 - Gate alias resolution idempotency
 - Monotonicity of entitlements across tiers
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 from __future__ import annotations
 

@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Encryption Monitoring Scan — SPEC-1843 / WI-1633.
 
 Periodic job that checks for unencrypted documents in tenant-scoped

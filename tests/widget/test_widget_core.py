@@ -9,7 +9,7 @@ Verifies TypeScript implementation patterns for widget core specs:
 Run with:
     pytest tests/widget/test_widget_core.py -v
 
-(c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+(c) 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations
@@ -726,7 +726,7 @@ class TestWidgetColorPipeline:
     the entire color pipeline: config interface → resolveTokens →
     Header background → Panel gradient wiring → API fetch.
 
-    © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+    © 2026 Michael Palmeter. All rights reserved.
     """
 
     # -- WidgetConfig interface (tokens.ts) ----------------------------------

@@ -1,11 +1,11 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * InviteForm — Invite-new-team-member form, extracted from TeamManager.
  *
  * Presentational component: receives all state and callbacks as props.
  * No API calls or local state management — all owned by the parent.
  *
- * (c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * (c) 2026 Michael Palmeter. All rights reserved.
  */
 
 import React from 'react';

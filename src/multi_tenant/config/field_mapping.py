@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """
 PreferencesDocument ↔ config schema field mapping.
 
@@ -6,7 +6,7 @@ Maps between the expanded config schema field set and the
 PreferencesDocument Cosmos DB model. Contains the direct field sets
 and bidirectional conversion functions.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

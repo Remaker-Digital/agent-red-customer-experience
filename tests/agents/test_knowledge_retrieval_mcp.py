@@ -3,7 +3,7 @@
 Covers: _try_mcp_augmentation, _find_search_tool, _merge_results,
 backward compatibility, end-to-end process() flow with MCP.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

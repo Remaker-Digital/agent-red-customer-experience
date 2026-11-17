@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Superadmin API -- Rate limit and back-off/retry configuration.
 
 Domain sub-module for SPEC-1819 (Code-Free Runtime Configuration — rate limits)
@@ -17,7 +17,7 @@ Back-off / Retry:
   PUT  /retry-configs/{service}    — Write retry config for a service
   GET  /retry-configs/history      — Audit history for retry config changes
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 from __future__ import annotations
 

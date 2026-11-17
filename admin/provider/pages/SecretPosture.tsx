@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * SecretHealth — Aggregate secret health (SPEC-1843 zero-knowledge).
  *
@@ -8,7 +8,7 @@
  *
  * API: GET /api/superadmin/health/secrets
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import React, { useEffect, useState } from 'react';

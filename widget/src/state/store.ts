@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * Widget state management.
  *
@@ -10,7 +10,7 @@
  *   - conversation: current conversation state (messages, status)
  *   - ui: presentation state (open/closed, view, loading indicators)
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import type { WidgetConfig, DesignTokens } from '@/theme/tokens';

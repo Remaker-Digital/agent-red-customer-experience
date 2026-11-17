@@ -1,7 +1,7 @@
 // @ts-nocheck
 /**
  * Inbox handlers - conversations, messages, search, actions.
- * (c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * (c) 2026 Michael Palmeter. All rights reserved.
  */
 import { GET, POST } from '../router';
 import { getStore } from '../store';

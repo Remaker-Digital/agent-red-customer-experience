@@ -8,7 +8,7 @@ Covers:
     4. widget_greeting_mode: field present in Cosmos schema + field_mapping
     5. Security middleware: 413 response includes both "error" and "max_bytes"
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

@@ -12,7 +12,7 @@ Covers:
     SID-09  start_conversation legacy mode (no customer_repo)
     SID-10  Shopify GID + email creates both contact attributes
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

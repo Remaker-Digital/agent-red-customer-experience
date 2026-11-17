@@ -8,7 +8,7 @@ baselined and tracked for remediation. Minor/moderate are logged as warnings.
 This module does NOT use importorskip — axe-playwright-python MUST be
 available in CI. ImportError = hard fail (fail-closed design).
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

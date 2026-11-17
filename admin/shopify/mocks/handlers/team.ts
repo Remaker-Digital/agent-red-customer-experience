@@ -1,7 +1,7 @@
 // @ts-nocheck
 /**
  * Team handlers - CRUD, role change, active toggle.
- * (c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * (c) 2026 Michael Palmeter. All rights reserved.
  */
 import { GET, POST, PUT, DELETE } from '../router';
 import { getStore } from '../store';

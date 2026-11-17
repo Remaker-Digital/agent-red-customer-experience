@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * CategoryTemplateSelector — picks and applies an industry template.
  *
@@ -7,7 +7,7 @@
  * Displays available category templates as a grid of selectable cards.
  * On selection, shows preview details and "Apply to KB" button.
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import React, { useState } from 'react';

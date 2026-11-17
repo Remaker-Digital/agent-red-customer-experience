@@ -1,5 +1,5 @@
 # tests/unit/test_kb_event_loop_offload.py: KB BM25 and the semantic-cache scan run off the event loop
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 
 """
 Design PR5 (docs/beta-single-container-design.md, sections 3 and 6). KB BM25 scoring

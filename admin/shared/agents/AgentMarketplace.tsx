@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * AgentMarketplace — browse and install/uninstall peer agents (SPEC-1865).
  *
@@ -6,7 +6,7 @@
  * skill count, tier gate, and an Install/Uninstall button. Actions are
  * best-effort with user feedback via onNotify.
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import React, { useState, useMemo, useCallback } from 'react';

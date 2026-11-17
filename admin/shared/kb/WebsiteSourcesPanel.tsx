@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * WebsiteSourcesPanel — manage automated website crawl sources for knowledge base.
  *
@@ -8,7 +8,7 @@
  *
  * Framework-agnostic React component — no Polaris, no Tailwind, pure inline styles.
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import React, { useState, useCallback } from 'react';

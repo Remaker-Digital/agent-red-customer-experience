@@ -1,11 +1,11 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * ConfirmRemoveDialog — Modal confirmation for removing a team member.
  *
  * Extracted from TeamManager.tsx. Presentational component: receives the
  * member to remove, loading state, and confirm/cancel callbacks as props.
  *
- * (c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * (c) 2026 Michael Palmeter. All rights reserved.
  */
 
 import React from 'react';

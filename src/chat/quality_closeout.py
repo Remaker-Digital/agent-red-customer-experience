@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Quality closeout helper — shared across all conversation-end paths.
 
 Called by:
@@ -12,7 +12,7 @@ Computes quality_aggregate from per-turn scores and evaluates quality
 regression alerts. Both operations must happen at every closeout path
 so the dashboard read path (_quality.py:242) always has data.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

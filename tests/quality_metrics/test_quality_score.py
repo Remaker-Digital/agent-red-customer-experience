@@ -3,7 +3,7 @@
 Verifies 6 metrics, composite score computation, trend arrows,
 and KB storage via quality_scores table.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 from __future__ import annotations
 

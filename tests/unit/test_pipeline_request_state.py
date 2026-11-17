@@ -1,5 +1,5 @@
 # tests/unit/test_pipeline_request_state.py: concurrent chat requests keep their own tenant state
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 
 """
 One ChatPipeline instance serves every chat request. ``execute`` stored the request's

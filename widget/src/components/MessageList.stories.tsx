@@ -1,11 +1,11 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * Storybook stories for MessageList (SPEC-1845/WI-1502).
  *
  * Covers: empty state, single message, conversation, typing indicator,
  * greeting message, and scroll overflow.
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import { MessageList } from './MessageList';

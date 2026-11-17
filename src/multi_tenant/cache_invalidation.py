@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Cross-replica cache invalidation via Redis pub/sub (SPEC-1757).
 
 When multiple Container App replicas each maintain local tenant metadata
@@ -11,7 +11,7 @@ This module provides Redis pub/sub-based invalidation:
 Without Redis the module is a no-op — TTL-based expiry handles invalidation
 with eventual consistency within the configured cache TTL window.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

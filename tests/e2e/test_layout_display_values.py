@@ -19,7 +19,7 @@ Run with:
     pytest tests/e2e/test_layout_display_values.py -v --headed
     pytest tests/e2e/test_layout_display_values.py -v
 
-(c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+(c) 2026 Michael Palmeter. All rights reserved.
 """
 
 import pytest
@@ -144,11 +144,11 @@ class TestLayoutDisplayValues:
         expect(version_el.first).to_be_visible()
 
     def test_footer_copyright_text(self, admin_page: Page) -> None:
-        """Footer contains '2026 Remaker Digital' copyright notice."""
-        copyright_text = admin_page.get_by_text("2026 Remaker Digital")
+        """Footer contains '2026 Michael Palmeter' copyright notice."""
+        copyright_text = admin_page.get_by_text("2026 Michael Palmeter")
         expect(copyright_text.first).to_be_visible()
 
     def test_footer_legal_entity(self, admin_page: Page) -> None:
-        """Footer contains 'VanDusen & Palmeter, LLC' legal entity."""
-        entity = admin_page.get_by_text("VanDusen & Palmeter, LLC")
+        """Footer contains the reservation of rights."""
+        entity = admin_page.get_by_text("All rights reserved.")
         expect(entity.first).to_be_visible()

@@ -10,7 +10,7 @@ Dependencies:
     - alert_delivery.py: send_acs_email (ACS fallback)
     - cosmos_schema.py: ContactMessageDocument
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

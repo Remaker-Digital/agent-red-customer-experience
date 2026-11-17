@@ -1,5 +1,5 @@
 # tests/unit/test_peer_agent_critic.py: peer-agent replies go through the Critic
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 
 """
 The peer-agent route stored and showed the agent's reply with ``critic_passed=None``

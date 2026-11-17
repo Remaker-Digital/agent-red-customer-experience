@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """ChatPipeline orchestrator — main pipeline entry point.
 
 Contains the ChatPipeline class which inherits from AgentDispatchMixin,
@@ -7,7 +7,7 @@ and __init__ / close / _init_agents / _load_customer_profile methods
 live here.
 
 R10 refactoring — extracted from pipeline.py (session 39).
-(c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+(c) 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

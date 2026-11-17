@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Superadmin API -- Alert thresholds and notification channel configuration.
 
 Domain sub-module for SPEC-1822 (Alert Threshold Configuration) and
@@ -18,7 +18,7 @@ Notification Channels:
   POST /notification-channels/{channel_type}/test — Send a test notification
   GET  /notification-channels/history       — Audit history for channel changes
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 from __future__ import annotations
 

@@ -1,4 +1,4 @@
-# (c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# (c) 2026 Michael Palmeter. All rights reserved.
 """Issue reports, message feedback and consent reach the conversation document (review F33).
 
 The three routes wrote through ``session._conversation_repo``, which ConversationSession

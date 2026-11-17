@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * Agent provider logos — real SVG files from integration-logos/ where available,
  * inline SVGs from Simple Icons (CC0 license) as fallback, and the Agent Red
@@ -9,7 +9,7 @@
  *   const Logo = getAgentLogo('stripe_mcp');
  *   <Logo size={32} />
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import React, { useState } from 'react';

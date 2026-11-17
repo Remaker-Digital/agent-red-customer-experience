@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * Provider Admin Login — Service Provider Administrator authentication.
  *
@@ -11,7 +11,7 @@
  *
  * Migrated to Mantine components (Cycle 10, item 10e).
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import React, { useState, useCallback, useEffect } from 'react';

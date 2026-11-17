@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * OfflineForm — leave-a-message form when chat is unavailable.
  *
@@ -12,7 +12,7 @@
  * Visual reference: Zapier (form styling, spacing, button design).
  * Functional reference: Tidio (offline form fields, success state).
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import { FunctionComponent } from 'preact';

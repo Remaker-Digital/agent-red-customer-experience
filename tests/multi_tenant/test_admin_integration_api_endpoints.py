@@ -7,7 +7,7 @@ Covers 5 specs:
     4. activate_integration — mock processor.update_config + get_config
     5. deactivate_integration — mock processor.update_config + get_config
 
-(C) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+(C) 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

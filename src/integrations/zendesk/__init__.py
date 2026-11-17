@@ -1,6 +1,6 @@
 """Zendesk Integration — Full Helpdesk Adapter (SPEC-1775).
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from src.integrations.zendesk.adapter import ZendeskAdapter

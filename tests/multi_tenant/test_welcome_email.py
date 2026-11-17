@@ -9,7 +9,7 @@ Verifies that:
     - Missing email address returns False immediately
     - Provisioning call sites invoke welcome email
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

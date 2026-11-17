@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Usage Dashboard API — billing transparency endpoints (Decision #25, WI #73-74).
 
 Provides REST endpoints for the three-layer usage transparency model:
@@ -29,7 +29,7 @@ Dependencies (all implemented):
 - middleware.py:           get_tenant_context, TenantContext
 - cosmos_schema.py:        ConversationStatus
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

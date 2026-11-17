@@ -1,10 +1,10 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * Configuration suggestions hooks — fetch AI-generated config field suggestions.
  *
  * KA-7: Knowledge Automation Admin UI.
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import { useApi } from './useApi';

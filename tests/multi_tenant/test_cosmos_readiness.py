@@ -3,7 +3,7 @@
 Verifies that /ready includes an explicit Cosmos DB connectivity check
 via a health_sentinel document pattern with caching and timeout.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

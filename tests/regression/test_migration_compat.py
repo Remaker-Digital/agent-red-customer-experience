@@ -20,7 +20,7 @@ ActivationService._ensure_config_state().  These tests verify that:
 Run:
     python -m pytest tests/regression/test_migration_compat.py -x -q
 
-Copyright 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+Copyright 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

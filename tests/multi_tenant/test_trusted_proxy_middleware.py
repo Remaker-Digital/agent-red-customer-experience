@@ -4,7 +4,7 @@ Verifies that reverse proxy headers (Cloudflare CF-Connecting-IP,
 generic X-Forwarded-For) are correctly extracted and applied to
 the ASGI scope so downstream middleware sees the real client IP.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

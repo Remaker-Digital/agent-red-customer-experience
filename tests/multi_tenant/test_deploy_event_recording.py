@@ -5,7 +5,7 @@ correctly POSTs audit events to the API, and gracefully handles failures.
 
 Total: 8 tests
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

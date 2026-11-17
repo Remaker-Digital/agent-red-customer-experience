@@ -1,10 +1,10 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * Shared style constants and helper factories for Knowledge Base sub-components.
  *
  * Framework-agnostic — no Polaris, no Tailwind, pure inline styles.
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import type React from 'react';

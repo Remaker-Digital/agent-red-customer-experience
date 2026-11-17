@@ -104,4 +104,4 @@ Custom instructions are applied *after* all other configuration (brand voice, fo
 
 ---
 
-*© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.*
+*© 2026 Michael Palmeter. All rights reserved.*

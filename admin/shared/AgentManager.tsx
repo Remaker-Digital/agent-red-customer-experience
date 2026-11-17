@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * AgentManager — two-panel orchestrator for tenant agent lifecycle.
  *
@@ -11,7 +11,7 @@
  *
  * Responsive: collapses to single pane below 768px.
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import React, { useState, useEffect, useCallback } from 'react';

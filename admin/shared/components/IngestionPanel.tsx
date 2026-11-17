@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * IngestionPanel — displays ingestion job progress and status.
  *
@@ -7,7 +7,7 @@
  * Shows the current/latest ingestion job status with progress bar,
  * article count, and cancel button for running jobs.
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import React from 'react';

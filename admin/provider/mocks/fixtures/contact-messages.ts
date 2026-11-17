@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * Provider contact messages fixture.
  *
@@ -9,7 +9,7 @@
  *   - status: new | read | resolved | archived
  *   - topic: support | feature_request | billing | bug_report | general
  *
- * (c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * (c) 2026 Michael Palmeter. All rights reserved.
  */
 export function createContactMessagesFixture() {
   return {

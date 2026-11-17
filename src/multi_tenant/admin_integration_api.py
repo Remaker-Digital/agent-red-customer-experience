@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """
 Admin Integration Management API — C10 capability dependency.
 
@@ -25,7 +25,7 @@ Routes:
     GET  /api/admin/integrations/stripe/tools       — List available Stripe MCP tools
     DELETE /api/admin/integrations/stripe/credentials — Remove Stripe API key
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

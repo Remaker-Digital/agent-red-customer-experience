@@ -3,7 +3,7 @@
 Confirms that the YAML-driven registry produces identical results to the
 original Python-based registry for all 78 field definitions.
 
-(c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+(c) 2026 Michael Palmeter. All rights reserved.
 """
 
 import pytest

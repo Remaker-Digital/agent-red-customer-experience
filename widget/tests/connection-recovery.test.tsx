@@ -4,7 +4,7 @@
  * Verifies store state, SSE callback contract, and locale support
  * for enhanced connection recovery UX.
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import { describe, it, expect } from 'vitest';

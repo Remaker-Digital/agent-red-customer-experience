@@ -9,7 +9,7 @@ Covers 7 specs:
     6. resolve_conversation — mock repo.read and repo.patch
     7. add_note — mock repo.add_internal_note
 
-(C) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+(C) 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

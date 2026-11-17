@@ -3,7 +3,7 @@
 Covers: list, get, create, update, delete, export, upload, URL import,
 staleness endpoints, chunk preview, and conflict scan.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

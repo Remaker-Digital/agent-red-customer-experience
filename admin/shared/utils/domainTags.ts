@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * Domain tag normalization for agent overlays and team members.
  *
@@ -7,7 +7,7 @@
  * (overlay staff_domain_tags) and caller-side (team member
  * staff_domain_tags) to avoid false denials.
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 /**

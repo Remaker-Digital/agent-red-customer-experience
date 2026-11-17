@@ -11,7 +11,7 @@ Covers:
     - Edge cases (empty KB, single entry, no embeddings, cache behaviour)
     - Module-level singleton
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 import time

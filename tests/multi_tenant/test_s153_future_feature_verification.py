@@ -6,7 +6,7 @@ and verify accuracy by reviewing the project code.
 These tests confirm that 24 specs previously thought to be unimplemented
 are in fact present in the production codebase.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 from pathlib import Path
 

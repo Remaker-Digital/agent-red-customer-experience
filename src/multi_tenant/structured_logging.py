@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Structured logging standardization (WI #149).
 
 Provides a JSON-structured log formatter and configuration helper that
@@ -31,7 +31,7 @@ Architecture references:
     - Decision #12: Correlation ID chain (conversation_id + tenant_id + trace_id)
     - otel_tracing.py: TenantLogFilter injects context fields
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

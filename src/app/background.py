@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Background tasks for Agent Red Customer Experience.
 
 - Idle conversation scanner — closes conversations exceeding 30-min idle timeout.
@@ -14,7 +14,7 @@
 - Trial expiry warning emails — sends warning emails at 7, 3, and 1 day(s)
   before trial end (WI-E3).
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

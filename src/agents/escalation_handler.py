@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 # Agent Red Customer Experience — Escalation Handler Agent
 #
 # Evaluates escalation context when the Intent Classifier detects an
@@ -13,7 +13,7 @@
 # Output payload:
 #   {"reason": str, "urgency": str, "context_summary": str, "category": str, "model": str}
 #
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 
 from __future__ import annotations
 

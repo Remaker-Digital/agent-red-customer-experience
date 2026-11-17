@@ -1,11 +1,11 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """PII masking helpers for superadmin API responses.
 
 SPEC-1843 (ZK Pillar 3): platform operator MUST NOT read tenant data.
 Masking applied at the response boundary so Cosmos queries still function
 but raw PII never reaches the API consumer.
 
-(c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+(c) 2026 Michael Palmeter. All rights reserved.
 """
 from __future__ import annotations
 

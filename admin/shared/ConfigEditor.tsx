@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * ConfigEditor — Full tenant configuration editor with version history.
  *
@@ -33,7 +33,7 @@
  *   - ../types  — BaseComponentProps, ConfigField, ConfigVersion, ConfigDiff, etc.
  *   - ../hooks  — useConfig, useUpdateConfig, useConfigVersions, useConfigSchema
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import React, { useState, useCallback, useEffect, useMemo } from 'react';

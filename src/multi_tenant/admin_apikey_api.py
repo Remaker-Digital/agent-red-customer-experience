@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Admin API Key Management API — generate, rotate, revoke, reset API keys.
 
 Provides REST endpoints for merchant API key lifecycle management:
@@ -31,7 +31,7 @@ Dependencies:
     - repository.py: TenantRepository
     - cosmos_schema.py: TenantDocument, AuditEventType
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

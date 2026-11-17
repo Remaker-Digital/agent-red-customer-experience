@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Configuration API — RESTful endpoints for tenant configuration management.
 
 Work Item #65 (Decision #22): Layer 3 of the 5-layer tenant configuration
@@ -49,7 +49,7 @@ Dependencies:
     - middleware.py: get_tenant_context
     - auth.py: TenantContext
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

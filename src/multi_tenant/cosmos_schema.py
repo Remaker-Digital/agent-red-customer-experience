@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """
 Cosmos DB schema definitions for multi-tenant Agent Red platform.
 
@@ -28,7 +28,7 @@ Architecture references:
     - Decision #29: Layer 2 vectorization (DiskANN, 3072 dimensions, cosine)
     - Master Plan Review Section 4: Architecture Decisions Detail
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations
@@ -1888,7 +1888,7 @@ class AdminDocumentationDocument(BaseModel):
     Partition key: /document_category
     No TTL — documentation is permanent.
 
-    (c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC.
+    (c) 2026 Michael Palmeter.
     """
 
     id: str = Field(description="Document ID: {category}:{slug}")

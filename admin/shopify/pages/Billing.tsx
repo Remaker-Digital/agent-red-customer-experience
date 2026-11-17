@@ -1,11 +1,11 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * Billing page — Shopify embedded admin.
  *
  * Renders BillingPortal shared component with Shopify-specific billing management.
  * Uses App Bridge redirect to Shopify billing page.
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import React, { useCallback } from 'react';

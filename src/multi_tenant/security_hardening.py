@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """
 Security hardening utilities — input/output sanitization, auth rate limiting,
 and API key rotation.
@@ -14,7 +14,7 @@ Architecture references:
     - Decision #5: Per-tenant rate limits
     - Decision #6: Key Vault per-tenant secrets
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

@@ -303,4 +303,4 @@ Contact your account manager to configure a custom integration for your specific
 
 ---
 
-*© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.*
+*© 2026 Michael Palmeter. All rights reserved.*

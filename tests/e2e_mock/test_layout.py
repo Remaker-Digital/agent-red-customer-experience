@@ -1,4 +1,4 @@
-# (C) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# (C) 2026 Michael Palmeter. All rights reserved.
 """SPEC-1706 mock E2E tests for StandaloneLayout.
 
 Tests the layout chrome (header, sidebar nav, footer, onboarding wizard,

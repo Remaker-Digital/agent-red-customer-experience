@@ -9,7 +9,7 @@ WI #133: Verifies multi-tab SSE coordination: tab_id tracking, connection
 counting, tab-aware disconnect, stream status endpoint, and widget tab_id
 query parameter support.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

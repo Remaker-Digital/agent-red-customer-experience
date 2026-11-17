@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """MCP Agent Plug-in Registry (SPEC-1706).
 
 Configuration-driven agent discovery and dispatch.  Loads agent
@@ -12,7 +12,7 @@ Key constraints (SPEC-1706):
   - Configuration-driven discovery (no hard-coded registration)
   - MCP protocol is the standard interface for all communication
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

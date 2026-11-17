@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * DeploymentManagement — Self-service deployment pipeline.
  *
@@ -12,7 +12,7 @@
  *      GET  /api/superadmin/deployments/{deploy_id}/status
  *
  * SPEC-1825 / S213
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';

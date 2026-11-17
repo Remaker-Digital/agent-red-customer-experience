@@ -4,7 +4,7 @@ Verifies that when a customer submits an issue report, the report_issue
 endpoint calls send_escalation_alert() with the issue type as reason and
 the details as context summary.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

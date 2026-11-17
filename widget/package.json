@@ -1,5 +1,6 @@
 {
   "name": "@agent-red/widget",
+  "license": "UNLICENSED",
   "version": "1.0.0",
   "private": true,
   "description": "Agent Red Customer Experience — Chat widget (Preact + TypeScript)",

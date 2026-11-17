@@ -1,7 +1,7 @@
 # Agent Red terminology enforcement
 # Ensures consistent capitalization and naming across all documentation.
 #
-# (c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# (c) 2026 Michael Palmeter. All rights reserved.
 
 extends: substitution
 message: "Use '%s' instead of '%s' for consistent terminology."

@@ -7,7 +7,7 @@
  * Usage: Add <DocFeedback /> at the bottom of any doc page, or integrate
  * into the DocItem footer via Docusaurus theme swizzling.
  *
- * (c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * (c) 2026 Michael Palmeter. All rights reserved.
  */
 
 import React, { useState } from 'react';

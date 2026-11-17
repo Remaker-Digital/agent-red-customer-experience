@@ -6,7 +6,7 @@ SPEC-1702 (operations index), SPEC-1703 (master test results).
 These tests validate docs/ directory content which is only present
 in the git working tree, not in Docker containers.
 
-(c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+(c) 2026 Michael Palmeter. All rights reserved.
 """
 
 import pathlib

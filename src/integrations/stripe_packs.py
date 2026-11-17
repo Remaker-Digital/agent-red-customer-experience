@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """
 Conversation pack purchase and balance management.
 
@@ -28,7 +28,7 @@ Endpoints:
     POST /api/packs/purchase             — Create a checkout session for a pack
     GET  /api/packs/balance/{customer_id} — Check remaining pack balance
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

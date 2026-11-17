@@ -6,7 +6,7 @@ Tests for:
     - Mid-stream error handling in pipeline execute()
     - Outer except block enhanced error events
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

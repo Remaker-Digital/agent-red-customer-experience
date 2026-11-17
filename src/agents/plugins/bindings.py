@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Agent Skill Binding service (SPEC-1856, SPEC-1857, SPEC-1858, WI-4014).
 
 Manages per-tenant, per-agent, per-skill authorization bindings.
@@ -11,7 +11,7 @@ Sync/async contract (Codex Finding 2):
     to clear this cache, forcing next reads to miss.
   - No second TTL cache (Codex Finding 1). Invalidation is immediate on writes.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

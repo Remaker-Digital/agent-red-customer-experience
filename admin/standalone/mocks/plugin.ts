@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 // @ts-nocheck
 /**
  * Vite mock API plugin - configureServer hook that intercepts /api/* requests.
@@ -6,7 +6,7 @@
  * Registered only in mock mode (vite --mode mock). Intercepts all API requests
  * before they reach the Vite proxy, returning mock data from the in-memory store.
  *
- * (c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * (c) 2026 Michael Palmeter. All rights reserved.
  */
 
 import type { Plugin, ViteDevServer } from "vite";

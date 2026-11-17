@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * WidgetConfigurator — Visual editor for the 24 widget customization fields.
  *
@@ -26,7 +26,7 @@
  *   - tenant_config_schema.py step 9: Widget Appearance (24 fields)
  *   - cosmos_schema.py: PreferencesDocument widget_* fields
  *
- * (c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * (c) 2026 Michael Palmeter. All rights reserved.
  */
 
 import React, { useState, useCallback, useMemo, useEffect } from 'react';

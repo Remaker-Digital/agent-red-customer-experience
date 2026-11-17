@@ -1,5 +1,5 @@
 # tests/unit/test_widget_key_scope.py: what the public widget key may do
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 
 """
 The widget key (``pk_live_...``) is embedded in storefront pages, so anyone can

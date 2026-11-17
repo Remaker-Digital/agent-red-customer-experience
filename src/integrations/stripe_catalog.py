@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """
 Stripe product catalog loader.
 
@@ -7,7 +7,7 @@ scripts/stripe/create_product_catalog.py) and provides typed access to
 Stripe product IDs, price IDs, and meter IDs used by checkout, webhook,
 and usage-reporting modules.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

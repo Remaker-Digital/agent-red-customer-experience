@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """PatternExtractionService — Layer 3 cross-session behavioral pattern learning.
 
 Work Items #90-92 (Decision #30): Post-conversation analysis to extract,
@@ -45,7 +45,7 @@ Dependencies:
     - cosmos_schema.py: ConsentStatus, TenantTier, TIER_DEFAULTS
     - No new pip packages required
 
-(c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+(c) 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

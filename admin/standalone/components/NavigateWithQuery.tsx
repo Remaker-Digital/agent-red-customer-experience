@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * NavigateWithQuery — declarative redirect that preserves URL search params.
  *
@@ -6,7 +6,7 @@
  * Reads the current location.search and appends it to the `to` prop so that
  * ?tenant= (SPEC-1617) survives catch-all and alias redirects.
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import React from 'react';

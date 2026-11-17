@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 // @ts-nocheck
 /**
  * Mock data store — Provider admin console.
@@ -6,7 +6,7 @@
  * In-memory mutable state for all mock API handlers.
  * Initialized from fixture files on server start.
  *
- * (c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * (c) 2026 Michael Palmeter. All rights reserved.
  */
 
 import { createDashboardFixture } from './fixtures/dashboard';

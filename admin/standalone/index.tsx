@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * Standalone Admin Shell — entry point.
  *
@@ -14,7 +14,7 @@
  *   Standalone admin is required because Stripe-direct merchants
  *   have no Shopify account and cannot access the embedded admin.
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import React from 'react';

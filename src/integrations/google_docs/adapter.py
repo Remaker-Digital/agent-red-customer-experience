@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Google Docs/Drive Knowledge Source Adapter (SPEC-1777).
 
 KnowledgeAdapter implementation for Google Docs and Drive.
@@ -12,7 +12,7 @@ Supported file types:
 
 Content-hash tracking prevents re-processing unchanged documents.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

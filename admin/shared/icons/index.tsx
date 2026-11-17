@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * Shared SVG Icon Library — single source for all admin surfaces.
  *
@@ -13,7 +13,7 @@
  *   <Icons.dashboard />
  *   <Icons.dashboard size={24} />
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import React from 'react';

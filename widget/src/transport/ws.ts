@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * WebSocket transport — bidirectional channel for typing and presence.
  *
@@ -17,7 +17,7 @@
  * authenticates via the widget key query parameter. Messages are
  * JSON-encoded with a `type` field.
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import { getStore } from '@/state/store';

@@ -1,11 +1,11 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Gateway Agent — Human Escalation Connection MCP Server (SPEC-1710).
 
 Manages seamless handoff from AI to human support agents.  Provides
 agent availability monitoring, queue management, context transfer,
 skill-based routing, and agent takeover/return transitions.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

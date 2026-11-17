@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Security middleware — trusted proxy, request body limits, JSON depth, security headers.
 
 Provides four middleware components for defense-in-depth:
@@ -32,7 +32,7 @@ Architecture references:
     - OWASP API Security Top 10 (2023)
     - Shopify App Store security review requirements
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

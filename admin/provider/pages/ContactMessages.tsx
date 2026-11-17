@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * ContactMessages — Provider Console page for contact message management.
  *
@@ -11,7 +11,7 @@
  *      PATCH  /api/superadmin/contact-messages/{id}
  *      GET    /api/superadmin/contact-messages/export
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import React, { useEffect, useState, useCallback } from 'react';

@@ -5,7 +5,7 @@ Provides:
     - Service wiring fixtures for superadmin, knowledge, team, etc.
     - CRUD lifecycle helpers
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

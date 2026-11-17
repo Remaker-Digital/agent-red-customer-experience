@@ -3,7 +3,7 @@
 Verifies that TenantScopedRepository.patch() rejects operations on
 encrypted fields, forcing callers to use read-modify-write helpers.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

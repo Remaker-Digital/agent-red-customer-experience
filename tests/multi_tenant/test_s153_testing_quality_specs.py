@@ -6,7 +6,7 @@ Testing artifacts are part of this project. Apply these specs to the artifacts t
 These tests verify that the testing infrastructure meets the quality standards
 defined by the aspirational specifications.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 import sqlite3
 from pathlib import Path

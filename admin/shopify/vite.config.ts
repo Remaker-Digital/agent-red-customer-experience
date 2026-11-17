@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * Agent Red Customer Experience — Shopify embedded admin build configuration.
  *
@@ -8,7 +8,7 @@
  * In mock mode (vite --mode mock), the mock API plugin is loaded to intercept
  * /api/* requests and inject a fake App Bridge for local development.
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import { defineConfig } from 'vite';

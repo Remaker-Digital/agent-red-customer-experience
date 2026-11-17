@@ -4,7 +4,7 @@
  * Verifies store state for isRestoring/restoreError and that the
  * RestoreSkeleton component contract is wired correctly.
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import { describe, it, expect } from 'vitest';

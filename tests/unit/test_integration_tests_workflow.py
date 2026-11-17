@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Static checks of .github/workflows/integration-tests.yml.
 
 The workflow runs the "integrations" pytest shard of the Azure DevOps release

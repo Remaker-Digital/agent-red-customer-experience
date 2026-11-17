@@ -1,5 +1,5 @@
 # tests/unit/test_test_pipeline_junit_fallback.py: test_pipeline's JUnit XML fallback
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 
 """
 When a pytest phase is killed before printing its summary, scripts/test_pipeline.py

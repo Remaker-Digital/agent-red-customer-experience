@@ -1,7 +1,7 @@
 """S153 Batch 10 — CLAUDE.md governance + Config/Admin + Widget + Glossary + Process.
 
 Specs verified against production interfaces.
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 import re
 from pathlib import Path

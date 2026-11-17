@@ -28,7 +28,7 @@ Usage (staging — via test host container):
 Usage (development — local):
     pytest tests/fuzzing/test_api_fuzz.py -v --timeout=600
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 from __future__ import annotations
 

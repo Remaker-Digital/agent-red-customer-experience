@@ -4,7 +4,7 @@ Each test class verifies a specific SPEC-* requirement against the
 actual implementation. Tests exercise production interfaces per GOV-10.
 
 Session S152 — spec review and real test creation (batch 3).
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

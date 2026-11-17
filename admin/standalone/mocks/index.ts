@@ -2,7 +2,7 @@
 /**
  * Mock API barrel export — registers all handlers with the router.
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import { registerTenantHandlers } from './handlers/tenant';

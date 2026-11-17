@@ -1,5 +1,5 @@
 # tests/unit/test_trusted_proxy_hops.py: the client IP comes from the trusted end of X-Forwarded-For
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 
 """
 TrustedProxyMiddleware's x-forwarded-for mode used the leftmost X-Forwarded-For entry. Azure

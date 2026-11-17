@@ -16,7 +16,7 @@ Test matrix:
     FCR-09: 72-hour window boundary: follow-up at exactly 72h is NOT counted
     FCR-10: Follow-up at 71h 59m IS counted as a repeat
 
-(C) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+(C) 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

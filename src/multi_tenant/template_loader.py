@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Category Template Loader (KA-3: Knowledge Automation).
 
 Loads industry-specific knowledge templates from JSON files and applies
@@ -9,7 +9,7 @@ suggestions tailored to common merchant categories.
 Templates are stored as JSON files in src/multi_tenant/knowledge_templates/
 and indexed by _registry.json.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

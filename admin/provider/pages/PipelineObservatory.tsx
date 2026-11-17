@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * PipelineObservatory -- Pipeline Observatory page (SPEC-1585..1587, SPEC-1786).
  *
@@ -13,7 +13,7 @@
  *   GET /api/superadmin/pipeline/tenants/{id}/metrics
  *   GET /api/superadmin/pipeline/database
  *
- * (c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * (c) 2026 Michael Palmeter. All rights reserved.
  */
 
 import React, { useCallback, useEffect, useState } from 'react';

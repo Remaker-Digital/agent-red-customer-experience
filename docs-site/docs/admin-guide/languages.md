@@ -79,4 +79,4 @@ When enabled, the AI automatically detects what language the customer is writing
 
 ---
 
-*© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.*
+*© 2026 Michael Palmeter. All rights reserved.*

@@ -1,11 +1,11 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 # Agent Red — Response Generator Container Entry Point
 #
 # Run: uvicorn src.agents.containers.response_generator_app:app --port 8083
 #
 # This container has an additional SSE streaming endpoint: /generate/stream
 #
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 
 from __future__ import annotations
 

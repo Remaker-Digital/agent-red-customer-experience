@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """A tenant's display_name never holds the owner's email or phone (decision 93).
 
 SPEC-1881 built it from the contact address, so it held the owner's email in

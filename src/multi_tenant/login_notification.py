@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """SPA Login Notification Emails (SPEC-1676).
 
 Sends a non-blocking email notification when a platform admin
@@ -14,7 +14,7 @@ address, falling back to their primary email if none is set.
 CRITICAL: Email failures must NEVER block authentication. All errors
 are logged and swallowed.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

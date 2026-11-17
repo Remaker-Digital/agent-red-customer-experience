@@ -6,7 +6,7 @@ and fallback behavior.
 
 Test plan ref: COMPREHENSIVE-TEST-PLAN-S245-S255.md Slice 0a
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

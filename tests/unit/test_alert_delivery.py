@@ -4,7 +4,7 @@ Covers: AlertDeliveryService, LogAlertChannel, DashboardAlertChannel,
 WebhookAlertChannel, EmailAlertChannel, create_alert, convenience functions,
 email rendering, and module singleton management.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

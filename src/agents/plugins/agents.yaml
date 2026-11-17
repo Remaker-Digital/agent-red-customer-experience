@@ -4,7 +4,7 @@
 # Adding a new agent = adding an entry here + deploying its container.
 # No code changes to existing agents or orchestrator required.
 #
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 
 version: "1.1"
 

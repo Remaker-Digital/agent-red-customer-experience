@@ -21,7 +21,7 @@ For sync tests that need to call async provisioning functions, use
     from tests.helpers.fake_tenant_repo import run_sync
     tenant = run_sync(provision_tenant(billing_channel=BillingChannel.STRIPE, ...))
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

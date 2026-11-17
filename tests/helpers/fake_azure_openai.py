@@ -1,5 +1,5 @@
 # tests/helpers/fake_azure_openai.py: a recording stand-in for the Azure OpenAI service
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 
 """
 FakeAzureOpenAI answers chat completion requests the way Azure OpenAI does, through an httpx

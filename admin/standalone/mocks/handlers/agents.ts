@@ -1,11 +1,11 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 // @ts-nocheck
 /**
  * Agent handlers — overlay CRUD, binding CRUD, effective config, available skills.
  *
  * Routes match /api/admin/agents (tenant-admin surface, Phase 4a).
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 import { GET, PUT, DELETE } from "../router";
 import { getStore } from "../store";

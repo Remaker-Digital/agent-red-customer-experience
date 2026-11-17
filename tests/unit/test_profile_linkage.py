@@ -7,7 +7,7 @@ Tests that:
 4. OTP token enriches visitor identity from token claims
 5. Invalid/expired OTP tokens are rejected gracefully
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

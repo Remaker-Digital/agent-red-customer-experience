@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """SPEC-1838: Quality Score Dashboard — compute 6 metrics and composite score.
 
 Computes quality metrics from the Knowledge Database:
@@ -11,7 +11,7 @@ Computes quality metrics from the Knowledge Database:
 
 Composite: weighted sum → 0-100 scale.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 from __future__ import annotations
 

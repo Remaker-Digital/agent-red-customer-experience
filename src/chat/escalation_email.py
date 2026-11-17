@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Async email-bridge escalation — send transcript emails to customer and agent.
 
 When the AI escalates a conversation, this module sends two emails:
@@ -12,7 +12,7 @@ The chat continues after escalation — this is a fork, not a handoff.
 
 WI-3030 / S259 D16/D17.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

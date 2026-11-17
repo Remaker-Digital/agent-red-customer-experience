@@ -11,7 +11,7 @@ Covers the full merchant API key reset lifecycle:
 
 Test plan reference: §5.9 (COMPREHENSIVE-TEST-PLAN.md)
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

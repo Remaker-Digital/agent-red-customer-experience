@@ -3,7 +3,7 @@
  *
  * Import-based checks — verifies locale keys exist in all 8 locale packs.
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import { describe, it, expect } from 'vitest';

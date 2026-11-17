@@ -24,7 +24,7 @@ Architecture:
     setup_admin_page() for custom data injection
   - All values are derived from MOCK_* constants for deterministic assertions
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 import pytest

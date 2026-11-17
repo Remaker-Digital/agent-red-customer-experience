@@ -1,11 +1,11 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * EditMemberDialog — Modal for editing a team member's role and escalation categories.
  *
  * Extracted from TeamManager.tsx. Presentational component: receives all
  * edit state and callbacks as props. No local state or API calls.
  *
- * (c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * (c) 2026 Michael Palmeter. All rights reserved.
  */
 
 import React from 'react';

@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * UserManagement — SPA platform admin user management page (SPEC-1675).
  *
@@ -10,7 +10,7 @@
  *      POST /api/superadmin/platform-admin/users/backup-codes
  *      PUT  /api/superadmin/platform-admin/users/notification-email
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import React, { useCallback, useEffect, useState } from 'react';

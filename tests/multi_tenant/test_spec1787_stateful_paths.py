@@ -9,7 +9,7 @@ Focus areas:
 - Multi-instance cache coherency (invalidate_tenant_meta_cache broadcast)
 - Append-only collection immutability (audit_log, alert_history, sla_snapshots)
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

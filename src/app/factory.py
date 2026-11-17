@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """FastAPI application factory for Agent Red Customer Experience.
 
 Creates and configures the FastAPI application instance with exception
@@ -8,7 +8,7 @@ CORS headers appear on ALL responses, including 429 (rate limit) and
 401 (auth failure) — see lifecycle.py docstring for middleware ordering.
 
 R1 refactoring — session 31.
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

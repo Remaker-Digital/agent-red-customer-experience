@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """
 Alert repositories — CRUD for alert rules and alert history.
 
@@ -6,7 +6,7 @@ Two collections:
   - alert_rules: persistent rule definitions (partition key: /rule_type)
   - alert_history: firing events with 90-day TTL (partition key: /alert_date)
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

@@ -1,5 +1,5 @@
 # tests/unit/test_single_container_critic.py: RC-11 flag and fail-closed in-process Critic
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 
 """
 RC-11 single-container beta mode, PR1 (docs/beta-single-container-design.md, sections 2 and 4).

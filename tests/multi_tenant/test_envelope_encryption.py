@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Tests for Pillar 1: Envelope Encryption Service (SPEC-1843).
 
 WI-1624: EnvelopeEncryptionService — encrypt/decrypt with AES-256-GCM

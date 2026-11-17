@@ -1,5 +1,5 @@
 # tests/agents/test_model_params.py: per-role model parameters, F30 and the RG empty-stream guard
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 
 """
 Chat roles and the deployment each one calls:

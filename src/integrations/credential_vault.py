@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Two-Layer Credential Vault (SPEC-1765).
 
 Extends TenantSecretService with a two-layer encryption scheme:
@@ -11,7 +11,7 @@ for credential reads — only DEK creation/rotation touches Key Vault.
 
 Source container: integration_credentials (PK: tenant_id) in Cosmos DB.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

@@ -5,7 +5,7 @@ via httpx AsyncClient to exercise the three routing branches in event_generator(
 
 Test plan ref: COMPREHENSIVE-TEST-PLAN-S245-S255.md Slice 2
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

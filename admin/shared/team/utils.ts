@@ -1,11 +1,11 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * TeamManager utility functions — date formatting and dark-mode detection.
  *
  * Extracted from TeamManager.tsx. Pure functions (formatDate, formatRelativeDate)
  * and the useIsDark hook for Mantine color-scheme detection.
  *
- * (c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * (c) 2026 Michael Palmeter. All rights reserved.
  */
 
 import { useState, useEffect } from 'react';

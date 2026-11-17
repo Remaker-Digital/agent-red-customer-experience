@@ -1,11 +1,11 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * TeamManager styles — theme-aware style factory.
  *
  * Extracted from TeamManager.tsx. Produces a complete style map from a
  * ThemePalette + dark flag, consumed by all team sub-components.
  *
- * (c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * (c) 2026 Michael Palmeter. All rights reserved.
  */
 
 import type React from 'react';

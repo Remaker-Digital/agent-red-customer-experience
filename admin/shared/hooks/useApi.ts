@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * Generic API fetch hook — foundation for all domain hooks.
  *
@@ -6,7 +6,7 @@
  * Shells inject the `apiFetch` function (which handles auth headers)
  * so hooks are auth-agnostic.
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import { useState, useEffect, useCallback, useRef } from 'react';

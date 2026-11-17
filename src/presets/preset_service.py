@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Preset Service — G6 Vertical Template Starter Kits (SPEC-1878).
 
 Loads vertical presets from YAML files and applies them to tenants
@@ -6,7 +6,7 @@ through existing config/QA/KB surfaces. Presets pre-fill configuration
 draft, seed quick actions, create starter KB articles, and provision
 agent overlays + skill bindings (v2 — WI-3025).
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

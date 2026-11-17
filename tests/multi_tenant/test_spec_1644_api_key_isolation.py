@@ -8,7 +8,7 @@ security violation.
 Run:
     pytest tests/multi_tenant/test_spec_1644_api_key_isolation.py -v
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

@@ -24,7 +24,7 @@ Covers:
   SPEC-1485: pre_flight_checklist D: if "D" in phases_to_run
   SPEC-1486: pre_flight_checklist D: requires the SPA superadmin key to provision tenants
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 import inspect

@@ -5,7 +5,7 @@ paragraph splitting, overlap, CSV parsing, TXT parsing, PDF parsing,
 DOCX parsing, parse_file dispatch, parse_url (full HTML branch),
 crawl_url, chunks_to_kb_entries conversion, and ParseResult properties.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

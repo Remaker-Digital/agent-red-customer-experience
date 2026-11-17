@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """HV-4 Abuse Detection API — cross-tenant anomalous usage detection.
 
 Provides REST endpoints for the service provider (SUPERADMIN role) to detect
@@ -12,7 +12,7 @@ Endpoints:
 
 All endpoints require SUPERADMIN role.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

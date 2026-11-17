@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Agent dispatch mixin — IC, KR, and RG agent call methods.
 
 Provides intent classification, knowledge retrieval, and response
@@ -15,7 +15,7 @@ by default) IC, KR and co-pilot run in-process instead, and a failure raises
 InProcessAgentError (in_process.py).
 
 R10 refactoring — extracted from pipeline.py (session 39).
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

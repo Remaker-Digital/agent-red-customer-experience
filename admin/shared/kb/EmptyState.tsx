@@ -1,7 +1,7 @@
 /**
  * EmptyState — centered icon + title + optional subtitle for zero-data views.
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import React from 'react';

@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Admin Integration Framework API — SPEC-1771 endpoint extensions.
 
 New endpoints for the Integration Framework (SPEC-1761+) that use
@@ -14,7 +14,7 @@ Routes:
     PUT  /api/admin/integration-framework/{id}/actions — Update HITL config
     GET  /api/integrations/oauth/callback              — Universal OAuth redirect
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

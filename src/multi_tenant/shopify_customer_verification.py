@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Shopify customer identity verification — HMAC-SHA256 passthrough (AUTH-4).
 
 Verifies that a Shopify customer identity submitted by the widget is
@@ -16,7 +16,7 @@ Flow:
     4. Backend: verify_shopify_customer_hmac() checks HMAC
     5. If valid → conversation linked to verified Shopify customer
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

@@ -3,7 +3,7 @@
 Tests: SPA emergency recovery, tenant account recovery, magic link auth.
 Exercises rate limiting, enumeration prevention, and token-based flows.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

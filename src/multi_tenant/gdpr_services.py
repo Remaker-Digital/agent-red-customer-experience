@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """
 GDPR compliance services — PII scrubbing, data export, data deletion, consent management.
 
@@ -46,7 +46,7 @@ Architecture references:
     - TenantDocument.consent_status, grace_period_ends_at
     - CustomerProfileDocument.consent_status
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

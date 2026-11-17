@@ -10,7 +10,7 @@ Total: 9 tests
 These tests verify that the three authentication verification functions
 exist, are async, and accept the expected parameters.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

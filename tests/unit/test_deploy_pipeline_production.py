@@ -18,7 +18,7 @@ Test IDs map to the Codex CPD test matrix:
   CPD-009: Mocked success path — pipeline exits 0 when all phases pass
   CPD-010: Mocked smoke-failure path — pipeline exits 1 with rollback attempted
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

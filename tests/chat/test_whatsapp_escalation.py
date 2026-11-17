@@ -3,7 +3,7 @@
 Verifies that the WhatsApp deep-link is included in escalation messages
 when the merchant has configured a WhatsApp business phone number.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 # Agent Red Customer Experience — Analytics Collector Agent
 #
 # Receives span/metric data from all pipeline agents and persists it.
@@ -14,7 +14,7 @@
 # Output payload:
 #   {"collected": bool, "event_count": int}
 #
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 
 from __future__ import annotations
 

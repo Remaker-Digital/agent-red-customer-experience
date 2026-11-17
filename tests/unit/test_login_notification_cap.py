@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """A platform admin gets at most one login notification an hour.
 
 The clock is injected. A capped request still authenticates, and the audit

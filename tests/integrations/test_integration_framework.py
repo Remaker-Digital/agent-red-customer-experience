@@ -3,7 +3,7 @@
 Tests cover: manifest definition, capability taxonomy, registry singleton,
 adapter protocol compliance, normalized data models, and error types.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

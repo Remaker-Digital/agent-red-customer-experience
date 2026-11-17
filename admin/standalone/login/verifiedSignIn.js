@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 // The email link and the 6-digit code share this next step.
 // Plain JavaScript so the unit test runs on Node 20.
 

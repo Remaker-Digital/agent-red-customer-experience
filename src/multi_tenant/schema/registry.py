@@ -1,11 +1,11 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Schema registry -- YAML-driven field registry with lazy singleton.
 
 Loads 78 field definitions from fields.yaml and provides accessor functions
 for querying fields by step, tier, and prompt injection status.
 
 R3 refactoring -- extracted from tenant_config_schema.py (session 39).
-(c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+(c) 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

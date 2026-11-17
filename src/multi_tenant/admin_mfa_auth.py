@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """
 Two-stage 2FA authentication endpoints for admin console.
 
@@ -22,7 +22,7 @@ Brute-force mitigation:
     5 failed attempts per pending_2fa token. The token has a 10-minute
     lifetime, so after exhaustion the user must request a new magic link.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

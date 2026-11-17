@@ -9,7 +9,7 @@ Covers Phase 1 Release-Blocking requirements:
 
 Total: 20 tests
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

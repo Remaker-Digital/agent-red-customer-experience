@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * RestoreDialog — Confirmation modal for restoring the previous activation snapshot.
  *
@@ -16,7 +16,7 @@
  *   - activeVersion   — current active version number
  *   - activeActivatedAt — current active activation timestamp (ISO 8601)
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import React, { useCallback, useState } from 'react';

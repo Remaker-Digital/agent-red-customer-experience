@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """
 NATS tenant isolation — topic namespace, subscription authorization, lifecycle.
 
@@ -40,7 +40,7 @@ Architecture references:
     - Master Plan Review Section 4: Topic-Based Routing
     - AGNTCY upstream: Topic naming (intent-classifier, knowledge-retrieval, etc.)
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

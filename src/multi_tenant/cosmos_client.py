@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """
 Cosmos DB async client manager.
 
@@ -19,7 +19,7 @@ Configuration (environment variables):
     COSMOS_DB_DATABASE    — Database name (default: agentred)
     COSMOS_USE_MANAGED_ID — "true" to use Azure Managed Identity instead of key
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

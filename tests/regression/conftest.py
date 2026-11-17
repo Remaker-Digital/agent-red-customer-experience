@@ -25,7 +25,7 @@ from pathlib import Path
 import httpx
 import pytest
 
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 # ---------------------------------------------------------------------------
 # Auto-load .env.local (transient credentials must never be hardcoded —
 # see REPEATABLE-PROCEDURES.md Section 7: No Hardcoded Transient Values)

@@ -17,7 +17,7 @@
 #     -e AGNTCY_NATS_ENDPOINT=nats://nats:4222 \
 #     -p 8081:8080 agent-intent-classifier
 #
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 
 FROM python:3.12-slim
 

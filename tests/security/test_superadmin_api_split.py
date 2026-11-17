@@ -2,7 +2,7 @@
 
 Validates SPEC-1694: superadmin_api.py MUST be split into domain sub-modules.
 
-(c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+(c) 2026 Michael Palmeter. All rights reserved.
 """
 
 import pathlib

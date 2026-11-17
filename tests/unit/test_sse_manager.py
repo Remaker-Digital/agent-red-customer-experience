@@ -10,7 +10,7 @@ Covers: EventBuffer (append, replay_after, is_expired),
         cleanup_expired_buffers, health_summary),
         module singleton (get_sse_manager).
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

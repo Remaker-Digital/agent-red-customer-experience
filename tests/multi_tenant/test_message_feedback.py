@@ -5,7 +5,7 @@ Covers:
   - WI-1459: Widget feedback UI (model/transport layer)
   - WI-1460: Feedback aggregate metrics (superadmin API)
 
-(c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+(c) 2026 Michael Palmeter. All rights reserved.
 """
 from __future__ import annotations
 

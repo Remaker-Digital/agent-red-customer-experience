@@ -11,7 +11,7 @@ Covers:
 
 Uses MockCosmosManager from conftest.py for in-memory Cosmos DB simulation.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

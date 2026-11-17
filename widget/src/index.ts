@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * Agent Red Widget — entry point.
  *
@@ -24,7 +24,7 @@
  * Or via Shopify Theme App Extension (app embed block):
  *   Liquid template injects the same script with tenant-specific attributes.
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import { h, render } from 'preact';

@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Reversible PII tokenization for transport-layer privacy (AGNTCY Phase 6).
 
 Replaces one-way PII scrubbing (``[REDACTED:type]``) with reversible UUID
@@ -23,7 +23,7 @@ Entity types detected:
     - order_number: Common e-commerce order ID patterns (#, ORD-, ORDER-)
     - name: Customer names (from customer context, not regex)
 
-(c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+(c) 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

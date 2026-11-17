@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * HelpTooltip — Shared inline help icon with hover tooltip.
  *
@@ -15,7 +15,7 @@
  *   <HelpTooltip text="Conversations where the AI produced a response." />
  *   <HelpTooltip text="Only Professional+ tiers." docLink="https://agentredcx.com/docs/..." />
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import React, { useState, useRef, useCallback, useLayoutEffect } from 'react';

@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * SPEC-1585 Pipeline Observatory — Traffic Flow tab coverage (WI-3221).
  *
@@ -10,7 +10,7 @@
  * Maps the stale e2e tests TEST-2771 (topology render) and TEST-2772
  * (invocation counts on edges) to executable component evidence.
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import { describe, it, expect, vi, beforeEach } from 'vitest';

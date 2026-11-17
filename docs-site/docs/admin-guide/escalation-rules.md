@@ -207,4 +207,4 @@ After your first 1 to 2 weeks of live traffic:
 
 ---
 
-*© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.*
+*© 2026 Michael Palmeter. All rights reserved.*

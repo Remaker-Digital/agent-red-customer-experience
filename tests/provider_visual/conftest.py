@@ -3,7 +3,7 @@
 Session-scoped Vite mock dev server with tenant-aware navigation.
 Same pattern as tests/accessibility/conftest.py but for visual regression.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

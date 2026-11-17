@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * BillingPortal — Subscription, usage, and billing management component.
  *
@@ -27,7 +27,7 @@
  *   - Decision #24: Billable conversation definition
  *   - UI-UX-ARCHITECTURE-DECISIONS.md section 7: BillingPortal spec
  *
- * (c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * (c) 2026 Michael Palmeter. All rights reserved.
  */
 
 import React, { useState, useMemo } from 'react';

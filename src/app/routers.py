@@ -1,11 +1,11 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Router registration for Agent Red Customer Experience.
 
 Imports all 45 API routers and provides a single function to register
 them on the FastAPI application instance.
 
 R1 refactoring — session 31.
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

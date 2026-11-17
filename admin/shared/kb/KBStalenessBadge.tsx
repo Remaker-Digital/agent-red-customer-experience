@@ -2,7 +2,7 @@
  * KBStalenessBadge — displays a colored pill badge for a KB article's freshness
  * category (Fresh / Aging / Stale / Very stale).
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import React from 'react';

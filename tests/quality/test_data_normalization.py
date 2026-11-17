@@ -3,7 +3,7 @@
 Verifies branch coverage config, last_result normalization,
 testable element linkage, and untested spec reporting.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

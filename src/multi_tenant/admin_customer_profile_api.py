@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Admin Customer Profile API — Layer 1 profile management (WI #142).
 
 Provides REST endpoints for the merchant admin dashboard to view and manage
@@ -25,7 +25,7 @@ Dependencies:
     - cosmos_schema.py: CustomerProfileDocument, ConsentStatus
     - middleware.py: get_tenant_context, TenantContext
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

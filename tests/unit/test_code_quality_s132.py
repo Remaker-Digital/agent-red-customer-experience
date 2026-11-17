@@ -9,7 +9,7 @@ Covers all 7 findings from the independent code quality review:
     - WI-0985: Distributed rate limiting abstraction
     - WI-0986: Repository barrel re-export sync
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

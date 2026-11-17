@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * Service Messages — compose and send bulk notifications to tenant superadmins.
  *
@@ -9,7 +9,7 @@
  * Specifications: SPEC-1646, SPEC-1647, SPEC-1648.
  * Work items: WI-0999.
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import { useState, useCallback } from 'react';

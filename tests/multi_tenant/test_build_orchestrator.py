@@ -4,7 +4,7 @@ Validates the BuildResult dataclass, step sequencing, dry-run behavior,
 and error handling. All Azure CLI calls are mocked.
 
 WI-1437 / SPEC-1825
-(c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+(c) 2026 Michael Palmeter. All rights reserved.
 """
 from __future__ import annotations
 

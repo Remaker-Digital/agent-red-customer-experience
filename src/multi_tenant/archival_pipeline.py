@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """
 Archival pipeline service — Cosmos DB to Azure Blob Storage (Parquet).
 
@@ -38,7 +38,7 @@ Architecture references:
     - WI #153: Archival pipeline (this module)
     - WI #154: Data retention enforcement (data_retention.py — companion)
 
-(c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+(c) 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

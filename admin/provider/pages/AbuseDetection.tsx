@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * AbuseDetection — Cross-tenant anomalous usage detection dashboard.
  *
@@ -9,7 +9,7 @@
  *      GET  /api/superadmin/abuse/tenant/{tenant_id}
  *      POST /api/superadmin/abuse/tenant/{tenant_id}/flag
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import React, { useEffect, useState } from 'react';

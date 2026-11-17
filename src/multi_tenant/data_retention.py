@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """
 Data retention enforcement service.
 
@@ -22,7 +22,7 @@ Architecture references:
     - WI #37 / #154: Data retention enforcement (overlapping items)
     - WI #153: Archival pipeline (Change Feed → Parquet → Blob)
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

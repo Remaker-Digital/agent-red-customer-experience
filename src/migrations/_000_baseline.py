@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Baseline migration — marks v1.0.0 schema as the starting point.
 
 This is a no-op migration. It exists solely to establish the migration
@@ -16,7 +16,7 @@ tracking baseline. All subsequent migrations build on the 1.0.0 schema.
     - platform_config (partition: /config_type)
     - audit_log (partition: /time_partition)
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

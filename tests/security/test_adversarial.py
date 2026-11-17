@@ -9,7 +9,7 @@ with explanatory comments.
 
 Work Item: Adversarial/security tests (§8).
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

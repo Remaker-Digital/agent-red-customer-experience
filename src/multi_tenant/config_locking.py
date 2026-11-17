@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Configuration optimistic locking — prevents concurrent overwrites (C14).
 
 Uses Cosmos DB ETags for optimistic concurrency control. When saving a draft,
@@ -6,7 +6,7 @@ the client must provide the ETag received from the last read. If another user
 has modified the document in between, the ETag won't match and the save is
 rejected with 409 Conflict.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

@@ -21,7 +21,7 @@ Run with:
     pytest tests/e2e/test_analytics_display_values.py -v --headed
     pytest tests/e2e/test_analytics_display_values.py -v
 
-(c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+(c) 2026 Michael Palmeter. All rights reserved.
 """
 
 import pytest

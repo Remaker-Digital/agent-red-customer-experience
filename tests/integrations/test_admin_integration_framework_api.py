@@ -3,7 +3,7 @@
 Tests cover: setup instructions, connection test, sync status/trigger,
 event logs with pagination, action config + HITL updates, OAuth callback.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

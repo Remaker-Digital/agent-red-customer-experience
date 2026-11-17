@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """IntentRouter — execution-plan boundary after intent classification (ADR-003).
 
 Deterministic routing engine that maps IC output + tenant config to an
@@ -15,7 +15,7 @@ Resolution order (SPEC-1861):
 Safety guarantee: all existing traffic routes to CORE_PIPELINE by default.
 Peer routing only activates with explicit tenant overlay config + skill binding.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

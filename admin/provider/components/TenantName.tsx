@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * TenantName — Human-readable tenant identifier with UUID tooltip.
  *
@@ -7,7 +7,7 @@
  *
  * SPEC-1569 / WI-0883: Provider Console human-readable tenant identification.
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import React from 'react';

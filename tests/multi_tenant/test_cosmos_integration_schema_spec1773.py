@@ -1,6 +1,6 @@
 """SPEC-1773 integration-framework Cosmos schema coverage.
 
-Copyright 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC.
+Copyright 2026 Michael Palmeter.
 All rights reserved.
 """
 

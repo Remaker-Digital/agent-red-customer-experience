@@ -1,10 +1,10 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Superadmin API -- Feedback analytics (SPEC-1836).
 
 Provides aggregate feedback metrics across tenants and conversations.
 Endpoints are registered on the shared router from _monolith.
 
-(c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+(c) 2026 Michael Palmeter. All rights reserved.
 """
 from __future__ import annotations
 

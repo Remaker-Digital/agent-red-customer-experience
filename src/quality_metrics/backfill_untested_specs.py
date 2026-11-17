@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """SPEC-1841: Untested Spec Backfill Program.
 
 Identifies implemented/verified specs with 0 linked tests, categorizes
@@ -7,7 +7,7 @@ by risk tier, and generates skeleton test records in KB.
 Usage:
     python -m src.quality_metrics.backfill_untested_specs [--dry-run] [--limit N]
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 from __future__ import annotations
 

@@ -14,7 +14,7 @@ admin-e2e with "NEW color-contrast" plus "STALE scrollable-region-focusable".
 These tests keep each suite on its own baseline. Whether an entry is stale can
 only be seen by running axe, which the two Playwright suites do on every run.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

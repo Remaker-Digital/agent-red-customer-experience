@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Per-request attributes for the shared ChatPipeline (architecture review S7)."""
 
 from __future__ import annotations

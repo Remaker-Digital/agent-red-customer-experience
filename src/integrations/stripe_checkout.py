@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """
 Stripe Checkout session management.
 
@@ -38,7 +38,7 @@ Endpoints:
     GET  /api/checkout/success  — Post-payment success landing
     GET  /api/checkout/cancel   — User-cancelled checkout landing
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

@@ -7,7 +7,7 @@ Covers:
     - list_conversations with repo=None (empty list)
     - get_conversation_detail (delegates to meter)
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

@@ -1,11 +1,11 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * TeamManager constants — role definitions, color palettes, status display.
  *
  * Extracted from TeamManager.tsx to reduce monolith size. These constants are
  * consumed by sub-components (InviteForm, TeamMemberRow, RoleTooltip, etc.).
  *
- * (c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * (c) 2026 Michael Palmeter. All rights reserved.
  */
 
 import type { ThemePalette, RoleDef } from './types';

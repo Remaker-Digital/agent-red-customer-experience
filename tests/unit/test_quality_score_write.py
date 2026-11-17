@@ -1,4 +1,4 @@
-# (c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# (c) 2026 Michael Palmeter. All rights reserved.
 """The per-reply quality score is stored on its message (architecture review F39, P3-1).
 
 After the Critic approves a reply, the orchestrator scores it and calls

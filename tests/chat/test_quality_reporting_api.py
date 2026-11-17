@@ -3,7 +3,7 @@
 Tests for QualityConversationEntry and QualitySummaryResponse models.
 Endpoint integration tests require Cosmos — these are model-level unit tests.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

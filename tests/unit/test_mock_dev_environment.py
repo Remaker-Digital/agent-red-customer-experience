@@ -1,4 +1,4 @@
-# (C) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# (C) 2026 Michael Palmeter. All rights reserved.
 """Tests for SPEC-1705 mock development environment.
 
 Validates build integrity, endpoint coverage, config structure, fixture validity.

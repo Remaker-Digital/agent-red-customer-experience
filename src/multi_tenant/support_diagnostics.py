@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """HV-1: Support Diagnostics API — per-tenant diagnostic snapshots.
 
 Provider-level (SPA) API that gives the platform operator diagnostic
@@ -17,7 +17,7 @@ Architecture notes:
     - Lazy imports: repositories are imported inside function bodies.
     - Cross-partition queries omit partition_key (SDK 4.14+ pattern).
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

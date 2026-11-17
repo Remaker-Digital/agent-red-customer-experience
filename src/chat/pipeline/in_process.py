@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """In-process agents for the RC-11 single-container beta mode.
 
 When SINGLE_CONTAINER_MODE is on (constants.single_container_mode), agents run

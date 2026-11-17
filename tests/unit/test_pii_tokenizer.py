@@ -1,5 +1,5 @@
 # tests/unit/test_pii_tokenizer.py: a token the tokenizer issued is never read as PII
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 
 """
 PiiTokenizer issues tokens as ``pii-{type}-{12 hex characters}``. Its detection passes

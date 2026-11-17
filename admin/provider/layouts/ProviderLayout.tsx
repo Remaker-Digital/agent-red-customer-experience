@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * ProviderLayout — Platform operator console shell.
  *
@@ -8,7 +8,7 @@
  *   3. Authenticated apiFetch wrapper (SUPERADMIN API key injection)
  *   4. AppContext for child pages
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import React, { createContext, useCallback, useContext, useEffect, useState } from 'react';

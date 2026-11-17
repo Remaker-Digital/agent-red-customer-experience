@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """
 E2E fixtures for the Shopify embedded admin SPA (`admin/shopify`).
 
@@ -14,7 +14,7 @@ while still hitting the Vite mock middleware.
 
 Live Shopify production paths remain under ``tests/e2e_live/shopify/`` (ADO-excluded).
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

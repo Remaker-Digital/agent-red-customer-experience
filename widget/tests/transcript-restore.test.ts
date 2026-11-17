@@ -6,7 +6,7 @@
  *   2. store.ts: restoreMessages normalization + restoredMessageCount
  *   3. Restore-on-mount contract verification (Panel.tsx branching logic)
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import { describe, it, expect, beforeEach, vi } from 'vitest';

@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 # Agent Red Customer Experience — Knowledge Retrieval Agent
 #
 # Retrieves relevant knowledge base articles for a customer query using
@@ -17,7 +17,7 @@
 #    "model": str, "tokens_input": int, "tokens_output": int,
 #    "mcp_trace": dict (optional)}
 #
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 
 from __future__ import annotations
 

@@ -1,5 +1,5 @@
 # tests/unit/test_websocket_auth.py: the chat WebSocket authenticates before accepting
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 
 """
 ``/api/chat/ws/{conversation_id}`` accepted every connection: the HTTP authentication

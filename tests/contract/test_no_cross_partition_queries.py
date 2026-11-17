@@ -11,7 +11,7 @@ This test statically verifies that:
 3. All lifecycle wiring passes domain_index_repo to consuming services.
 4. The DomainIndexRepository.lookup() never uses cross-partition queries.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

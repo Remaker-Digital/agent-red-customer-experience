@@ -1,5 +1,5 @@
 # tests/unit/test_copilot_route_gate.py: only team members reach the Co-pilot
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 
 """
 The classifier can label a customer's message ``admin_assistance``. The router used to

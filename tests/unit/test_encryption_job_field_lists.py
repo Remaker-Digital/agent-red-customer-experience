@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """The encryption jobs list the same fields as the repositories encrypt.
 
 The migration, DEK rotation and monitor jobs each keep their own

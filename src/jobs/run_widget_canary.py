@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """
 Scheduled job: Widget canary health monitor (WI-3028).
 
@@ -24,7 +24,7 @@ Environment variables:
     SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASSWORD: Email alert config
     CANARY_ALERT_EMAIL: Recipient for failure alerts (default: ADMIN_RESET_EMAIL)
 
-(c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+(c) 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

@@ -1,4 +1,4 @@
-# (C) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# (C) 2026 Michael Palmeter. All rights reserved.
 """Team page E2E tests against the mock Vite dev server.
 
 Tests cover: member table display, invite form CRUD, role changes, active/inactive

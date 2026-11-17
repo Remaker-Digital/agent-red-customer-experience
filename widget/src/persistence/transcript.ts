@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * Transcript persistence — stores conversation_id with TTL for
  * transcript continuity across page loads (SPEC-1868).
@@ -14,7 +14,7 @@
  * Key namespace: __agentred_{widgetKeyPrefix}_conv to prevent
  * collisions across tenants on the same origin.
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 interface StoredTranscript {

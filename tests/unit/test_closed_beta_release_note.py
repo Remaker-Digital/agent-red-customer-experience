@@ -1,6 +1,6 @@
 """The closed beta note is in the tagged tree, and not in the co-pilot image.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

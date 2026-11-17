@@ -6,7 +6,7 @@ Covers:
     - Cosmos persistence (SPEC-1588): persist before email
     - Contact repo wiring (configure_contact_repo)
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

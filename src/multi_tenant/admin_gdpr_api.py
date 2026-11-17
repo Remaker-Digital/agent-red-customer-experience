@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Admin GDPR API — data export, deletion, and consent management (WI #180).
 
 Provides REST endpoints for the merchant admin dashboard's Settings page
@@ -24,7 +24,7 @@ Dependencies:
       ConsentManager, DataStoreRegistry, GracePeriodActiveError
     - middleware.py: get_tenant_context, TenantContext
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

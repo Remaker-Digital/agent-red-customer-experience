@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Pipeline package — 6-agent pipeline orchestrator for the Chat API.
 
 Barrel re-export preserving the original ``from src.chat.pipeline import ...``
@@ -6,7 +6,7 @@ import paths. All public symbols that were previously in the monolithic
 ``pipeline.py`` module are re-exported here.
 
 R10 refactoring — session 39.
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from src.chat.pipeline.constants import (

@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """
 Incident repository — CRUD for status page incidents.
 
@@ -6,7 +6,7 @@ Platform-scoped (not tenant-scoped). Partition key is ``status``
 (investigating, identified, monitoring, resolved, scheduled).
 Documents auto-expire via Cosmos DB TTL (365 days).
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

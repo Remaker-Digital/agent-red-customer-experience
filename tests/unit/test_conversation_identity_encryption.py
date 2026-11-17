@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """The customer's email and phone on a conversation are encrypted at rest.
 
 P6 on v2.0.4 (run 11121234-c07a, encryption on) found ``identity_email`` in

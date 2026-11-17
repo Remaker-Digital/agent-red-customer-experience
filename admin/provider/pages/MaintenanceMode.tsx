@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * MaintenanceMode — Maintenance mode management.
  *
@@ -9,7 +9,7 @@
  *      PUT /api/superadmin/maintenance
  *
  * WI-1432 / SPEC-1829
- * (c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * (c) 2026 Michael Palmeter. All rights reserved.
  */
 
 import React, { useCallback, useEffect, useState } from 'react';

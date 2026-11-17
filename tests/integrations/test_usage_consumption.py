@@ -13,7 +13,7 @@ and stripe_packs.credit_pack_balance() together to verify end-to-end metering.
 Uses in-memory dev stores (stripe_usage._usage_counters, stripe_packs._pack_balances).
 Stripe API calls are mocked out to avoid hitting the real Stripe API.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

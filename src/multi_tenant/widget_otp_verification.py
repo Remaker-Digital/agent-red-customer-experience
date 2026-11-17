@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Widget OTP verification — customer-facing 6-digit code flow (email + SMS).
 
 Provides endpoints for the chat widget to send and verify OTP codes
@@ -14,7 +14,7 @@ Endpoints:
 Authentication:
     Widget key (X-Widget-Key: pk_live_...) — same as all /api/chat/* endpoints.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

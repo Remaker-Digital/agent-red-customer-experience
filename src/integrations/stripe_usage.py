@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """
 Stripe metered usage reporting.
 
@@ -24,7 +24,7 @@ Endpoints:
     POST /api/usage/record          — Record a conversation (internal API)
     GET  /api/usage/{customer_id}   — Get usage summary for a customer
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

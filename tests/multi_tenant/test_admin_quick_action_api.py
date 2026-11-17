@@ -9,7 +9,7 @@ Covers:
     - Config serving — GET /api/config with page_type filtering
     - Quick action resolution priority (handle > page_type > all)
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

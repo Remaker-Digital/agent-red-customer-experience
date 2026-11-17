@@ -7,7 +7,7 @@ Covers:
     - POST /api/admin/presets/{id}/apply — apply preset
     - POST /api/admin/presets/{id}/apply — 404 for unknown
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

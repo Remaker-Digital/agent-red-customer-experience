@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * QuickActions — contextual prompt button pills in the greeting area (WI #228).
  *
@@ -15,7 +15,7 @@
  * Buttons choose label contrast from their surface, including hover.
  * `colorSurfaceHover`. Subtle fade-in animation via CSS class `ar-fade-in`.
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import { FunctionComponent } from 'preact';

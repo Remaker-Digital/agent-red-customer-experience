@@ -10,7 +10,7 @@ Covers 8 specs:
     7. delete_team_member — mock repo.read and repo.delete
     8. rotate_user_api_key — patch generate_user_api_key/hash_api_key, mock repo
 
-(C) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+(C) 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

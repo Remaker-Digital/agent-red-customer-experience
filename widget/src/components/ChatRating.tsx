@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * ChatRating — post-conversation feedback prompt.
  *
@@ -13,7 +13,7 @@
  * Visual reference: Zapier (buttons, spacing, form layout).
  * Functional reference: Tidio (post-chat rating flow).
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import { FunctionComponent } from 'preact';

@@ -7,7 +7,7 @@ SPEC-1874: Validates that:
 4. Exporter failure does not block pipeline execution
 5. Config toggle works (disabled = no Langfuse calls)
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

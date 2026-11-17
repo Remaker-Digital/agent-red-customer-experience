@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Superadmin API -- shared state, router, and configuration functions.
 
 This module holds module-level service references, the shared router, and
@@ -46,7 +46,7 @@ or PII.
     operational state of the tenancy.
 ──────────────────────────────────────────────────────────────────────────────
 
-(c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+(c) 2026 Michael Palmeter. All rights reserved.
 """
 from __future__ import annotations
 

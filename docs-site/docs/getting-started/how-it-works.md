@@ -452,4 +452,4 @@ See the [Privacy Policy](https://www.iubenda.com/privacy-policy/51316355) for fu
 
 ---
 
-*© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.*
+*© 2026 Michael Palmeter. All rights reserved.*

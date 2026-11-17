@@ -1,4 +1,4 @@
-# Copyright 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# Copyright 2026 Michael Palmeter. All rights reserved.
 """Public widget origins through the composed application."""
 
 from __future__ import annotations

@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * Locale barrel — exports locale resolution and the buildLocale function.
  *
@@ -10,7 +10,7 @@
  *      always take precedence over the locale pack
  *   5. English is the ultimate fallback
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import type { Locale } from './en';

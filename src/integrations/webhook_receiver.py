@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Universal Webhook Receiver (SPEC-1766).
 
 Auth-exempt endpoint that receives webhooks from external integrations.
@@ -13,7 +13,7 @@ Per-integration signature verification:
 Idempotency: Redis SET with 24h TTL keyed on event_id.
 Processing: asyncio background tasks with error isolation.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

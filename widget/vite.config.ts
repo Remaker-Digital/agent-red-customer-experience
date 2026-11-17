@@ -10,7 +10,7 @@
  *   - iframe for conversation panel (full DOM isolation)
  *   - No external CSS files — all styles are inlined via JS
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 /// <reference types="vitest" />

@@ -1,7 +1,7 @@
 /**
  * LoadingSpinner — centered spinner with a text label, used while KB data loads.
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import React from 'react';

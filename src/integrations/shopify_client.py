@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """
 Shopify GraphQL Admin API client.
 
@@ -15,7 +15,7 @@ Configuration:
     SHOPIFY_STORE_URL   — e.g. "my-store.myshopify.com"
     SHOPIFY_ACCESS_TOKEN — Admin API access token (shpat_...)
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

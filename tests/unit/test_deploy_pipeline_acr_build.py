@@ -23,7 +23,7 @@ What these tests pin down:
 
 Nothing here talks to Azure: ``_run`` and the clock are replaced.
 
-(c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+(c) 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

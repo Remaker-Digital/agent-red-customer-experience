@@ -1,7 +1,7 @@
 """S153 Batch 11 — Deploy/Process + Quality Framework + Admin verifiable.
 
 Specs verified against production interfaces.
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 import re
 import sqlite3

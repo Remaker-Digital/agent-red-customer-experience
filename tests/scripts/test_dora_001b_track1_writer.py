@@ -9,7 +9,7 @@ Created 2026-04-28 (S319) per
 `bridge/gtkb-dora-001b-track1-implementation-006.md` Codex GO.
 Implementation contract: `bridge/gtkb-dora-001b-track1-implementation-005.md`.
 
-(c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+(c) 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

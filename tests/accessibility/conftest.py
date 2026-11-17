@@ -5,7 +5,7 @@ Pattern mirrors tests/e2e_mock/conftest.py with accessibility-specific
 focus: deterministic viewport, auth pre-injection, tenant param in every
 navigation, and page-rendered guards before axe runs.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

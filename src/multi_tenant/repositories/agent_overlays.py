@@ -1,11 +1,11 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """
 Tenant Agent Overlay repository — agent_overlays collection (SPEC-1854, WI-4011).
 
 Per-tenant, per-agent configuration overlays persisted in Cosmos DB.
 Partition key: /tenant_id. Document ID: agent_id (unique per tenant).
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Admin Preview API — conversation preview with message insights (SPEC-1872).
 
 Provides REST endpoints for operator-visible preview/test mode:
@@ -9,7 +9,7 @@ Provides REST endpoints for operator-visible preview/test mode:
 Preview conversations are tagged is_test_mode=True and excluded from
 production analytics and billing. Professional+ tier gate enforced.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

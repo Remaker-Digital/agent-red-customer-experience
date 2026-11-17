@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Skip unit tests that need files kept out of the public source.
 
 The public repository holds the product source only. Deploy scripts, the

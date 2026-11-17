@@ -1,5 +1,5 @@
 # tests/unit/test_staff_session_revalidation.py: staff sessions are checked against the member record
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 
 """
 A magic-link session lasts 8 hours. For a team member session the middleware took the

@@ -11,7 +11,7 @@ Validates:
 
 Uses the actual catalog file (config/stripe_product_ids.json) — no mocking needed.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

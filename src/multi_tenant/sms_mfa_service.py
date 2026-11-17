@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """
 SMS MFA service — 6-digit OTP codes via Azure Communication Services.
 
@@ -7,7 +7,7 @@ verification_tokens collection (token_type="sms_otp", 10-min TTL),
 and sends codes via ACS SmsClient. Gracefully degrades to unavailable
 when ACS_SMS_FROM is not configured.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Batch Data Encryption Migration — SPEC-1843 / WI-1629.
 
 Iterates all tenants, creates DEKs where missing, and encrypts all

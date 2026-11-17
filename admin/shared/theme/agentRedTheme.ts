@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * Agent Red Brand Theme — shared design tokens for Mantine surfaces.
  *
@@ -13,7 +13,7 @@
  * Four-tier dark mode hierarchy (Stone neutrals):
  *   chrome #0c0a09 → page #1c1917 → surface #292524 → border #44403c
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import { createTheme } from '@mantine/core';

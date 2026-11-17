@@ -3,7 +3,7 @@
 Tests: team CRUD, quick action management, conversation workflow, memory deletion.
 All endpoints require tenant admin authentication.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 from __future__ import annotations
 

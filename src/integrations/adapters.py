@@ -1,11 +1,11 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Adapter Protocol Interfaces — typed contracts for integrations (SPEC-1763).
 
 Four Protocol-based adapter interfaces that all integration adapters must
 implement.  All methods are async and return normalized models (SPEC-1762).
 Vendor errors are wrapped in IntegrationError.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

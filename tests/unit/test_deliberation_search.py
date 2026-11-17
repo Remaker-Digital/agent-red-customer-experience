@@ -9,7 +9,7 @@ Requires:
   - .groundtruth-chroma/ with rebuilt index (at repo root)
   - groundtruth-kb[search] installed (chromadb available)
 
-(c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+(c) 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

@@ -15,7 +15,7 @@ Run:
     pytest tests/integration/test_azure_services.py -v -k "openai"   # OpenAI only
     pytest tests/integration/test_azure_services.py -v -k "cosmos"   # Cosmos only
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

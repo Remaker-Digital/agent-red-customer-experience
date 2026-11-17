@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """CQ-8: Quality feedback loop (SPEC-0187 / WI-1518).
 
 Analyses patterns in quality issues across recent turns and generates
@@ -8,7 +8,7 @@ steer the LLM towards better responses.
 The feedback is *ephemeral* — it does NOT modify the stored system
 prompt.  It's added at runtime and cleared once quality recovers.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

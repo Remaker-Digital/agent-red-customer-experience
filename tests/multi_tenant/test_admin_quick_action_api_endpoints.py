@@ -6,7 +6,7 @@ Covers:
     - get_quick_action returns matching action from repo
     - seed_quick_actions triggers seeding when list is empty
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

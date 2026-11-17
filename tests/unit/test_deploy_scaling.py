@@ -24,7 +24,7 @@ importlib.util.spec_from_file_location (same pattern as
 test_deploy_pipeline_production.py) so these tests do not depend on
 scripts/ being on sys.path.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

@@ -14,7 +14,7 @@ Verifies HelpTooltip presence across all admin pages:
 Run with:
     pytest tests/widget/test_admin_tooltips.py -v
 
-(c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+(c) 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

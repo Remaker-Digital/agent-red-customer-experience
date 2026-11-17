@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Conversation vectorization pipeline — Layer 2 memory.
 
 Work Items #87-88 (Decision #29): Post-conversation vectorization and
@@ -32,7 +32,7 @@ Dependencies:
     - gdpr_services.py: PiiScrubber
     - openai: AsyncAzureOpenAI (text-embedding-3-large)
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

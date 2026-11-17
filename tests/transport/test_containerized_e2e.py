@@ -16,7 +16,7 @@ Pipeline paths tested:
 Recovery plan reference: the original transport analysis Phase 3, Category 3.
 Governing decisions: ADR-001, ADR-002.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

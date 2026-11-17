@@ -1,5 +1,5 @@
 # tests/unit/test_single_container_dispatch.py: RC-11 in-process IC, KR, escalation and analytics
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 
 """
 RC-11 single-container beta mode, PR2 (docs/beta-single-container-design.md, sections 3 and 8).

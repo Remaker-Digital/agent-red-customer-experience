@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Admin Team Management API — merchant team member CRUD (WI #179).
 
 Provides REST endpoints for the merchant admin dashboard's TeamManager
@@ -27,7 +27,7 @@ Dependencies:
     - cosmos_schema.py: TeamMemberDocument, TeamMemberRole
     - middleware.py: get_tenant_context, TenantContext
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

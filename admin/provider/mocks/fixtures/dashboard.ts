@@ -1,7 +1,7 @@
 // @ts-nocheck
 /**
  * Provider dashboard fixture — system health + tenant summary.
- * (c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * (c) 2026 Michael Palmeter. All rights reserved.
  */
 export function createDashboardFixture() {
   return {

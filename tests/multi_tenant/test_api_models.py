@@ -6,7 +6,7 @@ alias generation from the shared base class (R8 refactoring, session 31).
 Run:
     python -m pytest tests/multi_tenant/test_api_models.py -v
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 

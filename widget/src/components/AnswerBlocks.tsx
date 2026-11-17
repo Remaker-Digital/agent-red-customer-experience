@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * AnswerBlocks — renders structured answer blocks within agent messages (SPEC-1867).
  *
@@ -12,7 +12,7 @@
  * Blocks are supplementary — text content is always rendered above.
  * If block rendering fails, the text fallback is sufficient.
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import { FunctionComponent } from 'preact';

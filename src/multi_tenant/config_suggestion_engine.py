@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Configuration Suggestion Engine (KA-4: Knowledge Automation).
 
 Heuristic analysis of KB articles and storefront content to generate
@@ -16,7 +16,7 @@ Analyzes KB content to extract:
 
 Each suggestion has a confidence score (0.0-1.0).
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

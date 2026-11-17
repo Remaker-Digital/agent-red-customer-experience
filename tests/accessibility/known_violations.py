@@ -32,7 +32,7 @@ Source: axe-ci from the S282 local scan against admin/standalone dev:mock;
 both maps re-scanned locally 2026-10-21 (Chromium, axe-playwright-python 0.1.7),
 which reproduced the build 25 admin-e2e Inbox failure.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

@@ -2,7 +2,7 @@
 /**
  * Agent fixture data — mock agents, overlays, bindings, and available skills.
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 const NOW = new Date().toISOString();

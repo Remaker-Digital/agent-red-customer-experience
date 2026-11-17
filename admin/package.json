@@ -1,5 +1,6 @@
 {
   "name": "@agent-red/admin",
+  "license": "UNLICENSED",
   "version": "1.0.0",
   "private": true,
   "description": "Agent Red Customer Experience — Admin workspace root (shared dependencies)",

@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """
 OpenTelemetry tenant-aware tracing and correlation ID propagation.
 
@@ -36,7 +36,7 @@ Architecture references:
     - Decision #7: PII scrubbing (telemetry must be PII-free)
     - NATS correlation headers: X-Tenant-Id, X-Conversation-Id, X-Trace-Id
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

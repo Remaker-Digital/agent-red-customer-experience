@@ -18,7 +18,7 @@ commands must not print the whole container app (plain env values included),
 and until PR8 adds the beta `/ready` report, every use of that report's names
 must be labeled pending PR8.
 
-(c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+(c) 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

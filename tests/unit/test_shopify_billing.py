@@ -6,7 +6,7 @@ Covers: _get_tier_pricing, _is_test_mode, create_subscription,
         subscribe_endpoint, confirm_endpoint, status_endpoint,
         _shop_subscriptions tracking, pricing catalog validation.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

@@ -16,7 +16,7 @@ Architecture:
     rather than the full src.main app, isolating the config router and mocking
     both ActivationService and TenantConfigProcessor singletons.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

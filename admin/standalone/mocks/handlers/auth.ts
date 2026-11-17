@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 // @ts-nocheck
 /**
  * Auth handlers — magic-link request/verify and 2FA challenge endpoints for mock mode.
@@ -6,7 +6,7 @@
  * Used by Playwright auth / role-gating suites so login and MFA UI paths are
  * exercised against the Vite mock backend (not sessionStorage injection alone).
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 import { GET, POST } from "../router";
 

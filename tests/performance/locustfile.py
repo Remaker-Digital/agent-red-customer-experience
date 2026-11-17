@@ -35,7 +35,7 @@ Prerequisites:
     pip install locust
     Set LOAD_TEST_API_KEY or LOAD_TEST_WIDGET_KEY env vars for authenticated endpoints.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

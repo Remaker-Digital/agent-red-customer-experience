@@ -7,7 +7,7 @@ Covers 5 specs:
   - SPEC-1411: ResponseGeneratorAgent class exists in response_generator.py
   - SPEC-1414: response_generator.py has generate_stream method
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

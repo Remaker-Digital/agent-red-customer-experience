@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Backup Encryption and Key Management (SPEC-0297).
 
 Provides encryption, key management, and offloading to warm/cold storage
@@ -11,7 +11,7 @@ Architecture:
 - Storage tiers: hot (Cosmos), warm (Azure Blob), cold (Azure Archive)
 - Retention policies per storage tier
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 from __future__ import annotations
 

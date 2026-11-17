@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * TestExecution — Test pipeline trigger and result monitoring.
  *
@@ -10,7 +10,7 @@
  *      GET  /api/superadmin/tests/runs
  *
  * WI-1431 / SPEC-1826
- * (c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * (c) 2026 Michael Palmeter. All rights reserved.
  */
 
 import React, { useCallback, useEffect, useRef, useState } from 'react';

@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * Header — top bar of the conversation panel.
  *
@@ -11,7 +11,7 @@
  * Visual reference: Zapier (clean, minimal, consistent spacing).
  * Functional reference: Tidio (avatar, name, status, close).
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import { FunctionComponent } from 'preact';

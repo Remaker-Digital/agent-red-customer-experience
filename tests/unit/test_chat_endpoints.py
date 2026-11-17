@@ -8,7 +8,7 @@ Covers: configure_chat_services, _get_session, _get_pipeline,
         broadcast_to_conversation, _broadcast,
         _extract_last_customer_message, _extract_conversation_history.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

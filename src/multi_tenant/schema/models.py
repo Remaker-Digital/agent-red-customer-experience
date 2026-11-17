@@ -1,7 +1,7 @@
 """Schema models -- enums, Pydantic models, and constants for tenant config.
 
 R3 refactoring -- extracted from tenant_config_schema.py (session 39).
-(c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+(c) 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Admin Audit Log Query API — compliance reporting and inspection (WI #141).
 
 Provides REST endpoints for querying the append-only audit log. Merchants
@@ -26,7 +26,7 @@ Dependencies:
     - cosmos_schema.py: AuditEventType (12 event types)
     - middleware.py: get_tenant_context, TenantContext
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

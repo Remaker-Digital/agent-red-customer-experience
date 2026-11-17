@@ -1,6 +1,6 @@
 """SPEC-1741 How It Works intent diagram coverage.
 
-Copyright 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC.
+Copyright 2026 Michael Palmeter.
 All rights reserved.
 """
 

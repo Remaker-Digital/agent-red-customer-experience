@@ -9,7 +9,7 @@ Tests:
   - TenantSummaryItem includes display_name in API response
   - _generate_display_name() produces unique ordinals
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

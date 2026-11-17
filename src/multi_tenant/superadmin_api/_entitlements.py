@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Superadmin API -- Entitlement CRUD and feature flag management.
 
 Domain sub-module for SPEC-1816 (Superadmin Entitlement Management API)
@@ -16,7 +16,7 @@ Endpoints:
   PUT  /feature-flags             — Write the feature flags document
   GET  /feature-flags/evaluate    — Evaluate a flag for a tenant
 
-(c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+(c) 2026 Michael Palmeter. All rights reserved.
 """
 from __future__ import annotations
 

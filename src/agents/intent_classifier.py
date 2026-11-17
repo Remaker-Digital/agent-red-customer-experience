@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 # Agent Red Customer Experience — Intent Classification Agent
 #
 # Classifies customer messages into one of 17 intent categories using
@@ -13,7 +13,7 @@
 #   {"intent": str, "confidence": float, "model": str,
 #    "tokens_input": int, "tokens_output": int}
 #
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 
 from __future__ import annotations
 

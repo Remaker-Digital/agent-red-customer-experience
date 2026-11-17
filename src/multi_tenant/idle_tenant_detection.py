@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Idle tenant detection and auto-downgrade (SPEC-1835).
 
 Detects tenants with no activity and triggers notification/downgrade workflows.
@@ -10,7 +10,7 @@ Background job scans all tenants and classifies idle state:
   - 90 days: auto-downgrade to Starter (with 7-day advance notice)
   - 180 days: marked for archival review
 
-(c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+(c) 2026 Michael Palmeter. All rights reserved.
 """
 from __future__ import annotations
 

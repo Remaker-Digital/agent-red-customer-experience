@@ -1,6 +1,6 @@
 """SPEC-1772 Integrations Manager Admin UI source coverage.
 
-Copyright 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC.
+Copyright 2026 Michael Palmeter.
 All rights reserved.
 """
 

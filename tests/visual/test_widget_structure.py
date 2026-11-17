@@ -12,7 +12,7 @@ Run with:
     pytest tests/visual/test_widget_structure.py -v --headed   # visual
     pytest tests/visual/test_widget_structure.py -v             # headless
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 import pytest

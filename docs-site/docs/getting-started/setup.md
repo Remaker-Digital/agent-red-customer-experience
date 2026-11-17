@@ -322,4 +322,4 @@ The Agent Red dashboard provides real-time visibility into:
 
 ---
 
-*© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.*
+*© 2026 Michael Palmeter. All rights reserved.*

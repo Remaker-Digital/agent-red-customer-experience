@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * Agent Red Customer Experience — Standalone admin build configuration.
  *
@@ -10,7 +10,7 @@
  * which intercepts all /api/* requests with in-memory fixture data.
  * Zero backend dependency, full HMR support.
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import { defineConfig } from 'vite';

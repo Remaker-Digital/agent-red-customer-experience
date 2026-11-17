@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """
 Add-on subscription checkout — WI#138 capability.
 
@@ -9,7 +9,7 @@ Routes:
     GET  /api/billing/addons          — List available add-ons for current tier
     POST /api/billing/addons/checkout — Start Stripe Checkout for an add-on
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

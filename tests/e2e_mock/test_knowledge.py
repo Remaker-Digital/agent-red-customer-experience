@@ -1,4 +1,4 @@
-# (C) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# (C) 2026 Michael Palmeter. All rights reserved.
 """SPEC-1706 mock-based E2E tests -- Knowledge Base page.
 
 Tests the Knowledge Base admin page against the Vite mock dev server.

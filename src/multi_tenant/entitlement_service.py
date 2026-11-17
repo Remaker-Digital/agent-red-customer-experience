@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Centralized entitlement accessor — single source of truth for all tier config (SPEC-1815).
 
 Replaces all hardcoded TIER_DEFAULTS, TIER_PRICING, _TIER_PRICING, TIER_FEATURES,
@@ -19,7 +19,7 @@ snapshot (``FROZEN_ENTITLEMENTS``) compiled from the codebase values at the time
 this module was written. This ensures the system never crashes due to missing
 entitlement data — it degrades gracefully to known-good defaults.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

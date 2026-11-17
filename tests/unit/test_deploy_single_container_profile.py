@@ -1,5 +1,5 @@
 # tests/unit/test_deploy_single_container_profile.py: deploy.py single-container profile (RC-11, PR12)
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 
 """
 RC-11 closed beta: scripts/deploy.py gains ``--profile single-container`` for

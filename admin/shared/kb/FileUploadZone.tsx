@@ -2,7 +2,7 @@
  * FileUploadZone — drag-and-drop file upload area for importing KB content
  * from PDF, DOCX, CSV, or TXT files.
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import React, { useState, useCallback, useRef } from 'react';

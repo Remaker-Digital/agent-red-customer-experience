@@ -13,7 +13,7 @@ Covers:
 
 Test plan reference: §5.13 (MFA Management — WI #295 Phase 4)
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

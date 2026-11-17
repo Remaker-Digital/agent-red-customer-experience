@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * NotificationChannelConfig — Notification channel management.
  *
@@ -12,7 +12,7 @@
  *      GET      /api/superadmin/notification-channels/history
  *
  * WI-1428 / SPEC-1823
- * (c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * (c) 2026 Michael Palmeter. All rights reserved.
  */
 
 import React, { useCallback, useEffect, useState } from 'react';

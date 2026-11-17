@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 // @ts-nocheck
 /**
  * Mock handlers — Provider alert rules and history.
@@ -7,7 +7,7 @@
  *   rules: ruleId, ruleType, condition: { metric, operator, threshold }, ...
  *   history: alertId, alertDate, ruleType, triggeredAt, metricValue, ...
  *
- * (c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * (c) 2026 Michael Palmeter. All rights reserved.
  */
 import { GET, POST, PUT, DELETE } from '../router';
 import { getStore } from '../store';

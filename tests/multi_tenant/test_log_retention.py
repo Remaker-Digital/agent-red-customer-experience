@@ -4,7 +4,7 @@ Verifies tier-based retention periods, cutoff computation, archive path
 generation, expired record identification, NDJSON formatting, and
 retention summaries.
 
-(c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+(c) 2026 Michael Palmeter. All rights reserved.
 """
 from __future__ import annotations
 

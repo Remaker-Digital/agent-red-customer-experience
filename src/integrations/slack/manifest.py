@@ -1,11 +1,11 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Slack Integration Manifest (SPEC-1776).
 
 Declarative configuration for the Slack channel adapter.
 Auth: OAuth2.  Bot scopes: chat:write, channels:history/read, etc.
 Webhooks: Events API with x-slack-signature HMAC-SHA256.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from src.integrations.manifest import (

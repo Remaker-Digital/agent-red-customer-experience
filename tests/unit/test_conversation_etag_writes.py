@@ -1,4 +1,4 @@
-# (c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# (c) 2026 Michael Palmeter. All rights reserved.
 """Read-modify-write conversation writes are ETag-conditional (review F33, Codex P1).
 
 Every writer that reads and decrypts the whole messages array (SPEC-1843) and replaces

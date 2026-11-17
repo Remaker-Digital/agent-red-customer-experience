@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * useSaveBar — Shopify App Bridge contextual save bar hook.
  *
@@ -21,7 +21,7 @@
  *   // After successful save:
  *   markClean();
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import { useCallback, useEffect, useRef, useState } from 'react';

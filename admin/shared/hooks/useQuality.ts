@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * Quality hooks — knowledge score, gap review, and preview chat.
  *
@@ -6,7 +6,7 @@
  * Phase 1: useKnowledgeScore, useGapReview (GET endpoints).
  * Phase 2: usePreviewChat, usePreviewTrace (POST SSE + GET, deferred).
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import React from 'react';

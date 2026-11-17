@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """CQ-1: Runtime conversation quality scoring (SPEC-0180).
 
 Evaluates every AI response on a 1-5 scale across three dimensions:
@@ -10,7 +10,7 @@ The scorer is invoked asynchronously after each AI turn so it does NOT
 add latency to the user experience.  Scores are stored in the conversation
 document's message metadata under ``quality_score``.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

@@ -2,7 +2,7 @@
 
 Test IDs: MEXE-01 → MEXE-20
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

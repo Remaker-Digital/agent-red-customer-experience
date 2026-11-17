@@ -1,5 +1,5 @@
 # tests/unit/test_verify_email_reachable.py: the emailed verification link reaches its handler
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 
 """
 ``GET /api/auth/verify-email/confirm`` is opened from an email, with no credentials, but its

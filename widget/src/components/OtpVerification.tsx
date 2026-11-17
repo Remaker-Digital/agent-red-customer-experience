@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * OtpVerification — 6-digit code entry screen for email verification.
  *
@@ -9,7 +9,7 @@
  * Design: Minimal — "Enter the code we sent to your email." + 6-digit
  * input + Verify button. No elaboration per owner directive.
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import { FunctionComponent } from 'preact';

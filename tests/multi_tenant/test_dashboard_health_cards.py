@@ -9,7 +9,7 @@ for each subsystem, especially field mappings that caused production display bug
 
 Total: 14 tests
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 from __future__ import annotations
 

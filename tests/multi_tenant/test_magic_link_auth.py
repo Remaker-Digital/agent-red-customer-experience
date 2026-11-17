@@ -14,7 +14,7 @@ Covers the full magic link lifecycle:
 
 Test plan reference: §5.10 (Magic Link Auth)
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

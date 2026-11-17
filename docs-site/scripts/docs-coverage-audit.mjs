@@ -8,7 +8,7 @@
  *
  * Usage: node scripts/docs-coverage-audit.js
  *
- * (c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * (c) 2026 Michael Palmeter. All rights reserved.
  */
 
 import { readFileSync } from 'fs';

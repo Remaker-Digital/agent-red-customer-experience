@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Shopify admin — direct route loads (App Bridge NavMenu is not in the DOM)."""
 
 import pytest

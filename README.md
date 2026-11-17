@@ -2,11 +2,11 @@
 
 Agent Red Customer Experience automates support conversations for e-commerce stores. The hosted service is in a closed beta.
 
-This source is source-available. It is not open source. The PolyForm Noncommercial License 1.0.0 is not an open source license.
+Copyright © 2026 Michael Palmeter. All rights reserved.
 
-You may use, change, and share this software for a noncommercial purpose, under the terms in [LICENSE](LICENSE).
+No license is granted. See [LICENSE](LICENSE).
 
-To ask about commercial use, email support@remakerdigital.com.
+For licensing inquiries, email support@remakerdigital.com.
 
 Access to the hosted service is by request at the same address. There is no self-serve sign-up. Prices shown in the docs are planned and are not on offer yet.
 
@@ -59,4 +59,4 @@ GitHub Actions runs on every push to `main` and on every pull request:
 
 These checks do not commit corrections. Before you publish a change, run `ruff check --fix src tests` and `ruff format src tests` locally. The private release pipeline is not in this repository.
 
-Required Notice: Copyright Remaker Digital, a DBA of VanDusen & Palmeter, LLC
+Copyright © 2026 Michael Palmeter. All rights reserved.

@@ -2,7 +2,7 @@
 
 SPEC-1688 (Argon2id), SPEC-1689 (opaque session), SPEC-1690 (CSRF).
 
-(c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+(c) 2026 Michael Palmeter. All rights reserved.
 """
 
 

@@ -4,7 +4,7 @@ Verify IntentRouter is wired into the orchestrator, trace builder
 includes route decision, and peer agent handler has correct call
 signatures for dispatch_with_binding and SSE helpers.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

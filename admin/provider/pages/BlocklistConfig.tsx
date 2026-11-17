@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * BlocklistConfig — Allow/block list management + value checking.
  *
@@ -12,7 +12,7 @@
  *      POST /api/superadmin/blocklists/{list_type}/check
  *
  * WI-1425 / SPEC-1820
- * (c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * (c) 2026 Michael Palmeter. All rights reserved.
  */
 
 import React, { useCallback, useEffect, useState } from 'react';

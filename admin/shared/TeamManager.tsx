@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * TeamManager — Team member management component for the admin dashboard.
  *
@@ -27,7 +27,7 @@
  *   - InviteForm, TeamMemberRow, ConfirmRemoveDialog, EditMemberDialog, RoleTooltip
  *   - constants, styles, utils, types
  *
- * (c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * (c) 2026 Michael Palmeter. All rights reserved.
  */
 
 import React, { useState, useCallback } from 'react';

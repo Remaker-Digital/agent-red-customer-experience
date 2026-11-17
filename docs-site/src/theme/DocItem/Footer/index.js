@@ -4,7 +4,7 @@
  *
  * This wraps the default Docusaurus DocItem Footer component.
  *
- * (c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * (c) 2026 Michael Palmeter. All rights reserved.
  */
 
 import React from 'react';

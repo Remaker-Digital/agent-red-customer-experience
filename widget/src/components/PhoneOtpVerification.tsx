@@ -1,11 +1,11 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * PhoneOtpVerification — 6-digit code entry screen for SMS phone verification.
  *
  * Displayed after pre-chat form phone collection when SMS OTP is enabled.
  * Mirrors OtpVerification.tsx but for phone/SMS channel (SPEC-1879 Phase 3).
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import { FunctionComponent } from 'preact';

@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * useQueryPreservingNavigate — navigate() wrapper that carries forward URL search params.
  *
@@ -9,7 +9,7 @@
  *
  * If the target path already contains a query string, it is used as-is.
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import { useCallback } from 'react';

@@ -1,11 +1,11 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * Storybook stories for MessageBubble (SPEC-1845/WI-1502).
  *
  * Covers: user message, agent message, long message, streaming, retracted,
  * and system message variants.
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import { MessageBubble } from './MessageBubble';

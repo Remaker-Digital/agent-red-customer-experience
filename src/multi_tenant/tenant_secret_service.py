@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Tenant secret management — per-tenant secrets in Azure Key Vault.
 
 Work Item #29 (Decision #6): Enum-based access to per-tenant secrets
@@ -26,7 +26,7 @@ Dependencies:
     - azure-identity>=1.19.0 (in requirements.txt)
     - gdpr_services.py: DataStoreAdapter protocol
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

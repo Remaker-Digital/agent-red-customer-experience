@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * SPEC-1841 Deployment modal — recommended next-version pre-fill coverage (WI-3224).
  *
@@ -9,7 +9,7 @@
  * (`apiFetch`/`onNotify`) is mocked; Mantine renders under happy-dom via
  * tests/setup.ts. Reuses the Vitest harness committed by WI-3221.
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import { describe, it, expect, vi, beforeEach } from 'vitest';

@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * AgentDetailPanel — right panel showing agent overview, unified skills
  * table with inline toggle/select controls, and provider logo.
@@ -9,7 +9,7 @@
  *   - Agent description from registry replaces overlay system message (Change 4)
  *   - Provider logo 80x80 in header (Change 6)
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import React, { useCallback, useMemo, useState } from 'react';

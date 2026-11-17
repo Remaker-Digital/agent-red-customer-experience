@@ -25,7 +25,7 @@ Tests:
 Created 2026-04-25 (S308) per
 `bridge/canonical-deploy-pipeline-scaling-enforcement-007.md` (Codex GO at -008).
 
-(c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+(c) 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

@@ -7,7 +7,7 @@ Covers: stripe_webhook endpoint, signature verification, idempotency,
         invoice.payment_succeeded/failed/finalization_failed),
         _is_duplicate, _check_stripe_ip.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

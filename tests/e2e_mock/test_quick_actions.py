@@ -1,4 +1,4 @@
-# (C) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# (C) 2026 Michael Palmeter. All rights reserved.
 """Mock E2E tests for the Quick Actions page (/quick-actions).
 
 Tests action list display, create/edit/delete CRUD flows,

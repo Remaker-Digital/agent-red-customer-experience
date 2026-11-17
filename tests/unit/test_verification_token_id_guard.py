@@ -1,5 +1,5 @@
 # tests/unit/test_verification_token_id_guard.py: token ids Cosmos cannot store
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 
 """
 VerificationTokenRepository receives token ids from public links (email

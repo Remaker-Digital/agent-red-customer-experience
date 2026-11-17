@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """
 SLA snapshot repository — persistence for hourly/daily SLA snapshots.
 
@@ -7,7 +7,7 @@ per-tenant metrics to survive container restarts and enable trend analysis.
 
 Collection: sla_snapshots (partition key: /snapshot_type)
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

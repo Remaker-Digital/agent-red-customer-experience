@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Internal Integration Event Bus (SPEC-1778).
 
 Fire-and-forget event bus for integration lifecycle events.  Handlers
@@ -13,7 +13,7 @@ Event taxonomy:
 Uses asyncio background tasks.  Compatible with Redis pub/sub for
 cross-replica broadcasting (future enhancement).
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

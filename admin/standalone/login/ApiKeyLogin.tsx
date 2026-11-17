@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * ApiKeyLogin — Authentication gate for standalone admin.
  *
@@ -10,7 +10,7 @@
  *
  * Migrated to Mantine components (Cycle 10, item 10e).
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import React, { useState, useCallback, useMemo, useEffect } from 'react';

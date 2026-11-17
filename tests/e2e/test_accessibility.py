@@ -13,7 +13,7 @@ so each suite keeps its own entries; never borrow the other suite's.
 Run with:
     pytest tests/e2e/test_accessibility.py --headed
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

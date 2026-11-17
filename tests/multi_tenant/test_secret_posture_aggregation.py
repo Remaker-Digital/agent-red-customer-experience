@@ -4,7 +4,7 @@ Validates that the secret_health endpoint returns only aggregate key
 coverage counts.  The former secret_posture endpoint was removed because
 it exposed per-tenant secret inventories, customer emails, and TOTP seeds.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

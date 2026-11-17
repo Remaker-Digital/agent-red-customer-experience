@@ -1,11 +1,11 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """SPEC-1842/WI-1498: Mutation score tracking and oracle gap detection.
 
 Parses mutmut results, computes mutation scores, and identifies modules
 where high code coverage masks weak test assertions (the "oracle gap").
 See arXiv:2309.02395 and GOV-18.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 from __future__ import annotations
 

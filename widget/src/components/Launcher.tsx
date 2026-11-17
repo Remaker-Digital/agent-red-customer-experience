@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * Launcher — the floating action button that opens/closes the widget.
  *
@@ -10,7 +10,7 @@
  * Architecture (Decision UI-3): Shadow DOM for launcher, iframe for panel.
  * Same approach as Zendesk.
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import { FunctionComponent } from 'preact';

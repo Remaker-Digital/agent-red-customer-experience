@@ -3,7 +3,7 @@
 Tests the pure logic of save/load/clear with TTL, without requiring
 browser storage APIs. Uses a mock storage backend.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

@@ -1,7 +1,7 @@
 # Tenant configuration field definitions -- 78 fields across 10 onboarding steps.
 #
 # R3 refactoring -- extracted from tenant_config_schema.py (session 39).
-# (c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# (c) 2026 Michael Palmeter. All rights reserved.
 #
 # Sentinel values:
 #   $SUPPORTED_LANGUAGES -- resolved at load time from models.SUPPORTED_LANGUAGES

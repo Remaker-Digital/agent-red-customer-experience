@@ -154,4 +154,4 @@ Starter tier merchant uses 1,500 conversations with no packs. First 1,000 from i
 
 *This document is published as part of Agent Red's commitment to transparent, predictable billing. For billing inquiries, contact support@remakerdigital.com.*
 
-*© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.*
+*© 2026 Michael Palmeter. All rights reserved.*

@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Knowledge Base staleness detection and refresh service (WI #219-222).
 
 Tracks content freshness, computes staleness scores, and triggers
@@ -23,7 +23,7 @@ Architecture references:
     - cosmos_schema.py: KnowledgeBaseDocument staleness fields
     - Zendesk AI: Competitive reference for staleness detection
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

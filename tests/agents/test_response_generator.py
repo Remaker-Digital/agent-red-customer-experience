@@ -12,7 +12,7 @@ Verifies:
 Run:
     pytest tests/agents/test_response_generator.py -v
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

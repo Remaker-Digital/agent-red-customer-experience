@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Email Change Request & Confirmation (SPEC-1682, SPEC-1683).
 
 Two-phase email change flow for platform admins:
@@ -17,7 +17,7 @@ Endpoints:
     POST /api/admin/email/request  -- Authenticated (requires platform admin)
     GET  /api/admin/email/confirm   -- Public (token-based)
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

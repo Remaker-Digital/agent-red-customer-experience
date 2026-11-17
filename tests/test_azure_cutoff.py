@@ -6,7 +6,7 @@ points AZURE_CONFIG_DIR at an empty temporary folder unless a live-service run
 opts in with AGENT_RED_ALLOW_AZURE_CLI=1. This test fails if that guard is
 removed or bypassed by accident.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

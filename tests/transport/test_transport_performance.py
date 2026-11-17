@@ -16,7 +16,7 @@ Recovery plan reference: the original transport analysis Phase 4.
 Codex GO: the original transport analysis.
 Governing decisions: ADR-001, DCL-002 v4.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

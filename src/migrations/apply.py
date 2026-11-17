@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Migration runner for Agent Red schema migrations.
 
 Discovers migration modules in src/migrations/, tracks applied migrations
@@ -22,7 +22,7 @@ Manual apply (scripts/apply_migrations.py):
     runner = MigrationRunner(cosmos_manager)
     results = await runner.apply_all()
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """
 TenantConfigProcessor — backward-compatible re-export barrel.
 
@@ -17,7 +17,7 @@ For new code, prefer importing from the package directly:
 Architecture reference: Decision #22 (TenantConfigProcessor)
 R4 refactoring — session 34.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 # Re-export everything from the config package

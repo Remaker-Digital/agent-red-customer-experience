@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Integration Plugin Manifest — declarative integration configuration (SPEC-1761).
 
 Each integration declares its capabilities, authentication requirements,
@@ -6,7 +6,7 @@ sync strategy, and tier gate through an IntegrationManifest.  The manifest
 is the single source of truth for what an integration can do and how it
 connects.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

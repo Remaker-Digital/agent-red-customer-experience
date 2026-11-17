@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * English locale strings for the chat widget.
  *
@@ -8,7 +8,7 @@
  *      replace specific keys at runtime
  *   3. Content is cleanly separated from behavior and styling
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 export interface Locale {

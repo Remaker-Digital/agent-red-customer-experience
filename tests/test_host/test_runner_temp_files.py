@@ -1,5 +1,5 @@
 # tests/test_host/test_runner_temp_files.py: where TestRunner keeps its temporary files
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 
 """
 TestRunner's pytest report and Locust CSV files live in a new private

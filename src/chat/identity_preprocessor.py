@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """In-conversation identity preprocessor (P0-AUTH-FIX).
 
 Intercepts customer messages before they reach the AI pipeline to detect
@@ -25,7 +25,7 @@ The preprocessor reads/writes ConversationDocument fields:
 - identity_sms_attempts: int (SPEC-1879)
 - phone_verified: bool (SPEC-1879 Phase 2A — weaker assurance than customer_verified)
 
-(c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+(c) 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

@@ -1,7 +1,7 @@
 // @ts-nocheck
 /**
  * Billing / Account fixture — Shopify billing channel.
- * (c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * (c) 2026 Michael Palmeter. All rights reserved.
  */
 export function createBillingFixture() {
   return {

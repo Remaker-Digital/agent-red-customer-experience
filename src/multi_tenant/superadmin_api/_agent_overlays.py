@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Superadmin API -- Tenant Agent Overlay CRUD (SPEC-1854, WI-1666, WI-4013/4014).
 
 Admin endpoints for managing per-tenant, per-agent configuration overlays
@@ -10,7 +10,7 @@ and skill bindings. Backed by Cosmos DB repositories (WI-4011, WI-4012).
   DELETE /tenants/{tenant_id}/agents/{agent_id}/overlay        — Delete overlay
   GET  /tenants/{tenant_id}/agents/{agent_id}/effective-config — Get resolved config
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 from __future__ import annotations
 

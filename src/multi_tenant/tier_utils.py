@@ -1,6 +1,6 @@
 """Shared tenant tier utilities (SPEC-1879).
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

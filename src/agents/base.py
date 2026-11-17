@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 # Agent Red Customer Experience — Base Agent Protocol Implementation
 #
 # Abstract base class for all 6 Agent Red pipeline agents. Extends the
@@ -12,7 +12,7 @@
 # the monolithic pipeline.py. The handle_message() wrapper handles
 # serialization, error handling, and observability.
 #
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 
 from __future__ import annotations
 

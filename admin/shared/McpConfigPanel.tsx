@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * McpConfigPanel — Stripe MCP credential management and connection testing.
  *
@@ -11,7 +11,7 @@
  * AGNTCY Phase 3B (Cycle 5) — assertion 3.6 (Admin UI).
  * Migrated to Mantine components (Cycle 10, item 10f).
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import React, { useCallback, useState } from 'react';

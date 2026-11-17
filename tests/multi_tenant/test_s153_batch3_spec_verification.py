@@ -19,7 +19,7 @@ Specs verified:
     SPEC-1649: Master test plan uses live external interfaces only
     SPEC-1650: Mocked/inspection tests retained for localhost
 
-(c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+(c) 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

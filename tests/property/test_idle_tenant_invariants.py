@@ -3,7 +3,7 @@
 Tests that idle classification is monotonic over time and threshold ordering
 is consistent.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 from __future__ import annotations
 

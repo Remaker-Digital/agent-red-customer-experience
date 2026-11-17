@@ -1,7 +1,7 @@
 // @ts-nocheck
 /**
  * Mock handlers — Provider tenant directory endpoints.
- * (c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * (c) 2026 Michael Palmeter. All rights reserved.
  */
 import { GET, POST, PATCH } from '../router';
 import { getStore } from '../store';

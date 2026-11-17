@@ -14,7 +14,7 @@ References:
     - Decision #28+: Response explainability framework
     - Decision #32: Test cases and validation framework
 
-(C) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+(C) 2026 Michael Palmeter. All rights reserved.
 """
 
 from unittest.mock import patch

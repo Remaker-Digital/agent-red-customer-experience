@@ -6,7 +6,7 @@ can be called with properly mocked dependencies and returns expected responses.
 The admin knowledge API uses configure_admin_knowledge_services() to wire repos,
 plus inline KnowledgeBaseRepository() construction for website source endpoints.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """
 Persistent Memory dashboard API — WI#139 capability.
 
@@ -11,7 +11,7 @@ Routes:
     GET    /api/admin/memory/customer/{cid}     — Get memory vectors for a customer
     DELETE /api/admin/memory/customer/{cid}     — Erase all memory for a customer (GDPR)
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

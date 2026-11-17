@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 // @ts-nocheck
 /**
  * Vite mock API plugin — Provider admin console.
@@ -6,7 +6,7 @@
  * Intercepts /api/superadmin/* requests in mock mode, returning fixture data.
  * Same architecture as standalone mock plugin.
  *
- * (c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * (c) 2026 Michael Palmeter. All rights reserved.
  */
 
 import type { Plugin, ViteDevServer } from "vite";

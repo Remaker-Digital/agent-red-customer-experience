@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """CQ-6: Quality-aware escalation (SPEC-0185 / WI-1516).
 
 Provides quality-driven escalation recommendations.  When the AI's
@@ -9,7 +9,7 @@ to a human agent.
 The recommendation is *advisory* — it adds context to the escalation
 decision made in CriticEscalationMixin, not a hard override.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

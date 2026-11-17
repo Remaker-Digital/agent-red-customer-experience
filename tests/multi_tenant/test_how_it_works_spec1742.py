@@ -1,6 +1,6 @@
 """SPEC-1742 How It Works knowledge retrieval technical detail coverage.
 
-Copyright 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC.
+Copyright 2026 Michael Palmeter.
 All rights reserved.
 """
 

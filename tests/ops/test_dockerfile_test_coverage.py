@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """
 Dockerfile.test coverage test — ensures every file path referenced by a test
 via pathlib.Path("...") is available inside the test-host container.

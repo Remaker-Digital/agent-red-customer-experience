@@ -1,7 +1,7 @@
 """S153 Batch 7 — Widget + Billing + Deploy + Branding + Escalation + Email.
 
 47 specs verified against production interfaces.
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 from pathlib import Path
 

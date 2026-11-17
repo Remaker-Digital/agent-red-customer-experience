@@ -16,7 +16,7 @@ Test IDs:
 Run:
     pytest tests/multi_tenant/test_chunking_preview.py -v
 
-(C) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+(C) 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

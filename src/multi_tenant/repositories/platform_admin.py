@@ -1,11 +1,11 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Repository for the platform_admins collection (SPEC-1667).
 
 Stores Service Provider Administrator credentials, completely isolated
 from all tenant team_members collections. The SPA has zero permissions
 within any tenancy and does not exist as a user for any tenancy.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

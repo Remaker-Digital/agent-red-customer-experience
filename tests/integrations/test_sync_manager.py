@@ -4,7 +4,7 @@ Tests cover: echo marker store (set/check/remove), echo prevention
 flow, cancel on send failure, convenience handle_inbound, stats,
 marker expiry behavior.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

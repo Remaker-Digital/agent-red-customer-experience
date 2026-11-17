@@ -1,10 +1,10 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Health and readiness endpoints for Agent Red Customer Experience.
 
 Provides /health (liveness probe) and /ready (readiness probe) endpoints
 used by Azure Container Apps for traffic management.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

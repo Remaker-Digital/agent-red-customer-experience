@@ -7,7 +7,7 @@ security headers, API versioning).
 Note: Tests use different tier clients to spread requests across
 rate limit budgets. Auth middleware intercepts all non-exempt paths.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

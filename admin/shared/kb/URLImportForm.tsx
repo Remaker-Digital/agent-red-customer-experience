@@ -2,7 +2,7 @@
  * URLImportForm — form for importing KB content from a website URL,
  * with optional site-crawl mode.
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import React, { useState, useCallback } from 'react';

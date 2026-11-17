@@ -1,5 +1,5 @@
 # tests/unit/test_single_use_token_consumption.py: one winner per single-use token
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 
 """
 Review S13 (docs/agent-red-architecture-review.md): single-use tokens could be

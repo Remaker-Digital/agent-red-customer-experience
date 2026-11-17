@@ -9,7 +9,7 @@ Tests CPD-01 through CPD-15 covering:
 
 Uses mocked CustomerProfileRepository to avoid Cosmos DB dependency.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

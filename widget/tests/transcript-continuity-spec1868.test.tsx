@@ -4,7 +4,7 @@
  * Covers the restore transport and rendered continuation separator using
  * the production widget modules instead of mirrored logic.
  *
- * (c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * (c) 2026 Michael Palmeter. All rights reserved.
  */
 
 import { h } from 'preact';

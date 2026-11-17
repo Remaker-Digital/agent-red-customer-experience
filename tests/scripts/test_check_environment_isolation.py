@@ -1,6 +1,6 @@
 """Tests for the Phase 3 environment-boundary checker.
 
-(c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC.
+(c) 2026 Michael Palmeter.
 All rights reserved.
 """
 

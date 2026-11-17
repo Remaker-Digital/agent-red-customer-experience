@@ -294,4 +294,4 @@ The Agent Red dashboard shows real-time sync status:
 
 ---
 
-*© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.*
+*© 2026 Michael Palmeter. All rights reserved.*

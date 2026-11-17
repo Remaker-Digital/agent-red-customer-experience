@@ -1,4 +1,4 @@
-# (C) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# (C) 2026 Michael Palmeter. All rights reserved.
 """Dashboard page E2E tests against mock Vite dev server.
 
 Tests the Dashboard page rendered by admin/standalone with mock API fixtures.

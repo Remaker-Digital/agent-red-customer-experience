@@ -1,5 +1,5 @@
 # tests/unit/test_orchestrator_customer_name.py: S22, the stored profile name leaves the model text
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 
 """Decision 16. ChatPipeline.execute() is the path under test.
 

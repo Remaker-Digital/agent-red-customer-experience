@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * MessageList — scrollable container for conversation messages.
  *
@@ -13,7 +13,7 @@
  * Visual reference: Zapier (clean scrollbar, generous padding).
  * Functional reference: Tidio (auto-scroll, date separators, typing dots).
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import { FunctionComponent, JSX } from 'preact';

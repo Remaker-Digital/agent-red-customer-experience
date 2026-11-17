@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * Shared TypeScript types for the Admin component library.
  *
@@ -6,7 +6,7 @@
  * (Shopify embedded + Standalone). Framework-agnostic — no Polaris or
  * shell-specific dependencies.
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 // ---------------------------------------------------------------------------

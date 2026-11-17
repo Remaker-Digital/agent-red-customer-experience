@@ -5,7 +5,7 @@ with Cosmos-backed storage.
 
 These tests use mocked Cosmos containers (no live Azure dependency).
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

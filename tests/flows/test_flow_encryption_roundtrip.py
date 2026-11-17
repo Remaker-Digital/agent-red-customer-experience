@@ -14,7 +14,7 @@ Each test follows the outside-in pattern:
 SPEC-1843: Operator cannot read tenant data.
 GOV-19: Outside-in testing.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

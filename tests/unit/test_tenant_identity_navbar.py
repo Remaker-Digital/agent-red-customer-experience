@@ -15,7 +15,7 @@ Previously mocked the removed _lookup_by_api_key function.
 Run:
     pytest tests/unit/test_tenant_identity_navbar.py -v
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

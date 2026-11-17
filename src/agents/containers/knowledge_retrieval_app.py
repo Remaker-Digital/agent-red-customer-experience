@@ -2,7 +2,7 @@
 #
 # Run: uvicorn src.agents.containers.knowledge_retrieval_app:app --port 8082
 #
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 
 from __future__ import annotations
 

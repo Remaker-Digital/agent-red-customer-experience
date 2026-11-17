@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """
 Repository package — re-exports all repository classes and exceptions.
 
@@ -9,7 +9,7 @@ Direct imports from this package are also supported:
     from src.multi_tenant.repositories import TenantRepository
     from src.multi_tenant.repositories.base import TenantScopedRepository
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 # Base classes and exceptions

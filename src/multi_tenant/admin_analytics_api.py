@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Admin Analytics API — aggregated conversation metrics (WI #176-178).
 
 Provides REST endpoints for the merchant admin dashboard's Analytics
@@ -23,7 +23,7 @@ Dependencies:
     - cosmos_schema.py: ConversationStatus
     - middleware.py: get_tenant_context, TenantContext
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

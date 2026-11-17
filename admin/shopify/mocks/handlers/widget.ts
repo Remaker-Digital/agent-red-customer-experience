@@ -1,7 +1,7 @@
 // @ts-nocheck
 /**
  * Mock handlers — Widget endpoints.
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import { GET, POST } from '../router';

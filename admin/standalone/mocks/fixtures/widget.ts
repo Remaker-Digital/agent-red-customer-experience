@@ -1,7 +1,7 @@
 // @ts-nocheck
 /**
  * Widget fixture - preview config and embed code.
- * (c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * (c) 2026 Michael Palmeter. All rights reserved.
  */
 export function createWidgetFixture() {
   return {

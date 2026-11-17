@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Tests for Pillar 2: Operator-Blind Key Delivery (SPEC-1843, SPEC-1844).
 
 WI-1618: Provisioning response MUST NOT contain raw keys

@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 // @ts-nocheck
 /**
  * Shopify Vite mock API plugin — configureServer hook that intercepts /api/* requests.
@@ -12,7 +12,7 @@
  *   - Injects `?shop=mock-store.myshopify.com` URL param so `getShopifyConfig()`
  *     finds a valid shop domain.
  *
- * (c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * (c) 2026 Michael Palmeter. All rights reserved.
  */
 
 import type { Plugin, ViteDevServer } from 'vite';

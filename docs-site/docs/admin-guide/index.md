@@ -66,4 +66,4 @@ The **custom instructions** field gives you direct access to the system prompt. 
 
 ---
 
-*© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.*
+*© 2026 Michael Palmeter. All rights reserved.*

@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Communication Capture & Audit Infrastructure (SPEC-1687).
 
 Provides two operational modes controlled by the ENABLE_EMAIL_CAPTURE
@@ -19,7 +19,7 @@ point that email / SMS modules invoke after dispatching a message.
 
 CRITICAL: This module must NEVER block the calling code path.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

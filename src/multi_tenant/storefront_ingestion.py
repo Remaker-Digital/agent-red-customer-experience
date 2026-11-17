@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Storefront Ingestion Service (KA-1: Knowledge Automation).
 
 Orchestrates bulk knowledge base population from merchant storefronts.
@@ -10,7 +10,7 @@ Supports three ingestion paths:
 Jobs are tracked in the ingestion_jobs Cosmos DB collection and processed
 by a background loop in background.py.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

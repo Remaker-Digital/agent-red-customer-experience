@@ -3,7 +3,7 @@
 Verifies that POST /api/superadmin/deployments/record correctly stores
 deployment events in the audit log via AuditLogRepository.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

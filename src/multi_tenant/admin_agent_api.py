@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Tenant Admin — Agent Lifecycle API (Phase 4a, WI-4016).
 
 Tenant-scoped agent overlay and skill binding management for the
@@ -15,7 +15,7 @@ keys accepted), unlike the superadmin router which requires platform admin.
   DELETE /api/admin/agents/{agent_id}/skills/{skill_id}/binding  — Delete binding
   GET    /api/admin/agents/available-skills               — List invocable skills
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

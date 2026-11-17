@@ -7,7 +7,7 @@ Covers:
     - get_consent_status handler (reads from tenant_repo)
     - update_consent handler (delegates to consent_manager)
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

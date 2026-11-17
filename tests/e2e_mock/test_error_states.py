@@ -1,4 +1,4 @@
-# (C) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# (C) 2026 Michael Palmeter. All rights reserved.
 """SPEC-1706: Error states and edge case tests.
 
 Strong asserts for real error/empty UI (not "body still has text").

@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Activation lifecycle mock E2E — Activate / Deactivate / Restore via sidebar UI.
 
 UI-driven mutations against Vite ``dev:mock`` with request spies (route continue).

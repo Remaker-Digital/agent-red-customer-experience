@@ -1,11 +1,11 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * AgentListPanel — left panel showing a searchable list of agents.
  *
  * Each row displays agent name, kind badge, and enabled/disabled state.
  * Selected agent is highlighted with a left border accent.
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import React, { useState, useMemo } from 'react';

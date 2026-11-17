@@ -9,7 +9,7 @@ Test IDs: CM-01 through CM-20.
 Run:
     pytest tests/multi_tenant/test_cost_model.py -v
 
-(c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+(c) 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

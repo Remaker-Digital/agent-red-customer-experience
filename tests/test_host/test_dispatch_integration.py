@@ -1,5 +1,5 @@
 # tests/test_host/test_dispatch_integration.py — Dispatch endpoint integration tests
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 
 """
 Tests for the main API dispatch endpoint that routes test run requests

@@ -3,7 +3,7 @@
  *
  * Uses @storybook/preact-vite for the Preact widget components.
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 import type { StorybookConfig } from '@storybook/preact-vite';
 import { resolve } from 'path';

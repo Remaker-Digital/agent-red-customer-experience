@@ -140,4 +140,4 @@ In-progress conversations continue using the configuration that was active when 
 
 ---
 
-*© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.*
+*© 2026 Michael Palmeter. All rights reserved.*

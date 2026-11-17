@@ -1,7 +1,7 @@
 /**
  * Team sub-component barrel — re-exports all extracted TeamManager pieces.
  *
- * (c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * (c) 2026 Michael Palmeter. All rights reserved.
  */
 
 // Types

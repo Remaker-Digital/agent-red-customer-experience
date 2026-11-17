@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """
 Base repository classes and shared exceptions.
 
@@ -7,7 +7,7 @@ operation, making cross-tenant data access structurally impossible.
 
 Architecture reference: Decision #1 (TenantScopedRepository)
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

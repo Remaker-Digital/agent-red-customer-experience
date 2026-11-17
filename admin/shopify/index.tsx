@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * Shopify Embedded Admin Shell — entry point.
  *
@@ -12,7 +12,7 @@
  *   Shopify embedded admin uses Polaris + App Bridge for native Shopify UX.
  *   Shared components from admin/shared/ are wrapped in Polaris Page/Card.
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import React from 'react';

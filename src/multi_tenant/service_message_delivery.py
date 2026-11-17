@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Service message delivery — bulk BCC email to tenant superadmins.
 
 Sends service messages (system announcements, update notices) from the
@@ -13,7 +13,7 @@ Delivery pattern:
 Specifications: SPEC-1646, SPEC-1647, SPEC-1648.
 Work items: WI-1000 (delivery), WI-0998 (API), WI-0999 (UI).
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

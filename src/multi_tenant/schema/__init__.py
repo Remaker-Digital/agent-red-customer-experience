@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Schema package -- tenant configuration field definitions and validation.
 
 Barrel re-export preserving the original ``from src.multi_tenant.tenant_config_schema import ...``
@@ -6,7 +6,7 @@ import paths. All public symbols that were previously in the monolithic
 ``tenant_config_schema.py`` module are re-exported here.
 
 R3 refactoring -- session 39.
-(c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+(c) 2026 Michael Palmeter. All rights reserved.
 """
 
 from src.multi_tenant.schema.models import (

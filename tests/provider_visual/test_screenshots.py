@@ -6,7 +6,7 @@ compares against committed baselines in tests/e2e/screenshots/.
 Update baselines: Run CI workflow_dispatch (Phase A generates baselines).
 Browser time is frozen to match mock fixture dates for deterministic rendering.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

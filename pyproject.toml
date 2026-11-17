@@ -3,6 +3,7 @@ requires = ["setuptools>=70", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
+license = { file = "LICENSE" }
 name = "agent-red"
 version = "2.0.23"
 description = "Agent Red Customer Experience application"

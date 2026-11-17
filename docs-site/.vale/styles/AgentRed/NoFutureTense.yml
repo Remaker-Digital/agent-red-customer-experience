@@ -2,7 +2,7 @@
 # Product behavior should be described in present tense.
 # "The API returns..." not "The API will return..."
 #
-# (c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# (c) 2026 Michael Palmeter. All rights reserved.
 
 extends: existence
 message: "Use present tense to describe product behavior. Write '%s' without 'will'."

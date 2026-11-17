@@ -7,7 +7,7 @@ and query-level tenant isolation.
 
 Master Test Plan: §4 Gap Register — Multi-Tenant Isolation (1.0-required)
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

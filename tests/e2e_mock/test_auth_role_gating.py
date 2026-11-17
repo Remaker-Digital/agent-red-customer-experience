@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Auth / 2FA / role-gating against the Vite mock backend (SPEC-1706).
 
 Exercises real ApiKeyLogin + TwoFaChallenge UI paths and role-based nav /

@@ -3,7 +3,7 @@
 Covers: score computation, factor weights, gap detection, intent clustering,
 priority scoring, trend computation, and suggested actions.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

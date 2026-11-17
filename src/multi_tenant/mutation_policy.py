@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """MCP mutation safety — policy models and evaluation logic.
 
 Defines the mutation safety framework for gating MCP tool invocations
@@ -18,7 +18,7 @@ the Critic-gated confirmation UX is implemented.
 
 AGNTCY Phase 3B assertion targets: 3.7 (mutation safety), 3.8 (idempotency).
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

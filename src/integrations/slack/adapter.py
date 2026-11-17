@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Slack Channel Adapter (SPEC-1776).
 
 ChannelAdapter implementation for Slack.  Bot behavior: @mention trigger,
@@ -8,7 +8,7 @@ Auth: OAuth2 with bot token.
 Webhooks: Events API with HMAC-SHA256 x-slack-signature + timestamp.
 Rate limits: Tier 3 ≈ 50 req/min.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

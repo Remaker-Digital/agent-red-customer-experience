@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """MCP client for external tool server integration (AGNTCY Phase 3).
 
 All MCP connections route through ``AgntcyFactory.create_client("MCP", ...)``
@@ -26,7 +26,7 @@ Usage via AGNTCY factory::
         tools = await session.list_tools()
         result = await session.call_tool("search_products", {"query": "..."})
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

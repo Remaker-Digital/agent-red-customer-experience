@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """MCP mutation executor — Critic-gated, idempotent mutation execution.
 
 Orchestrates the full mutation execution pipeline:
@@ -22,7 +22,7 @@ Architecture:
 
 AGNTCY Phase 3B (Cycle 5) — mutation safety framework.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

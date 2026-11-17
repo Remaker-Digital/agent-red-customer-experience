@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """
 Tier upgrade/downgrade endpoint — D30 capability.
 
@@ -10,7 +10,7 @@ Routes:
     GET  /api/billing/upgrade/preview   — Preview upgrade cost/proration
     POST /api/billing/upgrade           — Initiate tier change via Stripe
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

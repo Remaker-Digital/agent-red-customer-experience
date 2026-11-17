@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Access expiry warning emails — sent at 7, 3, and 1 day(s) before expiry.
 
 Follows the same dual-provider pattern as trial_expiry_email.py and
@@ -9,7 +9,7 @@ Called by the access expiry warning background task in background.py.
 Unlike trial expiry emails (which say "upgrade to a paid plan"), these
 messages reference contacting the service provider to renew access.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

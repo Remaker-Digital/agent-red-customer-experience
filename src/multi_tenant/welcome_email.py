@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Welcome email — sent once when a new tenant is provisioned.
 
 Delivers the admin console URL and onboarding guidance. API keys are
@@ -14,7 +14,7 @@ Call sites:
     - provisioning.provision_trial_tenant()          (trial signup)
     - provisioning.spa_provision_tenant()            (SPA manual)
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

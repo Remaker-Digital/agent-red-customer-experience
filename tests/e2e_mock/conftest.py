@@ -1,4 +1,4 @@
-# (C) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# (C) 2026 Michael Palmeter. All rights reserved.
 """Shared fixtures for SPEC-1706 mock-based frontend E2E tests.
 
 Manages a session-scoped Vite dev server running in mock mode, plus

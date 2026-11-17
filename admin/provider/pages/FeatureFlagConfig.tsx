@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * FeatureFlagConfig — Feature flag management and evaluation.
  *
@@ -10,7 +10,7 @@
  *      GET  /api/superadmin/feature-flags/evaluate?flag=...&tenant_id=...
  *
  * WI-1429 / SPEC-1824
- * (c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * (c) 2026 Michael Palmeter. All rights reserved.
  */
 
 import React, { useCallback, useEffect, useState } from 'react';

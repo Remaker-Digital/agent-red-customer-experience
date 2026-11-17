@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * SPEC-1587 Pipeline Observatory — Tenant Comparison tab coverage (WI-3223).
  *
@@ -11,7 +11,7 @@
  *
  * Maps the stale e2e tests TEST-2775/TEST-2776/TEST-2777 to executable evidence.
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import { describe, it, expect, vi, beforeEach } from 'vitest';

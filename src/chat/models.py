@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """
 Chat API Pydantic models — request/response schemas for the conversation API.
 
@@ -16,7 +16,7 @@ Architecture references:
     - Decision UI-5: SSE stream-then-validate with Critic retraction
     - Decision UI-6: Publishable widget key authentication
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

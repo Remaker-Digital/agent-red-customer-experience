@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Cost and unit economics analytics for the service provider.
 
 Provides per-tenant cost attribution based on conversation volume,
@@ -22,7 +22,7 @@ Cost model:
 All costs are estimates based on usage metrics. Actual Azure billing
 may differ due to reserved capacity, tier discounts, or rounding.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

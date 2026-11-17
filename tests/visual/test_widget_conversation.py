@@ -11,7 +11,7 @@ PR #173). No azure-pipelines.yml change required on develop tip.
 Run:
     pytest tests/visual/test_widget_conversation.py -v
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """
 SLA monitoring and compliance tracking service.
 
@@ -22,7 +22,7 @@ Architecture references:
     - WI #79: SLA monitoring dashboard (Master Plan)
     - WI #151: SLA monitoring dashboard (Backlog — supersedes #79)
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Admin Agent Marketplace API — browse and install peer agents (SPEC-1865).
 
 Provides REST endpoints for the merchant admin dashboard's Agent Marketplace:
@@ -11,7 +11,7 @@ Only peer agents are shown (core pipeline agents are infrastructure).
 Install is best-effort: overlay + read-skill bindings across two Cosmos
 collections. On partial failure, compensating cleanup removes artifacts.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

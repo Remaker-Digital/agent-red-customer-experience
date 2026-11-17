@@ -9,7 +9,7 @@ Covers:
     - Snippet extraction and match-in field accuracy
     - Route ordering (search before /{conversation_id} catch-all)
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

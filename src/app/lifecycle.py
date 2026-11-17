@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """
 Agent Red Customer Experience — Application lifecycle management.
 
@@ -22,7 +22,7 @@ Usage (called from main.py):
     register_startup_handlers(app)
     register_shutdown_handlers(app)
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

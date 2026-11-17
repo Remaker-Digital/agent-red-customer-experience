@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Website crawl service — automated website source crawling with change detection.
 
 Orchestrates the crawl lifecycle for WebsiteSourceDocument records:
@@ -13,7 +13,7 @@ The service preserves source URLs on KB entries so the AI can inject
 clickable links into chat conversations, enabling navigation to
 product listings, policies, and other merchant site content.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

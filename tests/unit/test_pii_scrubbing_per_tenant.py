@@ -1,5 +1,5 @@
 # tests/unit/test_pii_scrubbing_per_tenant.py: stored transcripts follow each tenant's own pii_scrubbing (review S19)
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 
 """
 One ConversationSession serves every tenant. POST /api/chat/message stores the

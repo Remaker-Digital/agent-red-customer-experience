@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """SystemPromptBuilder — dynamic per-agent prompt assembly (Decision #23, WI #70).
 
 Composes system prompts for each of the 6 pipeline agents from five layers:
@@ -59,7 +59,7 @@ Dependencies (all implemented):
 - pattern_extraction.py: ExtractedPattern, PatternExtractionService
 - No new pip packages required.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

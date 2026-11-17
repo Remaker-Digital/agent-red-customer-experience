@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """
 E2E fixtures for the Provider admin SPA (`admin/provider`).
 
@@ -10,7 +10,7 @@ surfaces; login/MFA remain deferred (see progress note).
 Vite is launched with ``npx vite`` (not ``npm run dev``) so Linux ADO agents
 skip the Windows-only ``predev`` PowerShell env sync.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

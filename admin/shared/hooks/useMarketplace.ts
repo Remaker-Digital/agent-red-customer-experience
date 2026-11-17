@@ -1,11 +1,11 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * Marketplace hooks — SPEC-1865.
  *
  * useMarketplace: list peer agents available for install.
  * useInstallAgent / useUninstallAgent: mutate install state.
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import { useCallback, useState } from 'react';

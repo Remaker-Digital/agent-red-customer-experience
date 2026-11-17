@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * TwoFaChallenge — 2FA verification screen for admin magic link flow.
  *
@@ -11,7 +11,7 @@
  * On successful verification, calls onComplete(session_token).
  * On cancel, returns to the login screen.
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import React, { useState, useCallback } from 'react';

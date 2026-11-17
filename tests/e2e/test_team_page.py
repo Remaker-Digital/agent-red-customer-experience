@@ -17,7 +17,7 @@ Run with:
     pytest tests/e2e/test_team_page.py -v --headed   # visual
     pytest tests/e2e/test_team_page.py -v             # headless
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 

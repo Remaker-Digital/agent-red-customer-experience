@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Response explainability — per-response decision trace.
 
 Work Item #86 (Decision #28+/32): Captures the full decision context for
@@ -27,7 +27,7 @@ Dependencies:
     - system_prompt_builder.py: SystemPromptBuilder.explain()
     - cosmos_schema.py: CustomerProfileDocument, ConversationDocument
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

@@ -3,7 +3,7 @@
 Owner directive: Documentation specs are legitimate project artifacts and must be tested.
 These tests verify that documentation meets the specifications.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 from pathlib import Path
 

@@ -1,7 +1,7 @@
 // @ts-nocheck
 /**
  * Team fixture — team members with roles and escalation categories.
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 export function createTeamFixture() {

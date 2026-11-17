@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Document parsing pipeline for Knowledge Base uploads (WI #214-216).
 
 Parses uploaded files (PDF, DOCX, CSV, TXT) and web pages (URL) into
@@ -23,7 +23,7 @@ Dependencies:
     - beautifulsoup4 >= 4.12.0 (HTML parsing for URL scraping)
     - httpx (already in requirements.txt, used for URL fetching)
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

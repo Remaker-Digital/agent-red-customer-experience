@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * StandaloneLayout — Mantine AppShell with sidebar navigation.
  *
@@ -13,7 +13,7 @@
  * Four-tier dark mode hierarchy (designer-approved):
  *   chrome #0c0a09 → page #1c1917 → surface #292524 → border #44403c
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
@@ -1065,10 +1065,10 @@ export const StandaloneLayout: React.FC<StandaloneLayoutProps> = ({
                 v{productVersion || '...'}
               </Text>
               <Text size="xs" c="dimmed" ta="center" lh={1.4} mt={4} style={{ opacity: 0.7, fontSize: 10 }}>
-                {String.fromCodePoint(0x00A9)} 2026 Remaker Digital, a DBA of
+                {String.fromCodePoint(0x00A9)} 2026 Michael Palmeter.
               </Text>
               <Text size="xs" c="dimmed" ta="center" lh={1.4} style={{ opacity: 0.7, fontSize: 10 }}>
-                VanDusen & Palmeter, LLC. All rights reserved.
+                All rights reserved.
               </Text>
             </Box>
           </AppShell.Section>

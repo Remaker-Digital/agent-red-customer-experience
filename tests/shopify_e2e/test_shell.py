@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Shopify admin shell — Polaris Frame, tenant resolve, App Bridge auth, cross-nav."""
 
 import pytest

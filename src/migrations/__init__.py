@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Schema migration framework for Agent Red Customer Experience.
 
 Forward-only migrations for Cosmos DB schema changes. Migrations are
@@ -20,7 +20,7 @@ Architecture references:
     - Phase 6A: Schema Migration Framework (upgrade plan)
     - Decision #18: Cosmos DB continuous 7-day backup (PITR safety net)
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from src.migrations.apply import MigrationRunner

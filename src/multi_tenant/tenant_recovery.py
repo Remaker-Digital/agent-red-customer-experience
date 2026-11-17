@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Tenant Account Recovery by SPA (SPEC-1677).
 
 Allows the Service Provider Administrator to:
@@ -18,7 +18,7 @@ Endpoints:
     GET  /api/superadmin/tenant-recovery/status/{tenant_id}
     GET  /api/auth/account-recovery/verify
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

@@ -10,7 +10,7 @@ Categories:
 - Testing Process (3): First-login tested, repeatable processes, automated Chrome UI testing
 - Deploy/Documentation (1): Documented deploy process
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 import pathlib
 import sqlite3

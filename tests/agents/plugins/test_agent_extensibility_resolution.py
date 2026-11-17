@@ -3,7 +3,7 @@
 Tests for three-layer resolution algorithm, list_available_skills,
 and KR MCP migration to binding system.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

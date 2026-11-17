@@ -10,7 +10,7 @@ Covers 8 specs:
   - SPEC-1428: Constant PROFESSIONAL_TENANT_ID
   - SPEC-1429: Constant ENTERPRISE_TENANT_ID
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

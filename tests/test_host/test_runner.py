@@ -1,5 +1,5 @@
 # tests/test_host/test_runner.py — TestRunner unit tests
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 
 """
 Tests for test_host.runner — subprocess orchestration, JSON report parsing,

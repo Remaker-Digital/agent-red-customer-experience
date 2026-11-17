@@ -4,7 +4,7 @@
 # "v1 scope" are the only ones written to tenant config in v1.
 # Fields marked "informational" are displayed in UI but not persisted.
 #
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 
 # Required metadata
 id: string                  # unique slug (matches filename without .yaml)

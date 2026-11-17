@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * InputBar — message input area at the bottom of the conversation panel.
  *
@@ -14,7 +14,7 @@
  * Visual reference: Zapier (clean input, subtle borders, consistent sizing).
  * Functional reference: Tidio (auto-grow, enter-to-send, attachment).
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import { FunctionComponent } from 'preact';

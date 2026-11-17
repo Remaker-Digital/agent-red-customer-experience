@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """
 TenantConfigProcessor — validation, cleansing, versioning, and caching.
 
@@ -42,7 +42,7 @@ Dependencies:
     - cosmos_schema.py: PreferencesDocument, TenantTier, AuditEventType
     - repository.py: PreferencesRepository, AuditLogRepository
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """MCP credential cache — in-memory TTL cache for per-tenant MCP credentials.
 
 Wraps Key Vault credential retrieval with a 5-minute TTL cache to avoid
@@ -20,7 +20,7 @@ Integration:
 
 AGNTCY Phase 3B (Cycle 5) — credential cache for Stripe MCP.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

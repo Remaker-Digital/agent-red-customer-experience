@@ -7,7 +7,7 @@ title: Terms of service
 
 **Effective date:** February 9, 2026
 
-These Terms of Service ("Terms") govern your use of Agent Red Customer Experience ("Agent Red", "the Service"), operated by Remaker Digital, a DBA of VanDusen & Palmeter, LLC ("we", "us", "our").
+These Terms of Service ("Terms") govern your use of Agent Red Customer Experience ("Agent Red", "the Service"), operated by Remaker Digital ("we", "us", "our").
 
 By installing or using Agent Red, you agree to these Terms. If you do not agree, do not use the Service.
 
@@ -96,4 +96,4 @@ For questions about these Terms, contact us at [support@remakerdigital.com](mail
 
 ---
 
-*© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.*
+*© 2026 Michael Palmeter. All rights reserved.*

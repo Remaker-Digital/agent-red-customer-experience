@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * TestRunDetail — Standalone drill-down page for test run checks.
  *
@@ -8,7 +8,7 @@
  * - No check param: full sortable/filterable checks table
  * - With check param: single check detail view with full output
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import React, { useEffect, useState } from 'react';

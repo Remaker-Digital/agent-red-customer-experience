@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Activation lifecycle E2E — Activate / Deactivate / Restore via sidebar UI.
 
 Strong UI→API coverage against Playwright route mocks (AdminApiMocker):

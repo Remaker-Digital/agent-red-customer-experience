@@ -1,6 +1,6 @@
 """SMTP connections check the server certificate and never send a password in clear text.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

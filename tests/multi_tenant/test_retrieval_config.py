@@ -11,7 +11,7 @@ Covers:
   - Cite sources in response toggle
   - Config field definitions in tenant_config_schema.py
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 import pytest

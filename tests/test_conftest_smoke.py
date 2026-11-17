@@ -4,7 +4,7 @@ These tests validate that the shared test infrastructure (app_client,
 authenticated clients, mock services) works correctly. They serve as
 a canary: if these fail, fixture wiring is broken.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

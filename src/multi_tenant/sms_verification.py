@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """SMS Verification Service (SPEC-1686).
 
 Provides email/SMS choice for verification when a verified phone exists.
@@ -11,7 +11,7 @@ Key behaviors:
     5. Integrates with both login and email change flows.
     6. Emits communication events via SPEC-1687.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Launcher image upload endpoint — SPEC-0245 capability.
 
 Accepts PNG/JPEG/GIF/SVG launcher images, validates format and size,
@@ -8,7 +8,7 @@ Routes:
     POST /api/admin/launcher-image/upload — Upload launcher image (max 128KB)
     DELETE /api/admin/launcher-image       — Remove launcher image (reset to built-in icon)
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 from __future__ import annotations
 

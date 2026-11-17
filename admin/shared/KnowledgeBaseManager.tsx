@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * KnowledgeBaseManager - CRUD manager for knowledge base articles.
  *
@@ -12,7 +12,7 @@
  *
  * Sub-components and utilities are extracted into ./kb/ for maintainability.
  *
- * (c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * (c) 2026 Michael Palmeter. All rights reserved.
  */
 
 import React, { useState, useCallback, useMemo } from 'react';

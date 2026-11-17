@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * SuggestionBadge — inline badge for config field suggestions.
  *
@@ -8,7 +8,7 @@
  * a suggestion is available from the KB analysis engine. Clicking the
  * badge applies the suggestion to the field.
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import React from 'react';

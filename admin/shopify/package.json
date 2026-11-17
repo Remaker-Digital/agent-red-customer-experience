@@ -1,5 +1,6 @@
 {
   "name": "@agent-red/admin-shopify",
+  "license": "UNLICENSED",
   "version": "1.0.0",
   "private": true,
   "description": "Agent Red Customer Experience \u00e2\u20ac\u201d Shopify embedded admin (Polaris + App Bridge)",

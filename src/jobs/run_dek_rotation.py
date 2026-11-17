@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """DEK Rotation Cron Job — SPEC-1843 / WI-1630.
 
 Rotates tenant Data Encryption Keys every 90 days:

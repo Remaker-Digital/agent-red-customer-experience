@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """
 Config cache — in-memory TTL cache entry for resolved tenant config.
 
@@ -6,7 +6,7 @@ Decision #22: 60-second in-memory TTL per tenant. Cache is invalidated
 on write. Each instance maintains its own cache — eventual consistency
 within 60 seconds is acceptable for config changes.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

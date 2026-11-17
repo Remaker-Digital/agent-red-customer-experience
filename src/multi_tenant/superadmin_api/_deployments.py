@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Superadmin API -- Self-service deployment pipeline.
 
 Provides API endpoints for the SPA Provider Console to trigger builds,
@@ -13,7 +13,7 @@ Pipeline stages:
 All events recorded in Cosmos audit_log for full visibility.
 
 SPEC-1825 / S213
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 from __future__ import annotations
 

@@ -3,7 +3,7 @@
 Tests for QualityFeedbackEngine: issue accumulation, pattern detection,
 guidance generation, recovery, and reset.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

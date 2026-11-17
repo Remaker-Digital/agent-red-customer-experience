@@ -21,7 +21,7 @@ Specs verified:
     SPEC-1643: Staging deployment verifies tenant initialization
     SPEC-1645: example-tenant-001 is canonical staging tenancy
 
-(c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+(c) 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

@@ -3,7 +3,7 @@
 Tests the HMAC-SHA256 identity verification in
 src/multi_tenant/shopify_customer_verification.py.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

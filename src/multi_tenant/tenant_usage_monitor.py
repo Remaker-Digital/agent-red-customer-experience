@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """TenantUsageMonitor — progressive throttling for noisy neighbor prevention (WI #51).
 
 Monitors per-tenant resource consumption in a rolling window and applies
@@ -30,7 +30,7 @@ Architecture references:
     - pipeline_resilience.py: concurrency + circuit breakers (complementary)
     - conversation_meter.py: billable conversation tracking (complementary)
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

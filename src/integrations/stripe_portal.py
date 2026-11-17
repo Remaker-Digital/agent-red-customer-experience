@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """
 Stripe Customer Portal session management.
 
@@ -21,7 +21,7 @@ Flow:
     3. Creates a Stripe Billing Portal session with a return_url.
     4. Returns the portal URL for frontend redirect.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

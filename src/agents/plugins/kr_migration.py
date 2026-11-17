@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """KR MCP migration to binding system (SPEC-1860).
 
 Migrates the current Knowledge Retrieval MCP tool path from
@@ -12,7 +12,7 @@ Migration state contract (Codex P1 finding):
   dual_read        — binding exists, legacy fallback permitted
   binding_enforced — binding required, legacy path blocked
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

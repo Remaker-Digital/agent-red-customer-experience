@@ -1,7 +1,7 @@
 // @ts-nocheck
 /**
  * Quick actions fixture.
- * (c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * (c) 2026 Michael Palmeter. All rights reserved.
  */
 export function createQuickActionsFixture() {
   return {

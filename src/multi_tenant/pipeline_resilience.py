@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """
 Pipeline resilience — concurrency control, timeout orchestration, circuit breakers.
 
@@ -47,7 +47,7 @@ Architecture references:
     - Decision #16: Option B+ (min=2 replicas on 7 critical components)
     - TIER_DEFAULTS: max_concurrent, queue_depth per tier
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

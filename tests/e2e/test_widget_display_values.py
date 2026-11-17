@@ -17,7 +17,7 @@ Run with:
     pytest tests/e2e/test_widget_display_values.py -v --headed
     pytest tests/e2e/test_widget_display_values.py -v
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 import pytest

@@ -5,7 +5,7 @@ Covers 11 specs:
   - 3 Pydantic models in config/models.py (ConfigReadResult, ConfigVersionInfo, ConfigRollbackResult)
   - 1 internal dict _GATE_RANK in schema/validation.py
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

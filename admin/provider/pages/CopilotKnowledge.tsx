@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * CopilotKnowledge — Co-Pilot Knowledge Management page (SPEC-1578).
  *
@@ -20,7 +20,7 @@
  *   GET    /api/superadmin/copilot/config/retrieval
  *   PUT    /api/superadmin/copilot/config/retrieval
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import React, { useCallback, useEffect, useState } from 'react';

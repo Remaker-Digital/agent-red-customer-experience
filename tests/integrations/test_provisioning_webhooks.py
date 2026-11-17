@@ -12,7 +12,7 @@ find_by_stripe_customer_id, find_by_shopify_domain).
 Run:
     pytest tests/integrations/test_provisioning_webhooks.py -v
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

@@ -1,5 +1,5 @@
 # tests/unit/test_deploy_pipeline_build_only.py: deploy_pipeline --build-only and the staging guard (RC-11, PR13)
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 
 """
 RC-11 closed beta: scripts/deploy_pipeline.py gains ``--build-only`` (the beta

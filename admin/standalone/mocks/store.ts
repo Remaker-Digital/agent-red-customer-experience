@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 // @ts-nocheck
 /**
  * Mock data store — in-memory mutable state for all mock API handlers.
@@ -7,7 +7,7 @@
  * for POST/PUT/DELETE so subsequent GETs reflect changes. Survives HMR
  * because the Vite dev server process stays running.
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import { createTenantFixture } from './fixtures/tenant';

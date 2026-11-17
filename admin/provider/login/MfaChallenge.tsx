@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * MfaChallenge — TOTP verification step during login.
  *
@@ -6,7 +6,7 @@
  * has MFA enabled. Accepts a 6-digit TOTP code or an 8-character
  * backup code. On success, stores the MFA session token.
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import React, { useState, useCallback, useRef, useEffect } from 'react';

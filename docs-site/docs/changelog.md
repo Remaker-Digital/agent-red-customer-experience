@@ -1413,4 +1413,4 @@ Configuration changes now use a two-phase commit model. Saving a setting writes 
 
 ---
 
-*© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.*
+*© 2026 Michael Palmeter. All rights reserved.*

@@ -4,7 +4,7 @@ Deterministic coverage for the live SPEC-1879 contract in
 ``widget_otp_verification.py``, non-duplicative of
 ``test_widget_otp_verification.py::TestSmsOtpEndpoints``.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

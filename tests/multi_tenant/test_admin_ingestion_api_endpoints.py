@@ -12,7 +12,7 @@ Note: The ingestion API uses lazy imports inside each endpoint function body
 (``from src.multi_tenant.storefront_ingestion import get_ingestion_service``).
 Therefore we must patch at the SOURCE module, not the consumer module.
 
-(C) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+(C) 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

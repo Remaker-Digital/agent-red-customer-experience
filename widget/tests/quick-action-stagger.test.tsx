@@ -4,7 +4,7 @@
  * Verifies QuickActions source code contains staggered animation-delay
  * and per-button ar-fade-in animation.
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import { describe, it, expect } from 'vitest';

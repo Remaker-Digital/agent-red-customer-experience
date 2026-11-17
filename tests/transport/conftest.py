@@ -3,7 +3,7 @@
 Provides SSE event parsing, benchmark data structures, and staging
 fixtures used across Phase 3 (E2E) and Phase 4 (performance) tests.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

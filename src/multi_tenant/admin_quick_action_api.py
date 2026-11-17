@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Admin Quick Action API — contextual prompt button management (WI #226-229).
 
 Provides REST endpoints for the merchant admin dashboard's Quick Action
@@ -38,7 +38,7 @@ Dependencies:
       VALID_PAGE_TYPES
     - middleware.py: get_tenant_context, TenantContext
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

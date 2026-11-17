@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Default alert rules — ship operational monitoring out of the box (SPEC-1831).
 
 Seeds 8 default alert rules into Cosmos ``platform_config`` on application
@@ -8,7 +8,7 @@ deletable by platform admins via the SPA Control Plane.
 Called from application startup (lifespan). Safe to call repeatedly — skips
 seeding when rules already exist.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 from __future__ import annotations
 

@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Email verification endpoints.
 
 Provides endpoints to request and confirm email verification for
@@ -9,7 +9,7 @@ Endpoints:
     POST /api/auth/verify-email/request  — Send verification email (public)
     GET  /api/auth/verify-email/confirm  — Confirm token and mark verified
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

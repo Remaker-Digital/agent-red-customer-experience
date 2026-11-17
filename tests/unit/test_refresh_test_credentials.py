@@ -5,7 +5,7 @@ _read_env_local, _write_env_local, _fetch_widget_key, _verify_credentials, main.
 
 Test plan ref: COMPREHENSIVE-TEST-PLAN-S245-S255.md Slice 1
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

@@ -3,7 +3,7 @@
 Tests the heuristic analysis engine that generates configuration
 suggestions from KB article content. Pure text analysis — no LLM calls.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

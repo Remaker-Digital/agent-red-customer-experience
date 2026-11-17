@@ -1,4 +1,4 @@
-# (C) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# (C) 2026 Michael Palmeter. All rights reserved.
 """Mock E2E tests for the Widget configuration page (/widget).
 
 Tests embed code display, preview configuration, launcher preview,

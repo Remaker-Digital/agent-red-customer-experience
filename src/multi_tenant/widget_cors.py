@@ -1,4 +1,4 @@
-# Copyright 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# Copyright 2026 Michael Palmeter. All rights reserved.
 """Select public widget CORS separately from trusted browser clients."""
 
 from typing import Any

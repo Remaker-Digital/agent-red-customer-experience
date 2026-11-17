@@ -11,7 +11,7 @@ Covers all 9 mutation endpoints in src/multi_tenant/superadmin_api/_copilot.py:
     PUT    /api/superadmin/copilot/config/schedule
     PUT    /api/superadmin/copilot/config/retrieval
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 from __future__ import annotations
 

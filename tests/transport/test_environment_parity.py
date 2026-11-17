@@ -8,7 +8,7 @@ ALL tests execute behavior — none inspect source code.
 Recovery plan reference: the original transport analysis Phase 3, Category 4.
 Governing decisions: ADR-001, DCL-002 v4.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

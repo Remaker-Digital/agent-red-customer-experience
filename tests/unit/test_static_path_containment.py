@@ -1,5 +1,5 @@
 # tests/unit/test_static_path_containment.py: admin SPA routes serve only files inside their dist folder
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 
 """
 The admin SPA catch-all routes (``/admin/shopify/{path}``, ``/admin/provider/{path}``

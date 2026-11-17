@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """SPA Emergency Key Recovery (SPEC-1678).
 
 Provides an *unauthenticated* endpoint for platform admins who have lost
@@ -16,7 +16,7 @@ Security properties:
     - New key delivered only via email
     - Audit logged as SECURITY_EVENT
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

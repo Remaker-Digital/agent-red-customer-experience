@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Bidirectional Sync Manager with Echo Prevention (SPEC-1768).
 
 Prevents infinite loops in bidirectional sync by marking outbound
@@ -9,7 +9,7 @@ Pattern (same as cache_invalidation.py _publish=False):
   2. On inbound, check for marker — if present, it's our own echo.
   3. Remove marker if outbound send fails (avoid false echo detection).
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

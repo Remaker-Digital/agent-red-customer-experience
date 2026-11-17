@@ -6,7 +6,7 @@ and configure_tracing/configure_logging setup functions.
 
 Work Items #39-40 (Decisions #11-12).
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

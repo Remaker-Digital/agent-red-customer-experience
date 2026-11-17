@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Polling Scheduler & Cursor Management (SPEC-1767).
 
 Background polling scheduler for integrations that use polling or hybrid
@@ -15,7 +15,7 @@ Strategies:
   - full: Daily full sweep, ignores cursor.
   - hybrid: Webhook primary + periodic poll for verification/catch-up.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

@@ -1,5 +1,5 @@
 # tests/unit/test_scripts_run_without_shell.py: the scripts' _run helpers start no shell
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 
 """
 scripts/build.py, scripts/deploy.py and scripts/deploy_ui.py each run commands

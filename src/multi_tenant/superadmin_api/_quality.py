@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Superadmin API -- Quality endpoints (SPEC-1838, SPEC-0188).
 
 Provides read-only API endpoints for quality data:
@@ -7,7 +7,7 @@ Provides read-only API endpoints for quality data:
   GET /quality/conversations — Per-conversation quality scores (SPEC-0188 / CQ-9)
   GET /quality/summary       — Aggregate quality summary (SPEC-0188 / CQ-9)
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 from __future__ import annotations
 

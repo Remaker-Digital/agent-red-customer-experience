@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Reads of fields that were written with the real envelope service.
 
 A mock of encrypt or decrypt would still pass if a query returned the

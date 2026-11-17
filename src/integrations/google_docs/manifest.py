@@ -1,11 +1,11 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Google Docs/Drive Integration Manifest (SPEC-1777).
 
 Declarative configuration for the Google Docs knowledge source adapter.
 Auth: OAuth2.  Scopes: drive.readonly, documents.readonly.
 Sync: Polling via Drive changes.list (incremental) with daily full sweep.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from src.integrations.manifest import (

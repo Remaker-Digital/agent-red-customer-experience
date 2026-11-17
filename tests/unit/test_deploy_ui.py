@@ -3,7 +3,7 @@
 Tests the UI-only deployment tooling: component registry, hashing,
 build orchestration, deploy dry-run, verification, and CLI.
 
-(c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+(c) 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

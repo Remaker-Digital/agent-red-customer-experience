@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 // @ts-nocheck
 /**
  * Mock API router — Express-style path matching for Vite dev server middleware.
@@ -6,7 +6,7 @@
  * Converts route patterns like `/api/admin/team/:id` to regex,
  * extracts named params, and dispatches to registered handlers.
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 export type MockRequest = {

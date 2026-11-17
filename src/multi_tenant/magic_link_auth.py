@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Magic link authentication for standalone (Stripe-direct) merchants.
 
 Provides passwordless sign-in via emailed magic links and sign-in codes.
@@ -30,7 +30,7 @@ Security properties:
     - JWT secret derived from environment variable
     - 6-digit codes: 1M combinations, single-use, 15-min TTL, tenant-scoped
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

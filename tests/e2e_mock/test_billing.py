@@ -1,4 +1,4 @@
-# (C) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# (C) 2026 Michael Palmeter. All rights reserved.
 """SPEC-1706 Billing / Account E2E tests against mock Vite dev server.
 
 Tests cover: billing status display, contact preferences, email change

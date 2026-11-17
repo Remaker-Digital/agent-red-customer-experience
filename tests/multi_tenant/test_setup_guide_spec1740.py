@@ -4,7 +4,7 @@ The historical SPEC-1740 record is retired. The maintained Docusaurus Markdown
 source retains the first-login and key-handling checks; this module does not
 claim that a generated or remotely deployed site was built or exercised.
 
-Copyright 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC.
+Copyright 2026 Michael Palmeter.
 All rights reserved.
 """
 

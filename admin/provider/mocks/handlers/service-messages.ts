@@ -1,7 +1,7 @@
 // @ts-nocheck
 /**
  * Mock handlers — Provider service messages (bulk notifications).
- * (c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * (c) 2026 Michael Palmeter. All rights reserved.
  */
 import { POST } from '../router';
 import { getStore } from '../store';

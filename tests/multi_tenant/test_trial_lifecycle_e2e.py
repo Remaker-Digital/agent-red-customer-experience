@@ -6,7 +6,7 @@ consumption, paid conversion, expiry scanning, and demo data seeding.
 
 Master Test Plan: §4 Gap Register — Trial Lifecycle E2E (1.0-required)
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

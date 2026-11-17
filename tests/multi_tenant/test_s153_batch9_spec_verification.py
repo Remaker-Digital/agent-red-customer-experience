@@ -1,7 +1,7 @@
 """S153 Batch 9 — Admin UI behavior + Widget + Provider + Tooltips + more.
 
 Specs verified against production interfaces.
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 import json
 from pathlib import Path

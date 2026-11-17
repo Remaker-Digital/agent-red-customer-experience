@@ -7,7 +7,7 @@ The tenant config API uses factory functions (get_config_processor,
 get_activation_service) rather than module-level variables, so tests patch
 those factory functions to return mocks.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

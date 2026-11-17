@@ -1,4 +1,4 @@
-# (c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# (c) 2026 Michael Palmeter. All rights reserved.
 """Audit log sanitizer — SPEC-1843 / WI-1615.
 
 Ensures audit log payloads never contain PII or tenant business data.

@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Action Executor with HITL Gating — routes AI requests to adapters (SPEC-1769).
 
 The ActionExecutor is the single dispatch point for AI-initiated actions against
@@ -8,7 +8,7 @@ while low-risk reads can execute immediately.
 
 Audit logging captures every action attempt, approval, and result.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

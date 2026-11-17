@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * SPEC-1586 Pipeline Observatory — Agent Metrics tab coverage (WI-3222).
  *
@@ -12,7 +12,7 @@
  * (a thrown/rejected fetch). A resolved `{ ok: false }` response renders the
  * empty state WITHOUT notifying — distinct from the sibling `TrafficFlowTab`.
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import { describe, it, expect, vi, beforeEach } from 'vitest';

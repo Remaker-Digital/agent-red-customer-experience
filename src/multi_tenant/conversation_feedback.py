@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """SPEC-1836: Per-message user feedback (thumbs up/down).
 
 Feedback is stored in the conversation document's `feedback[]` array.
@@ -7,7 +7,7 @@ Each entry records the message index, rating, optional comment, and timestamp.
 Rate limit: max 10 feedback entries per conversation.
 Comment limit: max 500 characters.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

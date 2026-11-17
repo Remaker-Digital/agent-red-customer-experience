@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 # Agent Red Customer Experience — AGNTCY SDK Integration Layer
 #
 # This module provides Agent Red's integration with the AGNTCY platform SDK.
@@ -12,7 +12,7 @@
 # AGNTCY SDK source: https://github.com/agntcy/app-sdk
 # AGNTCY platform wiki: https://github.com/Remaker-Digital/AGNTCY-muti-agent-deployment-customer-service/wiki
 #
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 
 from __future__ import annotations
 

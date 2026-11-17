@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """
 OpenTelemetry Application Insights exporter integration (SPEC-1834).
 
@@ -14,7 +14,7 @@ Configuration:
 Custom dimensions included on every span (via TenantSpanProcessor in
 otel_tracing.py): tenant_id, conversation_id, trace_id.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

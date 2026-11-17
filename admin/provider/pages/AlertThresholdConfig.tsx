@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * AlertThresholdConfig — Alert threshold configuration per metric.
  *
@@ -9,7 +9,7 @@
  *      GET      /api/superadmin/alert-thresholds/history
  *
  * WI-1427 / SPEC-1822
- * (c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * (c) 2026 Michael Palmeter. All rights reserved.
  */
 
 import React, { useCallback, useEffect, useState } from 'react';

@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 # Agent Red Customer Experience — Generic Agent Container App
 #
 # Reusable FastAPI application factory for agent containers. Each agent
@@ -14,7 +14,7 @@
 #   from src.agents.intent_classifier import IntentClassifierAgent
 #   app = create_agent_app(IntentClassifierAgent)
 #
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 
 from __future__ import annotations
 

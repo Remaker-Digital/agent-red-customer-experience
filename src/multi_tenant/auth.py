@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """
 Triple authentication: Shopify session tokens + API keys + publishable widget keys.
 
@@ -32,7 +32,7 @@ Request flow:
     → Inject TenantContext into request state
     → Handler receives TenantContext via FastAPI dependency
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

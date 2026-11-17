@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """
 Fail-closed Critic/Supervisor safety enforcement.
 
@@ -42,7 +42,7 @@ Architecture references:
     - AuditEventType.SECURITY_EVENT for blocked responses
     - AuditEventType.ESCALATION_TRIGGERED for Critic-unavailable escalation
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

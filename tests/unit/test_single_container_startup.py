@@ -1,5 +1,5 @@
 # tests/unit/test_single_container_startup.py: RC-11 single-container startup handlers
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 
 """
 RC-11 single-container beta mode, PR3 (docs/beta-single-container-design.md, sections 3 and 6).

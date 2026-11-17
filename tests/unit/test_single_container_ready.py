@@ -1,5 +1,5 @@
 # tests/unit/test_single_container_ready.py: RC-11 /ready rule for single-container mode
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 
 """
 RC-11 single-container beta mode, PR8 (docs/beta-single-container-design.md, section 5).

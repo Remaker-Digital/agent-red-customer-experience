@@ -7,7 +7,7 @@ No mocks for transport creation — real SDK objects.
 Recovery plan reference: the original transport analysis Phase 3, Category 2.
 Governing decisions: ADR-001 (dispatch by physical possibility), SPEC-1802.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

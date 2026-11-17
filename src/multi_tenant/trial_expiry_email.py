@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Trial expiry warning emails — sent at 7, 3, and 1 day(s) before trial end.
 
 Follows the same dual-provider pattern as welcome_email.py and
@@ -6,7 +6,7 @@ widget_otp_verification.py (SMTP primary, ACS fallback, returns bool).
 
 Called by the trial expiry warning background task in background.py.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

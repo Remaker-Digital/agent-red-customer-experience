@@ -3,7 +3,7 @@
 The check used to require CLAUDE.md, which the repository no longer carries
 (agent configuration comes from GT-KB), so a real deploy failed it.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 import importlib.util

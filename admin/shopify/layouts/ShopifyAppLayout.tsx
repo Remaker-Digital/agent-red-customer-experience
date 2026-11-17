@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * ShopifyAppLayout — Polaris + App Bridge layout wrapper.
  *
@@ -13,7 +13,7 @@
  *   Session token auth is automatic via App Bridge — no cookie-based auth.
  *   The session token is included in every API call as Bearer token.
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import React, { createContext, useCallback, useContext, useEffect, useState } from 'react';

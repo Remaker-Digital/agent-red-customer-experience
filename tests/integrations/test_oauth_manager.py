@@ -3,7 +3,7 @@
 Tests cover: state token CSRF, authorization URL generation, callback
 handling, token refresh with locking, and revocation.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

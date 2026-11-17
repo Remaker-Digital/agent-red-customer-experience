@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * Vitest configuration for the provider admin console (SPEC-1585 coverage / WI-3221).
  *
@@ -6,7 +6,7 @@
  * widget app's Vitest runner; the @shared alias matches vite.config.ts so
  * shared-component imports resolve identically in tests.
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import { defineConfig } from 'vitest/config';

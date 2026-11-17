@@ -3,7 +3,7 @@
 Validates CRUD, batch ingestion, URL import, re-embedding, stats,
 and test query endpoints.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

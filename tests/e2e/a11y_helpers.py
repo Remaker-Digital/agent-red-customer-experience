@@ -4,7 +4,7 @@ Provides axe-core integration for WCAG 2.1 AA compliance testing via
 axe-playwright-python. Fails on critical and serious violations; logs
 minor and moderate.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 from __future__ import annotations
 

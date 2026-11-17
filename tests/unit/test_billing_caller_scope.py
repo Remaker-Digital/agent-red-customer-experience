@@ -1,5 +1,5 @@
 # tests/unit/test_billing_caller_scope.py: billing routes act only for the calling tenant
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 
 """
 ``POST /api/billing/portal``, ``/api/packs/*`` and ``/api/usage/*`` took a tenant id or

@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Adaptive Rate Limiter for External APIs (SPEC-1774).
 
 Outbound rate limiting to protect against 429 bans from external APIs.
@@ -15,7 +15,7 @@ Per-vendor defaults (RPM unless noted):
     Shopify:   40/sec (= 2400/min)
     Slack:     50/min
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

@@ -1,11 +1,11 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Zendesk Integration Manifest (SPEC-1775).
 
 Declarative configuration for the Zendesk full helpdesk adapter.
 Auth: OAuth2.  Scopes: read, write, tickets:read, tickets:write.
 API: REST v2, cursor pagination, 700 req/min.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from src.integrations.manifest import (

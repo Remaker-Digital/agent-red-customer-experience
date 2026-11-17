@@ -2,7 +2,7 @@
 #
 # Run: uvicorn src.agents.containers.critic_supervisor_app:app --port 8086
 #
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 
 from __future__ import annotations
 

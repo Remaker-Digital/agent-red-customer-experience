@@ -319,4 +319,4 @@ The placeholder text shown in the message input field before the customer starts
 
 ---
 
-*© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.*
+*© 2026 Michael Palmeter. All rights reserved.*

@@ -1,7 +1,7 @@
 // @ts-nocheck
 /**
  * Shopify tenant fixture — mock data for /api/tenants/lookup (with shop domain).
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 export function createTenantFixture() {

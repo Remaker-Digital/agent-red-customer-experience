@@ -3,7 +3,7 @@
 Covers: list, detail, messages, assign, escalate, resolve, archive,
 unarchive, add_note, search, and the _extract_search_snippet helper.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

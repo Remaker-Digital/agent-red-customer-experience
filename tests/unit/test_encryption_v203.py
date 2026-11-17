@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """v2.0.3 reads that must return plaintext from the real envelope service."""
 
 from __future__ import annotations

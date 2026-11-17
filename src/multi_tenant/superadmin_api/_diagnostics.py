@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Superadmin API -- Test pipeline trigger and diagnostic data export.
 
 Domain sub-module for SPEC-1826 (SPA Test Execution Trigger) and
@@ -17,7 +17,7 @@ Diagnostics:
   GET  /diagnostics/drift         — Configuration drift report
   GET  /diagnostics/health        — System health snapshot
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 from __future__ import annotations
 

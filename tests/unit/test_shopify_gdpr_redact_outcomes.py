@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """A Shopify redact webhook is acknowledged only when the request was carried out.
 
 Shopify retries a webhook that does not get a 2xx answer. Before this change

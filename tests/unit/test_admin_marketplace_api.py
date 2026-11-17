@@ -4,7 +4,7 @@ Covers: list (peer-only, tier-gate, category filter, install status),
 install (happy path, already installed, tier-gated, compensating cleanup),
 uninstall (happy path, not installed).
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

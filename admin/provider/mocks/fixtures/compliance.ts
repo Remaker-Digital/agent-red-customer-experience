@@ -1,7 +1,7 @@
 // @ts-nocheck
 /**
  * Provider compliance fixture — PII, secrets, billing, SLA, costs, abuse.
- * (c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * (c) 2026 Michael Palmeter. All rights reserved.
  */
 export function createComplianceFixture() {
   return {

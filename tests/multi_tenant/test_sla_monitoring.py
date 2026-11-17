@@ -9,7 +9,7 @@ Test IDs: SLA-01 through SLA-25.
 Run:
     pytest tests/multi_tenant/test_sla_monitoring.py -v
 
-(c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+(c) 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

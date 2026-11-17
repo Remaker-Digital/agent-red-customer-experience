@@ -6,7 +6,7 @@ and edge cases (missing file, comments, blank lines, malformed entries).
 Run:
     python -m pytest tests/test_env_loader.py -v
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 import os

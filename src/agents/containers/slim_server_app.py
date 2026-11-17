@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 # Agent Red Customer Experience — SLIM Routing Service
 #
 # Standalone SLIM server that provides the peer-to-peer mesh routing service
@@ -13,7 +13,7 @@
 #   SLIM_SERVICE_NAME  — Service name (default: agent-red-slim)
 #   LOG_LEVEL          — Logging level (default: INFO)
 #
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 
 from __future__ import annotations
 

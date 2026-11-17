@@ -1,5 +1,5 @@
 # tests/chat/test_model_config_pipeline.py: F29, the empty-reply guard and the chat API version
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 
 """
 Pipeline-level model configuration.

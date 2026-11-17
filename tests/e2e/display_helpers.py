@@ -3,7 +3,7 @@
 Card-scoped assertions bind visible KPI text to mock API payloads so bare
 ``get_by_text("142")`` presence checks cannot rubber-stamp decorative numbers.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

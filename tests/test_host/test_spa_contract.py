@@ -1,5 +1,5 @@
 # tests/test_host/test_spa_contract.py — SPA TestExecution contract tests
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 
 """
 Contract tests verifying that test host API responses match the shapes

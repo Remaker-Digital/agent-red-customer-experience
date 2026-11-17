@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Pipeline Metrics Aggregation Engine (SPEC-1584).
 
 Queries conversation documents across all tenants and computes per-agent,
@@ -7,7 +7,7 @@ per-edge, and per-tenant aggregate metrics from pipeline_trace data.
 Time windowing via since/until/period parameters. Results are cached with
 configurable TTL for dashboard responsiveness.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 from __future__ import annotations
 

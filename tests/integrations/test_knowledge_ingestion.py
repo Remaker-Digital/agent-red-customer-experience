@@ -4,7 +4,7 @@ Tests cover: ContentNormalizer (HTML, Markdown, Notion, Confluence, CSV),
 chunking with overlap, content hashing for incremental sync, full
 ingestion pipeline, and sync_source batch processing.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

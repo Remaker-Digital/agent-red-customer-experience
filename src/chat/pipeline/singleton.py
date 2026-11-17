@@ -1,11 +1,11 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Module-level singleton for ChatPipeline.
 
 Provides get_chat_pipeline(), configure_chat_pipeline(), and
 _create_openai_client() for application lifecycle management.
 
 R10 refactoring — extracted from pipeline.py (session 39).
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

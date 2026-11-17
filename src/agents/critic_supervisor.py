@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 # Agent Red Customer Experience — Critic/Supervisor Agent
 #
 # Validates AI-generated responses for safety (fail-closed gate).
@@ -16,7 +16,7 @@
 #    "modified_response": str|null, "block_reason": str|null,
 #    "model": str, "latency_ms": float}
 #
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 
 from __future__ import annotations
 

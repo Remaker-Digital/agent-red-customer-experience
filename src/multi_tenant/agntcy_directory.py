@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 # Agent Red Customer Experience — AGNTCY Directory Integration
 #
 # Provides dynamic agent discovery via the AGNTCY Directory registry,
@@ -11,7 +11,7 @@
 #   - Falls back to static AgentTopic enum when Directory is unavailable
 #   - Directory server address configured via AGNTCY_DIRECTORY_ADDR env var
 #
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 
 from __future__ import annotations
 

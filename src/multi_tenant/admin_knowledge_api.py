@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Admin Knowledge Base API — merchant knowledge management (WI #175).
 
 Provides REST endpoints for the merchant admin dashboard's Knowledge Base
@@ -26,7 +26,7 @@ Dependencies:
     - cosmos_schema.py: KnowledgeBaseDocument
     - middleware.py: get_tenant_context, TenantContext
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

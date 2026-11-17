@@ -1,11 +1,11 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Normalized data models — integration boundary types (SPEC-1762).
 
 All adapters produce and consume these normalized models.  Vendor-specific
 data is mapped to these types at the adapter boundary, ensuring the core
 system never deals with vendor-specific structures.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

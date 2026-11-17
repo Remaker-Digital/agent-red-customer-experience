@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Superadmin Contact Messages API — cross-tenant contact message management.
 
 Provides REST endpoints for the service provider (SUPERADMIN role) to
@@ -13,7 +13,7 @@ Endpoints (SPEC-1589, SPEC-1590, SPEC-1592):
 
 All endpoints require SUPERADMIN role.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

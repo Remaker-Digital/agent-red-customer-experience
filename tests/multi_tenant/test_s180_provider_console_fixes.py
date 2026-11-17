@@ -8,7 +8,7 @@ Fixes tested:
   - SPEC-1783: Support Diagnostics accepts email and resolves to tenant_id
   - SPEC-1785: Tenant Comparison shows brand_name/customer_email, not raw UUIDs
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 import pytest

@@ -2,7 +2,7 @@
 /**
  * Provider pipeline fixture — agent topology, infrastructure, and metrics.
  * Updated for SPEC-1579..1587 + SPEC-1786.
- * (c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * (c) 2026 Michael Palmeter. All rights reserved.
  */
 export function createPipelineFixture() {
   return {

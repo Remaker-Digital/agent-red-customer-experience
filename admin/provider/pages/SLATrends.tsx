@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * SLATrends — SLA uptime & latency time-series with error budget gauges.
  *
@@ -9,7 +9,7 @@
  *
  * API: GET /api/superadmin/sla/trends?range_days=N&period_days=30
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import React, { useEffect, useState } from 'react';

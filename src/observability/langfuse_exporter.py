@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Langfuse trace exporter — Lane 1 + Lane 2 observability export.
 
 SPEC-1874: Converts ResponseDecisionTrace to Langfuse trace format.
@@ -22,7 +22,7 @@ PROHIBITED (never exported, any lane):
 Controlled via LANGFUSE_ENABLED env var (Lane 1) + per-tenant
 preferences.langfuse_lane2_enabled (Lane 2). Fire-and-forget.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

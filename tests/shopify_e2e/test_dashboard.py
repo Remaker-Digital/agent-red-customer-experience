@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Shopify Dashboard — mock KPI binding (UsageDashboard) + UI→API analytics calls.
 
 AnalyticsOverview summary cards are intentionally not asserted here: the shared
@@ -7,7 +7,7 @@ so the path never stabilizes and the UI can remain on "Loading analytics...".
 That is a shared-component residual; UsageDashboard + API call capture still
 prove Shopify shell → mock API wiring for ADO.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 import pytest

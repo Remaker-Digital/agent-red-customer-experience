@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """CustomerProfileService — Layer 1 customer context management.
 
 Work Items #83-85 (Decision #28): CRUD operations for customer profiles,
@@ -29,7 +29,7 @@ Dependencies:
     - repository.py: CustomerProfileRepository
     - gdpr_services.py: PiiScrubber (for audit log sanitization)
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

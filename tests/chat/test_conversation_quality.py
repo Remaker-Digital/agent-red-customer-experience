@@ -4,7 +4,7 @@ Tests for the runtime ConversationQualityScorer and QualityScore model.
 15 tests covering: model validation, scoring formula, edge cases,
 aggregation, and the superadmin API endpoint.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

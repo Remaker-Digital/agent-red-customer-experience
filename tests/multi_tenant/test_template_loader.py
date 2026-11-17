@@ -3,7 +3,7 @@
 Validates template JSON files, registry, TemplateLoader class methods,
 apply_template with mock repositories, and configuration suggestions.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

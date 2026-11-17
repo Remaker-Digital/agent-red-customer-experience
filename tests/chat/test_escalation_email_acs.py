@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """E1. With ACS configured, the escalation email is attempted, not skipped."""
 
 from __future__ import annotations

@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * OnboardingWizard — First-login modal that guides merchants through:
  *   Step 1: Select product category (from template registry) + optional storefront URL
@@ -9,7 +9,7 @@
  *   - Shopify merchants: Uses Shopify Admin API via shopDomain prop
  *   - Non-Shopify merchants: Crawls storefront URL entered in Step 1
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import React, { useState, useEffect, useCallback, useRef } from 'react';

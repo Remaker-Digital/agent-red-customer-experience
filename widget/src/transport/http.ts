@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * HTTP transport — client→server message delivery.
  *
@@ -15,7 +15,7 @@
  *   SSE for server→client AI streaming (see sse.ts)
  *   WebSocket for bidirectional typing/presence (see ws.ts)
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import type { WidgetConfig } from '@/theme/tokens';

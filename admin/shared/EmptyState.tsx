@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * EmptyState — Shared empty state component for all admin surfaces.
  *
@@ -14,7 +14,7 @@
  *     action={{ label: 'View documentation', onClick: () => navigate('/docs') }}
  *   />
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import React from 'react';

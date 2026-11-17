@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * RetryConfig — Rate limit and back-off/retry configuration.
  *
@@ -11,7 +11,7 @@
  *      GET      /api/superadmin/retry-configs/history
  *
  * WI-1426 / SPEC-1819, SPEC-1821
- * (c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * (c) 2026 Michael Palmeter. All rights reserved.
  */
 
 import React, { useCallback, useEffect, useState } from 'react';

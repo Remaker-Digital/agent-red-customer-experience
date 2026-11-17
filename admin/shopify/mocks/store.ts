@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 // @ts-nocheck
 /**
  * Shopify mock data store — in-memory mutable state for all mock API handlers.
@@ -10,7 +10,7 @@
  * Shopify uses the same shared components as Standalone, so the store
  * mirrors the Standalone structure with Shopify-specific tenant data.
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import { createTenantFixture } from './fixtures/tenant';

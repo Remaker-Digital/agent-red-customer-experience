@@ -1,11 +1,11 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * Agent lifecycle types — Phase 4a (WI-4016).
  *
  * All interfaces match the backend CamelCaseModel wire format exactly.
  * Field names are camelCase as received from the API.
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 // ---------------------------------------------------------------------------

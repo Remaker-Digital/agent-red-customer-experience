@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """API versioning headers middleware (WI #140).
 
 Adds API version information to all responses via headers. This allows
@@ -17,7 +17,7 @@ Architecture references:
     - Decision #24: API versioning strategy (header-based, not URL-based)
     - Shopify API versioning pattern (quarterly, header-based)
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

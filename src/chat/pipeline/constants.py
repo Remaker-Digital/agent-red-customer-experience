@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Pipeline constants, environment configuration, and error classification.
 
 Contains USE_AGENT_CONTAINERS feature flag, agent HTTP endpoint URLs,
@@ -6,7 +6,7 @@ Azure OpenAI model deployment names, intent taxonomy, and the
 _classify_openai_error() utility.
 
 R10 refactoring — extracted from pipeline.py (session 39).
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

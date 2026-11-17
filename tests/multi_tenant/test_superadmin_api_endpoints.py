@@ -3,7 +3,7 @@
 Covers 28 specs: router prefix + 27 endpoint smoke tests verifying each handler
 can be called with properly mocked dependencies and returns the expected response.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

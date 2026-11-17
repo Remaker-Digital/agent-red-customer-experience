@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * Template variable substitution for quick action prompts (WI #229).
  *
@@ -15,7 +15,7 @@
  *
  * Unresolved variables are left as-is (e.g. {{unknown}} stays literally).
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 // ---------------------------------------------------------------------------

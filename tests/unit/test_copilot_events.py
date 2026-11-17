@@ -1,5 +1,5 @@
 # tests/unit/test_copilot_events.py: co-pilot turns emit validated and done events with the right arguments
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 
 """
 _handle_co_pilot called ``validated_event(response, trace_id=...)`` and

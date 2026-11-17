@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """
 Alert evaluation engine — evaluates rules against platform metrics.
 
@@ -14,7 +14,7 @@ Operators: gt, lt, gte, lte, eq, ne
 Cooldown: After a rule fires, it won't fire again until cooldown_minutes
 has elapsed (checked via AlertHistoryRepository.get_last_trigger_for_rule).
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

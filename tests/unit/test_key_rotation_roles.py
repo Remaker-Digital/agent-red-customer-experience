@@ -1,5 +1,5 @@
 # tests/unit/test_key_rotation_roles.py: only admins rotate keys, and the response is truthful
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 
 """
 ``POST /api/keys/rotate`` and ``/api/keys/rotate-widget-key`` checked only that some

@@ -1,11 +1,11 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * Provider alerts fixture — alert rules and history.
  *
  * Shape must match the AlertRule / AlertHistoryItem interfaces in
  * AlertConfig.tsx and the CamelCase models in _operations.py.
  *
- * (c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * (c) 2026 Michael Palmeter. All rights reserved.
  */
 export function createAlertsFixture() {
   return {

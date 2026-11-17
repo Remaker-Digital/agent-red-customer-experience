@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """
 Agent Red Customer Experience — FastAPI application entrypoint.
 
@@ -11,7 +11,7 @@ them together and re-exports names that existing test code imports.
 Usage:
     uvicorn src.main:app --host 0.0.0.0 --port 8000 --reload
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

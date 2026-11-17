@@ -11,7 +11,7 @@ Covers:
   SPEC-1463: upgrade_verification A: iterates all tenants
   SPEC-1464: upgrade_verification C: iterates all tenants
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 import inspect

@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """An escalating turn tells the reply step that a handoff is under way.
 
 The assertion is the system prompt the response generator receives, not the

@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Admin Conversation Inbox API — merchant conversation management (WI #171, C8, C9).
 
 Provides REST endpoints for the merchant admin dashboard's Conversation
@@ -28,7 +28,7 @@ Dependencies:
     - cosmos_schema.py: ConversationDocument, ConversationStatus
     - middleware.py: get_tenant_context, TenantContext
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

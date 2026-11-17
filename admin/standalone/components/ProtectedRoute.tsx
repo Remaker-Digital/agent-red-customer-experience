@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * ProtectedRoute — Role-based route guard for standalone admin.
  *
@@ -13,7 +13,7 @@
  * If userRole is null (still loading), renders nothing to avoid flash.
  * If userRole doesn't match allowedRoles, redirects to /inbox.
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import React from 'react';

@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """
 Tenant provisioning service.
 
@@ -29,7 +29,7 @@ Endpoints:
     GET /api/tenants/{tenant_id}     — Get tenant status
     GET /api/tenants/lookup          — Lookup by Stripe ID or Shopify domain
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

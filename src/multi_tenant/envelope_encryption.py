@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Envelope Encryption Service — SPEC-1843 / WI-1624 / WI-1625.
 
 Provides application-level envelope encryption for tenant data using

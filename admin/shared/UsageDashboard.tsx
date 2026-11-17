@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * UsageDashboard — Real-time billing usage dashboard.
  *
@@ -29,7 +29,7 @@
  *                  ConversationSummary, PaginatedList
  *   - ../hooks  — useUsageDashboard, useDailyVolume, useConversationList
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import React, { useState, useCallback, useMemo } from 'react';

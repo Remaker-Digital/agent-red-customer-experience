@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """
 Scheduled job: Archival pipeline (Cosmos DB → Blob Parquet).
 
@@ -9,7 +9,7 @@ then exits with code 0 (success) or 1 (errors encountered).
 Usage:
     python -m src.jobs.run_archival
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

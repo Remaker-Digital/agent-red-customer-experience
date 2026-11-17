@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * AnalyticsOverview - Analytics dashboard with summary cards, topic breakdown,
  * and knowledge gaps table.
@@ -11,7 +11,7 @@
  * Framework-agnostic React component — no Polaris, no Tailwind, pure inline styles.
  * Receives auth, API fetch, and notification callbacks from the shell.
  *
- * (c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * (c) 2026 Michael Palmeter. All rights reserved.
  */
 
 import React, { useMemo, useState } from 'react';

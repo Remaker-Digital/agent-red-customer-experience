@@ -4,7 +4,7 @@ Tests for detect_regression() and QualityRegressionAlert.
 8 tests covering: stable scores, threshold detection, configurable params,
 severity levels, edge cases, and alert data.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

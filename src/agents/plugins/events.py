@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """In-process invocation event bus (SPEC-1855).
 
 Provides a lightweight event bus for agent/skill invocation events.
@@ -8,7 +8,7 @@ by observability, audit, and billing subscribers.
 The bus is in-process only — no external messaging dependency.
 Subscribers receive events synchronously to ensure ordering guarantees.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

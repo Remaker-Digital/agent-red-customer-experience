@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 # Agent Red Customer Experience — Response Generator Agent
 #
 # Generates AI customer service responses using Azure OpenAI with SSE
@@ -19,7 +19,7 @@
 # the FastAPI app yields SSE chunks. The A2A handle_message() path returns
 # the full assembled response (non-streaming) for protocol compatibility.
 #
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 
 from __future__ import annotations
 

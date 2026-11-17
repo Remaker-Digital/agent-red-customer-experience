@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * TenantDirectory — Cross-tenant directory with filtering and pagination.
  *
@@ -11,7 +11,7 @@
  *   POST /api/superadmin/tenants         — create new tenant
  *   PATCH /api/superadmin/tenants/:id/expiry — set/clear/extend expiry
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import React, { useCallback, useEffect, useMemo, useState } from 'react';

@@ -1,11 +1,11 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * SkillBindingsTable — table of current skill bindings with add/delete.
  *
  * Shows each binding's skill ID, display name, mode, approval policy,
  * and enabled state. Delete action uses a confirm dialog.
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import React, { useState } from 'react';

@@ -1,4 +1,4 @@
-# (c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# (c) 2026 Michael Palmeter. All rights reserved.
 """Tests for audit log sanitizer (SPEC-1843 / WI-1615, WI-1616, WI-1617).
 
 Validates that the sanitizer:

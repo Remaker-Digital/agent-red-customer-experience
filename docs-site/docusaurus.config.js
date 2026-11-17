@@ -149,7 +149,7 @@ const config = {
             ],
           },
         ],
-        copyright: `\u00a9 ${new Date().getFullYear()} Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.`,
+        copyright: `\u00a9 ${new Date().getFullYear()} Michael Palmeter. All rights reserved.`,
       },
       mermaid: {
         theme: {light: 'base', dark: 'dark'},

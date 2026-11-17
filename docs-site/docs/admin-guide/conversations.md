@@ -147,4 +147,4 @@ A conversation is billable when the AI produces at least one response. Test, adm
 
 ---
 
-*© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.*
+*© 2026 Michael Palmeter. All rights reserved.*

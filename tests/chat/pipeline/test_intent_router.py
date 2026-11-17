@@ -3,7 +3,7 @@
 Tests for the deterministic execution-plan boundary that routes
 customer traffic after intent classification.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Knowledge Score Service — observable knowledge quality metrics (SPEC-1873).
 
 Computes a per-tenant knowledge quality score (0-100) from four factors:
@@ -11,7 +11,7 @@ Computes a per-tenant knowledge quality score (0-100) from four factors:
 Also provides gap detection and clustering for the unanswered-question
 review workflow.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

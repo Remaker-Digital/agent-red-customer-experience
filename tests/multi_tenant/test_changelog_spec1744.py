@@ -1,6 +1,6 @@
 """SPEC-1744 changelog deployed-version entry coverage.
 
-Copyright 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC.
+Copyright 2026 Michael Palmeter.
 All rights reserved.
 """
 

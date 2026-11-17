@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """
 MFA/TOTP service — RFC 6238 time-based one-time password authentication.
 
@@ -11,7 +11,7 @@ with the naming convention ``user-{team_member_id}-totp-seed``.
 MFA session tokens are JWTs signed with HS256 using a per-deployment
 secret from the MFA_JWT_SECRET environment variable.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

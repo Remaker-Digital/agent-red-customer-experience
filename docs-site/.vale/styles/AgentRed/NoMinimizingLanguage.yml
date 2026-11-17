@@ -2,7 +2,7 @@
 # Flags words that assume the reader's experience level.
 # Per Google Developer Documentation Style Guide.
 #
-# (c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# (c) 2026 Michael Palmeter. All rights reserved.
 
 extends: existence
 message: "Avoid minimizing language ('%s'). It assumes the reader's experience and can feel dismissive when they struggle."

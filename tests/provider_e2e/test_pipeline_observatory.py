@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """Provider SPA — Pipeline Observatory: tabs, period filter → API asserts."""
 
 import pytest

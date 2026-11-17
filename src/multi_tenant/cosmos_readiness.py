@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """SPEC-1833: Cosmos DB Health in Readiness Probe.
 
 Provides a cached, timeout-protected Cosmos DB connectivity check
@@ -7,7 +7,7 @@ to listing containers if the sentinel document is missing.
 
 Integrated into /ready via health.py.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

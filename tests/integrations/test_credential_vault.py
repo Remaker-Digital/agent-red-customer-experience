@@ -3,7 +3,7 @@
 Tests cover: initialization, store/get/delete credentials, rotation,
 DEK caching, per-tenant isolation, GDPR bulk delete, list credentials.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

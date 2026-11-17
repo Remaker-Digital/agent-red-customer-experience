@@ -1,10 +1,10 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * ArticleEditor — create / edit form for a single KB article.
  * Handles title, category (existing or new), status, content textarea,
  * save, and delete with confirmation.
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import React, { useState, useCallback } from 'react';

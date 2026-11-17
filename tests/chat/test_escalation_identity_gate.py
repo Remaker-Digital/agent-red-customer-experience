@@ -11,7 +11,7 @@ Also verifies:
 - escalation_sent is always True after successful escalation (repeat-suppression)
 - Customer-facing message adapts to identity channel (email vs phone)
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

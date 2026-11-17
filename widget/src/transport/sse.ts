@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * SSE transport — server→client AI response streaming.
  *
@@ -21,7 +21,7 @@
  *   post-stream. Rejection triggers 'retracted' event replacing displayed
  *   text with safe fallback. ~800ms exposure window at P50.
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import { getStore } from '@/state/store';

@@ -1,5 +1,5 @@
 # tests/unit/test_pre_auth_limiter.py: repeated failed sign-ins block the client IP
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 
 """
 Failed authentications were recorded against the client IP, but nothing ever checked the

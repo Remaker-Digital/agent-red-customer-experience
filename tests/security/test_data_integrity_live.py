@@ -9,7 +9,7 @@ Prerequisites: Production healthy, both tenants seeded.
 Run:
     PROD_URL=https://... python -m pytest tests/security/test_data_integrity_live.py -v
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

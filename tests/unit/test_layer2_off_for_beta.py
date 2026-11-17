@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """B6. Layer 2 search and conversation vectorization stay off for the beta."""
 
 from __future__ import annotations

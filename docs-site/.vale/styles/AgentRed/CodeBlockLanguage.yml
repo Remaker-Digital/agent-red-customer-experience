@@ -1,7 +1,7 @@
 # Code block language annotation
 # All fenced code blocks must specify a language for syntax highlighting.
 #
-# (c) 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# (c) 2026 Michael Palmeter. All rights reserved.
 
 extends: script
 message: "Code blocks must specify a language (e.g., ```python, ```bash, ```json)."

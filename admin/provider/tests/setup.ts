@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * Vitest setup for the provider admin console (WI-3221).
  *
@@ -6,7 +6,7 @@
  * browser-API shims Mantine needs under happy-dom (matchMedia, ResizeObserver,
  * scrollIntoView).
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import '@testing-library/jest-dom/vitest';

@@ -1,4 +1,4 @@
-# © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+# © 2026 Michael Palmeter. All rights reserved.
 """SSE connection management — keepalive, reconnection, tenant limits (WI #129/#131/#133).
 
 Manages Server-Sent Event connections for the chat streaming endpoint.
@@ -25,7 +25,7 @@ Architecture references:
     - Decision UI-5: SSE stream-then-validate
     - Decision #14: Per-tenant concurrency limits (reused for SSE)
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

@@ -7,7 +7,7 @@ KB CRUD through admin API, team listing, and GDPR export.
 
 Master Test Plan: §4 Gap Register — Shopify Compliance (1.0-required)
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

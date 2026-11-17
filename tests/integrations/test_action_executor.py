@@ -4,7 +4,7 @@ Tests cover: HITL policy evaluation, action submission with auto-approve and
 pending states, approval/rejection flow, dispatch routing, audit logging,
 rate limit handling, and tenant-level HITL overrides.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

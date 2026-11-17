@@ -1,4 +1,4 @@
-// © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+// © 2026 Michael Palmeter. All rights reserved.
 /**
  * Agent Red Design Tokens — TypeScript Constants & Style Factories
  *
@@ -15,7 +15,7 @@
  *   <div style={{ background: tokens.surface, color: tokens.textPrimary }}>
  *   <div style={dialog.overlay}>
  *
- * © 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+ * © 2026 Michael Palmeter. All rights reserved.
  */
 
 import type React from 'react';

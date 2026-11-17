@@ -10,7 +10,7 @@ The check is a lightweight static source read — same pattern as
 invariant that the GDPR consent flow is offered before any chat message can
 appear, regardless of any future Claude Design-driven refresh.
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations

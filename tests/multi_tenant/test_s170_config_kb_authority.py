@@ -5,7 +5,7 @@ Covers:
     WI-1230 / SPEC-1714: KB conflict scanner config cross-check
     WI-1231 / SPEC-1715: Admin UI models and endpoint for config conflict check
 
-© 2026 Remaker Digital, a DBA of VanDusen & Palmeter, LLC. All rights reserved.
+© 2026 Michael Palmeter. All rights reserved.
 """
 
 from __future__ import annotations
