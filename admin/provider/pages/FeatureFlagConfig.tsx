@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * FeatureFlagConfig — Feature flag management and evaluation.
  *
@@ -10,7 +11,8 @@
  *      GET  /api/superadmin/feature-flags/evaluate?flag=...&tenant_id=...
  *
  * WI-1429 / SPEC-1824
- * (c) 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import React, { useCallback, useEffect, useState } from 'react';

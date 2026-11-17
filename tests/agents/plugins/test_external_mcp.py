@@ -9,7 +9,8 @@ Tests cover:
   - Server status reporting
   - Audit logging
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

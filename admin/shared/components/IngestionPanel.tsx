@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * IngestionPanel — displays ingestion job progress and status.
  *
@@ -7,7 +8,8 @@
  * Shows the current/latest ingestion job status with progress bar,
  * article count, and cancel button for running jobs.
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import React from 'react';

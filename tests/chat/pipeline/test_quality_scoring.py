@@ -5,7 +5,8 @@ contract, and quality_aggregate computation at conversation end.
 
 Test plan ref: COMPREHENSIVE-TEST-PLAN-S245-S255.md Slice 10
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

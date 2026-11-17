@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Zendesk Helpdesk Adapter (SPEC-1775).
 
 Full HelpdeskAdapter + KnowledgeAdapter implementation for Zendesk.
@@ -14,7 +15,8 @@ Status mapping (Zendesk → normalized):
 Webhook events: ticket.created, ticket.updated
 Signature: HMAC-SHA256 via x-zendesk-webhook-signature
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

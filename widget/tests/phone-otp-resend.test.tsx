@@ -1,11 +1,12 @@
 /**
  * SPEC-1879 Phase 3 regression tests — phone OTP resend behavior.
  *
- * Covers two P2 findings from Codex advisory review:
+ * Covers two P2 findings from coding assistant advisory review:
  *   1. Resend cooldown must be gated on onResend() success (not unconditional).
  *   2. phoneSendFailed locale key must be present in all 8 locale packs.
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import { h } from 'preact';

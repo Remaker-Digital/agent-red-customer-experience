@@ -3,7 +3,8 @@
 Validates CRUD, batch ingestion, URL import, re-embedding, stats,
 and test query endpoints.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

@@ -1,5 +1,6 @@
 # tests/unit/test_pipeline_request_state.py: concurrent chat requests keep their own tenant state
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 
 """
 One ChatPipeline instance serves every chat request. ``execute`` stored the request's

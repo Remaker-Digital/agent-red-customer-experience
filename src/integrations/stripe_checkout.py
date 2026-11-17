@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """
 Stripe Checkout session management.
 
@@ -38,7 +39,8 @@ Endpoints:
     GET  /api/checkout/success  — Post-payment success landing
     GET  /api/checkout/cancel   — User-cancelled checkout landing
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

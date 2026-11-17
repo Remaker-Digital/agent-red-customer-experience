@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """
 Base repository classes and shared exceptions.
 
@@ -7,7 +8,8 @@ operation, making cross-tenant data access structurally impossible.
 
 Architecture reference: Decision #1 (TenantScopedRepository)
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

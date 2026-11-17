@@ -1,11 +1,13 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * SkillBindingsTable — table of current skill bindings with add/delete.
  *
  * Shows each binding's skill ID, display name, mode, approval policy,
  * and enabled state. Delete action uses a confirm dialog.
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import React, { useState } from 'react';

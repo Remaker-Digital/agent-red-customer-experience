@@ -1,4 +1,5 @@
-# (c) 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """WI-4572 regression: deploy FQDN routed through the deploy_config SoT (SPEC-1882).
 
 SPEC-1882 declares ``scripts/deploy_config.py`` the single source of truth for

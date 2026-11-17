@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Campaigns Agent — Marketing Campaign Information MCP Server (SPEC-1707).
 
 Provides campaign-aware tools for the AI pipeline: active campaigns,
@@ -6,7 +7,8 @@ discount codes, talking points, and conversation metrics tracking.
 
 Integrations: Shopify Marketing, Mailchimp, Klaviyo, etc.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

@@ -2,7 +2,8 @@
  * KBStatusBadge — displays a colored pill badge for a KB article's status
  * (Draft / Published / Archived).
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import React from 'react';

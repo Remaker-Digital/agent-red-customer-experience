@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * Agent Red Customer Experience — Standalone admin build configuration.
  *
@@ -10,7 +11,8 @@
  * which intercepts all /api/* requests with in-memory fixture data.
  * Zero backend dependency, full HMR support.
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import { defineConfig } from 'vite';

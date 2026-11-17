@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 # Agent Red Customer Experience — Intent Classification Agent
 #
 # Classifies customer messages into one of 17 intent categories using
@@ -13,7 +14,8 @@
 #   {"intent": str, "confidence": float, "model": str,
 #    "tokens_input": int, "tokens_output": int}
 #
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 
 from __future__ import annotations
 

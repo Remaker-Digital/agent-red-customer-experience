@@ -6,7 +6,8 @@ Covers:
     - Cosmos persistence (SPEC-1588): persist before email
     - Contact repo wiring (configure_contact_repo)
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

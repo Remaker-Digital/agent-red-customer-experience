@@ -1,5 +1,6 @@
 # tests/unit/test_orchestrator_customer_name.py: S22, the stored profile name leaves the model text
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 
 """Decision 16. ChatPipeline.execute() is the path under test.
 

@@ -1,7 +1,8 @@
 // @ts-nocheck
 /**
  * Provider dashboard fixture — system health + tenant summary.
- * (c) 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 export function createDashboardFixture() {
   return {

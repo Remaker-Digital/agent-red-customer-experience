@@ -3,7 +3,8 @@
 Tests the HMAC-SHA256 identity verification in
 src/multi_tenant/shopify_customer_verification.py.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

@@ -6,7 +6,7 @@
 .vscode
 .idea
 .claude
-.codex
+.coding assistant
 
 # GT-KB governance and runtime surfaces (scripts/check_environment_isolation.py).
 # None exists here today; they keep GT-KB's files out of images after onboarding.

@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """MCP client for external tool server integration (AGNTCY Phase 3).
 
 All MCP connections route through ``AgntcyFactory.create_client("MCP", ...)``
@@ -26,7 +27,8 @@ Usage via AGNTCY factory::
         tools = await session.list_tools()
         result = await session.call_tool("search_products", {"query": "..."})
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

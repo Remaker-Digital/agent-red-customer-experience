@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * Panel — the main conversation panel rendered inside an iframe.
  *
@@ -16,7 +17,8 @@
  * Architecture (Decision UI-3): iframe for full DOM isolation.
  * Same approach as Zendesk.
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import { FunctionComponent } from 'preact';

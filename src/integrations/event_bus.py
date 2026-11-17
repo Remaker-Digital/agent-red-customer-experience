@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Internal Integration Event Bus (SPEC-1778).
 
 Fire-and-forget event bus for integration lifecycle events.  Handlers
@@ -13,7 +14,8 @@ Event taxonomy:
 Uses asyncio background tasks.  Compatible with Redis pub/sub for
 cross-replica broadcasting (future enhancement).
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

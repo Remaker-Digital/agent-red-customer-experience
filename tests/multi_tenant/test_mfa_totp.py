@@ -11,7 +11,8 @@ Validates:
     - MfaTotpService enrollment, confirmation, verification, backup, disable flows
     - Module-level singleton lifecycle
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

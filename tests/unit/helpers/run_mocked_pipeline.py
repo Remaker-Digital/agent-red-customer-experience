@@ -14,7 +14,8 @@ Usage (from project root):
 
 All argv after the mode token are forwarded verbatim to deploy_pipeline's argparse.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * PreChatForm — collects customer information before starting a chat.
  *
@@ -16,7 +17,8 @@
  * Visual reference: Zapier (form layouts, input styling, spacing).
  * Functional reference: Tidio (pre-chat form fields, validation).
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import { FunctionComponent } from 'preact';

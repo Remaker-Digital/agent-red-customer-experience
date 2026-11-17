@@ -1,6 +1,7 @@
 """Google Docs/Drive Integration — Knowledge Source Adapter (SPEC-1777).
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from src.integrations.google_docs.adapter import GoogleDocsAdapter

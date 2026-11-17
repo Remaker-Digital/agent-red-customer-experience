@@ -1,5 +1,6 @@
 # tests/unit/test_widget_key_scope.py: what the public widget key may do
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 
 """
 The widget key (``pk_live_...``) is embedded in storefront pages, so anyone can

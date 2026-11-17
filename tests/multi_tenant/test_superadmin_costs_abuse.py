@@ -6,7 +6,8 @@ Verifies:
 - Tenant flag toggle works correctly
 - Response models serialize with camelCase
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

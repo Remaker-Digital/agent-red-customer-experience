@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 # Agent Red Customer Experience — Critic/Supervisor Agent
 #
 # Validates AI-generated responses for safety (fail-closed gate).
@@ -16,7 +17,8 @@
 #    "modified_response": str|null, "block_reason": str|null,
 #    "model": str, "latency_ms": float}
 #
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 
 from __future__ import annotations
 

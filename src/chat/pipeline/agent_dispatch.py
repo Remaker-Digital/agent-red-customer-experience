@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Agent dispatch mixin — IC, KR, and RG agent call methods.
 
 Provides intent classification, knowledge retrieval, and response
@@ -15,7 +16,8 @@ by default) IC, KR and co-pilot run in-process instead, and a failure raises
 InProcessAgentError (in_process.py).
 
 R10 refactoring — extracted from pipeline.py (session 39).
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

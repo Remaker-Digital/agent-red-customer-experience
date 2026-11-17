@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """
 E2E fixtures for the Shopify embedded admin SPA (`admin/shopify`).
 
@@ -14,7 +15,8 @@ while still hitting the Vite mock middleware.
 
 Live Shopify production paths remain under ``tests/e2e_live/shopify/`` (ADO-excluded).
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

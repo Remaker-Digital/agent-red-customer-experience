@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Cloud-native verification runner for SPA-triggered E2E testing (SPEC-1846).
 
 Executes HTTP-based verification checks against a live deployment entirely
@@ -16,7 +17,8 @@ SPEC-1845: All credentials are passed at runtime — no hardcoded keys.
 SPEC-1673: Uses HMAC verification tokens — no Cosmos dependency for auth.
 SPEC-1846: Tokens are signed with INTERNAL_VERIFICATION_SECRET (auto-generated).
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

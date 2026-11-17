@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Tests for Pillar 1: Envelope Encryption Service (SPEC-1843).
 
 WI-1624: EnvelopeEncryptionService — encrypt/decrypt with AES-256-GCM

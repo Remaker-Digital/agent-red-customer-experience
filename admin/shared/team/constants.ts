@@ -1,11 +1,13 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * TeamManager constants — role definitions, color palettes, status display.
  *
  * Extracted from TeamManager.tsx to reduce monolith size. These constants are
  * consumed by sub-components (InviteForm, TeamMemberRow, RoleTooltip, etc.).
  *
- * (c) 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import type { ThemePalette, RoleDef } from './types';

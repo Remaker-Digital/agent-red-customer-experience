@@ -4,7 +4,8 @@ Verifies that reverse proxy headers (Cloudflare CF-Connecting-IP,
 generic X-Forwarded-For) are correctly extracted and applied to
 the ASGI scope so downstream middleware sees the real client IP.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations
@@ -271,7 +272,7 @@ class TestXForwardedForMode:
 
     @pytest.mark.asyncio
     async def test_client_supplied_entries_are_ignored(self):
-        """A caller who prepends a fresh address per request cannot change its key (Codex review of #143)."""
+        """A caller who prepends a fresh address per request cannot change its key (coding assistant review of #143)."""
         for spoofed in ("6.6.6.6", "7.7.7.7", "198.51.100.200"):
             scope = _make_scope(
                 client=("10.0.0.1", 12345),

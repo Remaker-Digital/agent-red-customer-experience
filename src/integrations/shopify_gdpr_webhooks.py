@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Shopify GDPR mandatory webhook handlers (WI #35).
 
 Shopify requires all apps to implement three GDPR webhook endpoints before
@@ -23,7 +24,8 @@ Authentication:
 Shopify GDPR webhook reference:
     https://shopify.dev/docs/apps/build/privacy-law-compliance
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

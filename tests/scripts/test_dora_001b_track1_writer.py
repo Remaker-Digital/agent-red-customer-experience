@@ -6,10 +6,11 @@ does the manifest write site inject the block under the right conditions
 (non-empty phase_timings only, excluding dry-run mode)?
 
 Created 2026-04-28 (S319) per
-`bridge/gtkb-dora-001b-track1-implementation-006.md` Codex GO.
+`bridge/gtkb-dora-001b-track1-implementation-006.md` coding assistant GO.
 Implementation contract: `bridge/gtkb-dora-001b-track1-implementation-005.md`.
 
-(c) 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations
@@ -105,7 +106,7 @@ def test_phase_8_target_update_succeeded_false_when_az_returncode_nonzero() -> N
     assert not result.passed
     assert args._deploy_evidence["target_update_attempted"] is True
     assert args._deploy_evidence["target_update_succeeded"] is False
-    # Phase timing recorded on failure path (Codex GO -006 condition 2)
+    # Phase timing recorded on failure path (coding assistant GO -006 condition 2)
     assert "phase_9_deploy" in args._deploy_evidence["phase_timings"]
 
 
@@ -382,7 +383,7 @@ def test_main_emits_manifest_with_deploy_evidence_block(tmp_path: Path) -> None:
 def test_dry_run_does_not_populate_evidence(tmp_path: Path) -> None:
     """T13: dry-run mode produces a manifest WITHOUT deploy_evidence block.
 
-    Codex GO -006 condition 1: dry runs must not emit meaningful
+    coding assistant GO -006 condition 1: dry runs must not emit meaningful
     deploy_evidence just because `args._deploy_evidence` is truthy.
     """
     fake_args = argparse.Namespace(env="staging", version="v1.99.0", dry_run=True, approved=False)
@@ -397,6 +398,6 @@ def test_dry_run_does_not_populate_evidence(tmp_path: Path) -> None:
     manifests = list((tmp_path / "logs").glob("deploy-result-staging-*.json"))
     assert len(manifests) == 1
     body = json.loads(manifests[0].read_text())
-    # Per Codex condition 1: dry-run produces manifest without deploy_evidence
+    # Per coding assistant condition 1: dry-run produces manifest without deploy_evidence
     assert "deploy_evidence" not in body
     assert body["dry_run"] is True

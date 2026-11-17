@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * Shared TypeScript types for the Admin component library.
  *
@@ -6,7 +7,8 @@
  * (Shopify embedded + Standalone). Framework-agnostic — no Polaris or
  * shell-specific dependencies.
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 // ---------------------------------------------------------------------------

@@ -1,4 +1,5 @@
-# (C) 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """SPEC-1706 mock E2E tests for StandaloneLayout.
 
 Tests the layout chrome (header, sidebar nav, footer, onboarding wizard,

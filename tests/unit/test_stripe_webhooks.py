@@ -7,7 +7,8 @@ Covers: stripe_webhook endpoint, signature verification, idempotency,
         invoice.payment_succeeded/failed/finalization_failed),
         _is_duplicate, _check_stripe_ip.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

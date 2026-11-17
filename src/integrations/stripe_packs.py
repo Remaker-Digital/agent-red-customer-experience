@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """
 Conversation pack purchase and balance management.
 
@@ -28,7 +29,8 @@ Endpoints:
     POST /api/packs/purchase             — Create a checkout session for a pack
     GET  /api/packs/balance/{customer_id} — Check remaining pack balance
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

@@ -19,7 +19,8 @@ Run with:
     pytest tests/e2e/test_widget_preview_display_values.py -v --headed
     pytest tests/e2e/test_widget_preview_display_values.py -v
 
-(c) 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 import pytest

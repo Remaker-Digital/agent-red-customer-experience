@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Polling Scheduler & Cursor Management (SPEC-1767).
 
 Background polling scheduler for integrations that use polling or hybrid
@@ -15,7 +16,8 @@ Strategies:
   - full: Daily full sweep, ignores cursor.
   - hybrid: Webhook primary + periodic poll for verification/catch-up.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

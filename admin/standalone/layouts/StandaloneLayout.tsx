@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * StandaloneLayout — Mantine AppShell with sidebar navigation.
  *
@@ -13,7 +14,8 @@
  * Four-tier dark mode hierarchy (designer-approved):
  *   chrome #0c0a09 → page #1c1917 → surface #292524 → border #44403c
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
@@ -1065,10 +1067,11 @@ export const StandaloneLayout: React.FC<StandaloneLayoutProps> = ({
                 v{productVersion || '...'}
               </Text>
               <Text size="xs" c="dimmed" ta="center" lh={1.4} mt={4} style={{ opacity: 0.7, fontSize: 10 }}>
-                {String.fromCodePoint(0x00A9)} 2026 Michael Palmeter.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
               </Text>
               <Text size="xs" c="dimmed" ta="center" lh={1.4} style={{ opacity: 0.7, fontSize: 10 }}>
-                All rights reserved.
+                MIT License.
               </Text>
             </Box>
           </AppShell.Section>

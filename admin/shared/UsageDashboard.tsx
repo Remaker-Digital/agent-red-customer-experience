@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * UsageDashboard — Real-time billing usage dashboard.
  *
@@ -29,7 +30,8 @@
  *                  ConversationSummary, PaginatedList
  *   - ../hooks  — useUsageDashboard, useDailyVolume, useConversationList
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import React, { useState, useCallback, useMemo } from 'react';

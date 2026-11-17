@@ -1,6 +1,6 @@
 {
   "name": "@agent-red/admin-provider",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "version": "1.0.0",
   "private": true,
   "description": "Agent Red Customer Experience — Provider admin console (platform operator / SPA)",

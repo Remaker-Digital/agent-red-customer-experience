@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * BillingPortal — Subscription, usage, and billing management component.
  *
@@ -27,7 +28,8 @@
  *   - Decision #24: Billable conversation definition
  *   - UI-UX-ARCHITECTURE-DECISIONS.md section 7: BillingPortal spec
  *
- * (c) 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import React, { useState, useMemo } from 'react';

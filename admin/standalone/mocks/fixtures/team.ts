@@ -1,7 +1,8 @@
 // @ts-nocheck
 /**
  * Team fixture — team members with roles and escalation categories.
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 export function createTeamFixture() {

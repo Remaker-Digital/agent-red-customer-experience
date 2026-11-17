@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Migration runner for Agent Red schema migrations.
 
 Discovers migration modules in src/migrations/, tracks applied migrations
@@ -22,7 +23,8 @@ Manual apply (scripts/apply_migrations.py):
     runner = MigrationRunner(cosmos_manager)
     results = await runner.apply_all()
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

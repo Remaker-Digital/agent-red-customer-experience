@@ -140,4 +140,5 @@ In-progress conversations continue using the configuration that was active when 
 
 ---
 
-*© 2026 Michael Palmeter. All rights reserved.*
+<!-- Copyright (c) 2026 Michael Palmeter -->
+<!-- SPDX-License-Identifier: MIT -->

@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * ApiKeyLogin — Authentication gate for standalone admin.
  *
@@ -10,7 +11,8 @@
  *
  * Migrated to Mantine components (Cycle 10, item 10e).
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import React, { useState, useCallback, useMemo, useEffect } from 'react';

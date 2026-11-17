@@ -1,6 +1,7 @@
 """Shared tenant tier utilities (SPEC-1879).
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * AgentManager — two-panel orchestrator for tenant agent lifecycle.
  *
@@ -11,7 +12,8 @@
  *
  * Responsive: collapses to single pane below 768px.
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import React, { useState, useEffect, useCallback } from 'react';

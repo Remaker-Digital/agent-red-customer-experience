@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 // The email link and the 6-digit code share this next step.
 // Plain JavaScript so the unit test runs on Node 20.
 

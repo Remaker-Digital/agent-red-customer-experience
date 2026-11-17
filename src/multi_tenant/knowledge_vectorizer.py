@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Knowledge Base vectorization and hybrid retrieval pipeline.
 
 Work Items #209-213 (Decision RAG-1): Enterprise-grade RAG for the
@@ -25,7 +26,8 @@ Dependencies:
     - repository.py: KnowledgeBaseRepository (vector_search, list_unembedded)
     - openai: AsyncAzureOpenAI (text-embedding-3-large)
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

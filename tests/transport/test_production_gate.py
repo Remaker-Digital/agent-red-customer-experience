@@ -13,10 +13,11 @@ Gate criteria (the original transport analysis Phase 5):
 5. MCP exception register is empty or explicitly approved
 6. KB/spec state reflects the real deployed architecture
 
-Codex GO: the original transport analysis.
+coding assistant GO: the original transport analysis.
 Governing decisions: ADR-001, DCL-002 v4, DCL-003, GOV-16.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

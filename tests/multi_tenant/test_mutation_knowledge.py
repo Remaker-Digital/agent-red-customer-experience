@@ -4,7 +4,8 @@ Tests: CRUD, bulk operations, file upload, URL import, verify, conflict scan,
 config-vs-KB scan.
 All endpoints require tenant admin authentication.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

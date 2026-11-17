@@ -8,7 +8,8 @@ Verifies:
 - Co-pilot container entry point exists and is configured correctly
 - deploy_agent_containers.py script defines all 7 agents
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

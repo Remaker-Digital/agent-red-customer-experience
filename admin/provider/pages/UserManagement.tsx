@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * UserManagement — SPA platform admin user management page (SPEC-1675).
  *
@@ -10,7 +11,8 @@
  *      POST /api/superadmin/platform-admin/users/backup-codes
  *      PUT  /api/superadmin/platform-admin/users/notification-email
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import React, { useCallback, useEffect, useState } from 'react';

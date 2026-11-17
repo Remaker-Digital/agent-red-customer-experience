@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """A Shopify redact webhook is acknowledged only when the request was carried out.
 
 Shopify retries a webhook that does not get a 2xx answer. Before this change

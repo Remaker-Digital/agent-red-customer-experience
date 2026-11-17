@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * SPEC-1586 Pipeline Observatory — Agent Metrics tab coverage (WI-3222).
  *
@@ -12,7 +13,8 @@
  * (a thrown/rejected fetch). A resolved `{ ok: false }` response renders the
  * empty state WITHOUT notifying — distinct from the sibling `TrafficFlowTab`.
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import { describe, it, expect, vi, beforeEach } from 'vitest';

@@ -11,7 +11,8 @@ Covers:
     - Edge cases (empty KB, single entry, no embeddings, cache behaviour)
     - Module-level singleton
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 import time

@@ -5,7 +5,8 @@ with Cosmos-backed storage.
 
 These tests use mocked Cosmos containers (no live Azure dependency).
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations
@@ -71,7 +72,7 @@ class TestCollectionRegistration:
         assert binding_cfg.partition_key == "/tenant_id"
 
     def test_overlay_narrow_indexing_excludes_blobs(self):
-        """Codex Finding 5: overlay blobs excluded from indexing."""
+        """coding assistant Finding 5: overlay blobs excluded from indexing."""
         from src.multi_tenant.cosmos_schema import get_collection_configs
         configs = get_collection_configs()
         overlay_cfg = next(c for c in configs if c.name == COLLECTION_AGENT_OVERLAYS)
@@ -84,7 +85,7 @@ class TestCollectionRegistration:
         assert "/enabled/?" in included
 
     def test_binding_narrow_indexing(self):
-        """Codex Finding 5: binding indexing only covers queried fields."""
+        """coding assistant Finding 5: binding indexing only covers queried fields."""
         from src.multi_tenant.cosmos_schema import get_collection_configs
         configs = get_collection_configs()
         binding_cfg = next(c for c in configs if c.name == COLLECTION_AGENT_BINDINGS)
@@ -110,7 +111,7 @@ class TestOverlayRepository:
         assert repo._collection_name == COLLECTION_AGENT_OVERLAYS
 
     def test_document_model_uses_agent_id_as_id(self):
-        """Codex answer: overlay.id = agent_id."""
+        """coding assistant answer: overlay.id = agent_id."""
         doc = TenantAgentOverlayDocument(
             id="campaigns",
             tenant_id="t-1",
@@ -141,7 +142,7 @@ class TestBindingRepository:
         assert repo._collection_name == COLLECTION_AGENT_BINDINGS
 
     def test_document_model_uses_skill_id_as_id(self):
-        """Codex Finding 3: binding.id = skill_id."""
+        """coding assistant Finding 3: binding.id = skill_id."""
         doc = AgentSkillBindingDocument(
             id="campaigns:list-active",
             tenant_id="t-1",
@@ -160,7 +161,7 @@ class TestBindingRepository:
 
 
 class TestCacheInvalidation:
-    """Codex Finding 1: write-path invalidation is mandatory."""
+    """coding assistant Finding 1: write-path invalidation is mandatory."""
 
     def test_binding_service_invalidate_clears_tenant(self):
         svc = SkillBindingService.get_instance()
@@ -212,7 +213,7 @@ class TestCacheInvalidation:
 
 
 class TestSyncAsyncContract:
-    """Codex Finding 2: runtime reads remain synchronous."""
+    """coding assistant Finding 2: runtime reads remain synchronous."""
 
     def test_get_binding_is_synchronous(self):
         """Runtime read methods are not coroutines."""
@@ -280,7 +281,7 @@ class TestBindingApiWiring:
 
 
 class TestCustomMetadataGuardrails:
-    """Codex Finding 4: custom_metadata validated against allowed keys + shapes."""
+    """coding assistant Finding 4: custom_metadata validated against allowed keys + shapes."""
 
     @pytest.mark.asyncio
     async def test_overlay_repo_strips_unknown_metadata_keys(self):
@@ -385,7 +386,7 @@ class TestCustomMetadataGuardrails:
 
 
 class TestBindingHydration:
-    """Codex P1: Binding cache must be hydrated from Cosmos before sync reads."""
+    """coding assistant P1: Binding cache must be hydrated from Cosmos before sync reads."""
 
     @pytest.mark.asyncio
     async def test_load_tenant_bindings_populates_cache(self):
@@ -665,7 +666,7 @@ class TestBehavioralColdCache:
 
 
 class TestAsyncBoundaryHydration:
-    """Codex P2 caveat: tests must exercise the actual async boundary functions,
+    """coding assistant P2 caveat: tests must exercise the actual async boundary functions,
     not just manually call load_tenant_bindings.
 
     These tests call the real async boundary code (agent_dispatch, admin API)

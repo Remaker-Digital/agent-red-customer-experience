@@ -3,7 +3,8 @@
 Verifies that the platform seeds 8 default alert rules at startup,
 each with severity and cooldown, stored in platform_config.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 from __future__ import annotations
 

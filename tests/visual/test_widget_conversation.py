@@ -11,7 +11,8 @@ PR #173). No azure-pipelines.yml change required on develop tip.
 Run:
     pytest tests/visual/test_widget_conversation.py -v
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

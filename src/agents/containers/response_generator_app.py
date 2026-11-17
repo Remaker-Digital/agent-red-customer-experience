@@ -1,11 +1,13 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 # Agent Red — Response Generator Container Entry Point
 #
 # Run: uvicorn src.agents.containers.response_generator_app:app --port 8083
 #
 # This container has an additional SSE streaming endpoint: /generate/stream
 #
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 
 from __future__ import annotations
 

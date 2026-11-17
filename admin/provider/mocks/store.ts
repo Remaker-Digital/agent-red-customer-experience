@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 // @ts-nocheck
 /**
  * Mock data store — Provider admin console.
@@ -6,7 +7,8 @@
  * In-memory mutable state for all mock API handlers.
  * Initialized from fixture files on server start.
  *
- * (c) 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import { createDashboardFixture } from './fixtures/dashboard';

@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * SSE transport — server→client AI response streaming.
  *
@@ -21,7 +22,8 @@
  *   post-stream. Rejection triggers 'retracted' event replacing displayed
  *   text with safe fallback. ~800ms exposure window at P50.
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import { getStore } from '@/state/store';

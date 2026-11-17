@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """NL agent name extraction for peer agent escalation (SPEC-1864).
 
 Extracts agent names from natural language messages like "transfer to sales"
@@ -8,7 +9,8 @@ matching against the plugin registry.
 Used as a fallback in IntentRouter after exact intent matching fails.
 Conservative: high threshold (0.75), PEER agents only, no false positives.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

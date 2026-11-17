@@ -7,7 +7,8 @@ Covers:
     - list_conversations with repo=None (empty list)
     - get_conversation_detail (delegates to meter)
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

@@ -3,7 +3,8 @@
  *
  * Uses @storybook/preact-vite for the Preact widget components.
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 import type { StorybookConfig } from '@storybook/preact-vite';
 import { resolve } from 'path';

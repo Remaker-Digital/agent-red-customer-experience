@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """
 Standalone Admin SPA — production merchant admin (password-gated).
 
@@ -9,7 +10,8 @@ ADMIN_PREVIEW_PASSWORD environment variable on the Container App.
 After passing the password gate, merchants sign in with their API key
 inside the SPA for tenant-scoped access to all admin features.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """In-process agents for the RC-11 single-container beta mode.
 
 When SINGLE_CONTAINER_MODE is on (constants.single_container_mode), agents run

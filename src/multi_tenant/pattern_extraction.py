@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """PatternExtractionService — Layer 3 cross-session behavioral pattern learning.
 
 Work Items #90-92 (Decision #30): Post-conversation analysis to extract,
@@ -45,7 +46,8 @@ Dependencies:
     - cosmos_schema.py: ConsentStatus, TenantTier, TIER_DEFAULTS
     - No new pip packages required
 
-(c) 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

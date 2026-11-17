@@ -1,11 +1,13 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Log retention policy and archival (SPEC-1837).
 
 Enforces configurable retention periods for audit logs, API key usage records,
 and alert history. Expired records are archived to Azure Blob Storage (Cool tier)
 in NDJSON format before deletion.
 
-(c) 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 from __future__ import annotations
 

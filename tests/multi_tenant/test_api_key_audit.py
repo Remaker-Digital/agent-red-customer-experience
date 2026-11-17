@@ -3,7 +3,8 @@
 Verifies that every authenticated request logs auth_method, key_suffix,
 endpoint, status, and client IP — buffered in memory and flushed to Cosmos.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 from __future__ import annotations
 

@@ -1,4 +1,5 @@
-# Copyright 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Public widget origins through the composed application."""
 
 from __future__ import annotations
@@ -200,7 +201,7 @@ def test_trusted_origin_keeps_credentialed_cors(app_client):
 
 
 def test_the_widget_canary_can_send_an_origin(monkeypatch):
-    """A canary tenant that restricts origins would fail every check without one (Codex review of #139)."""
+    """A canary tenant that restricts origins would fail every check without one (coding assistant review of #139)."""
     import src.jobs.run_widget_canary as canary
 
     captured = {}
@@ -244,7 +245,7 @@ def test_an_empty_canary_origin_sends_no_origin_header(monkeypatch, value):
 
 
 def test_the_canary_job_definition_passes_every_setting_the_canary_reads():
-    """terraform/scaling_profiles.tf must pass each CANARY_* variable run_widget_canary reads (Codex review of #139)."""
+    """terraform/scaling_profiles.tf must pass each CANARY_* variable run_widget_canary reads (coding assistant review of #139)."""
     import re
     from pathlib import Path
 

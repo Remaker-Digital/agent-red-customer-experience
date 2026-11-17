@@ -113,4 +113,5 @@ After your first week of live traffic, review quick action performance:
 
 ---
 
-*© 2026 Michael Palmeter. All rights reserved.*
+<!-- Copyright (c) 2026 Michael Palmeter -->
+<!-- SPDX-License-Identifier: MIT -->

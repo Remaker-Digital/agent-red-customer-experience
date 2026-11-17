@@ -1,5 +1,6 @@
 # tests/unit/test_single_use_token_consumption.py: one winner per single-use token
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 
 """
 Review S13 (docs/agent-red-architecture-review.md): single-use tokens could be

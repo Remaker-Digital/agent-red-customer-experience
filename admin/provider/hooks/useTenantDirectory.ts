@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * useTenantDirectory — Shared hook that caches the tenant directory for
  * human-readable tenant identification across all Provider Console pages.
@@ -6,7 +7,8 @@
  * SPEC-1881: Uses display_name from the API for friendly tenant labels.
  * Falls back to tenantId only when display_name is not set.
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import { useCallback, useEffect, useRef, useState } from 'react';

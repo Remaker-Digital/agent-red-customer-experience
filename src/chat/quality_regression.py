@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """CQ-4: Automated quality regression detection (SPEC-0183).
 
 Monitors conversation quality scores over time and detects statistically
@@ -13,7 +14,8 @@ Severity levels:
 Integrates with the default alert rules engine (SPEC-1831) for
 notification delivery.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

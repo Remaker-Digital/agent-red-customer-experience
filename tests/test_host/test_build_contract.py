@@ -1,5 +1,6 @@
 # tests/test_host/test_build_contract.py â€” AI Software Quality Prevention Tests
-# Â© 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 #
 # 7 test classes that catch the 7 systematic failure modes identified in S209
 # for AI-generated software. Each class validates cross-layer consistency

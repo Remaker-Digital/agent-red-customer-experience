@@ -1,7 +1,8 @@
 # Code block language annotation
 # All fenced code blocks must specify a language for syntax highlighting.
 #
-# (c) 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 
 extends: script
 message: "Code blocks must specify a language (e.g., ```python, ```bash, ```json)."

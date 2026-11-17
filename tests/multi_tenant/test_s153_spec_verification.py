@@ -20,7 +20,8 @@ Specs verified:
     SPEC-1647: Service messages — email format and sender identity
     SPEC-1648: Service messages — BCC delivery with recipient privacy
 
-(c) 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

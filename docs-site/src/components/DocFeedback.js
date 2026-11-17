@@ -7,7 +7,8 @@
  * Usage: Add <DocFeedback /> at the bottom of any doc page, or integrate
  * into the DocItem footer via Docusaurus theme swizzling.
  *
- * (c) 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import React, { useState } from 'react';

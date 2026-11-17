@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Admin Agent Marketplace API — browse and install peer agents (SPEC-1865).
 
 Provides REST endpoints for the merchant admin dashboard's Agent Marketplace:
@@ -11,7 +12,8 @@ Only peer agents are shown (core pipeline agents are infrastructure).
 Install is best-effort: overlay + read-skill bindings across two Cosmos
 collections. On partial failure, compensating cleanup removes artifacts.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations
@@ -296,7 +298,7 @@ async def uninstall_agent(
 
     # Remove all bindings for this agent — fail-closed:
     # if any binding deletion fails, abort before removing the overlay
-    # to prevent residual routability (Codex P1).
+    # to prevent residual routability (coding assistant P1).
     bindings = await binding_repo.list_bindings(ctx.tenant_id, agent_id=agent_id)
     removed = 0
     failed_skills: list[str] = []

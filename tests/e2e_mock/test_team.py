@@ -1,4 +1,5 @@
-# (C) 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Team page E2E tests against the mock Vite dev server.
 
 Tests cover: member table display, invite form CRUD, role changes, active/inactive

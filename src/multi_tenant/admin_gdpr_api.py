@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Admin GDPR API — data export, deletion, and consent management (WI #180).
 
 Provides REST endpoints for the merchant admin dashboard's Settings page
@@ -24,7 +25,8 @@ Dependencies:
       ConsentManager, DataStoreRegistry, GracePeriodActiveError
     - middleware.py: get_tenant_context, TenantContext
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

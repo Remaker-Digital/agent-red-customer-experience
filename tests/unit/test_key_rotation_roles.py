@@ -1,5 +1,6 @@
 # tests/unit/test_key_rotation_roles.py: only admins rotate keys, and the response is truthful
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 
 """
 ``POST /api/keys/rotate`` and ``/api/keys/rotate-widget-key`` checked only that some
@@ -97,7 +98,7 @@ def _session_request(team_member_id):
 
 
 async def test_a_member_session_without_a_role_cannot_rotate_keys():
-    """A magic-link sign-in whose member lookup failed carries a member id but no role (Codex review)."""
+    """A magic-link sign-in whose member lookup failed carries a member id but no role (coding assistant review)."""
     from fastapi import HTTPException
 
     from src.multi_tenant.security_hardening import _require_key_manager

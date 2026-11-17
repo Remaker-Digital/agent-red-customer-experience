@@ -1,7 +1,8 @@
 // @ts-nocheck
 /**
  * Dashboard / Analytics handlers.
- * (c) 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 import { GET } from "../router";
 import { getStore } from "../store";

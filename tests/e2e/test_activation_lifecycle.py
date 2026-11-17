@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Activation lifecycle E2E — Activate / Deactivate / Restore via sidebar UI.
 
 Strong UI→API coverage against Playwright route mocks (AdminApiMocker):

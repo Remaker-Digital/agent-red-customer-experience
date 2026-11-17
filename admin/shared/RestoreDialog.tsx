@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * RestoreDialog — Confirmation modal for restoring the previous activation snapshot.
  *
@@ -16,7 +17,8 @@
  *   - activeVersion   — current active version number
  *   - activeActivatedAt — current active activation timestamp (ISO 8601)
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import React, { useCallback, useState } from 'react';

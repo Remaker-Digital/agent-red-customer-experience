@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Decision 94 preflight reads stored fields and returns aggregate counts."""
 
 from __future__ import annotations

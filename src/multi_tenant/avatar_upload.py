@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """
 Avatar upload endpoint — D22 capability.
 
@@ -9,7 +10,8 @@ Routes:
     POST /api/admin/avatar/upload — Upload avatar image (PNG/JPEG, max 256KB)
     DELETE /api/admin/avatar       — Remove avatar (reset to default)
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * ContactMessages — Provider Console page for contact message management.
  *
@@ -11,7 +12,8 @@
  *      PATCH  /api/superadmin/contact-messages/{id}
  *      GET    /api/superadmin/contact-messages/export
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import React, { useEffect, useState, useCallback } from 'react';

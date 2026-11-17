@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * ProtectedRoute — Role-based route guard for standalone admin.
  *
@@ -13,7 +14,8 @@
  * If userRole is null (still loading), renders nothing to avoid flash.
  * If userRole doesn't match allowedRoles, redirects to /inbox.
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import React from 'react';

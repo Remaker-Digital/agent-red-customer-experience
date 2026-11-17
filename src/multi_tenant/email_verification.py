@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Email verification endpoints.
 
 Provides endpoints to request and confirm email verification for
@@ -9,7 +10,8 @@ Endpoints:
     POST /api/auth/verify-email/request  — Send verification email (public)
     GET  /api/auth/verify-email/confirm  — Confirm token and mark verified
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

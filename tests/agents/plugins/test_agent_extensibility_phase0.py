@@ -3,7 +3,8 @@
 Tests for canonical agent identity, stable skill identity, tenant agent
 overlay, and invocation event contracts.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations
@@ -473,7 +474,7 @@ class TestInvocationEvent:
 
 
 # ---------------------------------------------------------------------------
-# Topology consistency (Codex P2 finding: no hard-coded agent lists)
+# Topology consistency (coding assistant P2 finding: no hard-coded agent lists)
 # ---------------------------------------------------------------------------
 
 
@@ -502,7 +503,7 @@ class TestTopologyConsistency:
 
 
 # ---------------------------------------------------------------------------
-# prompt_overrides non-operative marking (Codex P2 finding)
+# prompt_overrides non-operative marking (coding assistant P2 finding)
 # ---------------------------------------------------------------------------
 
 

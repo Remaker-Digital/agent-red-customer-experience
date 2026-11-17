@@ -1,8 +1,9 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Superadmin API -- Test pipeline trigger and diagnostic data export.
 
 Domain sub-module for SPEC-1826 (SPA Test Execution Trigger) and
-SPEC-1827 (Diagnostic Data Export for Claude Code). Endpoints are registered
+SPEC-1827 (Diagnostic Data Export for coding assistant). Endpoints are registered
 on the shared router from _monolith.
 
 Test Pipeline:
@@ -17,7 +18,8 @@ Diagnostics:
   GET  /diagnostics/drift         — Configuration drift report
   GET  /diagnostics/health        — System health snapshot
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 from __future__ import annotations
 
@@ -1227,7 +1229,7 @@ class SystemHealthResponse(CamelCaseModel):
     summary="Structured error logs (SPEC-1827)",
     description=(
         "Returns structured log entries filterable by time range, severity, "
-        "tenant ID, and service. Designed for Claude Code triage consumption."
+        "tenant ID, and service. Designed for coding assistant triage consumption."
     ),
     status_code=200,
 )

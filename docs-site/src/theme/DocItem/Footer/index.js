@@ -4,7 +4,8 @@
  *
  * This wraps the default Docusaurus DocItem Footer component.
  *
- * (c) 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import React from 'react';

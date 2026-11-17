@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * RetryConfig — Rate limit and back-off/retry configuration.
  *
@@ -11,7 +12,8 @@
  *      GET      /api/superadmin/retry-configs/history
  *
  * WI-1426 / SPEC-1819, SPEC-1821
- * (c) 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import React, { useCallback, useEffect, useState } from 'react';

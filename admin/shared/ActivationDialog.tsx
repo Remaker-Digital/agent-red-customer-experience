@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * ActivationDialog — Modal for validating and activating draft configuration.
  *
@@ -18,7 +19,8 @@
  *   - onClose   — close the dialog
  *   - onSuccess — called after successful activation (trigger banner refresh)
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import React, { useCallback, useEffect, useState } from 'react';

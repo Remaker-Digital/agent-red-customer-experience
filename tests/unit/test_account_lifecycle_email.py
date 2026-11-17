@@ -1,6 +1,7 @@
 """Verify branded account lifecycle emails at the transport boundary.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from types import SimpleNamespace

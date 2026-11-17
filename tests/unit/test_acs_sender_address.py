@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Escalation mail reads one sender, and ACS_SENDER_ADDRESS overrides it."""
 
 from __future__ import annotations

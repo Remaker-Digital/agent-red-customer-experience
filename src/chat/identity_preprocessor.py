@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """In-conversation identity preprocessor (P0-AUTH-FIX).
 
 Intercepts customer messages before they reach the AI pipeline to detect
@@ -25,7 +26,8 @@ The preprocessor reads/writes ConversationDocument fields:
 - identity_sms_attempts: int (SPEC-1879)
 - phone_verified: bool (SPEC-1879 Phase 2A — weaker assurance than customer_verified)
 
-(c) 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations
@@ -360,7 +362,7 @@ async def _verify_sms_otp_for_conversation(phone: str, code: str, tenant_id: str
         if doc.get("used"):
             return False
 
-        # Constant-time hash comparison (Codex security requirement)
+        # Constant-time hash comparison (coding assistant security requirement)
         stored_hash = doc.get("otp_code_hash", "")
         submitted_hash = hash_code(code.strip())
         if not secrets.compare_digest(submitted_hash, stored_hash):

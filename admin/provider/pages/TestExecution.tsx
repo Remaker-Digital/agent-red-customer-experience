@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * TestExecution — Test pipeline trigger and result monitoring.
  *
@@ -10,7 +11,8 @@
  *      GET  /api/superadmin/tests/runs
  *
  * WI-1431 / SPEC-1826
- * (c) 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import React, { useCallback, useEffect, useRef, useState } from 'react';

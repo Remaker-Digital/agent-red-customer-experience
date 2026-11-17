@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * Agent lifecycle hooks — Phase 4a (WI-4016).
  *
@@ -7,7 +8,8 @@
  *
  * All paths target /api/admin/agents (tenant-admin, RBAC-protected).
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import { useState, useCallback } from 'react';
@@ -91,7 +93,7 @@ export function useEffectiveConfig(apiFetch: ApiFetch, agentId: string, enabled 
  * When currentOverlay is provided, all existing fields (including
  * visibilityScope and staffDomainTags) are preserved in the PUT body.
  * This prevents the backend from resetting domain-scope fields to
- * defaults on a simple enable/disable toggle (Phase 4c, Codex P1 fix).
+ * defaults on a simple enable/disable toggle (Phase 4c, coding assistant P1 fix).
  */
 export function useToggleOverlay(apiFetch: ApiFetch) {
   const [loading, setLoading] = useState(false);

@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """
 FastAPI middleware and dependencies for tenant resolution and rate limiting.
 
@@ -29,7 +30,8 @@ Usage in route handlers:
         # Only Professional and Enterprise tenants can access this
         ...
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

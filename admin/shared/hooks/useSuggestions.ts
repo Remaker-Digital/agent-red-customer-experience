@@ -1,10 +1,12 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * Configuration suggestions hooks — fetch AI-generated config field suggestions.
  *
  * KA-7: Knowledge Automation Admin UI.
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import { useApi } from './useApi';

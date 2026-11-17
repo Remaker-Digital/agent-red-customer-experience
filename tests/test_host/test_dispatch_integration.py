@@ -1,5 +1,6 @@
 # tests/test_host/test_dispatch_integration.py — Dispatch endpoint integration tests
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 
 """
 Tests for the main API dispatch endpoint that routes test run requests

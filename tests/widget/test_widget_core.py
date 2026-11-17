@@ -9,7 +9,8 @@ Verifies TypeScript implementation patterns for widget core specs:
 Run with:
     pytest tests/widget/test_widget_core.py -v
 
-(c) 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations
@@ -726,7 +727,8 @@ class TestWidgetColorPipeline:
     the entire color pipeline: config interface → resolveTokens →
     Header background → Panel gradient wiring → API fetch.
 
-    © 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
     """
 
     # -- WidgetConfig interface (tokens.ts) ----------------------------------

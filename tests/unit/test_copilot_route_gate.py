@@ -1,5 +1,6 @@
 # tests/unit/test_copilot_route_gate.py: only team members reach the Co-pilot
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 
 """
 The classifier can label a customer's message ``admin_assistance``. The router used to
@@ -27,7 +28,7 @@ def test_team_members_reach_the_co_pilot(role):
 
 
 def test_a_tenant_admin_credential_reaches_the_co_pilot_for_admin_assistance():
-    """ar_live_ keys and Shopify sessions carry no member role but are the merchant (Codex review)."""
+    """ar_live_ keys and Shopify sessions carry no member role but are the merchant (coding assistant review)."""
     route = IntentRouter().resolve(tenant_id="t-1", intent="admin_assistance", confidence=0.95, trusted_admin=True)
     assert route.target == RouteTarget.CO_PILOT
 

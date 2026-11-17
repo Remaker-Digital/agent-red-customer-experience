@@ -17,7 +17,8 @@
 #     -e AGNTCY_NATS_ENDPOINT=nats://nats:4222 \
 #     -p 8081:8080 agent-intent-classifier
 #
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 
 FROM python:3.12-slim
 

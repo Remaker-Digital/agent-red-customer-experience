@@ -3,7 +3,8 @@
 Tests the UI-only deployment tooling: component registry, hashing,
 build orchestration, deploy dry-run, verification, and CLI.
 
-(c) 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

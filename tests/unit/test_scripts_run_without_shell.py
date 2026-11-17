@@ -1,5 +1,6 @@
 # tests/unit/test_scripts_run_without_shell.py: the scripts' _run helpers start no shell
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 
 """
 scripts/build.py, scripts/deploy.py and scripts/deploy_ui.py each run commands

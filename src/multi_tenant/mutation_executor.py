@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """MCP mutation executor — Critic-gated, idempotent mutation execution.
 
 Orchestrates the full mutation execution pipeline:
@@ -22,7 +23,8 @@ Architecture:
 
 AGNTCY Phase 3B (Cycle 5) — mutation safety framework.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

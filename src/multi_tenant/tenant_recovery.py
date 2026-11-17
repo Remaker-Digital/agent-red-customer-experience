@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Tenant Account Recovery by SPA (SPEC-1677).
 
 Allows the Service Provider Administrator to:
@@ -18,7 +19,8 @@ Endpoints:
     GET  /api/superadmin/tenant-recovery/status/{tenant_id}
     GET  /api/auth/account-recovery/verify
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

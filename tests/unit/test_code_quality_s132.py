@@ -9,7 +9,8 @@ Covers all 7 findings from the independent code quality review:
     - WI-0985: Distributed rate limiting abstraction
     - WI-0986: Repository barrel re-export sync
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

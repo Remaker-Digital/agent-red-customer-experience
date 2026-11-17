@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Knowledge Base conflict and duplication scanner.
 
 On-demand tool that scans all active knowledge base entries for a tenant
@@ -24,7 +25,8 @@ Architecture references:
     - staleness_service.py: singleton service pattern
     - admin_knowledge_api.py: endpoint integration
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

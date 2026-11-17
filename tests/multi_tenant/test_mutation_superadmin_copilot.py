@@ -11,7 +11,8 @@ Covers all 9 mutation endpoints in src/multi_tenant/superadmin_api/_copilot.py:
     PUT    /api/superadmin/copilot/config/schedule
     PUT    /api/superadmin/copilot/config/retrieval
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 from __future__ import annotations
 

@@ -4,7 +4,8 @@ Each KPI assertion is card- or row-scoped and derived from MOCK_* payloads
 (GOV-18). Bare page-wide ``get_by_text("142")`` checks are intentionally
 avoided so decorative numbers cannot rubber-stamp a pass.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

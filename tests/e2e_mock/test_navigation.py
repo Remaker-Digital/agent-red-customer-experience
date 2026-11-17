@@ -1,4 +1,5 @@
-# (C) 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """SPEC-1706 Navigation E2E tests -- routing, query param preservation, deep links, sidebar active state.
 
 Tests cross-page navigation against the mock Vite dev server (npm run dev:mock).

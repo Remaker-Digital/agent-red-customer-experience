@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Admin API Key Management API — generate, rotate, revoke, reset API keys.
 
 Provides REST endpoints for merchant API key lifecycle management:
@@ -31,7 +32,8 @@ Dependencies:
     - repository.py: TenantRepository
     - cosmos_schema.py: TenantDocument, AuditEventType
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

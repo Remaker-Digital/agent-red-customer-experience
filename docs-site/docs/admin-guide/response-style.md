@@ -106,4 +106,5 @@ The AI generates a contextual fallback that acknowledges the question, explains 
 
 ---
 
-*© 2026 Michael Palmeter. All rights reserved.*
+<!-- Copyright (c) 2026 Michael Palmeter -->
+<!-- SPDX-License-Identifier: MIT -->

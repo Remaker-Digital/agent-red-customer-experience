@@ -1,7 +1,8 @@
 /**
  * Inbox hooks — conversation list, messages, search, actions.
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import { useState, useCallback } from 'react';

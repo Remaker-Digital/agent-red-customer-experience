@@ -1,11 +1,13 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Zendesk Integration Manifest (SPEC-1775).
 
 Declarative configuration for the Zendesk full helpdesk adapter.
 Auth: OAuth2.  Scopes: read, write, tickets:read, tickets:write.
 API: REST v2, cursor pagination, 700 req/min.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from src.integrations.manifest import (

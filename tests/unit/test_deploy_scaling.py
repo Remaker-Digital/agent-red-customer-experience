@@ -2,7 +2,7 @@
 
 WI-3171 extends scripts/deploy.py scaling enforcement from the single API
 gateway (WI-3156) to every container app deploy.py manages. These tests
-verify the contract Codex approved in bridge/deploy-scaling-full-coverage-002.md:
+verify the contract coding assistant approved in bridge/deploy-scaling-full-coverage-002.md:
 
   T1. SCALING_CONFIG values align with Terraform main.tf for every
       deploy-managed container app (NOT every "critical" TF app, because NATS
@@ -24,7 +24,8 @@ importlib.util.spec_from_file_location (same pattern as
 test_deploy_pipeline_production.py) so these tests do not depend on
 scripts/ being on sys.path.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations
@@ -307,11 +308,11 @@ class TestEnforceAllScaling:
         assert len(calls) == 8, f"expected 8 calls, got {len(calls)}: {calls}"
 
         # Staging gateway preserves the WI-3156 baseline (min=1, max=5) that
-        # Codex explicitly instructed us not to change in GO condition 4.
+        # coding assistant explicitly instructed us not to change in GO condition 4.
         staging_call = next(c for c in calls if c[0] == "example-gateway-stage")
         assert staging_call[1:] == (1, 5), (
             f"staging gateway scaled to {staging_call[1:]}, expected (1, 5) — "
-            f"WI-3156 baseline preserved per Codex GO condition 4"
+            f"WI-3156 baseline preserved per coding assistant GO condition 4"
         )
 
     def test_enforce_all_scaling_partial_failure_continues(self) -> None:

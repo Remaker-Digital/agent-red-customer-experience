@@ -2,7 +2,8 @@
 
 SPEC-1688 (Argon2id), SPEC-1689 (opaque session), SPEC-1690 (CSRF).
 
-(c) 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 

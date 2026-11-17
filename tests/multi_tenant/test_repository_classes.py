@@ -25,7 +25,8 @@ Total: 18 tests
 These tests verify structural contracts (class existence, method presence,
 async nature) without requiring Cosmos DB connectivity.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

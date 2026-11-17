@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """
 Agent Red Customer Experience — Application lifecycle management.
 
@@ -22,7 +23,8 @@ Usage (called from main.py):
     register_startup_handlers(app)
     register_shutdown_handlers(app)
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

@@ -285,4 +285,5 @@ Follow this process to systematically improve your knowledge base over time:
 
 ---
 
-*© 2026 Michael Palmeter. All rights reserved.*
+<!-- Copyright (c) 2026 Michael Palmeter -->
+<!-- SPDX-License-Identifier: MIT -->

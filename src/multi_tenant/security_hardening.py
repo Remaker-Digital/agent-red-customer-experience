@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """
 Security hardening utilities — input/output sanitization, auth rate limiting,
 and API key rotation.
@@ -14,7 +15,8 @@ Architecture references:
     - Decision #5: Per-tenant rate limits
     - Decision #6: Key Vault per-tenant secrets
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

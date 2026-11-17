@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 
 import { afterEach, expect, it, vi } from 'vitest';
 import type { Window as HappyWindow } from 'happy-dom';

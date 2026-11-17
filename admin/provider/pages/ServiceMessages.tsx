@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * Service Messages — compose and send bulk notifications to tenant superadmins.
  *
@@ -9,7 +10,8 @@
  * Specifications: SPEC-1646, SPEC-1647, SPEC-1648.
  * Work items: WI-0999.
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import { useState, useCallback } from 'react';

@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * WebSocket transport — bidirectional channel for typing and presence.
  *
@@ -17,7 +18,8 @@
  * authenticates via the widget key query parameter. Messages are
  * JSON-encoded with a `type` field.
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import { getStore } from '@/state/store';

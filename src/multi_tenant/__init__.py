@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 # Agent Red Customer Experience — Multi-Tenant Infrastructure
 #
 # Primary imports:
@@ -26,4 +27,5 @@
 #   from src.multi_tenant.archival_pipeline import ArchivalPipelineService, get_archival_service
 #   from src.multi_tenant.agntcy_sdk_integration import get_agntcy_factory, init_agntcy_sdk, AgentTopic
 #
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT

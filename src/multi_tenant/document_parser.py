@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Document parsing pipeline for Knowledge Base uploads (WI #214-216).
 
 Parses uploaded files (PDF, DOCX, CSV, TXT) and web pages (URL) into
@@ -23,7 +24,8 @@ Dependencies:
     - beautifulsoup4 >= 4.12.0 (HTML parsing for URL scraping)
     - httpx (already in requirements.txt, used for URL fetching)
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

@@ -17,7 +17,8 @@ Covers:
     CID-14  Repository: get_by_customer_id routes cid_ to canonical lookup
     CID-15  ContactAttributeType enum values
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

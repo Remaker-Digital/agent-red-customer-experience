@@ -1,12 +1,14 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """
 Agent Skill Binding repository — agent_bindings collection (SPEC-1856, WI-4012).
 
 Per-tenant, per-skill authorization bindings persisted in Cosmos DB.
 Partition key: /tenant_id. Document ID: skill_id (unique per tenant partition,
-per Codex Finding 3 — skill_id already embeds agent identity).
+per coding assistant Finding 3 : skill_id already embeds agent identity).
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """
 TenantConfigProcessor — validation, cleansing, versioning, and caching.
 
@@ -42,7 +43,8 @@ Dependencies:
     - cosmos_schema.py: PreferencesDocument, TenantTier, AuditEventType
     - repository.py: PreferencesRepository, AuditLogRepository
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

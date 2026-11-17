@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Default alert rules — ship operational monitoring out of the box (SPEC-1831).
 
 Seeds 8 default alert rules into Cosmos ``platform_config`` on application
@@ -8,7 +9,8 @@ deletable by platform admins via the SPA Control Plane.
 Called from application startup (lifespan). Safe to call repeatedly — skips
 seeding when rules already exist.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 from __future__ import annotations
 

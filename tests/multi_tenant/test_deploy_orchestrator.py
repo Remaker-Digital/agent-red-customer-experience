@@ -5,7 +5,8 @@ health polling, rollback logic, and error handling. All Azure CLI and
 network calls are mocked.
 
 WI-1433 / SPEC-1825
-(c) 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 from __future__ import annotations
 

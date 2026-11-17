@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * DeploymentManagement — Self-service deployment pipeline.
  *
@@ -12,7 +13,8 @@
  *      GET  /api/superadmin/deployments/{deploy_id}/status
  *
  * SPEC-1825 / S213
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';

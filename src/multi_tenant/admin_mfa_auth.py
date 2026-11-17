@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """
 Two-stage 2FA authentication endpoints for admin console.
 
@@ -22,7 +23,8 @@ Brute-force mitigation:
     5 failed attempts per pending_2fa token. The token has a 10-minute
     lifetime, so after exhaustion the user must request a new magic link.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

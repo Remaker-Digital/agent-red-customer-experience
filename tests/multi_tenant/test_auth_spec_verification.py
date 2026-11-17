@@ -4,7 +4,8 @@ Each test class verifies a specific SPEC-* requirement against the
 actual implementation. Tests exercise production interfaces per GOV-10.
 
 Session S152 — spec review and real test creation.
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

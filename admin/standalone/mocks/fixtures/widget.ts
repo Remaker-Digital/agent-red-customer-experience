@@ -1,7 +1,8 @@
 // @ts-nocheck
 /**
  * Widget fixture - preview config and embed code.
- * (c) 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 export function createWidgetFixture() {
   return {

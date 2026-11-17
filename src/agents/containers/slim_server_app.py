@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 # Agent Red Customer Experience — SLIM Routing Service
 #
 # Standalone SLIM server that provides the peer-to-peer mesh routing service
@@ -13,7 +14,8 @@
 #   SLIM_SERVICE_NAME  — Service name (default: agent-red-slim)
 #   LOG_LEVEL          — Logging level (default: INFO)
 #
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 
 from __future__ import annotations
 

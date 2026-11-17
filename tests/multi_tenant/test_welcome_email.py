@@ -9,7 +9,8 @@ Verifies that:
     - Missing email address returns False immediately
     - Provisioning call sites invoke welcome email
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

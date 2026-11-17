@@ -3,7 +3,8 @@ Unit tests for miscellaneous Batch 5 specs.
 
 Tests for WI 115, 201, 204, 297 — implementation verification tests.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

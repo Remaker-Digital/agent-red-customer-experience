@@ -6,7 +6,8 @@ Tests for:
     - Mid-stream error handling in pipeline execute()
     - Outer except block enhanced error events
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

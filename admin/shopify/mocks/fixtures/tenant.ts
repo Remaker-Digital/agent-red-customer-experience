@@ -1,7 +1,8 @@
 // @ts-nocheck
 /**
  * Shopify tenant fixture — mock data for /api/tenants/lookup (with shop domain).
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 export function createTenantFixture() {

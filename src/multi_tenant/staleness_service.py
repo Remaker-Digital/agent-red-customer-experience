@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Knowledge Base staleness detection and refresh service (WI #219-222).
 
 Tracks content freshness, computes staleness scores, and triggers
@@ -23,7 +24,8 @@ Architecture references:
     - cosmos_schema.py: KnowledgeBaseDocument staleness fields
     - Zendesk AI: Competitive reference for staleness detection
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

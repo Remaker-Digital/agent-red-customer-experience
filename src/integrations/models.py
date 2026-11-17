@@ -1,11 +1,13 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Normalized data models — integration boundary types (SPEC-1762).
 
 All adapters produce and consume these normalized models.  Vendor-specific
 data is mapped to these types at the adapter boundary, ensuring the core
 system never deals with vendor-specific structures.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

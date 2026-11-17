@@ -1,7 +1,8 @@
 // @ts-nocheck
 /**
  * Mock handlers — Provider status page incidents.
- * (c) 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 import { GET, POST } from '../router';
 import { getStore } from '../store';

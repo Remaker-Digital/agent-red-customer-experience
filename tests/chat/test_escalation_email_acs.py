@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """E1. With ACS configured, the escalation email is attempted, not skipped."""
 
 from __future__ import annotations

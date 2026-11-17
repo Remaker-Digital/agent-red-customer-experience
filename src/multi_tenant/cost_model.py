@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """
 Parameterized cost model calculator.
 
@@ -23,7 +24,8 @@ Architecture references:
     - WI #82: Parameterized cost model (Master Plan)
     - WI #155: Cost model calculator (Backlog — supersedes #82)
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

@@ -9,7 +9,8 @@ Test IDs: CM-01 through CM-20.
 Run:
     pytest tests/multi_tenant/test_cost_model.py -v
 
-(c) 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

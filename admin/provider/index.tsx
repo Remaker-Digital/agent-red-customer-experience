@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * Provider Admin Console — entry point.
  *
@@ -12,7 +13,8 @@
  *   is per-tenant (merchant-facing); this console is platform-wide
  *   (operator-facing) and consumes /api/superadmin/* endpoints.
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import React from 'react';

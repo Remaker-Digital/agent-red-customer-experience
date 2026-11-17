@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """
 Chat API Pydantic models — request/response schemas for the conversation API.
 
@@ -16,7 +17,8 @@ Architecture references:
     - Decision UI-5: SSE stream-then-validate with Critic retraction
     - Decision UI-6: Publishable widget key authentication
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

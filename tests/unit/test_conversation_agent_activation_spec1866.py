@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """SPEC-1866 conversation-level agent activation coverage."""
 
 from __future__ import annotations

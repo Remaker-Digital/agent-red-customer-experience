@@ -13,7 +13,8 @@ Endpoints tested:
   PUT  /api/superadmin/retry-configs/{service}
   GET  /api/superadmin/retry-configs/history
 
-(c) 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 from __future__ import annotations
 

@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """
 Persistent Memory dashboard API — WI#139 capability.
 
@@ -11,7 +12,8 @@ Routes:
     GET    /api/admin/memory/customer/{cid}     — Get memory vectors for a customer
     DELETE /api/admin/memory/customer/{cid}     — Erase all memory for a customer (GDPR)
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

@@ -9,7 +9,8 @@ Covers 7 specs:
     6. resolve_conversation — mock repo.read and repo.patch
     7. add_note — mock repo.add_internal_note
 
-(C) 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

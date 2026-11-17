@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Admin Preview API — conversation preview with message insights (SPEC-1872).
 
 Provides REST endpoints for operator-visible preview/test mode:
@@ -9,7 +10,8 @@ Provides REST endpoints for operator-visible preview/test mode:
 Preview conversations are tagged is_test_mode=True and excluded from
 production analytics and billing. Professional+ tier gate enforced.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

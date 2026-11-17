@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * MfaChallenge — TOTP verification step during login.
  *
@@ -6,7 +7,8 @@
  * has MFA enabled. Accepts a 6-digit TOTP code or an 8-character
  * backup code. On success, stores the MFA session token.
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import React, { useState, useCallback, useRef, useEffect } from 'react';

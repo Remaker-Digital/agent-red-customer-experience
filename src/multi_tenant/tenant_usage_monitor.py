@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """TenantUsageMonitor — progressive throttling for noisy neighbor prevention (WI #51).
 
 Monitors per-tenant resource consumption in a rolling window and applies
@@ -30,7 +31,8 @@ Architecture references:
     - pipeline_resilience.py: concurrency + circuit breakers (complementary)
     - conversation_meter.py: billable conversation tracking (complementary)
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

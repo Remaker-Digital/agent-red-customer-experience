@@ -1,6 +1,7 @@
 """The closed beta note is in the tagged tree, and not in the co-pilot image.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

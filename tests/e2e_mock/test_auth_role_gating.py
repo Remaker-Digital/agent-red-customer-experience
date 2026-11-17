@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Auth / 2FA / role-gating against the Vite mock backend (SPEC-1706).
 
 Exercises real ApiKeyLogin + TwoFaChallenge UI paths and role-based nav /

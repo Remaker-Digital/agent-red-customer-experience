@@ -10,7 +10,8 @@
  *   - iframe for conversation panel (full DOM isolation)
  *   - No external CSS files — all styles are inlined via JS
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 /// <reference types="vitest" />

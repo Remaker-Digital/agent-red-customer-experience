@@ -1,10 +1,12 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Health and readiness endpoints for Agent Red Customer Experience.
 
 Provides /health (liveness probe) and /ready (readiness probe) endpoints
 used by Azure Container Apps for traffic management.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

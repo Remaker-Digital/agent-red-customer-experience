@@ -4,7 +4,8 @@ Tests for detect_regression() and QualityRegressionAlert.
 8 tests covering: stable scores, threshold detection, configurable params,
 severity levels, edge cases, and alert data.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

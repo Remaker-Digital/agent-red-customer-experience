@@ -3,7 +3,8 @@
 Verifies that quality_scores table exists in schema, and
 insert/get methods work correctly.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

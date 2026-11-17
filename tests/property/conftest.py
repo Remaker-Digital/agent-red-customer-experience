@@ -1,6 +1,7 @@
 """Shared Hypothesis settings and strategies for property-based tests (SPEC-1843).
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 from __future__ import annotations
 

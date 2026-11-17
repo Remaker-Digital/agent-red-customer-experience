@@ -3,7 +3,8 @@
 Confirms that the YAML-driven registry produces identical results to the
 original Python-based registry for all 78 field definitions.
 
-(c) 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 import pytest

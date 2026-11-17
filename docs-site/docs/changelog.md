@@ -1413,4 +1413,5 @@ Configuration changes now use a two-phase commit model. Saving a setting writes 
 
 ---
 
-*© 2026 Michael Palmeter. All rights reserved.*
+<!-- Copyright (c) 2026 Michael Palmeter -->
+<!-- SPDX-License-Identifier: MIT -->

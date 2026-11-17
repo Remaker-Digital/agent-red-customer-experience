@@ -3,7 +3,8 @@
 The check used to require CLAUDE.md, which the repository no longer carries
 (agent configuration comes from GT-KB), so a real deploy failed it.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 import importlib.util

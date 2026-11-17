@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """
 Add-on subscription checkout — WI#138 capability.
 
@@ -9,7 +10,8 @@ Routes:
     GET  /api/billing/addons          — List available add-ons for current tier
     POST /api/billing/addons/checkout — Start Stripe Checkout for an add-on
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

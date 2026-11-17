@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """FastAPI application factory for Agent Red Customer Experience.
 
 Creates and configures the FastAPI application instance with exception
@@ -8,7 +9,8 @@ CORS headers appear on ALL responses, including 429 (rate limit) and
 401 (auth failure) — see lifecycle.py docstring for middleware ordering.
 
 R1 refactoring — session 31.
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations
@@ -62,7 +64,7 @@ def create_app(lifespan=None) -> FastAPI:
             "Per-tenant rate limits are enforced. Check `X-RateLimit-Limit`, "
             "`X-RateLimit-Remaining`, and `X-RateLimit-Reset` response headers.\n\n"
             "---\n"
-            "© 2026 Remaker Digital. All rights reserved."
+            "Copyright (c) 2026 Michael Palmeter. MIT License."
         ),
         version="1.0.0",
         docs_url="/docs" if os.environ.get("ENVIRONMENT") == "development" else None,

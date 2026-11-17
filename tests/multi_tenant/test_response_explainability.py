@@ -14,7 +14,8 @@ References:
     - Decision #28+: Response explainability framework
     - Decision #32: Test cases and validation framework
 
-(C) 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from unittest.mock import patch

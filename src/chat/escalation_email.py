@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Async email-bridge escalation — send transcript emails to customer and agent.
 
 When the AI escalates a conversation, this module sends two emails:
@@ -12,7 +13,8 @@ The chat continues after escalation — this is a fork, not a handoff.
 
 WI-3030 / S259 D16/D17.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

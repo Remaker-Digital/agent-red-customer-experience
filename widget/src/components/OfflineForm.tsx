@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * OfflineForm — leave-a-message form when chat is unavailable.
  *
@@ -12,7 +13,8 @@
  * Visual reference: Zapier (form styling, spacing, button design).
  * Functional reference: Tidio (offline form fields, success state).
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import { FunctionComponent } from 'preact';

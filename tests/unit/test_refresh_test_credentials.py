@@ -5,7 +5,8 @@ _read_env_local, _write_env_local, _fetch_widget_key, _verify_credentials, main.
 
 Test plan ref: COMPREHENSIVE-TEST-PLAN-S245-S255.md Slice 1
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

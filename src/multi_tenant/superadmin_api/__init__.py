@@ -1,10 +1,12 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Superadmin Provider Operations API -- package init.
 
 Re-exports all public names from sub-modules for backward compatibility.
 All existing imports (from src.multi_tenant.superadmin_api import X) continue to work.
 
-(c) 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 # Shared state, router, and configuration functions
 from src.multi_tenant.superadmin_api._agent_overlays import *  # noqa: F401,F403

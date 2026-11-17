@@ -5,7 +5,8 @@ check_conversation, check_sse_stream, send_alert, and main orchestration.
 
 Test plan ref: COMPREHENSIVE-TEST-PLAN-S245-S255.md Slice 1
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """
 Stripe product catalog loader.
 
@@ -7,7 +8,8 @@ scripts/stripe/create_product_catalog.py) and provides typed access to
 Stripe product IDs, price IDs, and meter IDs used by checkout, webhook,
 and usage-reporting modules.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

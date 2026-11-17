@@ -15,7 +15,8 @@ Run:
     pytest tests/integration/test_azure_services.py -v -k "openai"   # OpenAI only
     pytest tests/integration/test_azure_services.py -v -k "cosmos"   # Cosmos only
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

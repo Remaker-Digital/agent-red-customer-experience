@@ -1,5 +1,6 @@
 # tests/unit/test_billing_caller_scope.py: billing routes act only for the calling tenant
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 
 """
 ``POST /api/billing/portal``, ``/api/packs/*`` and ``/api/usage/*`` took a tenant id or

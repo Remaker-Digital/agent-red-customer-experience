@@ -1,7 +1,8 @@
 /**
  * Knowledge Base hooks — CRUD, upload, import, export, staleness, conflict scan.
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import { useState, useCallback } from 'react';

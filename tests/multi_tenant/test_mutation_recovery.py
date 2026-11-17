@@ -3,7 +3,8 @@
 Tests: SPA emergency recovery, tenant account recovery, magic link auth.
 Exercises rate limiting, enumeration prevention, and token-based flows.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

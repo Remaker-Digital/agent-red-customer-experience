@@ -3,7 +3,8 @@
 Tests for agent skill bindings, deny-by-default enforcement, and
 credential scoping.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

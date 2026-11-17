@@ -2,7 +2,8 @@
  * UploadResultDisplay — success banner shown after a file upload or URL import
  * completes, displaying the number of entries created.
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import React from 'react';

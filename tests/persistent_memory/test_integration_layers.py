@@ -20,7 +20,8 @@ Test IDs:
 Run:
     pytest tests/persistent_memory/test_integration_layers.py -v
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

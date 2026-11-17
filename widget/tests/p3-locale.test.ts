@@ -3,7 +3,8 @@
  *
  * Import-based checks — verifies locale keys exist in all 8 locale packs.
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import { describe, it, expect } from 'vitest';

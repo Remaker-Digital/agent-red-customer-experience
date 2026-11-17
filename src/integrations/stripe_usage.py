@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """
 Stripe metered usage reporting.
 
@@ -24,7 +25,8 @@ Endpoints:
     POST /api/usage/record          — Record a conversation (internal API)
     GET  /api/usage/{customer_id}   — Get usage summary for a customer
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """
 Triple authentication: Shopify session tokens + API keys + publishable widget keys.
 
@@ -32,7 +33,8 @@ Request flow:
     → Inject TenantContext into request state
     → Handler receives TenantContext via FastAPI dependency
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

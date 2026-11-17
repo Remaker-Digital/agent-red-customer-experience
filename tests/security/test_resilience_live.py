@@ -9,7 +9,8 @@ Prerequisites: Production endpoint reachable.
 Run:
     PROD_URL=https://... python -m pytest tests/security/test_resilience_live.py -v
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

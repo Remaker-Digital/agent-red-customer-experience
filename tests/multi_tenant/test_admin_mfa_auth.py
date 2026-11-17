@@ -11,7 +11,8 @@ Covers:
 
 Test plan reference: §5.11 (2FA Auth — WI #295 Phase 2)
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

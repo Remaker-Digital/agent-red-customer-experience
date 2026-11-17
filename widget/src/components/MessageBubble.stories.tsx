@@ -1,11 +1,13 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * Storybook stories for MessageBubble (SPEC-1845/WI-1502).
  *
  * Covers: user message, agent message, long message, streaming, retracted,
  * and system message variants.
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import { MessageBubble } from './MessageBubble';

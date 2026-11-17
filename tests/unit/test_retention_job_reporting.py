@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """The scheduled retention job reports the counts returned by its service."""
 
 from unittest.mock import AsyncMock, MagicMock, Mock

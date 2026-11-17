@@ -1,4 +1,5 @@
-# (c) 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """The per-reply quality score is stored on its message (architecture review F39, P3-1).
 
 After the Critic approves a reply, the orchestrator scores it and calls

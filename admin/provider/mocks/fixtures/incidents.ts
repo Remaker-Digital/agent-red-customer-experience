@@ -1,7 +1,8 @@
 // @ts-nocheck
 /**
  * Provider incidents fixture — status page incident data.
- * (c) 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 export function createIncidentsFixture() {
   return {

@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """A platform admin gets at most one login notification an hour.
 
 The clock is injected. A capped request still authenticates, and the audit

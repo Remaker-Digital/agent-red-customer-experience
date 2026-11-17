@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Admin Quick Action API — contextual prompt button management (WI #226-229).
 
 Provides REST endpoints for the merchant admin dashboard's Quick Action
@@ -38,7 +39,8 @@ Dependencies:
       VALID_PAGE_TYPES
     - middleware.py: get_tenant_context, TenantContext
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

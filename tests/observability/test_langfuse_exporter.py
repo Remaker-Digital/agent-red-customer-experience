@@ -7,7 +7,8 @@ SPEC-1874: Validates that:
 4. Exporter failure does not block pipeline execution
 5. Config toggle works (disabled = no Langfuse calls)
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

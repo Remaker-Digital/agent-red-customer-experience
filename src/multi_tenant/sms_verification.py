@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """SMS Verification Service (SPEC-1686).
 
 Provides email/SMS choice for verification when a verified phone exists.
@@ -11,7 +12,8 @@ Key behaviors:
     5. Integrates with both login and email change flows.
     6. Emits communication events via SPEC-1687.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

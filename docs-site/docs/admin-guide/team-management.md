@@ -175,4 +175,5 @@ This is useful for temporary absences (vacation, leave) where you want to preser
 
 ---
 
-*© 2026 Michael Palmeter. All rights reserved.*
+<!-- Copyright (c) 2026 Michael Palmeter -->
+<!-- SPDX-License-Identifier: MIT -->

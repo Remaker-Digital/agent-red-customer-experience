@@ -9,7 +9,8 @@ docs/COMPREHENSIVE-TEST-PLAN.md.
 
 Work Item: P3 post-launch tests.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

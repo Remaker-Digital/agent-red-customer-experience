@@ -6,7 +6,8 @@ Covers:
     - get_quick_action returns matching action from repo
     - seed_quick_actions triggers seeding when list is empty
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * useSaveBar — Shopify App Bridge contextual save bar hook.
  *
@@ -21,7 +22,8 @@
  *   // After successful save:
  *   markClean();
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import { useCallback, useEffect, useRef, useState } from 'react';

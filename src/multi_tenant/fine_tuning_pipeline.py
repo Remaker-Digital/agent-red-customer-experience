@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """FineTuningPipelineService — Layer 4 dedicated model training.
 
 Work Items #93-96 (Decision #31): Per-tenant fine-tuning of GPT-4o-mini
@@ -52,7 +53,8 @@ Dependencies:
     - gdpr_services.py: PiiScrubber (for training data PII removal)
     - No new pip packages required
 
-(c) 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

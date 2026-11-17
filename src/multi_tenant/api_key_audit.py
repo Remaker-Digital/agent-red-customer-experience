@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """API key usage audit trail (SPEC-1832).
 
 Records which API key (or auth method) was used for every authenticated
@@ -8,7 +9,8 @@ Uses an in-memory buffer that flushes to Cosmos DB audit_log in batches
 to avoid per-request write latency. Buffer flushed on interval or when
 full (whichever comes first).
 
-(c) 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 from __future__ import annotations
 

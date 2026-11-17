@@ -1,7 +1,7 @@
 """SPEC-1773 integration-framework Cosmos schema coverage.
 
-Copyright 2026 Michael Palmeter.
-All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 import pytest

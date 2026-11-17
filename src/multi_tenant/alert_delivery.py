@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """
 Alert delivery mechanism for multi-tenant Agent Red platform.
 
@@ -26,7 +27,8 @@ Architecture references:
     - WI #151: SLA monitoring dashboard (compliance violations)
     - WI #192: Alert delivery mechanism (this module)
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations
@@ -83,7 +85,8 @@ def _send_acs_email_sync(
     entire request for over an hour.  We override the retry policy with
     a 10-second total retry budget so 429 fails fast instead of hanging.
 
-    © 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
     """
     from azure.communication.email import EmailClient
     from azure.core.exceptions import HttpResponseError
@@ -735,7 +738,8 @@ class EmailAlertChannel(AlertChannel):
         preferences_repo: For resolving per-tenant notification_email.
         tenant_repo: Fallback to customer_email from TenantDocument.
 
-    © 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
     """
 
     TIMEOUT_SECONDS = 10.0

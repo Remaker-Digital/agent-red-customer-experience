@@ -18,7 +18,8 @@ JSON.  No backend server is needed.  This tests the UI layer in isolation:
   - Do error states render correctly?
   - Are tier-gated features hidden/shown correctly?
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 import json

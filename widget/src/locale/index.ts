@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * Locale barrel — exports locale resolution and the buildLocale function.
  *
@@ -10,7 +11,8 @@
  *      always take precedence over the locale pack
  *   5. English is the ultimate fallback
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import type { Locale } from './en';

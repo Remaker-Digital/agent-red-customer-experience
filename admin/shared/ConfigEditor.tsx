@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * ConfigEditor — Full tenant configuration editor with version history.
  *
@@ -33,7 +34,8 @@
  *   - ../types  — BaseComponentProps, ConfigField, ConfigVersion, ConfigDiff, etc.
  *   - ../hooks  — useConfig, useUpdateConfig, useConfigVersions, useConfigSchema
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import React, { useState, useCallback, useEffect, useMemo } from 'react';

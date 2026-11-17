@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * TenantDirectory — Cross-tenant directory with filtering and pagination.
  *
@@ -11,7 +12,8 @@
  *   POST /api/superadmin/tenants         — create new tenant
  *   PATCH /api/superadmin/tenants/:id/expiry — set/clear/extend expiry
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import React, { useCallback, useEffect, useMemo, useState } from 'react';

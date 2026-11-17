@@ -3,7 +3,8 @@
 Verifies 6 metrics, composite score computation, trend arrows,
 and KB storage via quality_scores table.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 from __future__ import annotations
 

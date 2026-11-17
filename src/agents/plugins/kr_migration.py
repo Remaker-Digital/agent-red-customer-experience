@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """KR MCP migration to binding system (SPEC-1860).
 
 Migrates the current Knowledge Retrieval MCP tool path from
@@ -7,12 +8,13 @@ tenant-global mcp_servers config to the agent skill binding system.
 Migration is idempotent (SPEC-1860 req 3) and preserves behavior
 for existing tenants (SPEC-1860 req 4).
 
-Migration state contract (Codex P1 finding):
+Migration state contract (coding assistant P1 finding):
   legacy_only      — tenant uses global KR path only
   dual_read        — binding exists, legacy fallback permitted
   binding_enforced — binding required, legacy path blocked
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

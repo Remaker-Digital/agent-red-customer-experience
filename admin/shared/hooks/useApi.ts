@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * Generic API fetch hook — foundation for all domain hooks.
  *
@@ -6,7 +7,8 @@
  * Shells inject the `apiFetch` function (which handles auth headers)
  * so hooks are auth-agnostic.
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import { useState, useEffect, useCallback, useRef } from 'react';

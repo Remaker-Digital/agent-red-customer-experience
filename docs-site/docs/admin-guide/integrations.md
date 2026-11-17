@@ -303,4 +303,5 @@ Contact your account manager to configure a custom integration for your specific
 
 ---
 
-*© 2026 Michael Palmeter. All rights reserved.*
+<!-- Copyright (c) 2026 Michael Palmeter -->
+<!-- SPDX-License-Identifier: MIT -->

@@ -1,4 +1,5 @@
-# (C) 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Mock E2E tests for the Quick Actions page (/quick-actions).
 
 Tests action list display, create/edit/delete CRUD flows,

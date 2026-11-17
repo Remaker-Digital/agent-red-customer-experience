@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """
 OpenTelemetry tenant-aware tracing and correlation ID propagation.
 
@@ -36,7 +37,8 @@ Architecture references:
     - Decision #7: PII scrubbing (telemetry must be PII-free)
     - NATS correlation headers: X-Tenant-Id, X-Conversation-Id, X-Trace-Id
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

@@ -1,7 +1,8 @@
 // @ts-nocheck
 /**
  * Provider Co-Pilot knowledge fixture — documents, stats, config.
- * (c) 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 export function createCopilotFixture() {
   return {

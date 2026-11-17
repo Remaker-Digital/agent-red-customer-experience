@@ -2,7 +2,8 @@
 #
 # Run: uvicorn src.agents.containers.knowledge_retrieval_app:app --port 8082
 #
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 
 from __future__ import annotations
 

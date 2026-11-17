@@ -15,7 +15,8 @@ Flow pattern:
 GOV-19: Outside-in testing.
 SPEC-1843: Zero-knowledge.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

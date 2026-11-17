@@ -1,11 +1,13 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Static file serving for Agent Red Customer Experience.
 
 Mounts the Shopify embedded admin SPA, the provider admin console SPA,
 and the widget JS bundle endpoint on the FastAPI application.
 
 R1 refactoring — session 31. Provider admin added — session 39.
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """CustomerProfileService — Layer 1 customer context management.
 
 Work Items #83-85 (Decision #28): CRUD operations for customer profiles,
@@ -29,7 +30,8 @@ Dependencies:
     - repository.py: CustomerProfileRepository
     - gdpr_services.py: PiiScrubber (for audit log sanitization)
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

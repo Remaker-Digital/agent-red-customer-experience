@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * Design tokens — the single source of truth for all visual values.
  *
@@ -16,7 +17,8 @@
  * Functional reference: Tidio (controls, behaviors, workflows).
  * Brand: Agent Red (Inter, #ff3621, 15-color palette).
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 // ---------------------------------------------------------------------------

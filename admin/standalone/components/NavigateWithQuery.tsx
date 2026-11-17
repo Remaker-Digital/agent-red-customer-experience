@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * NavigateWithQuery — declarative redirect that preserves URL search params.
  *
@@ -6,7 +7,8 @@
  * Reads the current location.search and appends it to the `to` prop so that
  * ?tenant= (SPEC-1617) survives catch-all and alias redirects.
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import React from 'react';

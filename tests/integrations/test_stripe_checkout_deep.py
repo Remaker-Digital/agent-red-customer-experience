@@ -8,7 +8,8 @@ Test IDs: SCD-01 through SCD-10.
 
 Work Item: Stripe Checkout deep-coverage supplement.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

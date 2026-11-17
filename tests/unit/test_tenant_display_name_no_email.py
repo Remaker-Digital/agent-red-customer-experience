@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """A tenant's display_name never holds the owner's email or phone (decision 93).
 
 SPEC-1881 built it from the contact address, so it held the owner's email in

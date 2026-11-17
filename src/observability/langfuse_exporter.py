@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Langfuse trace exporter — Lane 1 + Lane 2 observability export.
 
 SPEC-1874: Converts ResponseDecisionTrace to Langfuse trace format.
@@ -22,7 +23,8 @@ PROHIBITED (never exported, any lane):
 Controlled via LANGFUSE_ENABLED env var (Lane 1) + per-tenant
 preferences.langfuse_lane2_enabled (Lane 2). Fire-and-forget.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations
@@ -46,7 +48,7 @@ LANGFUSE_ENABLED = os.getenv("LANGFUSE_ENABLED", "false").lower() == "true"
 _HASH_SALT = os.getenv("LANGFUSE_HASH_SALT", "")
 
 # ---------------------------------------------------------------------------
-# Critic flag normalization (S251 Phase 0 — Codex P1 ZK boundary fix)
+# Critic flag normalization (S251 Phase 0 : coding assistant P1 ZK boundary fix)
 # ---------------------------------------------------------------------------
 # Critic returns free-form flags that may echo customer text or KB content.
 # Normalize to a closed set before export. Unknown flags become "other".
@@ -108,7 +110,7 @@ def _normalize_critic_flags(raw_flags: list[str]) -> list[str]:
     return result
 
 # ---------------------------------------------------------------------------
-# Union PII scrubber (S251 Phase 2 — Codex-reviewed)
+# Union PII scrubber (S251 Phase 2 : coding assistant-reviewed)
 # ---------------------------------------------------------------------------
 # Ordered list: more specific patterns first to avoid partial matches.
 # Union of audit_sanitizer.py (tokens/keys/email) + pii_tokenizer.py (phone/order).

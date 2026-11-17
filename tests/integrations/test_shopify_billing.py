@@ -8,7 +8,8 @@ Covers:
 Run:
     pytest tests/integrations/test_shopify_billing.py -v
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

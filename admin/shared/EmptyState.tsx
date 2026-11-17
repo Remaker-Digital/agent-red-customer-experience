@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * EmptyState — Shared empty state component for all admin surfaces.
  *
@@ -14,7 +15,8 @@
  *     action={{ label: 'View documentation', onClick: () => navigate('/docs') }}
  *   />
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import React from 'react';

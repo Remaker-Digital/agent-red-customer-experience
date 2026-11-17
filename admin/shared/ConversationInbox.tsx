@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * ConversationInbox - Two-panel conversation inbox for the Admin dashboard.
  *
@@ -9,7 +10,8 @@
  * Framework-agnostic React component — no Polaris, no Tailwind, pure inline styles.
  * Receives auth, API fetch, and notification callbacks from the shell.
  *
- * (c) 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import React, { useState, useCallback, useEffect, useRef, useMemo } from 'react';

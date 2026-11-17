@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Admin Analytics API — aggregated conversation metrics (WI #176-178).
 
 Provides REST endpoints for the merchant admin dashboard's Analytics
@@ -23,7 +24,8 @@ Dependencies:
     - cosmos_schema.py: ConversationStatus
     - middleware.py: get_tenant_context, TenantContext
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

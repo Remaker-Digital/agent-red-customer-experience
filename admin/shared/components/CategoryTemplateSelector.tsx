@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * CategoryTemplateSelector — picks and applies an industry template.
  *
@@ -7,7 +8,8 @@
  * Displays available category templates as a grid of selectable cards.
  * On selection, shows preview details and "Apply to KB" button.
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import React, { useState } from 'react';

@@ -11,7 +11,8 @@ Validates:
 
 Uses the actual catalog file (config/stripe_product_ids.json) — no mocking needed.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * LoadingState — Shared loading indicator for all admin surfaces.
  *
@@ -11,7 +12,8 @@
  *   <LoadingState text="Loading conversations" />  // Custom text
  *   <LoadingState variant="skeleton" lines={4} />  // Skeleton lines
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import React from 'react';

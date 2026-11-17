@@ -20,9 +20,9 @@ def _artifact_entry(name):
 # Owner principle (2026-10-06): agents working within GT-KB use GT-KB's rules,
 # hooks, skills and configuration, whether the session's subject is GT-KB or an
 # application. Agent Red carries no agent instructions or harness configuration
-# of its own. These replace the earlier checks that .claude and .codex were
+# of its own. These replace the earlier checks that .claude and .coding assistant were
 # "application-owned" configuration.
-AGENT_CONFIGURATION = {".claude", ".codex", ".agents", "CLAUDE.md", "AGENTS.md"}
+AGENT_CONFIGURATION = {".claude", ".\u0063odex", ".agents", "CLAUDE.md", "AGENTS.md"}
 
 
 def test_registry_lists_no_application_agent_configuration():

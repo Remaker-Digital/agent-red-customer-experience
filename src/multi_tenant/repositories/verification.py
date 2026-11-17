@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """
 Verification token repository — short-lived tokens for email verification
 and magic links.
@@ -7,7 +8,8 @@ Tokens are stored with Cosmos DB TTL so they auto-expire. The collection
 uses ``token_type`` as partition key (e.g. "email_verification",
 "magic_link") to separate token families.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

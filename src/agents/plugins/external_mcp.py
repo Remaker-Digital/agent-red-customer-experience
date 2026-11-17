@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """3rd-Party MCP Server Integrations — External Service Connectors (SPEC-1712).
 
 Manages connections to external MCP servers (Stripe, Shopify, Square,
@@ -9,7 +10,8 @@ breaking, and audit logging.
 Security: Tenant-scoped credentials (no cross-tenant access), Azure Key
 Vault storage, PCI awareness, consent-based activation.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

@@ -12,7 +12,8 @@ Run with:
     pytest tests/visual/test_widget_structure.py -v --headed   # visual
     pytest tests/visual/test_widget_structure.py -v             # headless
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 import pytest

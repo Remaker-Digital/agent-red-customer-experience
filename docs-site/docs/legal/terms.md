@@ -96,4 +96,5 @@ For questions about these Terms, contact us at [support@remakerdigital.com](mail
 
 ---
 
-*© 2026 Michael Palmeter. All rights reserved.*
+<!-- Copyright (c) 2026 Michael Palmeter -->
+<!-- SPDX-License-Identifier: MIT -->

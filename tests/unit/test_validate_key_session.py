@@ -8,7 +8,8 @@ The session must be valid, and signed for the tenant named in the request.
 A member session is checked against the member document, as the
 authentication middleware does. The API key path is unchanged.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

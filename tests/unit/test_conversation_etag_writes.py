@@ -1,5 +1,6 @@
-# (c) 2026 Michael Palmeter. All rights reserved.
-"""Read-modify-write conversation writes are ETag-conditional (review F33, Codex P1).
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
+"""Read-modify-write conversation writes are ETag-conditional (review F33, coding assistant P1).
 
 Every writer that reads and decrypts the whole messages array (SPEC-1843) and replaces
 the document does so under If-Match with a bounded retry: the routes' append_message and

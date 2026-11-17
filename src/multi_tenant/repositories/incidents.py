@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """
 Incident repository — CRUD for status page incidents.
 
@@ -6,7 +7,8 @@ Platform-scoped (not tenant-scoped). Partition key is ``status``
 (investigating, identified, monitoring, resolved, scheduled).
 Documents auto-expire via Cosmos DB TTL (365 days).
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

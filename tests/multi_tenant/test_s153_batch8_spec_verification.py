@@ -1,7 +1,8 @@
 """S153 Batch 8 — Config + Chat + KB + TenantAuth + Wizard + Sidebar + Shopify + Billing + Memory + Escalation.
 
 Specs verified against production interfaces.
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 from pathlib import Path
 

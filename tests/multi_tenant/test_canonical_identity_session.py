@@ -12,7 +12,8 @@ Covers:
     SID-09  start_conversation legacy mode (no customer_repo)
     SID-10  Shopify GID + email creates both contact attributes
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Security middleware — trusted proxy, request body limits, JSON depth, security headers.
 
 Provides four middleware components for defense-in-depth:
@@ -32,7 +33,8 @@ Architecture references:
     - OWASP API Security Top 10 (2023)
     - Shopify App Store security review requirements
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

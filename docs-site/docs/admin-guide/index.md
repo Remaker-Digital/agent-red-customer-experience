@@ -66,4 +66,5 @@ The **custom instructions** field gives you direct access to the system prompt. 
 
 ---
 
-*© 2026 Michael Palmeter. All rights reserved.*
+<!-- Copyright (c) 2026 Michael Palmeter -->
+<!-- SPDX-License-Identifier: MIT -->

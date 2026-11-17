@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Launcher image upload endpoint — SPEC-0245 capability.
 
 Accepts PNG/JPEG/GIF/SVG launcher images, validates format and size,
@@ -8,7 +9,8 @@ Routes:
     POST /api/admin/launcher-image/upload — Upload launcher image (max 128KB)
     DELETE /api/admin/launcher-image       — Remove launcher image (reset to built-in icon)
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 from __future__ import annotations
 

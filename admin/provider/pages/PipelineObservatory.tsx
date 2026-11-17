@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * PipelineObservatory -- Pipeline Observatory page (SPEC-1585..1587, SPEC-1786).
  *
@@ -13,7 +14,8 @@
  *   GET /api/superadmin/pipeline/tenants/{id}/metrics
  *   GET /api/superadmin/pipeline/database
  *
- * (c) 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import React, { useCallback, useEffect, useState } from 'react';

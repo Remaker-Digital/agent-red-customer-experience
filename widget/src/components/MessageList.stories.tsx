@@ -1,11 +1,13 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * Storybook stories for MessageList (SPEC-1845/WI-1502).
  *
  * Covers: empty state, single message, conversation, typing indicator,
  * greeting message, and scroll overflow.
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import { MessageList } from './MessageList';

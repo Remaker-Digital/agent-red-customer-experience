@@ -4,7 +4,8 @@ Verify IntentRouter is wired into the orchestrator, trace builder
 includes route decision, and peer agent handler has correct call
 signatures for dispatch_with_binding and SSE helpers.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations
@@ -73,7 +74,7 @@ class TestTraceIntegration:
 
 
 class TestPeerAgentHandlerSignatures:
-    """Verify _handle_peer_agent uses correct call signatures (Codex P1 fix)."""
+    """Verify _handle_peer_agent uses correct call signatures (coding assistant P1 fix)."""
 
     def test_dispatch_with_binding_has_agent_id_and_skill_id(self):
         """dispatch_with_binding() call includes agent_id and skill_id kwargs."""

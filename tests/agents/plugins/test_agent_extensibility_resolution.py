@@ -3,7 +3,8 @@
 Tests for three-layer resolution algorithm, list_available_skills,
 and KR MCP migration to binding system.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations
@@ -296,7 +297,7 @@ class TestKrMcpMigration:
 
 
 # ---------------------------------------------------------------------------
-# Migration State Contract (Codex P1 finding)
+# Migration State Contract (coding assistant P1 finding)
 # ---------------------------------------------------------------------------
 
 
@@ -383,7 +384,7 @@ class TestMigrationStateContract:
 
 
 # ---------------------------------------------------------------------------
-# Runtime wiring: agent_dispatch calls resolve_kr_with_fallback (Codex P1)
+# Runtime wiring: agent_dispatch calls resolve_kr_with_fallback (coding assistant P1)
 # ---------------------------------------------------------------------------
 
 

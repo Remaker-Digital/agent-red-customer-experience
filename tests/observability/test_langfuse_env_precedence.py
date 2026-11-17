@@ -6,7 +6,8 @@ of src/observability/langfuse_exporter.py:
 
 Test plan ref: COMPREHENSIVE-TEST-PLAN-S245-S255.md Slice 0c
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

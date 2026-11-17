@@ -4,7 +4,8 @@
  * Verifies store state, SSE callback contract, and locale support
  * for enhanced connection recovery UX.
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import { describe, it, expect } from 'vitest';

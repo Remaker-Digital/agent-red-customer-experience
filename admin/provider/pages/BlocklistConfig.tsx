@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * BlocklistConfig — Allow/block list management + value checking.
  *
@@ -12,7 +13,8 @@
  *      POST /api/superadmin/blocklists/{list_type}/check
  *
  * WI-1425 / SPEC-1820
- * (c) 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import React, { useCallback, useEffect, useState } from 'react';

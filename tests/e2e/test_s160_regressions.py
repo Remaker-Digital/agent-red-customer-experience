@@ -12,7 +12,8 @@ Requires:
   - admin/standalone Vite dev server (admin_vite_server fixture)
   - widget/dist/agent-red-widget.iife.js (built widget bundle)
 
-(c) 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 import json

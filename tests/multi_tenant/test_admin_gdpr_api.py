@@ -7,7 +7,8 @@ Covers:
     - get_consent_status handler (reads from tenant_repo)
     - update_consent handler (delegates to consent_manager)
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

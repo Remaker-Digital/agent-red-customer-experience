@@ -1,7 +1,8 @@
 /**
  * SPEC-1880: WhatsApp escalation markdown links render as clickable widget anchors.
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import { h } from 'preact';

@@ -6,7 +6,8 @@ alias generation from the shared base class (R8 refactoring, session 31).
 Run:
     python -m pytest tests/multi_tenant/test_api_models.py -v
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 

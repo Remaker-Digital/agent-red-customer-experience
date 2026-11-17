@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Superadmin API -- Allow/block list management + maintenance mode.
 
 Domain sub-module for SPEC-1820 (Allow/Block List Management) and
@@ -15,7 +16,8 @@ Maintenance Mode:
   GET  /maintenance             — Read current maintenance state
   PUT  /maintenance             — Enable/disable/schedule maintenance mode
 
-(c) 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 from __future__ import annotations
 

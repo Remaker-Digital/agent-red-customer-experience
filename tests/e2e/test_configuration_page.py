@@ -15,7 +15,8 @@ Run with:
     pytest tests/e2e/test_configuration_page.py -v --headed
     pytest tests/e2e/test_configuration_page.py -v
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 import pytest

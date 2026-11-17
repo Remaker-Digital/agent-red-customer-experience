@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * Launcher — the floating action button that opens/closes the widget.
  *
@@ -10,7 +11,8 @@
  * Architecture (Decision UI-3): Shadow DOM for launcher, iframe for panel.
  * Same approach as Zendesk.
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import { FunctionComponent } from 'preact';

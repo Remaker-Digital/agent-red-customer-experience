@@ -1,4 +1,5 @@
-# (C) 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """SPEC-1706 mock E2E tests for Inbox page.
 
 Tests the Inbox UI (conversation list, detail panel, message thread, search,

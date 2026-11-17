@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """B6. Layer 2 search and conversation vectorization stay off for the beta."""
 
 from __future__ import annotations

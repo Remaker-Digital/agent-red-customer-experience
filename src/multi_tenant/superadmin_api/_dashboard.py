@@ -1,10 +1,12 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Superadmin API -- Dashboard, billing, SLA, queues, compliance, secrets, integrations.
 
 Domain sub-module extracted from the superadmin_api monolith.
 Endpoints are registered on the shared router from _monolith.
 
-(c) 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 from __future__ import annotations
 

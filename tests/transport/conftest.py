@@ -3,7 +3,8 @@
 Provides SSE event parsing, benchmark data structures, and staging
 fixtures used across Phase 3 (E2E) and Phase 4 (performance) tests.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

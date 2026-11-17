@@ -10,7 +10,8 @@ Covers:
 
 Test plan reference: HV-1 (Support Diagnostics)
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

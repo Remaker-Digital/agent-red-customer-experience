@@ -1,4 +1,5 @@
-# (c) 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Audit log sanitizer — SPEC-1843 / WI-1615.
 
 Ensures audit log payloads never contain PII or tenant business data.

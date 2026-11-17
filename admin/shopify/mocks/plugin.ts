@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 // @ts-nocheck
 /**
  * Shopify Vite mock API plugin — configureServer hook that intercepts /api/* requests.
@@ -12,7 +13,8 @@
  *   - Injects `?shop=mock-store.myshopify.com` URL param so `getShopifyConfig()`
  *     finds a valid shop domain.
  *
- * (c) 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import type { Plugin, ViteDevServer } from 'vite';

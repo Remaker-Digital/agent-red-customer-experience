@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """
 Fail-closed Critic/Supervisor safety enforcement.
 
@@ -42,7 +43,8 @@ Architecture references:
     - AuditEventType.SECURITY_EVENT for blocked responses
     - AuditEventType.ESCALATION_TRIGGERED for Critic-unavailable escalation
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

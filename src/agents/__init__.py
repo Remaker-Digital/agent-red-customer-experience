@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 # Agent Red Customer Experience — Containerized Agent Package
 #
 # This package contains the 6 AGNTCY-compatible agent implementations,
@@ -18,4 +19,5 @@
 # Base class:
 #   from src.agents.base import AgentRedBaseAgent
 #
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT

@@ -1,5 +1,6 @@
 # tests/test_host/test_runner_temp_files.py: where TestRunner keeps its temporary files
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 
 """
 TestRunner's pytest report and Locust CSV files live in a new private

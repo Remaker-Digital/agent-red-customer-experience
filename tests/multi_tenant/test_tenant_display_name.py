@@ -9,7 +9,8 @@ Tests:
   - TenantSummaryItem includes display_name in API response
   - _generate_display_name() produces unique ordinals
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

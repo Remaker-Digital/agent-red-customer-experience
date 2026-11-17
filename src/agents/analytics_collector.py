@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 # Agent Red Customer Experience — Analytics Collector Agent
 #
 # Receives span/metric data from all pipeline agents and persists it.
@@ -14,7 +15,8 @@
 # Output payload:
 #   {"collected": bool, "event_count": int}
 #
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 
 from __future__ import annotations
 

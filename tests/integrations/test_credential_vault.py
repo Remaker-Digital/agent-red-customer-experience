@@ -3,7 +3,8 @@
 Tests cover: initialization, store/get/delete credentials, rotation,
 DEK caching, per-tenant isolation, GDPR bulk delete, list credentials.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

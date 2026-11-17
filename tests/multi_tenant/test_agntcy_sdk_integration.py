@@ -15,7 +15,8 @@ Validates:
 
 Module under test: src/multi_tenant/agntcy_sdk_integration.py
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

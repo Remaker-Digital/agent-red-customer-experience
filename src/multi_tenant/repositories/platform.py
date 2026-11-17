@@ -1,11 +1,13 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """
 Platform-scoped repositories — platform_config and audit_log collections.
 
 These collections are NOT partitioned by tenant_id. They use
 functional partition keys (config_type, time_partition).
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations
@@ -329,7 +331,8 @@ class AdminDocumentationRepository(PlatformScopedRepository):
     Used by the Co-pilot agent to retrieve product documentation
     when team members ask about Agent Red admin features.
 
-    (c) 2026 Michael Palmeter.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
     """
 
     def __init__(self) -> None:

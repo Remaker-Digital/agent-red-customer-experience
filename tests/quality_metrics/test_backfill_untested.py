@@ -3,7 +3,8 @@
 Verifies risk tier classification, untested spec identification,
 and skeleton test generation.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 from __future__ import annotations
 

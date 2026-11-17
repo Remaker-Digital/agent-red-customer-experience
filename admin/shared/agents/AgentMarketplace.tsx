@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * AgentMarketplace — browse and install/uninstall peer agents (SPEC-1865).
  *
@@ -6,7 +7,8 @@
  * skill count, tier gate, and an Install/Uninstall button. Actions are
  * best-effort with user feedback via onNotify.
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import React, { useState, useMemo, useCallback } from 'react';

@@ -1,7 +1,8 @@
 """S153 Batch 11 — Deploy/Process + Quality Framework + Admin verifiable.
 
 Specs verified against production interfaces.
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 import re
 import sqlite3

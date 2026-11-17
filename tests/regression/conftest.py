@@ -25,7 +25,8 @@ from pathlib import Path
 import httpx
 import pytest
 
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 # ---------------------------------------------------------------------------
 # Auto-load .env.local (transient credentials must never be hardcoded —
 # see REPEATABLE-PROCEDURES.md Section 7: No Hardcoded Transient Values)

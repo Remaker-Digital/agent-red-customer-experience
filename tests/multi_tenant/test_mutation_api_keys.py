@@ -5,7 +5,8 @@ Tests: metadata, generate, rotate, revoke, reset (public).
 Exercises GET/POST/DELETE on /api/admin/api-keys through the full middleware
 stack using the ``apikey_repos`` fixture from ``tests/multi_tenant/conftest.py``.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

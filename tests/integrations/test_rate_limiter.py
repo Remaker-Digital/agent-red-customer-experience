@@ -3,7 +3,8 @@
 Tests cover: TokenBucket mechanics, per-vendor rate limits, adaptive
 factor on 429s, RetryExecutor with backoff, and vendor stats.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

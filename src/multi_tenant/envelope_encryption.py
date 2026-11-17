@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Envelope Encryption Service — SPEC-1843 / WI-1624 / WI-1625.
 
 Provides application-level envelope encryption for tenant data using

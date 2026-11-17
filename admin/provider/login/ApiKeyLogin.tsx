@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * Provider Admin Login — Service Provider Administrator authentication.
  *
@@ -11,7 +12,8 @@
  *
  * Migrated to Mantine components (Cycle 10, item 10e).
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import React, { useState, useCallback, useEffect } from 'react';

@@ -1,5 +1,6 @@
 # tests/unit/test_single_container_startup.py: RC-11 single-container startup handlers
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 
 """
 RC-11 single-container beta mode, PR3 (docs/beta-single-container-design.md, sections 3 and 6).

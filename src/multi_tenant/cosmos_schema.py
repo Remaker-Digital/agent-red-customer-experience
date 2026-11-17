@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """
 Cosmos DB schema definitions for multi-tenant Agent Red platform.
 
@@ -28,7 +29,8 @@ Architecture references:
     - Decision #29: Layer 2 vectorization (DiskANN, 3072 dimensions, cosine)
     - Master Plan Review Section 4: Architecture Decisions Detail
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations
@@ -421,7 +423,7 @@ class ConversationDocument(BaseModel):
         ),
     )
 
-    # Actor/channel metadata (SPEC-1862 — Codex P1.3 normalization)
+    # Actor/channel metadata (SPEC-1862 : coding assistant P1.3 normalization)
     actor_type: str = Field(
         default="customer",
         description="Actor who initiated: 'customer', 'team_member', or 'internal_agent'.",
@@ -1888,7 +1890,8 @@ class AdminDocumentationDocument(BaseModel):
     Partition key: /document_category
     No TTL — documentation is permanent.
 
-    (c) 2026 Michael Palmeter.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
     """
 
     id: str = Field(description="Document ID: {category}:{slug}")
@@ -2642,7 +2645,7 @@ def get_collection_configs() -> list[CollectionConfig]:
         # 27. agent_overlays — WI-4010: per-tenant agent configuration overlays (SPEC-1854)
         # Partition key: /tenant_id. ID: agent_id (unique per tenant partition).
         # Narrow indexing: exclude skill_overrides/prompt_overrides/custom_metadata blobs
-        # that are never directly queried (Codex Finding 5).
+        # that are never directly queried (coding assistant Finding 5).
         CollectionConfig(
             name=COLLECTION_AGENT_OVERLAYS,
             partition_key="/tenant_id",

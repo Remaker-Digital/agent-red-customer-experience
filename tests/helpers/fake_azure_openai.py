@@ -1,5 +1,6 @@
 # tests/helpers/fake_azure_openai.py: a recording stand-in for the Azure OpenAI service
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 
 """
 FakeAzureOpenAI answers chat completion requests the way Azure OpenAI does, through an httpx

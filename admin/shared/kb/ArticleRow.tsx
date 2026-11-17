@@ -1,10 +1,12 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * ArticleRow — a single table row in the KB article list, showing title,
  * category, status badge, staleness badge, last-updated date, and a
  * conditional "Verify" action button.
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import React from 'react';

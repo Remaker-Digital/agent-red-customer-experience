@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * AnalyticsOverview - Analytics dashboard with summary cards, topic breakdown,
  * and knowledge gaps table.
@@ -11,7 +12,8 @@
  * Framework-agnostic React component — no Polaris, no Tailwind, pure inline styles.
  * Receives auth, API fetch, and notification callbacks from the shell.
  *
- * (c) 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import React, { useMemo, useState } from 'react';

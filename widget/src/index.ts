@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * Agent Red Widget — entry point.
  *
@@ -24,7 +25,8 @@
  * Or via Shopify Theme App Extension (app embed block):
  *   Liquid template injects the same script with tenant-specific attributes.
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import { h, render } from 'preact';

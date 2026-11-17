@@ -4,7 +4,8 @@ Validates the BuildResult dataclass, step sequencing, dry-run behavior,
 and error handling. All Azure CLI calls are mocked.
 
 WI-1437 / SPEC-1825
-(c) 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 from __future__ import annotations
 

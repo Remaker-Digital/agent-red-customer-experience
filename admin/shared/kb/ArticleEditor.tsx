@@ -1,10 +1,12 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * ArticleEditor — create / edit form for a single KB article.
  * Handles title, category (existing or new), status, content textarea,
  * save, and delete with confirmation.
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import React, { useState, useCallback } from 'react';

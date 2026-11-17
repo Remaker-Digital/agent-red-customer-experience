@@ -3,7 +3,8 @@
 Verifies that POST /api/superadmin/deployments/record correctly stores
 deployment events in the audit log via AuditLogRepository.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

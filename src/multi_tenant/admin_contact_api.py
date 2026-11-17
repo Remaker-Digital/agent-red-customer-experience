@@ -10,7 +10,8 @@ Dependencies:
     - alert_delivery.py: send_acs_email (ACS fallback)
     - cosmos_schema.py: ContactMessageDocument
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

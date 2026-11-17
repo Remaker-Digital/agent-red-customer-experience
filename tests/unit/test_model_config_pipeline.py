@@ -1,5 +1,6 @@
 # tests/chat/test_model_config_pipeline.py: F29, the empty-reply guard and the chat API version
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 
 """
 Pipeline-level model configuration.

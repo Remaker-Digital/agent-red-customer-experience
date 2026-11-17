@@ -1,12 +1,12 @@
 """CPD-001..010: Canonical production deploy pipeline tests.
 
 Validates the deterministic production deployment procedure per the
-Codex test protocol v0.1-draft. Covers:
+coding assistant test protocol v0.1-draft. Covers:
   - Contract tests (CLI requirements, approval gate, no prompts)
   - Behavioral unit tests (rollback capture, rollback decision, failure reporting)
   - Subprocess CLI tests (dry-run success exit 0, smoke-failure exit 1 + rollback)
 
-Test IDs map to the Codex CPD test matrix:
+Test IDs map to the coding assistant CPD test matrix:
   CPD-001: CLI requires --version
   CPD-002: Production path without approval → fail before deploy
   CPD-003: No interactive prompt strings in canonical path
@@ -18,7 +18,8 @@ Test IDs map to the Codex CPD test matrix:
   CPD-009: Mocked success path — pipeline exits 0 when all phases pass
   CPD-010: Mocked smoke-failure path — pipeline exits 1 with rollback attempted
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations
@@ -576,7 +577,7 @@ class TestCPD009SuccessPath:
     def test_mocked_success_path_cli_exits_zero(self):
         """Subprocess CLI: all phases mocked to PASS → pipeline exits 0.
 
-        This is the Phase C case 4 proof from the Codex test protocol v0.1:
+        This is the Phase C case 4 proof from the coding assistant test protocol v0.1:
         top-level command wired correctly so a success-path run exits 0.
         Uses run_mocked_pipeline.py which patches every phase function before
         calling deploy_pipeline.main() — proving CLI exit-code wiring without
@@ -665,7 +666,7 @@ class TestCPD010MockedSmokeFailurePath:
     def test_mocked_smoke_failure_cli_exits_one_with_rollback(self):
         """Subprocess CLI: production smoke failure → pipeline exits 1, rollback logged.
 
-        This is the Phase C case 5 proof from the Codex test protocol v0.1:
+        This is the Phase C case 5 proof from the coding assistant test protocol v0.1:
         top-level command wired correctly so a smoke-failure path exits 1 and
         records rollback attempt. Uses run_mocked_pipeline.py which patches
         all shared/deploy phases to PASS while leaving phase_11_production_verification

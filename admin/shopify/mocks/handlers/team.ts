@@ -1,7 +1,8 @@
 // @ts-nocheck
 /**
  * Team handlers - CRUD, role change, active toggle.
- * (c) 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 import { GET, POST, PUT, DELETE } from '../router';
 import { getStore } from '../store';

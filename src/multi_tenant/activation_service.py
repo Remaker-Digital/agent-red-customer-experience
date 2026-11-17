@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """ActivationService — Save → Activate configuration lifecycle manager.
 
 Replaces the wizard (OnboardingWizard) and test mode (TestModeService) with
@@ -29,7 +30,8 @@ Architecture:
     - Draft reads bypass the 60-second cache (admin-only, low frequency)
     - Activation snapshots are stored permanently for future history UI
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

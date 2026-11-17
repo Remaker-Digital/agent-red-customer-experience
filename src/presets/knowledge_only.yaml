@@ -1,5 +1,6 @@
 # Knowledge Only — FAQ/docs, no commerce focus
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 
 id: knowledge_only
 display_name: "Knowledge Only"

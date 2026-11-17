@@ -1,11 +1,13 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * ConfirmRemoveDialog — Modal confirmation for removing a team member.
  *
  * Extracted from TeamManager.tsx. Presentational component: receives the
  * member to remove, loading state, and confirm/cancel callbacks as props.
  *
- * (c) 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import React from 'react';

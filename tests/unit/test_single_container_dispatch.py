@@ -1,5 +1,6 @@
 # tests/unit/test_single_container_dispatch.py: RC-11 in-process IC, KR, escalation and analytics
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 
 """
 RC-11 single-container beta mode, PR2 (docs/beta-single-container-design.md, sections 3 and 8).
@@ -669,7 +670,7 @@ def test_in_process_module_imported_only_inside_beta_branches() -> None:
 
 
 async def test_in_process_failures_log_no_exception_text(caplog):
-    """An agent exception can carry customer text or an SDK request body; logs get the code and type only (Codex review of #152)."""
+    """An agent exception can carry customer text or an SDK request body; logs get the code and type only (coding assistant review of #152)."""
     import logging
 
     from src.chat.pipeline.in_process import InProcessAgentError, call_in_process, validate_with_in_process_critic

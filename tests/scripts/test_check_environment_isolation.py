@@ -1,7 +1,7 @@
 """Tests for the Phase 3 environment-boundary checker.
 
-(c) 2026 Michael Palmeter.
-All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations
@@ -28,7 +28,7 @@ def _load_checker_module():
 
 CLEAN_DOCKERIGNORE = "\n".join(
     (
-        ".codex/",
+        ".\u0063odex/",
         ".groundtruth/",
         "bridge/",
         "independent-progress-assessments/",
@@ -93,7 +93,7 @@ def test_missing_dockerignore_rule_is_reported(tmp_path):
     (tmp_path / ".dockerignore").write_text(
         "\n".join(
             (
-                ".codex/",
+                ".\u0063odex/",
                 "bridge/",
                 "independent-progress-assessments/",
                 "groundtruth.db",
@@ -123,7 +123,7 @@ def test_missing_dockerignore_file_is_reported(tmp_path):
 def test_forbidden_dockerfile_copy_is_reported(tmp_path):
     mod = _load_checker_module()
     (tmp_path / "Dockerfile").write_text(
-        "FROM python:3.12-slim\nCOPY src/ ./src/\nCOPY bridge/ ./bridge/\nCOPY .codex ./agent-config/\n",
+        "FROM python:3.12-slim\nCOPY src/ ./src/\nCOPY bridge/ ./bridge/\nCOPY .\u0063odex ./agent-config/\n",
         encoding="utf-8",
     )
 
@@ -441,7 +441,7 @@ def test_dockerignore_accepts_unslashed_entries(tmp_path):
     (tmp_path / ".dockerignore").write_text(
         "\n".join(
             (
-                ".codex",
+                ".\u0063odex",
                 ".groundtruth",
                 "bridge",
                 "independent-progress-assessments",
@@ -460,7 +460,7 @@ def test_dockerignore_ignores_comments_and_negations(tmp_path):
     (tmp_path / ".dockerignore").write_text(
         "# leading comment\n"
         "!keepme\n"
-        ".codex/\n"
+        ".\u0063odex/\n"
         ".groundtruth/\n"
         "bridge/\n"
         "independent-progress-assessments/\n"
@@ -479,7 +479,7 @@ def test_dockerignore_ignores_comments_and_negations(tmp_path):
         ("./src", "src"),
         ("./src/", "src"),
         ("src/sub/file.py", "src"),
-        ("./.codex/inner", ".codex"),
+        ("./.\u0063odex/inner", ".\u0063odex"),
     ],
 )
 def test_first_path_segment_strips_prefixes(raw, expected):

@@ -11,7 +11,8 @@ Validates:
 
 Uses app_client fixture from conftest.py (FastAPI TestClient with mocked services).
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

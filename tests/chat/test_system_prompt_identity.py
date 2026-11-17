@@ -13,7 +13,8 @@ identity collection rules based on the is_anonymous parameter.
 Run:
     pytest tests/chat/test_system_prompt_identity.py -v
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """
 GDPR compliance services — PII scrubbing, data export, data deletion, consent management.
 
@@ -46,7 +47,8 @@ Architecture references:
     - TenantDocument.consent_status, grace_period_ends_at
     - CustomerProfileDocument.consent_status
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

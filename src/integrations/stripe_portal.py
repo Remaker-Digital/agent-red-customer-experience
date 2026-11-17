@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """
 Stripe Customer Portal session management.
 
@@ -21,7 +22,8 @@ Flow:
     3. Creates a Stripe Billing Portal session with a return_url.
     4. Returns the portal URL for frontend redirect.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

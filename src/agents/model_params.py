@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Azure OpenAI chat parameters per role, with opt-in reasoning-model support.
 
 Roles and the deployment each one calls:

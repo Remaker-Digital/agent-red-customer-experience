@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """
 Admin Integration Management API — C10 capability dependency.
 
@@ -25,7 +26,8 @@ Routes:
     GET  /api/admin/integrations/stripe/tools       — List available Stripe MCP tools
     DELETE /api/admin/integrations/stripe/credentials — Remove Stripe API key
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

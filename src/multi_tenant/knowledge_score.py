@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Knowledge Score Service — observable knowledge quality metrics (SPEC-1873).
 
 Computes a per-tenant knowledge quality score (0-100) from four factors:
@@ -11,7 +12,8 @@ Computes a per-tenant knowledge quality score (0-100) from four factors:
 Also provides gap detection and clustering for the unanswered-question
 review workflow.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

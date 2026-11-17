@@ -4,7 +4,8 @@
 # Adding a new agent = adding an entry here + deploying its container.
 # No code changes to existing agents or orchestrator required.
 #
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 
 version: "1.1"
 

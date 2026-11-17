@@ -1,5 +1,6 @@
 # tests/unit/test_verification_token_id_guard.py: token ids Cosmos cannot store
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 
 """
 VerificationTokenRepository receives token ids from public links (email

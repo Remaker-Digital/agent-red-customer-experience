@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * Agent provider logos — real SVG files from integration-logos/ where available,
  * inline SVGs from Simple Icons (CC0 license) as fallback, and the Agent Red
@@ -9,7 +10,8 @@
  *   const Logo = getAgentLogo('stripe_mcp');
  *   <Logo size={32} />
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import React, { useState } from 'react';

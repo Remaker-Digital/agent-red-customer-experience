@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """CQ-6: Quality-aware escalation (SPEC-0185 / WI-1516).
 
 Provides quality-driven escalation recommendations.  When the AI's
@@ -9,7 +10,8 @@ to a human agent.
 The recommendation is *advisory* — it adds context to the escalation
 decision made in CriticEscalationMixin, not a hard override.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

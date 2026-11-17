@@ -1,11 +1,13 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Google Docs/Drive Integration Manifest (SPEC-1777).
 
 Declarative configuration for the Google Docs knowledge source adapter.
 Auth: OAuth2.  Scopes: drive.readonly, documents.readonly.
 Sync: Polling via Drive changes.list (incremental) with daily full sweep.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from src.integrations.manifest import (

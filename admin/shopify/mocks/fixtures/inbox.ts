@@ -1,7 +1,8 @@
 // @ts-nocheck
 /**
  * Inbox fixture - conversations with messages, customer info, pipeline traces.
- * (c) 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 export function createInboxFixture() {

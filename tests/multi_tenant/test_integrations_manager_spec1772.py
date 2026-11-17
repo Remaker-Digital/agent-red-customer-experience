@@ -1,7 +1,7 @@
 """SPEC-1772 Integrations Manager Admin UI source coverage.
 
-Copyright 2026 Michael Palmeter.
-All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from pathlib import Path

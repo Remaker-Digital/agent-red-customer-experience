@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """An escalating turn tells the reply step that a handoff is under way.
 
 The assertion is the system prompt the response generator receives, not the

@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Magic link authentication for standalone (Stripe-direct) merchants.
 
 Provides passwordless sign-in via emailed magic links and sign-in codes.
@@ -30,7 +31,8 @@ Security properties:
     - JWT secret derived from environment variable
     - 6-digit codes: 1M combinations, single-use, 15-min TTL, tenant-scoped
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

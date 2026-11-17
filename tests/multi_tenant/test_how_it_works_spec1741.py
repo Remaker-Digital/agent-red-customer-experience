@@ -1,7 +1,7 @@
 """SPEC-1741 How It Works intent diagram coverage.
 
-Copyright 2026 Michael Palmeter.
-All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 import re

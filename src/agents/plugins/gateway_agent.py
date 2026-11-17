@@ -1,11 +1,13 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Gateway Agent — Human Escalation Connection MCP Server (SPEC-1710).
 
 Manages seamless handoff from AI to human support agents.  Provides
 agent availability monitoring, queue management, context transfer,
 skill-based routing, and agent takeover/return transitions.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

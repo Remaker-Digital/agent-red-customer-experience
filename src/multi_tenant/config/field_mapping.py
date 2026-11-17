@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """
 PreferencesDocument ↔ config schema field mapping.
 
@@ -6,7 +7,8 @@ Maps between the expanded config schema field set and the
 PreferencesDocument Cosmos DB model. Contains the direct field sets
 and bidirectional conversion functions.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

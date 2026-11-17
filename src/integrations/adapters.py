@@ -1,11 +1,13 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Adapter Protocol Interfaces — typed contracts for integrations (SPEC-1763).
 
 Four Protocol-based adapter interfaces that all integration adapters must
 implement.  All methods are async and return normalized models (SPEC-1762).
 Vendor errors are wrapped in IntegrationError.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

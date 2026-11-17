@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Category Template Loader (KA-3: Knowledge Automation).
 
 Loads industry-specific knowledge templates from JSON files and applies
@@ -9,7 +10,8 @@ suggestions tailored to common merchant categories.
 Templates are stored as JSON files in src/multi_tenant/knowledge_templates/
 and indexed by _registry.json.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

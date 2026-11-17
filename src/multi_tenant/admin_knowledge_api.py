@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Admin Knowledge Base API — merchant knowledge management (WI #175).
 
 Provides REST endpoints for the merchant admin dashboard's Knowledge Base
@@ -26,7 +27,8 @@ Dependencies:
     - cosmos_schema.py: KnowledgeBaseDocument
     - middleware.py: get_tenant_context, TenantContext
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

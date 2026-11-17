@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Quality closeout helper — shared across all conversation-end paths.
 
 Called by:
@@ -12,7 +13,8 @@ Computes quality_aggregate from per-turn scores and evaluates quality
 regression alerts. Both operations must happen at every closeout path
 so the dashboard read path (_quality.py:242) always has data.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

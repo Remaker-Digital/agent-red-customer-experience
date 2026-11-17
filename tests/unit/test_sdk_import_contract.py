@@ -9,7 +9,8 @@ AgentDispatchMixin._call_via_transport. These tests find every SDK symbol
 src/ imports, import each one up front, and check that requirements.txt keeps
 the three packages on the releases the code is written for.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

@@ -1,7 +1,7 @@
 """Tests for superadmin test pipeline trigger and diagnostic export endpoints.
 
 Validates SPEC-1826 (SPA Test Execution Trigger) and
-SPEC-1827 (Diagnostic Data Export for Claude Code).
+SPEC-1827 (Diagnostic Data Export for coding assistant).
 
 Endpoints tested:
   POST /api/superadmin/tests/run
@@ -13,7 +13,8 @@ Endpoints tested:
   GET  /api/superadmin/diagnostics/drift
   GET  /api/superadmin/diagnostics/health
 
-(c) 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 from __future__ import annotations
 

@@ -5,7 +5,8 @@ store's config (updated by setConfigPartial) rather than the stale initial
 config prop, so that draft-mode and post-activation changes take effect
 without requiring a full page reload.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

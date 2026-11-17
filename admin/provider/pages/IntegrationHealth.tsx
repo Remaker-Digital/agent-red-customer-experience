@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * IntegrationHealth — Cross-service integration reliability dashboard.
  *
@@ -7,7 +8,8 @@
  *
  * API: GET /api/superadmin/integrations/health
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import React, { useEffect, useState } from 'react';

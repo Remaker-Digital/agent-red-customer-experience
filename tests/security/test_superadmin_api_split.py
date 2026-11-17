@@ -2,7 +2,8 @@
 
 Validates SPEC-1694: superadmin_api.py MUST be split into domain sub-modules.
 
-(c) 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 import pathlib

@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * ActivationBanner — Persistent banner for pending configuration changes.
  *
@@ -16,7 +17,8 @@
  *   - onActivate   — callback to open the ActivationDialog
  *   - refreshKey   — increment to force immediate re-poll after save/discard
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import React, { useCallback, useEffect, useState } from 'react';

@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Skip unit tests that need files kept out of the public source.
 
 The public repository holds the product source only. Deploy scripts, the

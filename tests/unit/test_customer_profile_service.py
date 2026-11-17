@@ -14,7 +14,8 @@ Covers:
     - record_interaction
     - Singleton (get_profile_service)
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

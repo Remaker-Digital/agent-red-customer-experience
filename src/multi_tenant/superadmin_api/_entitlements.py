@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Superadmin API -- Entitlement CRUD and feature flag management.
 
 Domain sub-module for SPEC-1816 (Superadmin Entitlement Management API)
@@ -16,7 +17,8 @@ Endpoints:
   PUT  /feature-flags             — Write the feature flags document
   GET  /feature-flags/evaluate    — Evaluate a flag for a tenant
 
-(c) 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 from __future__ import annotations
 

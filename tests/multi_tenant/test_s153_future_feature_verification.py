@@ -6,7 +6,8 @@ and verify accuracy by reviewing the project code.
 These tests confirm that 24 specs previously thought to be unimplemented
 are in fact present in the production codebase.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 from pathlib import Path
 

@@ -3,7 +3,8 @@
 Tests the pure logic of save/load/clear with TTL, without requiring
 browser storage APIs. Uses a mock storage backend.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

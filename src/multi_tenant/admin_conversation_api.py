@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Admin Conversation Inbox API — merchant conversation management (WI #171, C8, C9).
 
 Provides REST endpoints for the merchant admin dashboard's Conversation
@@ -28,7 +29,8 @@ Dependencies:
     - cosmos_schema.py: ConversationDocument, ConversationStatus
     - middleware.py: get_tenant_context, TenantContext
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations
@@ -1531,7 +1533,7 @@ async def set_agent_override(
                 )
 
         # Binding check — tenant must have at least one binding for the agent
-        # Hydrate cache from Cosmos if not yet loaded (Codex P1: cold cache → false 422)
+        # Hydrate cache from Cosmos if not yet loaded (coding assistant P1: cold cache → false 422)
         svc = SkillBindingService.get_instance()
         if ctx.tenant_id not in svc._loaded_tenants:
             await svc.load_tenant_bindings(ctx.tenant_id)

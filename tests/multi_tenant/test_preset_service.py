@@ -10,7 +10,8 @@ Covers:
     - apply_preset calls all 4 write surfaces
     - apply_preset raises ValueError for unknown preset
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

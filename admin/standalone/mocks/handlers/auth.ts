@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 // @ts-nocheck
 /**
  * Auth handlers — magic-link request/verify and 2FA challenge endpoints for mock mode.
@@ -6,7 +7,8 @@
  * Used by Playwright auth / role-gating suites so login and MFA UI paths are
  * exercised against the Vite mock backend (not sessionStorage injection alone).
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 import { GET, POST } from "../router";
 

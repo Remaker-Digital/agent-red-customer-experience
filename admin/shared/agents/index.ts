@@ -1,7 +1,8 @@
 /**
  * Agent sub-components barrel export — Phase 4a.
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 export { AgentListPanel } from './AgentListPanel';
 export { AgentDetailPanel } from './AgentDetailPanel';

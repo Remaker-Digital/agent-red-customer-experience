@@ -1,5 +1,6 @@
 # tests/unit/test_pre_auth_limiter.py: repeated failed sign-ins block the client IP
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 
 """
 Failed authentications were recorded against the client IP, but nothing ever checked the
@@ -93,7 +94,7 @@ def test_wrong_admin_passwords_block_the_client_ip(app_client, small_limiter, mo
 
 
 def test_other_successful_requests_do_not_reset_password_failures(app_client, small_limiter, monkeypatch):
-    """A public widget key or any valid key must not clear the password count (Codex review of #143)."""
+    """A public widget key or any valid key must not clear the password count (coding assistant review of #143)."""
     import src.app.standalone_auth as standalone
 
     monkeypatch.setattr(standalone, "_admin_password_hash", standalone._hash_password("the-right-password"))
@@ -118,7 +119,7 @@ class _UnavailableStore:
 
 
 def test_a_key_store_outage_is_not_a_failed_key_check(app_client, small_limiter, monkeypatch):
-    """An outage answers 503 and counts nothing against the caller (Codex review of #143)."""
+    """An outage answers 503 and counts nothing against the caller (coding assistant review of #143)."""
     import src.integrations.provisioning as provisioning
 
     monkeypatch.setattr(provisioning, "_tenant_repo", _UnavailableStore())
@@ -146,7 +147,7 @@ def _admin_sign_in(app_client, monkeypatch):
 
 
 def test_exempt_ips_keep_their_exemption_at_the_password_gate(app_client, monkeypatch):
-    """PRE_AUTH_RATE_LIMIT_EXEMPT_IPS lists raw IPs; the gate's own key must honor them (Codex review of #143)."""
+    """PRE_AUTH_RATE_LIMIT_EXEMPT_IPS lists raw IPs; the gate's own key must honor them (coding assistant review of #143)."""
     import src.multi_tenant.security_hardening as hardening
 
     monkeypatch.setattr(
@@ -161,7 +162,7 @@ def test_exempt_ips_keep_their_exemption_at_the_password_gate(app_client, monkey
 
 
 def test_service_side_authentication_errors_are_not_counted(app_client, small_limiter, monkeypatch):
-    """A 5xx AuthenticationError is a configuration or store failure, not a guess (Codex review of #143).
+    """A 5xx AuthenticationError is a configuration or store failure, not a guess (coding assistant review of #143).
 
     Unexpected exceptions still count (tests/unit/test_code_quality_s132.py); that choice is parked as RC-14.
     """
@@ -178,7 +179,7 @@ def test_service_side_authentication_errors_are_not_counted(app_client, small_li
 
 
 def test_the_blocked_page_pairs_its_form_token_with_a_cookie(app_client, small_limiter, monkeypatch):
-    """Otherwise the first sign-in after the cooldown fails CSRF validation (Codex review of #143)."""
+    """Otherwise the first sign-in after the cooldown fails CSRF validation (coding assistant review of #143)."""
     import re
 
     sign_in = _admin_sign_in(app_client, monkeypatch)
@@ -203,7 +204,7 @@ class _OneKeyStore:
 
 
 def test_a_valid_key_clears_earlier_key_check_failures(app_client, small_limiter, monkeypatch):
-    """As the authentication middleware does, so earlier typos cannot lock out a later sign-in (Codex review of #143)."""
+    """As the authentication middleware does, so earlier typos cannot lock out a later sign-in (coding assistant review of #143)."""
     import src.integrations.provisioning as provisioning
 
     monkeypatch.setattr(provisioning, "_tenant_repo", _OneKeyStore("ar_live_the_real_key"))
@@ -222,7 +223,7 @@ def test_a_valid_key_clears_earlier_key_check_failures(app_client, small_limiter
 
 @pytest.mark.parametrize("headers", [{}, {"Origin": "https://attacker.example"}], ids=["bare", "cross-site"])
 def test_requests_without_a_credential_are_not_counted(app_client, small_limiter, headers):
-    """Any page can make a visitor's browser send these, so they must not block the visitor (Codex review of #143)."""
+    """Any page can make a visitor's browser send these, so they must not block the visitor (coding assistant review of #143)."""
     for _ in range(LIMIT + 1):
         assert app_client.get("/api/config", params={"tenant": STARTER_TENANT_ID}, headers=headers).status_code == 401
     assert not small_limiter._trackers
@@ -231,7 +232,7 @@ def test_requests_without_a_credential_are_not_counted(app_client, small_limiter
 
 @pytest.mark.parametrize("param", ["api_key", "session_token", "widget_key", "key"])
 def test_a_refused_query_credential_is_not_counted(app_client, small_limiter, param):
-    """Any page can put a credential in a cross-site URL without a preflight (Codex review of #143)."""
+    """Any page can put a credential in a cross-site URL without a preflight (coding assistant review of #143)."""
     for _ in range(LIMIT + 1):
         app_client.get("/api/config", params={"tenant": STARTER_TENANT_ID, param: "not_a_real_credential"})
     assert not small_limiter._trackers
@@ -317,7 +318,7 @@ def test_the_password_gate_enforces_even_when_ip_blocks_are_record_only(app_clie
 
 
 def test_the_api_key_sign_in_explains_a_lockout():
-    """The standalone key login must not show a lockout as "Server error (429)" (Codex review of #143)."""
+    """The standalone key login must not show a lockout as "Server error (429)" (coding assistant review of #143)."""
     import re
     from pathlib import Path
 

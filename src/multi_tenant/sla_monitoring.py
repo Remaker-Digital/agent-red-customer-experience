@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """
 SLA monitoring and compliance tracking service.
 
@@ -22,7 +23,8 @@ Architecture references:
     - WI #79: SLA monitoring dashboard (Master Plan)
     - WI #151: SLA monitoring dashboard (Backlog — supersedes #79)
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

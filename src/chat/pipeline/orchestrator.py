@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """ChatPipeline orchestrator — main pipeline entry point.
 
 Contains the ChatPipeline class which inherits from AgentDispatchMixin,
@@ -7,7 +8,8 @@ and __init__ / close / _init_agents / _load_customer_profile methods
 live here.
 
 R10 refactoring — extracted from pipeline.py (session 39).
-(c) 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations
@@ -702,7 +704,7 @@ class ChatPipeline(AgentDispatchMixin, CriticEscalationMixin, AnalyticsMixin):
                 tokens_input=intent_result.get("tokens_input", 0),
                 tokens_output=intent_result.get("tokens_output", 0),
             )
-            # Preserve original IC result before any clarification overwrite (Codex P2 fix)
+            # Preserve original IC result before any clarification overwrite (coding assistant P2 fix)
             trace.set_intent(intent, confidence)
             detected_intent = intent
 
@@ -1405,7 +1407,7 @@ class ChatPipeline(AgentDispatchMixin, CriticEscalationMixin, AnalyticsMixin):
         stage_event -> dispatch_with_binding -> token_event -> session ->
         agents_invoked -> invocation events -> analytics -> done_event.
 
-        conversation_type stays 'customer' (Codex correction: route info
+        conversation_type stays 'customer' (coding assistant correction: route info
         is recorded in pipeline_trace and invocation events only).
         """
         yield stage_event(
@@ -1568,7 +1570,7 @@ class ChatPipeline(AgentDispatchMixin, CriticEscalationMixin, AnalyticsMixin):
             else:
                 yield validated_event(conversation_id, message_id or "")
 
-            # Do NOT patch conversation_type — stays 'customer' (Codex P1 correction)
+            # Do NOT patch conversation_type : stays 'customer' (coding assistant P1 correction)
             # Route info is in pipeline_trace and invocation events only.
 
             # Persist pipeline_trace for this routed branch

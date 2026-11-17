@@ -1,5 +1,6 @@
 # tests/test_host/test_suites.py — Suite configuration tests
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 
 """Tests for test_host.suites — suite definitions, composite logic, and metadata."""
 

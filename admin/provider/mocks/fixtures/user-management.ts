@@ -1,7 +1,8 @@
 // @ts-nocheck
 /**
  * Provider user management fixture — platform admin users.
- * (c) 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 export function createUserManagementFixture() {
   return {

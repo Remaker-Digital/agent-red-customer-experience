@@ -4,7 +4,8 @@ Tests cover: per-vendor signature verification (Zendesk, Intercom,
 Shopify, Slack), event ID extraction, dedup, async processing,
 error isolation, invalid payloads.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

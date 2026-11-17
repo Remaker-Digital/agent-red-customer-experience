@@ -133,4 +133,5 @@ If your brand voice says "casual" but your formality level is set to "formal," t
 
 ---
 
-*© 2026 Michael Palmeter. All rights reserved.*
+<!-- Copyright (c) 2026 Michael Palmeter -->
+<!-- SPDX-License-Identifier: MIT -->

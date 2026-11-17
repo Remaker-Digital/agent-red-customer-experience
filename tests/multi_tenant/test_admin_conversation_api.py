@@ -9,7 +9,8 @@ Covers:
     - Snippet extraction and match-in field accuracy
     - Route ordering (search before /{conversation_id} catch-all)
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

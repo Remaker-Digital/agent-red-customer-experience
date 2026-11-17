@@ -3,7 +3,8 @@
 Covers: _try_mcp_augmentation, _find_search_tool, _merge_results,
 backward compatibility, end-to-end process() flow with MCP.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

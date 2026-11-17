@@ -1,7 +1,7 @@
 """
 Flow tests: Caller-level encrypted field patch safety.
 
-Verifies that callers identified in the S218 Codex NO-GO report
+Verifies that callers identified in the S218 coding assistant NO-GO report
 no longer trigger EncryptedFieldPatchError at runtime.
 
 Each test simulates the caller's update flow and verifies:
@@ -9,7 +9,7 @@ Each test simulates the caller's update flow and verifies:
   2. Encrypted fields are updated correctly (read-modify-write)
   3. Non-encrypted fields are patched normally
 
-S218 Codex findings:
+S218 coding assistant findings:
   - admin_team_api.py:752 — display_name patch
   - admin_knowledge_api.py:998,1000 — title/content patch
   - activation_service.py:1158-1160 — custom_instructions/return_policy/shipping_info
@@ -17,7 +17,8 @@ S218 Codex findings:
 GOV-19: Outside-in testing.
 SPEC-1843: Zero-knowledge architecture.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

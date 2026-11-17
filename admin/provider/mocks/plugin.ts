@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 // @ts-nocheck
 /**
  * Vite mock API plugin — Provider admin console.
@@ -6,7 +7,8 @@
  * Intercepts /api/superadmin/* requests in mock mode, returning fixture data.
  * Same architecture as standalone mock plugin.
  *
- * (c) 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import type { Plugin, ViteDevServer } from "vite";

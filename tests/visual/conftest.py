@@ -14,7 +14,8 @@ The widget uses a closed Shadow DOM for the launcher (inaccessible to
 Playwright) and a same-origin iframe for the panel. All panel assertions
 operate on the iframe via `page.frame_locator('iframe[title="Agent Red Chat"]')`.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 import json

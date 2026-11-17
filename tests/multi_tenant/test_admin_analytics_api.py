@@ -10,7 +10,8 @@ Test matrix:
     - Repository-level filter for aggregate_metrics, count_by_status,
       list_agents_invoked, list_gap_conversations
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

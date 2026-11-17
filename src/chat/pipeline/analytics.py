@@ -1,7 +1,8 @@
 """Analytics mixin — fire-and-forget analytics event dispatch.
 
 R10 refactoring — extracted from pipeline.py (session 39).
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

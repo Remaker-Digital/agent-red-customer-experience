@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """
 E2E fixtures for the Provider admin SPA (`admin/provider`).
 
@@ -10,7 +11,8 @@ surfaces; login/MFA remain deferred (see progress note).
 Vite is launched with ``npx vite`` (not ``npm run dev``) so Linux ADO agents
 skip the Windows-only ``predev`` PowerShell env sync.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Welcome email — sent once when a new tenant is provisioned.
 
 Delivers the admin console URL and onboarding guidance. API keys are
@@ -14,7 +15,8 @@ Call sites:
     - provisioning.provision_trial_tenant()          (trial signup)
     - provisioning.spa_provision_tenant()            (SPA manual)
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

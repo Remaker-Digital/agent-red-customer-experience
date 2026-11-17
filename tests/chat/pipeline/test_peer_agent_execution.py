@@ -6,7 +6,8 @@ and fallback behavior.
 
 Test plan ref: COMPREHENSIVE-TEST-PLAN-S245-S255.md Slice 0a
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations
@@ -20,7 +21,7 @@ from unittest.mock import AsyncMock, MagicMock, patch
 # ---------------------------------------------------------------------------
 
 def FakeDispatchResult(result=None, error=None, metadata=None):
-    """The real PluginDispatchResult, whose payload is ``content`` (Codex review of #142)."""
+    """The real PluginDispatchResult, whose payload is ``content`` (coding assistant review of #142)."""
     from src.agents.plugins.dispatch import PluginDispatchResult
 
     return PluginDispatchResult(

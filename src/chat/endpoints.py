@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """
 Chat API endpoints — 6 FastAPI routes for customer conversations.
 
@@ -26,7 +27,8 @@ Architecture references:
     - Decision UI-5: SSE stream-then-validate with Critic retraction
     - Decision UI-6: Publishable widget key authentication
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations
@@ -1385,7 +1387,7 @@ async def _websocket_allowed(websocket: WebSocket, conversation_id: str) -> bool
     handler checks before accepting (architecture review S4). A client blocked
     by the pre-auth limiter is refused. Refusals here are not counted toward
     that block: a WebSocket key travels in the query string, which any page can
-    plant in a visitor's browser (Codex review of #143). Probing keys and
+    plant in a visitor's browser (coding assistant review of #143). Probing keys and
     conversation ids is bounded by the handshake cap instead.
     """
     from src.multi_tenant.security_hardening import get_pre_auth_limiter

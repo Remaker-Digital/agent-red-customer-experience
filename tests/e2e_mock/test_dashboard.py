@@ -1,4 +1,5 @@
-# (C) 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Dashboard page E2E tests against mock Vite dev server.
 
 Tests the Dashboard page rendered by admin/standalone with mock API fixtures.

@@ -1,5 +1,6 @@
 # tests/unit/test_copilot_events.py: co-pilot turns emit validated and done events with the right arguments
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 
 """
 _handle_co_pilot called ``validated_event(response, trace_id=...)`` and

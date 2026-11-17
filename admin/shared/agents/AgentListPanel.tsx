@@ -1,11 +1,13 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * AgentListPanel — left panel showing a searchable list of agents.
  *
  * Each row displays agent name, kind badge, and enabled/disabled state.
  * Selected agent is highlighted with a left border accent.
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import React, { useState, useMemo } from 'react';

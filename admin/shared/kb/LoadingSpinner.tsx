@@ -1,7 +1,8 @@
 /**
  * LoadingSpinner — centered spinner with a text label, used while KB data loads.
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import React from 'react';

@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * McpConfigPanel — Stripe MCP credential management and connection testing.
  *
@@ -11,7 +12,8 @@
  * AGNTCY Phase 3B (Cycle 5) — assertion 3.6 (Admin UI).
  * Migrated to Mantine components (Cycle 10, item 10f).
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import React, { useCallback, useState } from 'react';

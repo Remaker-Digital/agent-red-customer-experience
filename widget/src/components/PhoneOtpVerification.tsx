@@ -1,11 +1,13 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * PhoneOtpVerification — 6-digit code entry screen for SMS phone verification.
  *
  * Displayed after pre-chat form phone collection when SMS OTP is enabled.
  * Mirrors OtpVerification.tsx but for phone/SMS channel (SPEC-1879 Phase 3).
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import { FunctionComponent } from 'preact';

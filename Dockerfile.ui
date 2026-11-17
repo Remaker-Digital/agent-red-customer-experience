@@ -1,5 +1,6 @@
 # Dockerfile.ui — Lightweight UI-only overlay for Agent Red
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 #
 # Uses the existing production image as a base and overlays ONLY the UI
 # dist directories (3 admin SPAs + widget bundle). This skips the entire

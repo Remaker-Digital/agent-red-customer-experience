@@ -7,7 +7,8 @@ Tests cover all 5 domain agents:
   - Gateway (SPEC-1710): availability, queue, context transfer, monitor
   - Schedule (SPEC-1711): create, list, cancel followups, ingest events, notify
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

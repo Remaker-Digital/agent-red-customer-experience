@@ -4,7 +4,8 @@
  * Verifies store state for isRestoring/restoreError and that the
  * RestoreSkeleton component contract is wired correctly.
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import { describe, it, expect } from 'vitest';

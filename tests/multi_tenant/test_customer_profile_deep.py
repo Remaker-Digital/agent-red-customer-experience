@@ -9,7 +9,8 @@ Tests CPD-01 through CPD-15 covering:
 
 Uses mocked CustomerProfileRepository to avoid Cosmos DB dependency.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * BillingHealth — Cross-tenant billing reconciliation dashboard.
  *
@@ -7,7 +8,8 @@
  *
  * API: GET /api/superadmin/billing/health
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import React, { useEffect, useState } from 'react';

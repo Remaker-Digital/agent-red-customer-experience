@@ -149,7 +149,7 @@ const config = {
             ],
           },
         ],
-        copyright: `\u00a9 ${new Date().getFullYear()} Michael Palmeter. All rights reserved.`,
+        copyright: 'Copyright (c) 2026 Michael Palmeter. MIT License.',
       },
       mermaid: {
         theme: {light: 'base', dark: 'dark'},

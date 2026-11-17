@@ -8,7 +8,8 @@ WI-0817, WI-0819, WI-0816, WI-0820.
 Run with:
     pytest tests/widget/test_admin_features_batch.py -v
 
-(c) 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

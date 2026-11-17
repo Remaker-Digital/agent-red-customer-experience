@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Batch Data Encryption Migration — SPEC-1843 / WI-1629.
 
 Iterates all tenants, creates DEKs where missing, and encrypts all

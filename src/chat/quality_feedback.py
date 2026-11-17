@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """CQ-8: Quality feedback loop (SPEC-0187 / WI-1518).
 
 Analyses patterns in quality issues across recent turns and generates
@@ -8,7 +9,8 @@ steer the LLM towards better responses.
 The feedback is *ephemeral* — it does NOT modify the stored system
 prompt.  It's added at runtime and cleared once quality recovers.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

@@ -1,4 +1,5 @@
-# (c) 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Tests for audit log sanitizer (SPEC-1843 / WI-1615, WI-1616, WI-1617).
 
 Validates that the sanitizer:

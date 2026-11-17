@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """
 Archival pipeline service — Cosmos DB to Azure Blob Storage (Parquet).
 
@@ -38,7 +39,8 @@ Architecture references:
     - WI #153: Archival pipeline (this module)
     - WI #154: Data retention enforcement (data_retention.py — companion)
 
-(c) 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

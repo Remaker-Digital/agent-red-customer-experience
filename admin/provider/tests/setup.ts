@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * Vitest setup for the provider admin console (WI-3221).
  *
@@ -6,7 +7,8 @@
  * browser-API shims Mantine needs under happy-dom (matchMedia, ResizeObserver,
  * scrollIntoView).
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import '@testing-library/jest-dom/vitest';

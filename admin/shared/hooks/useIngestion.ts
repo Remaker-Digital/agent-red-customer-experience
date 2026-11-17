@@ -1,10 +1,12 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * Ingestion hooks — start, monitor, and cancel storefront ingestion jobs.
  *
  * KA-7: Knowledge Automation Admin UI.
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import { useState, useCallback } from 'react';

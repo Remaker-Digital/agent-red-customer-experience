@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Auth / 2FA / role-gating Playwright coverage for standalone admin (ADO).
 
 These tests deliberately do **not** rely on sessionStorage injection as the

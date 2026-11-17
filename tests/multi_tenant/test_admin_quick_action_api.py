@@ -9,7 +9,8 @@ Covers:
     - Config serving — GET /api/config with page_type filtering
     - Quick action resolution priority (handle > page_type > all)
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

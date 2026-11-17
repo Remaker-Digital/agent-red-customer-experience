@@ -19,7 +19,8 @@ Covers:
 
 Uses MockCosmosManager from conftest.py for in-memory Cosmos DB simulation.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

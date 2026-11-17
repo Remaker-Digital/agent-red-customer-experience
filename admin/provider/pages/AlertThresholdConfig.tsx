@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * AlertThresholdConfig — Alert threshold configuration per metric.
  *
@@ -9,7 +10,8 @@
  *      GET      /api/superadmin/alert-thresholds/history
  *
  * WI-1427 / SPEC-1822
- * (c) 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import React, { useCallback, useEffect, useState } from 'react';

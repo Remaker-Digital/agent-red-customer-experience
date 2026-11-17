@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Count stored Decision 94 fields before a cleanup is planned."""
 
 from __future__ import annotations

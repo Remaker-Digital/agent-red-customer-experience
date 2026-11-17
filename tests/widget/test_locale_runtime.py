@@ -5,7 +5,8 @@ Verifies that the 26 new locale keys are actually used in components
 
 Test plan ref: COMPREHENSIVE-TEST-PLAN-S245-S255.md Slice 8
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

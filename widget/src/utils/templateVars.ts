@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * Template variable substitution for quick action prompts (WI #229).
  *
@@ -15,7 +16,8 @@
  *
  * Unresolved variables are left as-is (e.g. {{unknown}} stays literally).
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 // ---------------------------------------------------------------------------

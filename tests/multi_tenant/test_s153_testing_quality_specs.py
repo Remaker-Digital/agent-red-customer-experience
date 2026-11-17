@@ -6,7 +6,8 @@ Testing artifacts are part of this project. Apply these specs to the artifacts t
 These tests verify that the testing infrastructure meets the quality standards
 defined by the aspirational specifications.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 import sqlite3
 from pathlib import Path

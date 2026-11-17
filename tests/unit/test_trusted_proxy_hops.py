@@ -1,5 +1,6 @@
 # tests/unit/test_trusted_proxy_hops.py: the client IP comes from the trusted end of X-Forwarded-For
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 
 """
 TrustedProxyMiddleware's x-forwarded-for mode used the leftmost X-Forwarded-For entry. Azure
@@ -9,7 +10,7 @@ so a caller could prepend a fresh address per request and dodge every per-IP lim
 at a victim. The middleware now trusts the entry TRUSTED_PROXY_HOPS positions from the right
 (default 1), and the Stripe webhook allowlist uses the address it resolved.
 
-Architecture review S17 and S18 (Codex reviews of #143 and #145); the SPEC-1663 change is RC-17.
+Architecture review S17 and S18 (coding assistant reviews of #143 and #145); the SPEC-1663 change is RC-17.
 """
 
 from __future__ import annotations
@@ -70,7 +71,7 @@ def test_hops_from_the_environment(monkeypatch, raw, expected):
 
 @pytest.mark.parametrize("hops", [0, -1, -5, True])
 async def test_an_explicit_hop_count_below_one_is_normalized(hops):
-    """hops=0 would index the leftmost, client-supplied entry (Codex review of #145)."""
+    """hops=0 would index the leftmost, client-supplied entry (coding assistant review of #145)."""
     middleware = TrustedProxyMiddleware(AsyncMock(), mode=TRUSTED_PROXY_FORWARDED_FOR, hops=hops)
     assert middleware.hops == 1
     assert await _resolved("6.6.6.6, 203.0.113.9", hops=hops) == "203.0.113.9"
@@ -87,7 +88,7 @@ def test_addresses_are_accepted(value):
 
 
 async def test_a_spoofed_stripe_address_does_not_pass_the_webhook_allowlist():
-    """End to end: the allowlist sees the address the middleware resolved (Codex review of #145)."""
+    """End to end: the allowlist sees the address the middleware resolved (coding assistant review of #145)."""
     from starlette.requests import Request
 
     from src.integrations.stripe_webhooks import STRIPE_WEBHOOK_IP_RANGES, _check_stripe_ip

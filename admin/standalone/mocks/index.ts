@@ -2,7 +2,8 @@
 /**
  * Mock API barrel export — registers all handlers with the router.
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import { registerTenantHandlers } from './handlers/tenant';

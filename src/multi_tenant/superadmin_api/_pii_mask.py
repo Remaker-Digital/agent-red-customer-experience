@@ -1,11 +1,13 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """PII masking helpers for superadmin API responses.
 
 SPEC-1843 (ZK Pillar 3): platform operator MUST NOT read tenant data.
 Masking applied at the response boundary so Cosmos queries still function
 but raw PII never reaches the API consumer.
 
-(c) 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 from __future__ import annotations
 

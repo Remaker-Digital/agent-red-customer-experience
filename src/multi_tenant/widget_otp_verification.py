@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Widget OTP verification — customer-facing 6-digit code flow (email + SMS).
 
 Provides endpoints for the chat widget to send and verify OTP codes
@@ -14,7 +15,8 @@ Endpoints:
 Authentication:
     Widget key (X-Widget-Key: pk_live_...) — same as all /api/chat/* endpoints.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations
@@ -589,7 +591,7 @@ class SmsVerifyResponse(BaseModel):
 
     Phase 1 constraint: does NOT return a customer_token. The verified phone
     is confirmed but no chat-usable token is minted until a phone-aware
-    session/endpoint path is reviewed in a later phase (Codex P1-2 blocker).
+    session/endpoint path is reviewed in a later phase (coding assistant P1-2 blocker).
     """
 
     verified: bool = Field(description="Whether the code was valid")
@@ -679,7 +681,7 @@ async def send_sms_otp(
             ttl=_OTP_TTL,
         )
 
-        # Patch to store hashed code (NOT plaintext — Codex requirement)
+        # Patch to store hashed code (NOT plaintext : coding assistant requirement)
         from src.multi_tenant.cosmos_client import get_cosmos_manager
         from src.multi_tenant.cosmos_schema import COLLECTION_VERIFICATION_TOKENS
 
@@ -773,7 +775,7 @@ async def verify_sms_otp(
             )
             return SmsVerifyResponse(verified=False)
 
-        # Constant-time hash comparison (Codex security requirement)
+        # Constant-time hash comparison (coding assistant security requirement)
         stored_hash = doc.get("otp_code_hash", "")
         submitted_hash = hash_code(body.code.strip())
         if not secrets.compare_digest(submitted_hash, stored_hash):
@@ -806,7 +808,7 @@ async def verify_sms_otp(
         # Phase 1: return verified status + phone only.
         # No customer_token minted — current chat runtime treats any valid
         # customer_token as customer_verified=True which would skip identity
-        # collection (Codex P1-2 blocker). Token issuance deferred to a
+        # collection (coding assistant P1-2 blocker). Token issuance deferred to a
         # later phase with a reviewed phone-aware session path.
 
         logger.info(

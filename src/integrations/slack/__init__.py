@@ -1,6 +1,7 @@
 """Slack Integration — Channel Adapter for AI Bot (SPEC-1776).
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from src.integrations.slack.adapter import SlackAdapter

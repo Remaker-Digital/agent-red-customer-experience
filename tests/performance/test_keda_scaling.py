@@ -12,7 +12,8 @@ Since KEDA is an external Kubernetes operator, these tests validate:
 Run:
     pytest tests/performance/test_keda_scaling.py -v
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

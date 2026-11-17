@@ -1,7 +1,8 @@
 // @ts-nocheck
 /**
  * Quick actions fixture.
- * (c) 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 export function createQuickActionsFixture() {
   return {

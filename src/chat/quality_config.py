@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """CQ-7: Merchant quality configuration (SPEC-0186 / WI-1517).
 
 Tenant-level quality thresholds and preferences.  Merchants can
@@ -8,7 +9,8 @@ premium support, or relaxed thresholds during onboarding.
 Configuration is stored in the tenant's Cosmos document and read at
 conversation start.  When no config exists, sensible defaults apply.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

@@ -97,4 +97,5 @@ These are the performance targets Agent Red is designed to achieve:
 
 ---
 
-*© 2026 Michael Palmeter. All rights reserved.*
+<!-- Copyright (c) 2026 Michael Palmeter -->
+<!-- SPDX-License-Identifier: MIT -->

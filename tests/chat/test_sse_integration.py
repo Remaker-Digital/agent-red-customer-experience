@@ -10,7 +10,8 @@ SSE transport behavior from actual AI model calls.
 
 Master Test Plan: §4 Gap Register — SSE Integration (1.0-required)
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

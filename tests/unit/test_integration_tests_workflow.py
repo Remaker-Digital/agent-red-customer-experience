@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Static checks of .github/workflows/integration-tests.yml.
 
 The workflow runs the "integrations" pytest shard of the Azure DevOps release

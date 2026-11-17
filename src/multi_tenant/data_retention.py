@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """
 Data retention enforcement service.
 
@@ -22,7 +23,8 @@ Architecture references:
     - WI #37 / #154: Data retention enforcement (overlapping items)
     - WI #153: Archival pipeline (Change Feed → Parquet → Blob)
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

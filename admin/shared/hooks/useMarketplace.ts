@@ -1,11 +1,13 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * Marketplace hooks — SPEC-1865.
  *
  * useMarketplace: list peer agents available for install.
  * useInstallAgent / useUninstallAgent: mutate install state.
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import { useCallback, useState } from 'react';

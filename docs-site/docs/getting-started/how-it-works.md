@@ -452,4 +452,5 @@ See the [Privacy Policy](https://www.iubenda.com/privacy-policy/51316355) for fu
 
 ---
 
-*© 2026 Michael Palmeter. All rights reserved.*
+<!-- Copyright (c) 2026 Michael Palmeter -->
+<!-- SPDX-License-Identifier: MIT -->

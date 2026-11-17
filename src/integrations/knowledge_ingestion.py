@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Multi-Source Knowledge Ingestion Pipeline (SPEC-1770).
 
 Extends the knowledge vectorizer with content normalization from diverse
@@ -14,7 +15,8 @@ Pipeline stages:
 Integration-sourced articles appear in admin KB alongside manually added ones.
 They are distinguished by source field and are read-only in the admin UI.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

@@ -6,7 +6,8 @@
  *   2. store.ts: restoreMessages normalization + restoredMessageCount
  *   3. Restore-on-mount contract verification (Panel.tsx branching logic)
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import { describe, it, expect, beforeEach, vi } from 'vitest';

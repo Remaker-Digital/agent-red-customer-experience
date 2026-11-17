@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """SPA Emergency Key Recovery (SPEC-1678).
 
 Provides an *unauthenticated* endpoint for platform admins who have lost
@@ -16,7 +17,8 @@ Security properties:
     - New key delivered only via email
     - Audit logged as SECURITY_EVENT
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

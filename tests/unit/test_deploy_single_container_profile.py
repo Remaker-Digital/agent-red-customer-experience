@@ -1,5 +1,6 @@
 # tests/unit/test_deploy_single_container_profile.py: deploy.py single-container profile (RC-11, PR12)
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 
 """
 RC-11 closed beta: scripts/deploy.py gains ``--profile single-container`` for

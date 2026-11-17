@@ -1,7 +1,8 @@
 /**
  * Configuration hooks — config CRUD, named configs, widget appearances, activation.
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import { useState, useCallback } from 'react';

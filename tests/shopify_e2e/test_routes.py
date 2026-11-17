@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Shopify admin — direct route loads (App Bridge NavMenu is not in the DOM)."""
 
 import pytest

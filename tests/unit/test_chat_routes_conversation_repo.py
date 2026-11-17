@@ -1,4 +1,5 @@
-# (c) 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Issue reports, message feedback and consent reach the conversation document (review F33).
 
 The three routes wrote through ``session._conversation_repo``, which ConversationSession

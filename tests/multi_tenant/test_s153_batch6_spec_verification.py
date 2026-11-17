@@ -1,7 +1,8 @@
 """S153 Batch 6 — Team + QuickActions + KB + Integrations + Config + Sidebar + Inbox + Dashboard.
 
 55 specs verified against production interfaces.
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 from pathlib import Path
 

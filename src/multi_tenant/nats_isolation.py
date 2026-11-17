@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """
 NATS tenant isolation — topic namespace, subscription authorization, lifecycle.
 
@@ -40,7 +41,8 @@ Architecture references:
     - Master Plan Review Section 4: Topic-Based Routing
     - AGNTCY upstream: Topic naming (intent-classifier, knowledge-retrieval, etc.)
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

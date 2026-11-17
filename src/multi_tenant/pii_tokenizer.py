@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Reversible PII tokenization for transport-layer privacy (AGNTCY Phase 6).
 
 Replaces one-way PII scrubbing (``[REDACTED:type]``) with reversible UUID
@@ -23,7 +24,8 @@ Entity types detected:
     - order_number: Common e-commerce order ID patterns (#, ORD-, ORDER-)
     - name: Customer names (from customer context, not regex)
 
-(c) 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations
@@ -342,7 +344,7 @@ def _tokenize_values(
     used to run one after another over the growing result, so a later one read an
     earlier one's tokens: an all-digit token id read as a phone number and nested (ADO
     build 25), and an email ending in the customer's first name stopped partway
-    through the name token and reached the AI raw (Codex review of #210).
+    through the name token and reached the AI raw (coding assistant review of #210).
 
     Values that overlap are one value: the union of their spans gets one token, typed
     after its longest member (the first detected on a tie). So an email holding the
@@ -354,7 +356,7 @@ def _tokenize_values(
     """
     # Sort by position, then merge overlapping values. Each group keeps its end and its
     # best member as values join, so a name that overlaps itself many times ("aa" in a
-    # long run of "a") stays linear (Codex review of #210).
+    # long run of "a") stays linear (coding assistant review of #210).
     ordered = sorted((start, end, order, length, kind) for order, (start, end, length, kind) in enumerate(candidates))
     groups: list[tuple[int, int, tuple[int, int, str]]] = []  # start, end, (-length, order, type)
     for start, end, order, length, kind in ordered:

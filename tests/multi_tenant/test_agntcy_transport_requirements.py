@@ -5,7 +5,8 @@ not active in staging/production, and that /ready reflects transport status.
 
 Also covers transport tier detection from get_sdk_status().
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

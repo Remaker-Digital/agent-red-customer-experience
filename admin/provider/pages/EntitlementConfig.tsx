@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * EntitlementConfig — View and edit tier entitlement configuration.
  *
@@ -10,7 +11,8 @@
  *      GET /api/superadmin/entitlements/history
  *
  * WI-1424 / SPEC-1819
- * (c) 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import React, { useCallback, useEffect, useState } from 'react';

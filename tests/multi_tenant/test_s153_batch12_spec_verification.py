@@ -10,7 +10,8 @@ Categories:
 - Testing Process (3): First-login tested, repeatable processes, automated Chrome UI testing
 - Deploy/Documentation (1): Documented deploy process
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 import pathlib
 import sqlite3

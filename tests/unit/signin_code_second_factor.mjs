@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 // The 6-digit code and the email link share this decision.
 import { applyVerifiedSignIn } from "../../admin/standalone/login/verifiedSignIn.js";
 

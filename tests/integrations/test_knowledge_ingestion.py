@@ -4,7 +4,8 @@ Tests cover: ContentNormalizer (HTML, Markdown, Notion, Confluence, CSV),
 chunking with overlap, content hashing for incremental sync, full
 ingestion pipeline, and sync_source batch processing.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

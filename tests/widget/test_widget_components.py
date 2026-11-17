@@ -7,7 +7,8 @@ Verifies TypeScript implementation patterns for widget component specs:
 Run with:
     pytest tests/widget/test_widget_components.py -v
 
-(c) 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

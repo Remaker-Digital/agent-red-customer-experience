@@ -1,5 +1,6 @@
 # tests/agents/test_model_params.py: per-role model parameters, F30 and the RG empty-stream guard
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 
 """
 Chat roles and the deployment each one calls:

@@ -1,11 +1,13 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Slack Integration Manifest (SPEC-1776).
 
 Declarative configuration for the Slack channel adapter.
 Auth: OAuth2.  Bot scopes: chat:write, channels:history/read, etc.
 Webhooks: Events API with x-slack-signature HMAC-SHA256.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from src.integrations.manifest import (

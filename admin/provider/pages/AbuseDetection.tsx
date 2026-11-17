@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * AbuseDetection — Cross-tenant anomalous usage detection dashboard.
  *
@@ -9,7 +10,8 @@
  *      GET  /api/superadmin/abuse/tenant/{tenant_id}
  *      POST /api/superadmin/abuse/tenant/{tenant_id}/flag
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import React, { useEffect, useState } from 'react';

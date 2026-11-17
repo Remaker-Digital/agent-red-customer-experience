@@ -8,7 +8,8 @@ Note: Starter tier has 10 RPM rate limit. Tests that make many requests
 through the same authenticated client may hit 429. This is expected and
 tests accept it as a valid response where appropriate.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

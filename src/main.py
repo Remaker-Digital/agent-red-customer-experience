@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """
 Agent Red Customer Experience — FastAPI application entrypoint.
 
@@ -11,7 +12,8 @@ them together and re-exports names that existing test code imports.
 Usage:
     uvicorn src.main:app --host 0.0.0.0 --port 8000 --reload
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

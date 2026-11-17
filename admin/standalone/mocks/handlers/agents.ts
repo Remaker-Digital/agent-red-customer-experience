@@ -1,11 +1,13 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 // @ts-nocheck
 /**
  * Agent handlers — overlay CRUD, binding CRUD, effective config, available skills.
  *
  * Routes match /api/admin/agents (tenant-admin surface, Phase 4a).
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 import { GET, PUT, DELETE } from "../router";
 import { getStore } from "../store";

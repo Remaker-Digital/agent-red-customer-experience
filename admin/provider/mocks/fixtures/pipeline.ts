@@ -2,7 +2,8 @@
 /**
  * Provider pipeline fixture — agent topology, infrastructure, and metrics.
  * Updated for SPEC-1579..1587 + SPEC-1786.
- * (c) 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 export function createPipelineFixture() {
   return {

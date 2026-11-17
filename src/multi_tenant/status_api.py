@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Public Status API — unauthenticated service status endpoint.
 
 Returns current platform status and active incidents for public
@@ -6,7 +7,8 @@ consumption (status pages, monitoring dashboards).
 
 No authentication required. Read-only.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

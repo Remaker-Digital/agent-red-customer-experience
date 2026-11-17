@@ -5,7 +5,8 @@ Covers:
   - WI-1459: Widget feedback UI (model/transport layer)
   - WI-1460: Feedback aggregate metrics (superadmin API)
 
-(c) 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 from __future__ import annotations
 

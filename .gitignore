@@ -67,8 +67,6 @@ tests/performance/ramp-to-overload-*.json
 harness-state/
 /assets/
 agent-red.wiki/
-.claude/
-.codex/
 groundtruth.db
 
 # PDF generation one-offs (not part of the product)
@@ -86,4 +84,11 @@ pdf-tooling/PRODUCTION-READINESS-SUMMARY.txt
 Thumbs.db
 desktop.ini
 
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
+/.tools/
+/.sessions/
+/.worktrees/
+/.cache/
+/*.exe
+/*.bin

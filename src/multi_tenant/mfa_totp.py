@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """
 MFA/TOTP service — RFC 6238 time-based one-time password authentication.
 
@@ -11,7 +12,8 @@ with the naming convention ``user-{team_member_id}-totp-seed``.
 MFA session tokens are JWTs signed with HS256 using a per-deployment
 secret from the MFA_JWT_SECRET environment variable.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

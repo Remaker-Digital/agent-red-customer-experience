@@ -1,11 +1,13 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * TeamManager styles — theme-aware style factory.
  *
  * Extracted from TeamManager.tsx. Produces a complete style map from a
  * ThemePalette + dark flag, consumed by all team sub-components.
  *
- * (c) 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import type React from 'react';

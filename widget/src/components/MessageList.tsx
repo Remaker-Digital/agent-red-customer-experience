@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * MessageList — scrollable container for conversation messages.
  *
@@ -13,7 +14,8 @@
  * Visual reference: Zapier (clean scrollbar, generous padding).
  * Functional reference: Tidio (auto-scroll, date separators, typing dots).
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import { FunctionComponent, JSX } from 'preact';

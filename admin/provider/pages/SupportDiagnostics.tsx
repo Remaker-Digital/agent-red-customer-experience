@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * SupportDiagnostics — Per-tenant diagnostic snapshot for support.
  *
@@ -9,7 +10,8 @@
  * API: GET /api/superadmin/diagnostics/{tenant_id}
  *      GET /api/superadmin/diagnostics/{tenant_id}/errors
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import React, { useEffect, useState } from 'react';

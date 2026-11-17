@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """
 TenantConfigProcessor — backward-compatible re-export barrel.
 
@@ -17,7 +18,8 @@ For new code, prefer importing from the package directly:
 Architecture reference: Decision #22 (TenantConfigProcessor)
 R4 refactoring — session 34.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 # Re-export everything from the config package

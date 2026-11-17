@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Semantic caching for Knowledge Base retrieval and AI responses.
 
 Work Items #223-225: Multi-layer caching system that reduces Azure OpenAI
@@ -23,7 +24,8 @@ Integration points:
 Dependencies:
     - No external packages (stdlib only)
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

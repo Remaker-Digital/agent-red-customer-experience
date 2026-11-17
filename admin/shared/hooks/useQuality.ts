@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * Quality hooks — knowledge score, gap review, and preview chat.
  *
@@ -6,7 +7,8 @@
  * Phase 1: useKnowledgeScore, useGapReview (GET endpoints).
  * Phase 2: usePreviewChat, usePreviewTrace (POST SSE + GET, deferred).
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import React from 'react';

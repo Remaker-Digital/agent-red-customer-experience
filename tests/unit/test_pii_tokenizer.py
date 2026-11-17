@@ -1,5 +1,6 @@
 # tests/unit/test_pii_tokenizer.py: a token the tokenizer issued is never read as PII
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 
 """
 PiiTokenizer issues tokens as ``pii-{type}-{12 hex characters}``. Its detection passes
@@ -12,7 +13,7 @@ result, so a later pass read an earlier pass's tokens:
   build 25 failed tests/unit/test_peer_agent_critic.py this way: the customer got
   ``pii-email-836890970487`` back instead of their email address.
 - An email ending in the customer's first name (``alice@example.jo`` for "Jo") stopped
-  partway through the name token, so the mailbox and domain reached the AI raw (Codex
+  partway through the name token, so the mailbox and domain reached the AI raw (coding assistant
   review of #210).
 
 Every detector now reads the original text, and overlapping values become one token,
@@ -231,7 +232,7 @@ def test_an_echoed_token_whose_original_is_detected_again_keeps_its_token(monkey
 
 
 def test_a_name_that_overlaps_itself_across_a_long_message_is_one_token(monkeypatch):
-    """Codex review of #210: "aa" in a long run of "a" matches at every position; the values
+    """coding assistant review of #210: "aa" in a long run of "a" matches at every position; the values
     merge into one token, and grouping keeps a running end instead of rescanning."""
     _issue_token_ids(monkeypatch, "aaaaaaaaaaa1")
     tokenizer = PiiTokenizer(customer_names=["aa"])

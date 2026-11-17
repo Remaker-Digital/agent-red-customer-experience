@@ -1,4 +1,5 @@
-# (C) 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """SPEC-1706: Error states and edge case tests.
 
 Strong asserts for real error/empty UI (not "body still has text").

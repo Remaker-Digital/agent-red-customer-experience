@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * TeamManager — Team member management component for the admin dashboard.
  *
@@ -27,7 +28,8 @@
  *   - InviteForm, TeamMemberRow, ConfirmRemoveDialog, EditMemberDialog, RoleTooltip
  *   - constants, styles, utils, types
  *
- * (c) 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import React, { useState, useCallback } from 'react';

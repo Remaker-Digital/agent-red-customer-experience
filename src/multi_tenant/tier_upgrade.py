@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """
 Tier upgrade/downgrade endpoint — D30 capability.
 
@@ -10,7 +11,8 @@ Routes:
     GET  /api/billing/upgrade/preview   — Preview upgrade cost/proration
     POST /api/billing/upgrade           — Initiate tier change via Stripe
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

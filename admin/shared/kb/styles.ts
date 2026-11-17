@@ -1,10 +1,12 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * Shared style constants and helper factories for Knowledge Base sub-components.
  *
  * Framework-agnostic — no Polaris, no Tailwind, pure inline styles.
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import type React from 'react';

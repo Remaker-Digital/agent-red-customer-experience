@@ -4,7 +4,8 @@ Tests POST/PUT/GET round-trip of staff_domain_tags on team member documents.
 
 Test plan ref: COMPREHENSIVE-TEST-PLAN-S245-S255.md Slice 0b
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

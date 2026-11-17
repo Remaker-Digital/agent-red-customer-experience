@@ -3,7 +3,8 @@
 Covers: McpServerConfig, shop domain validation, tool classification,
 policy gate, AgentRedMcpClient, config builders, config resolvers.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

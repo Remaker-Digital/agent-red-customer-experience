@@ -7,7 +7,8 @@ Covers:
     - POST /api/admin/presets/{id}/apply — apply preset
     - POST /api/admin/presets/{id}/apply — 404 for unknown
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

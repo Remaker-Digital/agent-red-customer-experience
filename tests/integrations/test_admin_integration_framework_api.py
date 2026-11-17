@@ -3,7 +3,8 @@
 Tests cover: setup instructions, connection test, sync status/trigger,
 event logs with pagination, action config + HITL updates, OAuth callback.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

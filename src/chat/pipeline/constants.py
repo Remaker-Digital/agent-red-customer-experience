@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Pipeline constants, environment configuration, and error classification.
 
 Contains USE_AGENT_CONTAINERS feature flag, agent HTTP endpoint URLs,
@@ -6,7 +7,8 @@ Azure OpenAI model deployment names, intent taxonomy, and the
 _classify_openai_error() utility.
 
 R10 refactoring — extracted from pipeline.py (session 39).
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

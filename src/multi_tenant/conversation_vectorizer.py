@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Conversation vectorization pipeline — Layer 2 memory.
 
 Work Items #87-88 (Decision #29): Post-conversation vectorization and
@@ -32,7 +33,8 @@ Dependencies:
     - gdpr_services.py: PiiScrubber
     - openai: AsyncAzureOpenAI (text-embedding-3-large)
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

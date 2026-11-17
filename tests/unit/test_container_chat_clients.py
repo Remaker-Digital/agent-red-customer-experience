@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """The per-agent container apps build their chat client with the gateway's API version rule.
 
 With no new variable set they keep today's AsyncAzureOpenAI at 2024-10-21. With a reasoning

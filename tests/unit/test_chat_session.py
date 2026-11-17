@@ -9,7 +9,8 @@ Covers: ConversationSession (start_conversation, add_customer_message,
         (_resolve_customer_id, _end_reason_to_status, _calculate_duration),
         module-level singletons.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

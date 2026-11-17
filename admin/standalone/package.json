@@ -1,6 +1,6 @@
 {
   "name": "@agent-red/admin-standalone",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "version": "1.0.0",
   "private": true,
   "description": "Agent Red Customer Experience \u2014 Standalone admin (API key auth, non-Shopify merchants)",

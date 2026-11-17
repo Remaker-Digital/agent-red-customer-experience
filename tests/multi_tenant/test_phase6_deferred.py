@@ -4,7 +4,8 @@ SPEC-0761 (customer admin), SPEC-0195 (CSV export), SPEC-0151 (covered by A/B),
 SPEC-0245 (launcher image), SPEC-1705 (staging proxy), SPEC-0617 (admin RAG),
 SPEC-0823 (RAG + memory), SPEC-0297 (backup encryption).
 
-(c) 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 from __future__ import annotations
 

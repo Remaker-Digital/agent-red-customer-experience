@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Action Executor with HITL Gating — routes AI requests to adapters (SPEC-1769).
 
 The ActionExecutor is the single dispatch point for AI-initiated actions against
@@ -8,7 +9,8 @@ while low-risk reads can execute immediately.
 
 Audit logging captures every action attempt, approval, and result.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

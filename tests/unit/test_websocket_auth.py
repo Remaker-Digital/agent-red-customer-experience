@@ -1,5 +1,6 @@
 # tests/unit/test_websocket_auth.py: the chat WebSocket authenticates before accepting
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 
 """
 ``/api/chat/ws/{conversation_id}`` accepted every connection: the HTTP authentication
@@ -135,7 +136,7 @@ def test_customers_can_send_human_messages(app_client, conversations):
 
 def test_refused_handshakes_do_not_feed_the_pre_auth_block(app_client, conversations, monkeypatch):
     """A WebSocket key travels in the query string, which any page can plant in a visitor's browser, so
-    refusals must not block the visitor (Codex review of #143). Probing is bounded by the handshake cap."""
+    refusals must not block the visitor (coding assistant review of #143). Probing is bounded by the handshake cap."""
     import src.multi_tenant.security_hardening as hardening
 
     monkeypatch.setattr(hardening, "_pre_auth_limiter", hardening.PreAuthRateLimiter(max_attempts=2))
@@ -177,7 +178,7 @@ def test_a_client_blocked_over_http_is_refused_on_the_websocket_too(app_client, 
 
 
 def test_all_handshakes_are_capped_per_client_ip(app_client, conversations, monkeypatch):
-    """Successful handshakes cost lookups too, so every attempt counts (Codex review of #137)."""
+    """Successful handshakes cost lookups too, so every attempt counts (coding assistant review of #137)."""
     import src.chat.endpoints as endpoints
 
     monkeypatch.setattr(endpoints, "_WS_HANDSHAKES_PER_MINUTE", 2)
@@ -196,7 +197,7 @@ class _UnreachableRedis:
 
 
 def test_handshakes_survive_a_shared_backend_outage(app_client, conversations, monkeypatch):
-    """The HTTP limiter falls back to a local count when Redis fails; sockets do too (Codex review of #137)."""
+    """The HTTP limiter falls back to a local count when Redis fails; sockets do too (coding assistant review of #137)."""
     import src.chat.endpoints as endpoints
     import src.multi_tenant.security_hardening as hardening
 
@@ -210,7 +211,7 @@ def test_handshakes_survive_a_shared_backend_outage(app_client, conversations, m
 
 
 def test_unconfigured_key_resolution_is_not_counted(app_client, conversations, fresh_limiter, monkeypatch):
-    """A 500 from the key check is a configuration fault, not a guess (Codex review of #139)."""
+    """A 500 from the key check is a configuration fault, not a guess (coding assistant review of #139)."""
     monkeypatch.setattr("src.multi_tenant.middleware._resolve_by_widget_key_hash", None)
     for _ in range(3):
         assert _refused(app_client, f"/api/chat/ws/{OWN}?widget_key={TEST_WIDGET_KEY}") == 1008
@@ -227,7 +228,7 @@ def test_unknown_keys_are_refused_but_not_counted(app_client, conversations, mon
 
 
 def test_handshakes_without_a_key_are_not_counted(app_client, conversations, monkeypatch):
-    """Browsers open cross-site WebSockets freely, so a keyless handshake must not block the visitor (Codex review of #143)."""
+    """Browsers open cross-site WebSockets freely, so a keyless handshake must not block the visitor (coding assistant review of #143)."""
     import src.multi_tenant.security_hardening as hardening
 
     monkeypatch.setattr(hardening, "_pre_auth_limiter", hardening.PreAuthRateLimiter(max_attempts=2))
@@ -240,7 +241,7 @@ def test_handshakes_without_a_key_are_not_counted(app_client, conversations, mon
 
 def test_without_a_per_client_address_the_cap_is_platform_wide(app_client, conversations, monkeypatch):
     """Behind the ingress with no TRUSTED_PROXY, the per-IP cap is replaced by a larger platform-wide one,
-    not removed, since the pre-auth limiter is record-only there too (Codex review of #143)."""
+    not removed, since the pre-auth limiter is record-only there too (coding assistant review of #143)."""
     import src.chat.endpoints as endpoints
 
     monkeypatch.setattr(endpoints, "_WS_HANDSHAKES_PER_MINUTE", 1)

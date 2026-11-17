@@ -4,7 +4,8 @@ Provides axe-core integration for WCAG 2.1 AA compliance testing via
 axe-playwright-python. Fails on critical and serious violations; logs
 minor and moderate.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 from __future__ import annotations
 

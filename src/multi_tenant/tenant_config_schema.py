@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Tenant configuration JSON schema -- field definitions, validation, and metadata.
 
 Work Item #63 (Decision #22): Layer 1 of the 5-layer tenant configuration system.
@@ -10,7 +11,8 @@ All definitions have been moved to ``src.multi_tenant.schema``:
   - registry.py: YAML-driven field registry, accessors, export
   - fields.yaml: 78 field definitions (declarative)
 
-(c) 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 # Re-export everything from the schema package so that existing

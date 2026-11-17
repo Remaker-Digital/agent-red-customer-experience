@@ -1,5 +1,6 @@
 # tests/test_host/test_cosmos_writer.py — CosmosWriter unit tests
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 
 """
 Tests for test_host.cosmos_writer — state management, result batching,

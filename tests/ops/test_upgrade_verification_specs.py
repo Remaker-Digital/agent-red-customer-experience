@@ -11,7 +11,8 @@ Covers:
   SPEC-1463: upgrade_verification A: iterates all tenants
   SPEC-1464: upgrade_verification C: iterates all tenants
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 import inspect

@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Admin Customer Profile API — Layer 1 profile management (WI #142).
 
 Provides REST endpoints for the merchant admin dashboard to view and manage
@@ -25,7 +26,8 @@ Dependencies:
     - cosmos_schema.py: CustomerProfileDocument, ConsentStatus
     - middleware.py: get_tenant_context, TenantContext
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

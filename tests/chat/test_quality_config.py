@@ -3,7 +3,8 @@
 Tests for MerchantQualityConfig, get_merchant_quality_config(), and
 update_merchant_quality_config().
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

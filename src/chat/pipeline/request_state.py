@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Per-request attributes for the shared ChatPipeline (architecture review S7)."""
 
 from __future__ import annotations

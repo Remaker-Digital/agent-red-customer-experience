@@ -8,7 +8,8 @@ Covers: configure_chat_services, _get_session, _get_pipeline,
         broadcast_to_conversation, _broadcast,
         _extract_last_customer_message, _extract_conversation_history.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

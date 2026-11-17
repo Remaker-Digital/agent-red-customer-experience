@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * InputBar — message input area at the bottom of the conversation panel.
  *
@@ -14,7 +15,8 @@
  * Visual reference: Zapier (clean input, subtle borders, consistent sizing).
  * Functional reference: Tidio (auto-grow, enter-to-send, attachment).
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import { FunctionComponent } from 'preact';

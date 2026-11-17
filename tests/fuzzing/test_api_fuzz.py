@@ -28,7 +28,8 @@ Usage (staging — via test host container):
 Usage (development — local):
     pytest tests/fuzzing/test_api_fuzz.py -v --timeout=600
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 from __future__ import annotations
 

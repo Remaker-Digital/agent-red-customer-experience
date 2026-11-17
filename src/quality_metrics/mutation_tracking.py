@@ -1,11 +1,13 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """SPEC-1842/WI-1498: Mutation score tracking and oracle gap detection.
 
 Parses mutmut results, computes mutation scores, and identifies modules
 where high code coverage masks weak test assertions (the "oracle gap").
 See arXiv:2309.02395 and GOV-18.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 from __future__ import annotations
 

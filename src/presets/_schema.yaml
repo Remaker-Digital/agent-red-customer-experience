@@ -4,7 +4,8 @@
 # "v1 scope" are the only ones written to tenant config in v1.
 # Fields marked "informational" are displayed in UI but not persisted.
 #
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 
 # Required metadata
 id: string                  # unique slug (matches filename without .yaml)

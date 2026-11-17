@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """
 Scheduled job: Archival pipeline (Cosmos DB → Blob Parquet).
 
@@ -9,7 +10,8 @@ then exits with code 0 (success) or 1 (errors encountered).
 Usage:
     python -m src.jobs.run_archival
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

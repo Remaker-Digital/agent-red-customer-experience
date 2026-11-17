@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * Widget state management.
  *
@@ -10,7 +11,8 @@
  *   - conversation: current conversation state (messages, status)
  *   - ui: presentation state (open/closed, view, loading indicators)
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import type { WidgetConfig, DesignTokens } from '@/theme/tokens';
@@ -228,7 +230,7 @@ class Store {
     }>,
   ): void {
     const normalized: Message[] = backendMessages.map((m) => {
-      // Role mapping (Codex F1): ai → agent, human_agent → agent
+      // Role mapping (coding assistant F1): ai → agent, human_agent → agent
       let role: Message['role'] = 'system';
       if (m.role === 'customer') role = 'customer';
       else if (m.role === 'ai' || m.role === 'human_agent') role = 'agent';

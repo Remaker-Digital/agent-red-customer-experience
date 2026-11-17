@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Tenant Agent Overlay resolution (SPEC-1854, SPEC-1859).
 
 Computes effective agent/skill configuration by merging the base
@@ -7,7 +8,8 @@ registry definition with per-tenant overlays and skill bindings.
 Three-layer resolution order (SPEC-1859 req 1):
   base_registry -> tenant_overlay -> skill_binding
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

@@ -12,7 +12,8 @@ to ValidationRule.allowed_values, so SELECT fields accepted any value.
 
 Test plan ref: COMPREHENSIVE-TEST-PLAN-S245-S255.md (Batch 1 schema alias)
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

@@ -12,7 +12,8 @@ Covers 19 specs across 6 email modules:
   - SMTP config: SPEC-1299 (env vars), SPEC-1300 (SSL/STARTTLS), SPEC-1302 (From address)
   - magic_link_auth.py: SPEC-1319 (subject), SPEC-1320 (multi-tenant buttons)
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

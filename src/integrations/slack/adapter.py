@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Slack Channel Adapter (SPEC-1776).
 
 ChannelAdapter implementation for Slack.  Bot behavior: @mention trigger,
@@ -8,7 +9,8 @@ Auth: OAuth2 with bot token.
 Webhooks: Events API with HMAC-SHA256 x-slack-signature + timestamp.
 Rate limits: Tier 3 ≈ 50 req/min.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

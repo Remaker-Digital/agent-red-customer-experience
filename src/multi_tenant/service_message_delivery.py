@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Service message delivery — bulk BCC email to tenant superadmins.
 
 Sends service messages (system announcements, update notices) from the
@@ -13,7 +14,8 @@ Delivery pattern:
 Specifications: SPEC-1646, SPEC-1647, SPEC-1648.
 Work items: WI-1000 (delivery), WI-0998 (API), WI-0999 (UI).
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

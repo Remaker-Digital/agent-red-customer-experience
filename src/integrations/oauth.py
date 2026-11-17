@@ -1,11 +1,13 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Multi-Tenant OAuth Manager (SPEC-1764).
 
 Manages OAuth2 authorization code flows for external integrations.
 Each (tenant, integration) pair gets isolated token storage with
 automatic refresh and CSRF protection via signed JWT state.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

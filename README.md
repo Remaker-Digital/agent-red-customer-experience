@@ -2,9 +2,10 @@
 
 Agent Red Customer Experience automates support conversations for e-commerce stores. The hosted service is in a closed beta.
 
-Copyright © 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 
-No license is granted. See [LICENSE](LICENSE).
+This project is licensed under the [MIT License](LICENSE).
 
 For licensing inquiries, email support@remakerdigital.com.
 
@@ -59,4 +60,5 @@ GitHub Actions runs on every push to `main` and on every pull request:
 
 These checks do not commit corrections. Before you publish a change, run `ruff check --fix src tests` and `ruff format src tests` locally. The private release pipeline is not in this repository.
 
-Copyright © 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT

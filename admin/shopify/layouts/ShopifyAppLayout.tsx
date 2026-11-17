@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * ShopifyAppLayout — Polaris + App Bridge layout wrapper.
  *
@@ -13,7 +14,8 @@
  *   Session token auth is automatic via App Bridge — no cookie-based auth.
  *   The session token is included in every API call as Bearer token.
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import React, { createContext, useCallback, useContext, useEffect, useState } from 'react';

@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 # Agent Red Customer Experience — Co-Pilot Agent (SPEC-1557)
 #
 # Dedicated handler for admin team member conversations. Retrieves product
@@ -29,7 +30,8 @@
 #     "tokens_output": int
 #   }
 #
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 
 from __future__ import annotations
 

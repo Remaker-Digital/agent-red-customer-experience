@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """SPEC-1838: Quality Score Dashboard — compute 6 metrics and composite score.
 
 Computes quality metrics from the Knowledge Database:
@@ -11,7 +12,8 @@ Computes quality metrics from the Knowledge Database:
 
 Composite: weighted sum → 0-100 scale.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 from __future__ import annotations
 

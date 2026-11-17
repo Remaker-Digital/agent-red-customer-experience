@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Admin Ingestion API — Knowledge Automation (KA-2).
 
 REST endpoints for triggering and monitoring storefront ingestion jobs
@@ -13,7 +14,8 @@ Endpoints:
 
 All endpoints derive tenant_id from the authenticated TenantContext.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

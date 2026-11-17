@@ -1,7 +1,8 @@
 """S153 Batch 5 — Dark Mode + Activation/Wizard + Infrastructure spec verification.
 
 29 specs verified against production interfaces (SPEC-0472, 0744 and 0850 stayed with GT-KB at the split).
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from pathlib import Path

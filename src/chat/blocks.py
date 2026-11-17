@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Structured Answer Blocks — heuristic extraction from AI responses (SPEC-1867).
 
 Detects structural patterns in AI response text and converts them to
@@ -13,7 +14,8 @@ Product cards are deferred to v2 (requires upstream structured-data plumbing).
 Blocks are supplementary — the text content is always preserved as fallback.
 Extraction is heuristic/regex only (no LLM call).
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

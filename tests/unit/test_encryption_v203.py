@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """v2.0.3 reads that must return plaintext from the real envelope service."""
 
 from __future__ import annotations

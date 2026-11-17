@@ -1,17 +1,19 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Agent Skill Binding service (SPEC-1856, SPEC-1857, SPEC-1858, WI-4014).
 
 Manages per-tenant, per-agent, per-skill authorization bindings.
 Enforces deny-by-default: no tool call proceeds without an active binding.
 
-Sync/async contract (Codex Finding 2):
+Sync/async contract (coding assistant Finding 2):
   - Runtime reads (get_binding, check_binding, resolve_credential) are SYNCHRONOUS.
     They read from the in-memory _bindings dict which acts as the sole cache.
   - Admin writes go through the Cosmos repo (async) and then call invalidate()
     to clear this cache, forcing next reads to miss.
-  - No second TTL cache (Codex Finding 1). Invalidation is immediate on writes.
+  - No second TTL cache (coding assistant Finding 1). Invalidation is immediate on writes.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

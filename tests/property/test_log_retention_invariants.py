@@ -3,7 +3,8 @@
 Tests that log retention cutoff dates are always in the past for valid
 retention periods, and that archive paths are well-formed.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 from __future__ import annotations
 

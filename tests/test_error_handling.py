@@ -7,7 +7,8 @@ security headers, API versioning).
 Note: Tests use different tier clients to spread requests across
 rate limit budgets. Auth middleware intercepts all non-exempt paths.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

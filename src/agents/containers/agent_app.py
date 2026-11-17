@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 # Agent Red Customer Experience — Generic Agent Container App
 #
 # Reusable FastAPI application factory for agent containers. Each agent
@@ -14,7 +15,8 @@
 #   from src.agents.intent_classifier import IntentClassifierAgent
 #   app = create_agent_app(IntentClassifierAgent)
 #
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 
 from __future__ import annotations
 

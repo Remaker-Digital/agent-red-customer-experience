@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * Transcript persistence — stores conversation_id with TTL for
  * transcript continuity across page loads (SPEC-1868).
@@ -14,7 +15,8 @@
  * Key namespace: __agentred_{widgetKeyPrefix}_conv to prevent
  * collisions across tenants on the same origin.
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 interface StoredTranscript {

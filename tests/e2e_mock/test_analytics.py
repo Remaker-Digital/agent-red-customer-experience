@@ -1,4 +1,5 @@
-# (C) 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """SPEC-1706 Analytics / Dashboard E2E tests against mock Vite dev server.
 
 Tests cover: analytics summary panel metrics, intent chart breakdown,

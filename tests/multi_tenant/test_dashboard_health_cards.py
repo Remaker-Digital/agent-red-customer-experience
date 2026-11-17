@@ -9,7 +9,8 @@ for each subsystem, especially field mappings that caused production display bug
 
 Total: 14 tests
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 from __future__ import annotations
 

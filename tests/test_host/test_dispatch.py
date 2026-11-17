@@ -1,5 +1,6 @@
 # tests/test_host/test_dispatch.py — Suite dispatch routing tests
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 
 """
 Tests for the dispatch logic in _diagnostics.py — verifying that suites are

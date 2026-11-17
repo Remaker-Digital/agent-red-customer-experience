@@ -5,7 +5,8 @@ that phase 6 assembles must carry it. Phase 6 used to copy only src, config
 and the admin and widget dist directories, so an ACR build from it could not
 satisfy that COPY (review F24, design PR11).
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 import argparse

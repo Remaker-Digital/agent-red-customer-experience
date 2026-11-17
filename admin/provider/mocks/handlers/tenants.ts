@@ -1,7 +1,8 @@
 // @ts-nocheck
 /**
  * Mock handlers — Provider tenant directory endpoints.
- * (c) 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 import { GET, POST, PATCH } from '../router';
 import { getStore } from '../store';

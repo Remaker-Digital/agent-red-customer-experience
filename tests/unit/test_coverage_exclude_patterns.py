@@ -7,7 +7,8 @@ is excluded. A bare "pass" entry therefore matched critic_passed, password
 and bypass and silently removed whole functions from the coverage report.
 These tests pin the pass and ellipsis entries to bare statements.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

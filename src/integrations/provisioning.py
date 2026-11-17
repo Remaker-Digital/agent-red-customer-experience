@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """
 Tenant provisioning service.
 
@@ -29,7 +30,8 @@ Endpoints:
     GET /api/tenants/{tenant_id}     — Get tenant status
     GET /api/tenants/lookup          — Lookup by Stripe ID or Shopify domain
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

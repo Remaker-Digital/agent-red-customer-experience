@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Structured logging standardization (WI #149).
 
 Provides a JSON-structured log formatter and configuration helper that
@@ -31,7 +32,8 @@ Architecture references:
     - Decision #12: Correlation ID chain (conversation_id + tenant_id + trace_id)
     - otel_tracing.py: TenantLogFilter injects context fields
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

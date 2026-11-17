@@ -15,7 +15,8 @@ Test IDs: SLAP-01 through SLAP-30.
 Run:
     pytest tests/multi_tenant/test_sla_persistence.py -v
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

@@ -2,7 +2,8 @@
 
 Covers 1 spec: GET /export endpoint existence (SPEC-0969).
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

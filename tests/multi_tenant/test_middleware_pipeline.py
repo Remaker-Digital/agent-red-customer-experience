@@ -9,7 +9,8 @@ docs/COMPREHENSIVE-TEST-PLAN.md.
 
 Work Item: P0 launch-blocker tests.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations
@@ -684,7 +685,7 @@ class TestApiKeyWidgetKeyFallthrough:
     ):
         """MWP-30: Invalid API key + valid widget key on superadmin path → 401/403.
 
-        Codex required correction: explicit regression proving the
+        coding assistant required correction: explicit regression proving the
         fallthrough cannot reach admin or superadmin endpoints.
         """
         headers = {

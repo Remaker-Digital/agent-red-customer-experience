@@ -1,4 +1,5 @@
-# (C) 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Mock E2E tests for the Widget configuration page (/widget).
 
 Tests embed code display, preview configuration, launcher preview,

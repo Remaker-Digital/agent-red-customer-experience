@@ -1,5 +1,6 @@
 # tests/unit/test_single_container_copilot.py: RC-11 in-process co-pilot with a beta-only 15 s stage budget
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 
 """
 RC-11 single-container beta mode, PR7 (docs/beta-single-container-design.md, sections 3, 6 and 8).

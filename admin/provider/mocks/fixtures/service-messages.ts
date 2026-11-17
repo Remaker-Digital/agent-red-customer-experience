@@ -1,7 +1,8 @@
 // @ts-nocheck
 /**
  * Provider service messages fixture — bulk notification data.
- * (c) 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 export function createServiceMessagesFixture() {
   return {

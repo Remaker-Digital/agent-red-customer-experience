@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Superadmin API -- Rate limit and back-off/retry configuration.
 
 Domain sub-module for SPEC-1819 (Code-Free Runtime Configuration — rate limits)
@@ -17,7 +18,8 @@ Back-off / Retry:
   PUT  /retry-configs/{service}    — Write retry config for a service
   GET  /retry-configs/history      — Audit history for retry config changes
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 from __future__ import annotations
 

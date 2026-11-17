@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """SSE connection management — keepalive, reconnection, tenant limits (WI #129/#131/#133).
 
 Manages Server-Sent Event connections for the chat streaming endpoint.
@@ -25,7 +26,8 @@ Architecture references:
     - Decision UI-5: SSE stream-then-validate
     - Decision #14: Per-tenant concurrency limits (reused for SSE)
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

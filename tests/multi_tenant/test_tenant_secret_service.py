@@ -13,7 +13,8 @@ Validates:
 
 Work Item #29 (Decision #6).
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

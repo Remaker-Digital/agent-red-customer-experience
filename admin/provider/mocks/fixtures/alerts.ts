@@ -1,11 +1,13 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * Provider alerts fixture — alert rules and history.
  *
  * Shape must match the AlertRule / AlertHistoryItem interfaces in
  * AlertConfig.tsx and the CamelCase models in _operations.py.
  *
- * (c) 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 export function createAlertsFixture() {
   return {

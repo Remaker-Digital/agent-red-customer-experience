@@ -1,11 +1,13 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * EditMemberDialog — Modal for editing a team member's role and escalation categories.
  *
  * Extracted from TeamManager.tsx. Presentational component: receives all
  * edit state and callbacks as props. No local state or API calls.
  *
- * (c) 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import React from 'react';

@@ -6,7 +6,8 @@ and configure_tracing/configure_logging setup functions.
 
 Work Items #39-40 (Decisions #11-12).
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

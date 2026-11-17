@@ -1,11 +1,13 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * Agent lifecycle types — Phase 4a (WI-4016).
  *
  * All interfaces match the backend CamelCaseModel wire format exactly.
  * Field names are camelCase as received from the API.
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 // ---------------------------------------------------------------------------

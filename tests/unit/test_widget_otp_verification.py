@@ -3,7 +3,8 @@
 Tests the OTP send and verify endpoints in
 src/multi_tenant/widget_otp_verification.py.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

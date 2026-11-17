@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * KnowledgeBaseManager - CRUD manager for knowledge base articles.
  *
@@ -12,7 +13,8 @@
  *
  * Sub-components and utilities are extracted into ./kb/ for maintainability.
  *
- * (c) 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import React, { useState, useCallback, useMemo } from 'react';

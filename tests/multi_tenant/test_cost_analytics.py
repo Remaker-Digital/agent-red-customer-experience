@@ -8,7 +8,8 @@ Covers the HV-2 cost/unit economics endpoints:
 
 Test plan reference: §5.11 (Cost Analytics)
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

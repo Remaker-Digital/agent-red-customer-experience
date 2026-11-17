@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * Agent Red Brand Theme — shared design tokens for Mantine surfaces.
  *
@@ -13,7 +14,8 @@
  * Four-tier dark mode hierarchy (Stone neutrals):
  *   chrome #0c0a09 → page #1c1917 → surface #292524 → border #44403c
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import { createTheme } from '@mantine/core';

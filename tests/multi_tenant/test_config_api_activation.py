@@ -16,7 +16,8 @@ Architecture:
     rather than the full src.main app, isolating the config router and mocking
     both ActivationService and TenantConfigProcessor singletons.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

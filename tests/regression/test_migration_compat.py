@@ -20,7 +20,8 @@ ActivationService._ensure_config_state().  These tests verify that:
 Run:
     python -m pytest tests/regression/test_migration_compat.py -x -q
 
-Copyright 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

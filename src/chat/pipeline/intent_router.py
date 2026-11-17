@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """IntentRouter — execution-plan boundary after intent classification (ADR-003).
 
 Deterministic routing engine that maps IC output + tenant config to an
@@ -15,7 +16,8 @@ Resolution order (SPEC-1861):
 Safety guarantee: all existing traffic routes to CORE_PIPELINE by default.
 Peer routing only activates with explicit tenant overlay config + skill binding.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations
@@ -441,7 +443,7 @@ class IntentRouter:
                         fallback_from=agent_id,
                     )
                 # Pick the first enabled binding as the default skill
-                # (Codex P1: skill_id=None causes dispatch denial on empty key)
+                # (coding assistant P1: skill_id=None causes dispatch denial on empty key)
                 enabled_bindings = [b for b in bindings if b.get("enabled", True)]
                 if enabled_bindings:
                     skill_id = enabled_bindings[0].get("skill_id")

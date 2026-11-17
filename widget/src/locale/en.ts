@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * English locale strings for the chat widget.
  *
@@ -8,7 +9,8 @@
  *      replace specific keys at runtime
  *   3. Content is cleanly separated from behavior and styling
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 export interface Locale {

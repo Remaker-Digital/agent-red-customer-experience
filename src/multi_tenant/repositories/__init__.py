@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """
 Repository package — re-exports all repository classes and exceptions.
 
@@ -9,7 +10,8 @@ Direct imports from this package are also supported:
     from src.multi_tenant.repositories import TenantRepository
     from src.multi_tenant.repositories.base import TenantScopedRepository
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 # Base classes and exceptions

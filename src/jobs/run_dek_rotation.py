@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """DEK Rotation Cron Job — SPEC-1843 / WI-1630.
 
 Rotates tenant Data Encryption Keys every 90 days:

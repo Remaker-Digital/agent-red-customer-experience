@@ -1,4 +1,5 @@
-# (C) 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Tests for SPEC-1705 mock development environment.
 
 Validates build integrity, endpoint coverage, config structure, fixture validity.

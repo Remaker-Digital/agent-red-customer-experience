@@ -7,7 +7,8 @@ Tests that:
 4. OTP token enriches visitor identity from token claims
 5. Invalid/expired OTP tokens are rejected gracefully
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

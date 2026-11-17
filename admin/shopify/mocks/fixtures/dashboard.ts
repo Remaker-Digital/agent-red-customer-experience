@@ -1,7 +1,8 @@
 // @ts-nocheck
 /**
  * Dashboard fixture — analytics summary, daily volume, intent breakdown.
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 /** Deterministic daily volume — fixed values, no Math.random(). */

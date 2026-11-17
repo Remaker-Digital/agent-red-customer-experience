@@ -1,11 +1,13 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """
 Tenant Agent Overlay repository — agent_overlays collection (SPEC-1854, WI-4011).
 
 Per-tenant, per-agent configuration overlays persisted in Cosmos DB.
 Partition key: /tenant_id. Document ID: agent_id (unique per tenant).
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations
@@ -25,7 +27,7 @@ from src.multi_tenant.repositories.base import (
 
 logger = logging.getLogger(__name__)
 
-# Allowed top-level keys in custom_metadata (Codex Finding 4: schema guardrails).
+# Allowed top-level keys in custom_metadata (coding assistant Finding 4: schema guardrails).
 # Secret values MUST NOT be stored here — they live in Key Vault only.
 _ALLOWED_CUSTOM_METADATA_KEYS = frozenset({
     "intent_routes",
@@ -108,7 +110,7 @@ class TenantAgentOverlayRepository(TenantScopedRepository):
         """Create or replace an overlay for tenant + agent."""
         now = datetime.now(UTC).isoformat()
 
-        # Validate custom_metadata keys AND shapes (Codex Findings 4 + review P2)
+        # Validate custom_metadata keys AND shapes (coding assistant Findings 4 + review P2)
         clean_metadata = {}
         if custom_metadata:
             for key, val in custom_metadata.items():

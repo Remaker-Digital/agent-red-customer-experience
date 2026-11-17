@@ -59,4 +59,5 @@ Conversations where the AI lacked sufficient knowledge to fully resolve the cust
 
 ---
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT

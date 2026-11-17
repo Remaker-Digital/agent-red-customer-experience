@@ -10,7 +10,8 @@ so SPA keys receive 403 from middleware before reaching endpoint logic.
 Per-user keys (user_client) can reach the endpoint but get ok=False
 because is_platform_admin is False for user-key auth.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

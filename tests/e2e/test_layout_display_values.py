@@ -19,7 +19,8 @@ Run with:
     pytest tests/e2e/test_layout_display_values.py -v --headed
     pytest tests/e2e/test_layout_display_values.py -v
 
-(c) 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 import pytest
@@ -149,6 +150,6 @@ class TestLayoutDisplayValues:
         expect(copyright_text.first).to_be_visible()
 
     def test_footer_legal_entity(self, admin_page: Page) -> None:
-        """Footer contains the reservation of rights."""
-        entity = admin_page.get_by_text("All rights reserved.")
+        """Footer displays the MIT license."""
+        entity = admin_page.get_by_text("MIT License.")
         expect(entity.first).to_be_visible()

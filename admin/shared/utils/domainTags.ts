@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * Domain tag normalization for agent overlays and team members.
  *
@@ -7,7 +8,8 @@
  * (overlay staff_domain_tags) and caller-side (team member
  * staff_domain_tags) to avoid false denials.
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 /**

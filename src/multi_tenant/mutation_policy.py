@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """MCP mutation safety — policy models and evaluation logic.
 
 Defines the mutation safety framework for gating MCP tool invocations
@@ -18,7 +19,8 @@ the Critic-gated confirmation UX is implemented.
 
 AGNTCY Phase 3B assertion targets: 3.7 (mutation safety), 3.8 (idempotency).
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

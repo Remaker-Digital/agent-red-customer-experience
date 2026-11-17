@@ -15,7 +15,8 @@ Architecture:
     test_config_api_activation.py and test_admin_analytics_api.py).
     Mocks Cosmos DB repositories to isolate test mode logic.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

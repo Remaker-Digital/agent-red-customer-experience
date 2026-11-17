@@ -9,7 +9,8 @@ for all three Shopify GDPR endpoints:
 
 Master Test Plan: §4 Gap Register — Shopify GDPR Webhooks (1.0-required)
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

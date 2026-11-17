@@ -83,4 +83,5 @@ Add-on modules extend your plan with specialized capabilities. Available add-ons
 
 ---
 
-*© 2026 Michael Palmeter. All rights reserved.*
+<!-- Copyright (c) 2026 Michael Palmeter -->
+<!-- SPDX-License-Identifier: MIT -->

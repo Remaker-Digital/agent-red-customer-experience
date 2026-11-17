@@ -1,7 +1,8 @@
 /**
  * SPEC-1867: Structured answer block widget coverage.
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import { h } from 'preact';

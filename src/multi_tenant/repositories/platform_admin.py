@@ -1,11 +1,13 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Repository for the platform_admins collection (SPEC-1667).
 
 Stores Service Provider Administrator credentials, completely isolated
 from all tenant team_members collections. The SPA has zero permissions
 within any tenancy and does not exist as a user for any tenancy.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

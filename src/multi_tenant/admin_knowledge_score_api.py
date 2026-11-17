@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Admin Knowledge Score API — knowledge quality metrics and gap review (SPEC-1873).
 
 Provides REST endpoints for knowledge quality observability:
@@ -8,7 +9,8 @@ Provides REST endpoints for knowledge quality observability:
 
 Professional+ tier gate enforced on all endpoints.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

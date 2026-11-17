@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * HelpTooltip — Shared inline help icon with hover tooltip.
  *
@@ -15,7 +16,8 @@
  *   <HelpTooltip text="Conversations where the AI produced a response." />
  *   <HelpTooltip text="Only Professional+ tiers." docLink="https://agentredcx.com/docs/..." />
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import React, { useState, useRef, useCallback, useLayoutEffect } from 'react';

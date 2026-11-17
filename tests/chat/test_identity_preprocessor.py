@@ -24,7 +24,8 @@ Covers:
 Run:
     pytest tests/chat/test_identity_preprocessor.py -v
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations
@@ -818,7 +819,7 @@ class TestDualStatePreprocessor:
 class TestSendSmsOtpForConversationInternals:
     """Test that _send_sms_otp_for_conversation correctly handles _send_sms() returning False.
 
-    Covers the silent-failure path identified by Codex S276 advisory: the transport
+    Covers the silent-failure path identified by coding assistant S276 advisory: the transport
     function _send_sms() returns False on failure without raising, so callers must
     explicitly branch on the return value.
 

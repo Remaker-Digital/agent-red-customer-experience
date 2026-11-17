@@ -4,7 +4,8 @@ Tests cover: echo marker store (set/check/remove), echo prevention
 flow, cancel on send failure, convenience handle_inbound, stats,
 marker expiry behavior.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

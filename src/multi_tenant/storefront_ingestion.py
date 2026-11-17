@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Storefront Ingestion Service (KA-1: Knowledge Automation).
 
 Orchestrates bulk knowledge base population from merchant storefronts.
@@ -10,7 +11,8 @@ Supports three ingestion paths:
 Jobs are tracked in the ingestion_jobs Cosmos DB collection and processed
 by a background loop in background.py.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

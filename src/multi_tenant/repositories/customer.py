@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """
 Customer profile repository — customer_profiles collection (Layer 1).
 
@@ -6,7 +7,8 @@ ADR-004: Canonical customer identity.  The primary key is ``canonical_id``
 (format: cid_<uuid4>).  Contact methods are stored as ``contact_attributes``
 and can be linked/unlinked without changing the canonical identity.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

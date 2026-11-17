@@ -104,4 +104,5 @@ Custom instructions are applied *after* all other configuration (brand voice, fo
 
 ---
 
-*© 2026 Michael Palmeter. All rights reserved.*
+<!-- Copyright (c) 2026 Michael Palmeter -->
+<!-- SPDX-License-Identifier: MIT -->

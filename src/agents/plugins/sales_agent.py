@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Sales Agent — In-line Purchase Completion MCP Server (SPEC-1709).
 
 Enables product discovery, cart management, and checkout within the
@@ -8,7 +9,8 @@ and order management systems.
 PCI scope: Payment operations generate secure checkout links rather
 than handling card data directly.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

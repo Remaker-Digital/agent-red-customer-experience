@@ -24,7 +24,8 @@ Architecture:
     setup_admin_page() for custom data injection
   - All values are derived from MOCK_* constants for deterministic assertions
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 import pytest

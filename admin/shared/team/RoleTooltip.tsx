@@ -1,11 +1,13 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * RoleTooltip — Hover tooltip showing role permission descriptions.
  *
  * Extracted from TeamManager.tsx. Displays a floating tooltip with all four
  * role definitions when hovering over the "Role" column header.
  *
- * (c) 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import React from 'react';

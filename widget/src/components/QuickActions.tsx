@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * QuickActions — contextual prompt button pills in the greeting area (WI #228).
  *
@@ -15,7 +16,8 @@
  * Buttons choose label contrast from their surface, including hover.
  * `colorSurfaceHover`. Subtle fade-in animation via CSS class `ar-fade-in`.
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import { FunctionComponent } from 'preact';

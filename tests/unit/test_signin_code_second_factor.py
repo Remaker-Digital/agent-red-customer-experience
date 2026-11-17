@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """A 6-digit code that still needs a second factor must not become a session."""
 
 from __future__ import annotations

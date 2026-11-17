@@ -1,5 +1,6 @@
 # tests/test_host/test_api.py — Test Host API endpoint tests
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 
 """
 Tests for test_host.main — FastAPI endpoints for triggering, monitoring,

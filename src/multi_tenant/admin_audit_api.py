@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Admin Audit Log Query API — compliance reporting and inspection (WI #141).
 
 Provides REST endpoints for querying the append-only audit log. Merchants
@@ -26,7 +27,8 @@ Dependencies:
     - cosmos_schema.py: AuditEventType (12 event types)
     - middleware.py: get_tenant_context, TenantContext
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

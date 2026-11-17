@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """HV-4 Abuse Detection API — cross-tenant anomalous usage detection.
 
 Provides REST endpoints for the service provider (SUPERADMIN role) to detect
@@ -12,7 +13,8 @@ Endpoints:
 
 All endpoints require SUPERADMIN role.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

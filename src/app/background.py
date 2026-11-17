@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Background tasks for Agent Red Customer Experience.
 
 - Idle conversation scanner — closes conversations exceeding 30-min idle timeout.
@@ -14,7 +15,8 @@
 - Trial expiry warning emails — sends warning emails at 7, 3, and 1 day(s)
   before trial end (WI-E3).
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

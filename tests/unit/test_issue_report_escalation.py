@@ -4,7 +4,8 @@ Verifies that when a customer submits an issue report, the report_issue
 endpoint calls send_escalation_alert() with the issue type as reason and
 the details as context summary.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

@@ -1,6 +1,7 @@
 // @ts-nocheck
 /**
  * Provider mock API — barrel export.
- * (c) 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 export { mockApiPlugin } from './plugin';

@@ -2,7 +2,8 @@
 # Product behavior should be described in present tense.
 # "The API returns..." not "The API will return..."
 #
-# (c) 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 
 extends: existence
 message: "Use present tense to describe product behavior. Write '%s' without 'will'."

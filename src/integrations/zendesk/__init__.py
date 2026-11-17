@@ -1,6 +1,7 @@
 """Zendesk Integration — Full Helpdesk Adapter (SPEC-1775).
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from src.integrations.zendesk.adapter import ZendeskAdapter

@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Usage Dashboard API — billing transparency endpoints (Decision #25, WI #73-74).
 
 Provides REST endpoints for the three-layer usage transparency model:
@@ -29,7 +30,8 @@ Dependencies (all implemented):
 - middleware.py:           get_tenant_context, TenantContext
 - cosmos_schema.py:        ConversationStatus
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

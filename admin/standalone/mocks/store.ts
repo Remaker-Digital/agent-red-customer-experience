@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 // @ts-nocheck
 /**
  * Mock data store — in-memory mutable state for all mock API handlers.
@@ -7,7 +8,8 @@
  * for POST/PUT/DELETE so subsequent GETs reflect changes. Survives HMR
  * because the Vite dev server process stays running.
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import { createTenantFixture } from './fixtures/tenant';

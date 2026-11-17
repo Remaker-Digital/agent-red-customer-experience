@@ -8,7 +8,8 @@ Verifies:
 - _self_provision helper module works correctly
 - Pipeline --self-provision flag integration
 
-(c) 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

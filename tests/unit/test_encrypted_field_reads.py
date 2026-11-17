@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Reads of fields that were written with the real envelope service.
 
 A mock of encrypt or decrypt would still pass if a query returned the
@@ -301,7 +302,7 @@ async def test_provisioned_tenant_stores_the_owner_email_encrypted(encryption, m
 
 @pytest.mark.unit
 async def test_provisioned_tenant_without_the_lookup_key_has_a_warning(encryption, mock_cosmos, mock_keyvault):
-    """Codex on PR 267: without the key the email is ciphertext with no hash, so email reset cannot find it."""
+    """coding assistant on PR 267: without the key the email is ciphertext with no hash, so email reset cannot find it."""
     record = await _provision(mock_keyvault, lookup_key=False)
     assert record.warnings == [_LOOKUP_KEY_NOT_STORED]
     stored = _stored_tenant(mock_cosmos, record.tenant_id)
@@ -340,7 +341,7 @@ _SHOP = "enc-shop.myshopify.com"
 async def test_shopify_tenant_is_found_by_its_encrypted_domain(encryption, mock_cosmos, mock_keyvault):
     """The domain is ciphertext, so the lookup uses a keyed hash, not the plain domain.
 
-    Codex on PR 267: find_by_shopify_domain queried the plain domain, which cannot
+    coding assistant on PR 267: find_by_shopify_domain queried the plain domain, which cannot
     match ciphertext, so the GDPR redact fallback missed new Shopify tenants.
     """
     mock_keyvault._store[CUSTOMER_EMAIL_LOOKUP_KEY] = _LOOKUP_KEY

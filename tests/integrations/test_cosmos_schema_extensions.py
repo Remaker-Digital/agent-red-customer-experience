@@ -8,7 +8,8 @@ Tests cover:
   - Indexing policies for events container
   - Integration with existing schema (no collisions)
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

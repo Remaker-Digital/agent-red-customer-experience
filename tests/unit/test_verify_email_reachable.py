@@ -1,5 +1,6 @@
 # tests/unit/test_verify_email_reachable.py: the emailed verification link reaches its handler
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 
 """
 ``GET /api/auth/verify-email/confirm`` is opened from an email, with no credentials, but its
@@ -7,7 +8,7 @@ path was missing from ``AUTH_EXEMPT_PREFIXES``, so in the composed application i
 401 before its handler ran. The route's own tests used a bare ``FastAPI()`` and missed it.
 
 Only the confirm link is exempt. ``POST /api/auth/verify-email/request`` takes the tenant id
-from its body, so it stays behind authentication (Codex review of #144); being public, the
+from its body, so it stays behind authentication (coding assistant review of #144); being public, the
 confirm link limits attempts per client IP before it reads the token store.
 
 Architecture review F1 (docs/agent-red-architecture-review.md); see also RC-5.
@@ -50,7 +51,7 @@ def test_the_emailed_confirm_link_reaches_its_handler(app_client, no_such_token)
 
 
 def test_the_verification_request_still_needs_credentials(app_client):
-    """It takes the tenant id from its body, so it must not be public (Codex review of #144)."""
+    """It takes the tenant id from its body, so it must not be public (coding assistant review of #144)."""
     response = app_client.post(
         "/api/auth/verify-email/request", json={"tenant_id": "any-tenant", "email": "someone@example.com"}
     )
@@ -64,7 +65,7 @@ def test_the_exemption_covers_only_the_confirm_link():
 
 
 def test_confirm_attempts_are_limited_per_client_ip(app_client, no_such_token, monkeypatch):
-    """A public route that reads the token store must not be unbounded (Codex review of #144)."""
+    """A public route that reads the token store must not be unbounded (coding assistant review of #144)."""
     monkeypatch.setattr("src.multi_tenant.email_verification._CONFIRM_MAX", 2)
     for _ in range(2):
         assert app_client.get(CONFIRM, params={"token": "b" * 43}).status_code == 400
@@ -91,7 +92,7 @@ def test_confirm_attempts_are_counted_locally_when_the_shared_backend_fails(app_
 
 
 def test_the_confirmation_page_escapes_the_stored_address(app_client):
-    """The link is public, so a crafted display-name address must not run script on this origin (Codex review of #144)."""
+    """The link is public, so a crafted display-name address must not run script on this origin (coding assistant review of #144)."""
     crafted = '"<img src=x onerror=alert(1)>" <attacker@example.com>'
     token = {"tenant_id": "tenant-1", "email": crafted}
     with (

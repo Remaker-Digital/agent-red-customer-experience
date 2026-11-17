@@ -1,5 +1,6 @@
 # tests/unit/test_peer_agent_critic.py: peer-agent replies go through the Critic
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 
 """
 The peer-agent route stored and showed the agent's reply with ``critic_passed=None``
@@ -38,7 +39,7 @@ def _fresh_token_store() -> Iterator[None]:
 
 
 def _Dispatch(result: dict[str, Any] | None = None, error: str | None = None) -> PluginDispatchResult:
-    """The real dispatch result: the payload is ``content`` (Codex review of #142)."""
+    """The real dispatch result: the payload is ``content`` (coding assistant review of #142)."""
     return PluginDispatchResult(
         tool_name="refunds", agent_id="orders-agent", success=error is None, content=result, error=error or ""
     )
@@ -157,7 +158,7 @@ async def test_the_pipeline_trace_records_the_verdict():
 
 
 async def test_the_critic_gets_the_tokenized_reply_and_the_customer_the_original():
-    """A peer can echo PII from the raw message; the Critic's model prompt must not see it (Codex review of #142)."""
+    """A peer can echo PII from the raw message; the Critic's model prompt must not see it (coding assistant review of #142)."""
     from src.multi_tenant.pii_tokenizer import PiiTokenizer
 
     reply = "I've sent the refund details to jo.customer@example.com."
@@ -202,7 +203,7 @@ def _bubble_opens_first(events) -> bool:
 
 
 async def test_a_rejected_reply_retracts_this_turns_bubble():
-    """Without a bubble for this turn, the widget's retraction replaced the previous reply (Codex review of #142)."""
+    """Without a bubble for this turn, the widget's retraction replaced the previous reply (coding assistant review of #142)."""
     events = await _run(_pipeline(approved=False), _Dispatch(result={"response": AGENT_REPLY, "model": "gpt-4o"}))
     assert _bubble_opens_first(events)
 
@@ -213,7 +214,7 @@ async def test_an_approved_reply_has_a_bubble_to_appear_in():
 
 
 async def test_the_peer_critic_reports_its_stage():
-    """Admin pipeline views and metrics must see the Critic run, as on the core path (Codex review of #142)."""
+    """Admin pipeline views and metrics must see the Critic run, as on the core path (coding assistant review of #142)."""
     pipeline = _pipeline(approved=True)
     trace = MagicMock()
     with (
@@ -268,7 +269,7 @@ async def test_an_external_peers_explicit_reply_is_validated_and_shown():
 @pytest.mark.parametrize(
     "content",
     [
-        "raw-text-blocks",  # tool data, not a customer reply (Codex review of #142)
+        "raw-text-blocks",  # tool data, not a customer reply (coding assistant review of #142)
         "error-result",
         {"mock": True, "tool": "refunds"},  # the dispatcher's no-client mock
         {"response": "   "},
@@ -296,7 +297,7 @@ async def test_an_unusable_peer_reply_gets_the_fixed_notice_not_a_blank_message(
 
 
 async def test_the_peer_critic_is_a_recorded_pipeline_stage():
-    """The persisted trace and analytics enumerate budget.stages, so the Critic must be one (Codex review of #142)."""
+    """The persisted trace and analytics enumerate budget.stages, so the Critic must be one (coding assistant review of #142)."""
     pipeline = _pipeline(approved=True)
     await _run(pipeline, _Dispatch(result={"response": AGENT_REPLY, "model": "gpt-4o"}))
     persisted = str(pipeline._session.update_conversation_metadata.call_args)

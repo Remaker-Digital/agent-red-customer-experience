@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """The encryption jobs list the same fields as the repositories encrypt.
 
 The migration, DEK rotation and monitor jobs each keep their own

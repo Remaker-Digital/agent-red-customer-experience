@@ -7,7 +7,8 @@ Verifies:
 - Per-conversation and per-tenant error isolation
 - list_unvectorized_ended() query filters
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

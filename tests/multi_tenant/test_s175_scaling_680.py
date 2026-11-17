@@ -5,7 +5,8 @@ SPEC-1756 (Global SSE limit), SPEC-1757 (Cache invalidation pub/sub),
 SPEC-1758 (Pre-auth tracker LRU), SPEC-1759 (TOCTOU lock LRU),
 SPEC-1760 (Health metrics endpoint).
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

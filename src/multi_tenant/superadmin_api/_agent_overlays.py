@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Superadmin API -- Tenant Agent Overlay CRUD (SPEC-1854, WI-1666, WI-4013/4014).
 
 Admin endpoints for managing per-tenant, per-agent configuration overlays
@@ -10,7 +11,8 @@ and skill bindings. Backed by Cosmos DB repositories (WI-4011, WI-4012).
   DELETE /tenants/{tenant_id}/agents/{agent_id}/overlay        — Delete overlay
   GET  /tenants/{tenant_id}/agents/{agent_id}/effective-config — Get resolved config
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 from __future__ import annotations
 
@@ -45,7 +47,7 @@ def _get_binding_repo():
 def _invalidate_caches(tenant_id: str | None = None) -> None:
     """Invalidate all resolution and binding caches on every write/delete.
 
-    Codex Finding 1: no second TTL cache — write-path invalidation is
+    coding assistant Finding 1: no second TTL cache : write-path invalidation is
     mandatory before any caching layer is acceptable.
     """
     from src.agents.plugins.bindings import SkillBindingService
@@ -252,7 +254,7 @@ async def put_agent_overlay(
         custom_metadata=body.custom_metadata,
     )
 
-    # Codex Finding 1: invalidate resolution cache on every write
+    # coding assistant Finding 1: invalidate resolution cache on every write
     _invalidate_caches(tenant_id)
 
     return AgentOverlayModel(
@@ -286,7 +288,7 @@ async def delete_agent_overlay(
     if not deleted:
         raise HTTPException(status_code=404, detail="No overlay for this agent")
 
-    # Codex Finding 1: invalidate resolution cache on every delete
+    # coding assistant Finding 1: invalidate resolution cache on every delete
     _invalidate_caches(tenant_id)
 
 
@@ -458,7 +460,7 @@ async def put_skill_binding(
         enabled=body.enabled,
     )
 
-    # Codex Finding 1: invalidate resolution cache on binding write
+    # coding assistant Finding 1: invalidate resolution cache on binding write
     _invalidate_caches(tenant_id)
 
     return BindingModel(
@@ -491,7 +493,7 @@ async def delete_skill_binding(
     if not deleted:
         raise HTTPException(status_code=404, detail="No binding found")
 
-    # Codex Finding 1: invalidate resolution cache on binding delete
+    # coding assistant Finding 1: invalidate resolution cache on binding delete
     _invalidate_caches(tenant_id)
 
 

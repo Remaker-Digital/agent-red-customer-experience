@@ -3,7 +3,8 @@
 Tests for target_agent_id routing, agent_access validation,
 activation-gate bypass, and actor/channel metadata.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

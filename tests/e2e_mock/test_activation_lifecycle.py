@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Activation lifecycle mock E2E — Activate / Deactivate / Restore via sidebar UI.
 
 UI-driven mutations against Vite ``dev:mock`` with request spies (route continue).

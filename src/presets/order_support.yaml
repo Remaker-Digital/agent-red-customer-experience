@@ -1,5 +1,6 @@
 # Order Support — full lifecycle: orders, shipping, payments
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 
 id: order_support
 display_name: "Order Support"

@@ -4,7 +4,8 @@
  * Verifies QuickActions source code contains staggered animation-delay
  * and per-button ar-fade-in animation.
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import { describe, it, expect } from 'vitest';

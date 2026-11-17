@@ -3,7 +3,8 @@
 Tests: team CRUD, quick action management, conversation workflow, memory deletion.
 All endpoints require tenant admin authentication.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 from __future__ import annotations
 

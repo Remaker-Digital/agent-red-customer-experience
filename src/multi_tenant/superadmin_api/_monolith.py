@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Superadmin API -- shared state, router, and configuration functions.
 
 This module holds module-level service references, the shared router, and
@@ -46,7 +47,8 @@ or PII.
     operational state of the tenancy.
 ──────────────────────────────────────────────────────────────────────────────
 
-(c) 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 from __future__ import annotations
 

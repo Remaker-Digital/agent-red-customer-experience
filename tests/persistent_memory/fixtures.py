@@ -11,7 +11,8 @@ Usage:
         make_fine_tuning_config, make_training_job, make_fine_tuned_model,
     )
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

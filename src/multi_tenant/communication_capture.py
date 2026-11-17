@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Communication Capture & Audit Infrastructure (SPEC-1687).
 
 Provides two operational modes controlled by the ENABLE_EMAIL_CAPTURE
@@ -19,7 +20,8 @@ point that email / SMS modules invoke after dispatching a message.
 
 CRITICAL: This module must NEVER block the calling code path.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

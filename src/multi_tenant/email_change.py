@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Email Change Request & Confirmation (SPEC-1682, SPEC-1683).
 
 Two-phase email change flow for platform admins:
@@ -17,7 +18,8 @@ Endpoints:
     POST /api/admin/email/request  -- Authenticated (requires platform admin)
     GET  /api/admin/email/confirm   -- Public (token-based)
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

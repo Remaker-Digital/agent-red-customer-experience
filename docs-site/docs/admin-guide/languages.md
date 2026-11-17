@@ -79,4 +79,5 @@ When enabled, the AI automatically detects what language the customer is writing
 
 ---
 
-*© 2026 Michael Palmeter. All rights reserved.*
+<!-- Copyright (c) 2026 Michael Palmeter -->
+<!-- SPDX-License-Identifier: MIT -->

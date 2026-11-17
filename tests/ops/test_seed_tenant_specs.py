@@ -32,7 +32,8 @@ Specs covered:
   SPEC-1454: seed_tenant 5: (KB articles) removed — initialization yields zero articles
   SPEC-1455: seed_tenant 4: runs AFTER demo data so superadmin with API key hash overwrites
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """MCP Agent Plug-in Dispatch (SPEC-1706).
 
 Dispatches tool invocations to plug-in agents via MCP protocol.
@@ -9,7 +10,8 @@ authenticated external connections.
 The dispatch layer is called by the orchestrator when the LLM
 selects a plug-in agent tool during the tool-use pattern.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Provider SPA — navigation visibility, route transitions, theme toggle, logout."""
 
 import pytest

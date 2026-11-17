@@ -11,7 +11,8 @@ Also verifies:
 - escalation_sent is always True after successful escalation (repeat-suppression)
 - Customer-facing message adapts to identity channel (email vs phone)
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations
@@ -323,7 +324,7 @@ class TestEscalationMessaging:
 class TestEscalationBudgetPath:
     """Exercises execute_with_budget success path with a real PipelineTimeoutBudget.
 
-    Codex Phase 4 GO noted that existing tests use MagicMock for the budget,
+    coding assistant Phase 4 GO noted that existing tests use MagicMock for the budget,
     which silently discards the coroutine. These tests use a real budget so
     asyncio.wait_for actually awaits _call_escalation_handler.
     """

@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """
 OpenTelemetry Application Insights exporter integration (SPEC-1834).
 
@@ -14,7 +15,8 @@ Configuration:
 Custom dimensions included on every span (via TenantSpanProcessor in
 otel_tracing.py): tenant_id, conversation_id, trace_id.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

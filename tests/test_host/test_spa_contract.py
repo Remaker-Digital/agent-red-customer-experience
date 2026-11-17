@@ -1,5 +1,6 @@
 # tests/test_host/test_spa_contract.py — SPA TestExecution contract tests
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 
 """
 Contract tests verifying that test host API responses match the shapes

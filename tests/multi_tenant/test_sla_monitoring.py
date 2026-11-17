@@ -9,7 +9,8 @@ Test IDs: SLA-01 through SLA-25.
 Run:
     pytest tests/multi_tenant/test_sla_monitoring.py -v
 
-(c) 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

@@ -2,7 +2,8 @@
  * FileUploadZone — drag-and-drop file upload area for importing KB content
  * from PDF, DOCX, CSV, or TXT files.
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import React, { useState, useCallback, useRef } from 'react';

@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Response explainability — per-response decision trace.
 
 Work Item #86 (Decision #28+/32): Captures the full decision context for
@@ -27,7 +28,8 @@ Dependencies:
     - system_prompt_builder.py: SystemPromptBuilder.explain()
     - cosmos_schema.py: CustomerProfileDocument, ConversationDocument
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

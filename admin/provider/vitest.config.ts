@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * Vitest configuration for the provider admin console (SPEC-1585 coverage / WI-3221).
  *
@@ -6,7 +7,8 @@
  * widget app's Vitest runner; the @shared alias matches vite.config.ts so
  * shared-component imports resolve identically in tests.
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import { defineConfig } from 'vitest/config';

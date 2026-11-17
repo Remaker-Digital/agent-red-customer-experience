@@ -1,11 +1,13 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """SPEC-1844: Line Coverage Enforcement and Per-Module Tracking.
 
 Parses coverage.py JSON reports, computes per-module line/branch
 coverage, identifies bottom modules, tracks deltas across sessions,
 and detects per-module regressions.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

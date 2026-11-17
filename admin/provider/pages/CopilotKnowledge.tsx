@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * CopilotKnowledge — Co-Pilot Knowledge Management page (SPEC-1578).
  *
@@ -20,7 +21,8 @@
  *   GET    /api/superadmin/copilot/config/retrieval
  *   PUT    /api/superadmin/copilot/config/retrieval
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import React, { useCallback, useEffect, useState } from 'react';

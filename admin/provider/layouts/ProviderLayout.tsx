@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * ProviderLayout — Platform operator console shell.
  *
@@ -8,7 +9,8 @@
  *   3. Authenticated apiFetch wrapper (SUPERADMIN API key injection)
  *   4. AppContext for child pages
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import React, { createContext, useCallback, useContext, useEffect, useState } from 'react';

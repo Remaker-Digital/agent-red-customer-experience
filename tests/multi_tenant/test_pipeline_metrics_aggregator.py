@@ -3,7 +3,8 @@
 Validates cross-tenant conversation trace aggregation with per-agent,
 per-edge, and per-tenant metric computation. Time windowing and caching.
 
-(c) 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 from __future__ import annotations
 

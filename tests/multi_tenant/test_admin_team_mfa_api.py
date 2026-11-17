@@ -13,7 +13,8 @@ Covers:
 
 Test plan reference: §5.13 (MFA Management — WI #295 Phase 4)
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

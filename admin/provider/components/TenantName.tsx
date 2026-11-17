@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * TenantName — Human-readable tenant identifier with UUID tooltip.
  *
@@ -7,7 +8,8 @@
  *
  * SPEC-1569 / WI-0883: Provider Console human-readable tenant identification.
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import React from 'react';

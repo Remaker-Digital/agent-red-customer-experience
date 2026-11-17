@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Domain Index Repository — single-partition lookups for SPEC-1644.
 
 Provides O(1) point reads to resolve external identifiers (Shopify shop
@@ -15,7 +16,8 @@ Schema:
         "domain_type": "shopify" | "stripe",
     }
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

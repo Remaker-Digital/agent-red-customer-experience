@@ -4,7 +4,8 @@ Tests for avatar upload endpoint — D22 capability.
 Migrated from processor.update_config() to activation_service.save_draft()
 (WI-A3, session 66).
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

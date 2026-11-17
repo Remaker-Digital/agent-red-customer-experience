@@ -1,5 +1,6 @@
 # tests/unit/test_kb_zero_vector_repair.py: RC-11 KB zero-vector repair and cache invalidation
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 
 """
 RC-11 single-container beta mode, PR4 (docs/beta-single-container-design.md, sections 3 and 6).

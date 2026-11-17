@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """
 Dockerfile.test coverage test — ensures every file path referenced by a test
 via pathlib.Path("...") is available inside the test-host container.

@@ -319,4 +319,5 @@ The placeholder text shown in the message input field before the customer starts
 
 ---
 
-*© 2026 Michael Palmeter. All rights reserved.*
+<!-- Copyright (c) 2026 Michael Palmeter -->
+<!-- SPDX-License-Identifier: MIT -->

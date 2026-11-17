@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Pipeline package — 6-agent pipeline orchestrator for the Chat API.
 
 Barrel re-export preserving the original ``from src.chat.pipeline import ...``
@@ -6,7 +7,8 @@ import paths. All public symbols that were previously in the monolithic
 ``pipeline.py`` module are re-exported here.
 
 R10 refactoring — session 39.
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from src.chat.pipeline.constants import (

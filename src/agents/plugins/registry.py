@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """MCP Agent Plug-in Registry (SPEC-1706).
 
 Configuration-driven agent discovery and dispatch.  Loads agent
@@ -12,7 +13,8 @@ Key constraints (SPEC-1706):
   - Configuration-driven discovery (no hard-coded registration)
   - MCP protocol is the standard interface for all communication
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

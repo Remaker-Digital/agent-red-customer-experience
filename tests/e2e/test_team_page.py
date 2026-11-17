@@ -17,7 +17,8 @@ Run with:
     pytest tests/e2e/test_team_page.py -v --headed   # visual
     pytest tests/e2e/test_team_page.py -v             # headless
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 

@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Superadmin API -- Alert thresholds and notification channel configuration.
 
 Domain sub-module for SPEC-1822 (Alert Threshold Configuration) and
@@ -18,7 +19,8 @@ Notification Channels:
   POST /notification-channels/{channel_type}/test — Send a test notification
   GET  /notification-channels/history       — Audit history for channel changes
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 from __future__ import annotations
 

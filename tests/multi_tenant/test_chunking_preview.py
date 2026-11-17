@@ -16,7 +16,8 @@ Test IDs:
 Run:
     pytest tests/multi_tenant/test_chunking_preview.py -v
 
-(C) 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

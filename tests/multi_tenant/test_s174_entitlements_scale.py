@@ -11,7 +11,8 @@ Covers:
     WI-1272: Per-tier caps (SPEC-1752)
     WI-1273: History depth enforcement (SPEC-1753)
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 import asyncio

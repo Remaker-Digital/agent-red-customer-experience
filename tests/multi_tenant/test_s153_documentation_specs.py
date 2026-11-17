@@ -3,7 +3,8 @@
 Owner directive: Documentation specs are legitimate project artifacts and must be tested.
 These tests verify that documentation meets the specifications.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 from pathlib import Path
 

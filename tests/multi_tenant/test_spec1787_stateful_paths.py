@@ -9,7 +9,8 @@ Focus areas:
 - Multi-instance cache coherency (invalidate_tenant_meta_cache broadcast)
 - Append-only collection immutability (audit_log, alert_history, sla_snapshots)
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

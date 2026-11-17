@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * MessageBubble — renders a single message in the conversation.
  *
@@ -13,7 +14,8 @@
  * Visual reference: Zapier (clean borders, consistent padding, readable type).
  * Functional reference: Tidio (bubble layout, avatar, streaming cursor).
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import { FunctionComponent, VNode } from 'preact';

@@ -1,7 +1,8 @@
 // @ts-nocheck
 /**
  * Provider operations fixture — deployments, queues, integrations, diagnostics.
- * (c) 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 export function createOperationsFixture() {
   return {

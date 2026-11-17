@@ -1,5 +1,6 @@
 # tests/unit/test_kb_event_loop_offload.py: KB BM25 and the semantic-cache scan run off the event loop
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 
 """
 Design PR5 (docs/beta-single-container-design.md, sections 3 and 6). KB BM25 scoring

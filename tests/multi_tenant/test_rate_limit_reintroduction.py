@@ -9,7 +9,8 @@ Covers:
   - GET /api/superadmin/tenants/{id}/rate-limit endpoint
   - Fail-open guarantee (no zero-RPM tenants)
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

@@ -1,5 +1,6 @@
 # tests/unit/test_pii_scrubbing_per_tenant.py: stored transcripts follow each tenant's own pii_scrubbing (review S19)
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 
 """
 One ConversationSession serves every tenant. POST /api/chat/message stores the
@@ -612,7 +613,7 @@ async def test_an_initial_message_follows_the_tenants_setting(scrubbing: bool, a
 async def test_a_stale_turn_recorded_during_a_refresh_never_replaces_the_newer_configuration(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    """Codex P1 on #163: the turn loaded its preferences before the tenant turned scrubbing on."""
+    """coding assistant P1 on #163: the turn loaded its preferences before the tenant turned scrubbing on."""
     world = _World(monkeypatch, {TENANT_A: False})
     world.store.open(TENANT_A, CONV_A)
     await world.send(TENANT_A, CONV_A)

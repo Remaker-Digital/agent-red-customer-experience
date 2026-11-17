@@ -3,7 +3,8 @@
 Tests the heuristic analysis engine that generates configuration
 suggestions from KB article content. Pure text analysis — no LLM calls.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 # Agent Red Customer Experience — AGNTCY Directory Integration
 #
 # Provides dynamic agent discovery via the AGNTCY Directory registry,
@@ -11,7 +12,8 @@
 #   - Falls back to static AgentTopic enum when Directory is unavailable
 #   - Directory server address configured via AGNTCY_DIRECTORY_ADDR env var
 #
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 
 from __future__ import annotations
 

@@ -3,7 +3,8 @@
 Validates template JSON files, registry, TemplateLoader class methods,
 apply_template with mock repositories, and configuration suggestions.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

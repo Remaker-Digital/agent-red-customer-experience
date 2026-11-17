@@ -24,7 +24,7 @@ import ThemedImage from '@theme/ThemedImage';
 
 Agent Red Customer Experience is in a closed beta. It automates support conversations for e-commerce stores. Access is by request. Email [support@remakerdigital.com](mailto:support@remakerdigital.com).
 
-The public source is [agent-red-customer-experience](https://github.com/Remaker-Digital/agent-red-customer-experience). Copyright © 2026 Michael Palmeter. All rights reserved. No license is granted.
+The public source is [agent-red-customer-experience](https://github.com/Remaker-Digital/agent-red-customer-experience). This project is licensed under the MIT License. Copyright (c) 2026 Michael Palmeter.
 
 ## What you'll find here
 
@@ -71,4 +71,5 @@ To request access, email [support@remakerdigital.com](mailto:support@remakerdigi
 
 ---
 
-*© 2026 Michael Palmeter. All rights reserved.*
+<!-- Copyright (c) 2026 Michael Palmeter -->
+<!-- SPDX-License-Identifier: MIT -->

@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """
 Alert repositories — CRUD for alert rules and alert history.
 
@@ -6,7 +7,8 @@ Two collections:
   - alert_rules: persistent rule definitions (partition key: /rule_type)
   - alert_history: firing events with 90-day TTL (partition key: /alert_date)
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

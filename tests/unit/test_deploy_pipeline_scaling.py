@@ -14,7 +14,7 @@ Tests:
 - T3: dry-run returns PASS without invoking the runner (call count == 0).
 - T4: Single-app failure produces PASS with extra="DRIFT: 1/N failed (...)"
       and detail recording the failed app; WARN log line emitted.
-- T5: OPERATOR-VISIBILITY (Codex -006 required action). Capture
+- T5: OPERATOR-VISIBILITY (coding assistant -006 required action). Capture
       _print_summary() output for a PASS scaling phase whose extra contains
       a DRIFT marker; assert the DRIFT substring appears in the captured
       summary text.
@@ -23,9 +23,10 @@ Tests:
       via the pipeline import path).
 
 Created 2026-04-25 (S308) per
-`bridge/canonical-deploy-pipeline-scaling-enforcement-007.md` (Codex GO at -008).
+`bridge/canonical-deploy-pipeline-scaling-enforcement-007.md` (coding assistant GO at -008).
 
-(c) 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations
@@ -196,7 +197,7 @@ def test_phase_15_single_failure_returns_pass_with_drift_extra() -> None:
     assert "agent-red-slim" in result.detail
 
 
-# T5 — OPERATOR-VISIBILITY (Codex -006 required action)
+# T5 : OPERATOR-VISIBILITY (coding assistant -006 required action)
 def test_phase_15_drift_appears_in_final_summary_when_status_is_pass() -> None:
     """Capture _print_summary() output for a PASS scaling phase with DRIFT extra;
     assert the DRIFT substring appears so an operator scanning the final

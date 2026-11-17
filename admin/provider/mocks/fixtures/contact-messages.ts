@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * Provider contact messages fixture.
  *
@@ -9,7 +10,8 @@
  *   - status: new | read | resolved | archived
  *   - topic: support | feature_request | billing | bug_report | general
  *
- * (c) 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 export function createContactMessagesFixture() {
   return {

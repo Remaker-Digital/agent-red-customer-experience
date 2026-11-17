@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 // @ts-nocheck
 /**
  * Shopify mock data store — in-memory mutable state for all mock API handlers.
@@ -10,7 +11,8 @@
  * Shopify uses the same shared components as Standalone, so the store
  * mirrors the Standalone structure with Shopify-specific tenant data.
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import { createTenantFixture } from './fixtures/tenant';

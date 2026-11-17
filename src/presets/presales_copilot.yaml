@@ -1,5 +1,6 @@
 # Pre-Sales Copilot — product questions and recommendations
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 
 id: presales_copilot
 display_name: "Pre-Sales Copilot"

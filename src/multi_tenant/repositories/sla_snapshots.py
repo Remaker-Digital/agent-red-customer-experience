@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """
 SLA snapshot repository — persistence for hourly/daily SLA snapshots.
 
@@ -7,7 +8,8 @@ per-tenant metrics to survive container restarts and enable trend analysis.
 
 Collection: sla_snapshots (partition key: /snapshot_type)
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

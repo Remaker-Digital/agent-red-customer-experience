@@ -13,10 +13,11 @@ Hard enforcement deferred to Phase 5 after baseline stabilization.
 Analytics is explicitly excluded: fire-and-forget, non-customer-facing.
 
 Recovery plan reference: the original transport analysis Phase 4.
-Codex GO: the original transport analysis.
+coding assistant GO: the original transport analysis.
 Governing decisions: ADR-001, DCL-002 v4.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

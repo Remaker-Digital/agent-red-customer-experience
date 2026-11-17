@@ -3,7 +3,8 @@
 Validates HMAC-signed tokens work across replicas (no shared in-memory state),
 rate limiting, single-use nonce tracking, and email enumeration resistance.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 import time

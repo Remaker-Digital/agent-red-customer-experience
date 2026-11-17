@@ -1,11 +1,13 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Integration Registry — singleton registry for plugin management (SPEC-1761).
 
 The registry is the central coordination point for all integrations.
 It manages manifest registration, per-tenant adapter instances, and
 capability queries.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

@@ -15,9 +15,10 @@ prove that:
       production and staging environments (gateway + agents + infra).
 
 Created 2026-04-25 (S308) per
-`bridge/canonical-deploy-pipeline-scaling-enforcement-007.md` (Codex GO at -008).
+`bridge/canonical-deploy-pipeline-scaling-enforcement-007.md` (coding assistant GO at -008).
 
-(c) 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

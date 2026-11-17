@@ -3,7 +3,8 @@
 Covers 28 specs: router prefix + 27 endpoint smoke tests verifying each handler
 can be called with properly mocked dependencies and returns the expected response.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

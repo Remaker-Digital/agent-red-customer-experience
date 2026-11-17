@@ -1,7 +1,8 @@
 // @ts-nocheck
 /**
  * Mock handlers — Provider service messages (bulk notifications).
- * (c) 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 import { POST } from '../router';
 import { getStore } from '../store';

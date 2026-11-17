@@ -160,4 +160,5 @@ The onboarding wizard is only shown to merchants who have not yet activated. Aft
 
 ---
 
-*© 2026 Michael Palmeter. All rights reserved.*
+<!-- Copyright (c) 2026 Michael Palmeter -->
+<!-- SPDX-License-Identifier: MIT -->

@@ -255,4 +255,5 @@ If not set, these derive from the primary color and color mode automatically. On
 
 ---
 
-*© 2026 Michael Palmeter. All rights reserved.*
+<!-- Copyright (c) 2026 Michael Palmeter -->
+<!-- SPDX-License-Identifier: MIT -->

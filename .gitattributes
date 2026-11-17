@@ -32,4 +32,5 @@
 *.bat text eol=crlf
 *.ps1 text eol=crlf
 
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT

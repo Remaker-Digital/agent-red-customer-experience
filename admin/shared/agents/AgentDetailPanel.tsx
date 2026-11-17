@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * AgentDetailPanel — right panel showing agent overview, unified skills
  * table with inline toggle/select controls, and provider logo.
@@ -9,7 +10,8 @@
  *   - Agent description from registry replaces overlay system message (Change 4)
  *   - Provider logo 80x80 in header (Change 6)
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import React, { useCallback, useMemo, useState } from 'react';

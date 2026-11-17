@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * SPEC-1841 Deployment modal — recommended next-version pre-fill coverage (WI-3224).
  *
@@ -9,7 +10,8 @@
  * (`apiFetch`/`onNotify`) is mocked; Mantine renders under happy-dom via
  * tests/setup.ts. Reuses the Vitest harness committed by WI-3221.
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import { describe, it, expect, vi, beforeEach } from 'vitest';

@@ -5,7 +5,8 @@ Covers:
     WI-1230 / SPEC-1714: KB conflict scanner config cross-check
     WI-1231 / SPEC-1715: Admin UI models and endpoint for config conflict check
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

@@ -1,4 +1,5 @@
-# © 2026 Michael Palmeter. All rights reserved.
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 """Google Docs/Drive Knowledge Source Adapter (SPEC-1777).
 
 KnowledgeAdapter implementation for Google Docs and Drive.
@@ -12,7 +13,8 @@ Supported file types:
 
 Content-hash tracking prevents re-processing unchanged documents.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

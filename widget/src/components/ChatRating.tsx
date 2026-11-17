@@ -1,4 +1,5 @@
-// © 2026 Michael Palmeter. All rights reserved.
+// Copyright (c) 2026 Michael Palmeter
+// SPDX-License-Identifier: MIT
 /**
  * ChatRating — post-conversation feedback prompt.
  *
@@ -13,7 +14,8 @@
  * Visual reference: Zapier (buttons, spacing, form layout).
  * Functional reference: Tidio (post-chat rating flow).
  *
- * © 2026 Michael Palmeter. All rights reserved.
+ * Copyright (c) 2026 Michael Palmeter
+ * SPDX-License-Identifier: MIT
  */
 
 import { FunctionComponent } from 'preact';

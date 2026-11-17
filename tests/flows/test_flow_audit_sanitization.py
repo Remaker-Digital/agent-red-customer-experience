@@ -15,7 +15,8 @@ Flow pattern:
 SPEC-1843 / WI-1615 / WI-1616.
 GOV-19: Outside-in testing.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

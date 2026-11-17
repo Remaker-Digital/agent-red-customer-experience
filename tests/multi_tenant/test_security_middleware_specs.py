@@ -15,7 +15,8 @@ functions inside __call__ methods. We verify their existence by inspecting
 the source code of the containing method, since they are not directly
 accessible as attributes.
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

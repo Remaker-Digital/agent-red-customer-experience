@@ -10,7 +10,8 @@ Covers: EventBuffer (append, replay_after, is_expired),
         cleanup_expired_buffers, health_summary),
         module singleton (get_sse_manager).
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

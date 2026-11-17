@@ -15,7 +15,8 @@ Covers the two-phase commit model for tenant configuration:
 Run:
     pytest tests/multi_tenant/test_activation_service.py -v
 
-(c) 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations

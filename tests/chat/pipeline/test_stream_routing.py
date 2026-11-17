@@ -5,7 +5,8 @@ that event_generator() depends on.
 
 Test plan ref: COMPREHENSIVE-TEST-PLAN-S245-S255.md Slice 4
 
-© 2026 Michael Palmeter. All rights reserved.
+Copyright (c) 2026 Michael Palmeter
+SPDX-License-Identifier: MIT
 """
 
 from __future__ import annotations
