@@ -1262,6 +1262,53 @@ fields:
     pii_classification: none
     injected_in_prompt: false
 
+  - field_name: widget_panel_border_enabled
+    display_name: Show panel border
+    field_type: boolean
+    platform_default: false
+    tier_gate: all
+    onboarding_step: 9
+    step_order: 31.51
+    tooltip: Show an outline around the chat overlay.
+    description: Helps the chat panel stand out against the page underneath it.
+    doc_link: "https://agentredcx.com/docs/configuration/widget-appearance"
+    affects_agents: []
+    pii_classification: none
+    injected_in_prompt: false
+
+  - field_name: widget_panel_border_width
+    display_name: Panel border width
+    field_type: integer
+    validation:
+      min_value: 1
+      max_value: 8
+    platform_default: 2
+    tier_gate: all
+    onboarding_step: 9
+    step_order: 31.52
+    tooltip: Thickness of the panel border, in pixels.
+    description: Sets the outline thickness when the panel border is enabled.
+    doc_link: "https://agentredcx.com/docs/configuration/widget-appearance"
+    affects_agents: []
+    pii_classification: none
+    injected_in_prompt: false
+
+  - field_name: widget_panel_border_color
+    display_name: Panel border color
+    field_type: string
+    validation:
+      pattern: "^#[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?$"
+    platform_default: "#718096"
+    tier_gate: all
+    onboarding_step: 9
+    step_order: 31.53
+    tooltip: Choose an outline color that contrasts with the surrounding page.
+    description: Sets the outline color and optional opacity when the panel border is enabled.
+    doc_link: "https://agentredcx.com/docs/configuration/widget-appearance"
+    affects_agents: []
+    pii_classification: none
+    injected_in_prompt: false
+
   - field_name: widget_locale
     display_name: Widget language
     field_type: enum

@@ -169,6 +169,9 @@ export interface WidgetConfig {
   widget_position_offset_y?: number | null;
   widget_panel_width?: 'compact' | 'standard' | 'wide' | null;
   widget_panel_height?: 'short' | 'standard' | 'tall' | null;
+  widget_panel_border_enabled?: boolean | null;
+  widget_panel_border_width?: number | null;
+  widget_panel_border_color?: string | null;
   widget_locale?: 'auto' | 'en' | 'es' | 'fr' | 'de' | 'pt' | 'ja' | 'zh' | 'ko' | null;
   // Transcript continuity (SPEC-1868)
   widget_transcript_continuity?: 'none' | 'session' | 'persistent' | null;

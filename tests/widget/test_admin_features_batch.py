@@ -1206,12 +1206,6 @@ class TestRuntimeConfigApi:
         interface_block = src[src.index("interface AgentRedSDK"):src.index("// Boot") if "// Boot" in src else len(src)]
         assert "setConfigPartial" in interface_block
 
-    def test_set_config_partial_merges_into_store(self) -> None:
-        """setConfigPartial merges overrides into store config (SPEC-1514-A2)."""
-        src = _read(self.INDEX_TS)
-        # Should spread current config with overrides
-        assert "...current, ...overrides" in src or "{ ...current, ...overrides }" in src
-
     def test_set_config_partial_accepts_partial_widget_config(self) -> None:
         """setConfigPartial parameter type is Partial<WidgetConfig> (SPEC-1514-A3)."""
         src = _read(self.INDEX_TS)

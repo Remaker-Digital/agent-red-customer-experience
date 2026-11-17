@@ -303,7 +303,6 @@ async function init(
           'left: 0',
           'width: 100vw',
           'height: 100vh',
-          'border: none',
           'border-radius: 0',
           'box-shadow: none',
           `z-index: ${tokens.zIndexPanel}`,
@@ -320,7 +319,6 @@ async function init(
           `width: ${tokens.panelWidth}`,
           `max-width: calc(100% - ${offsetX}px)`,
           `height: ${tokens.panelHeight}`,
-          'border: none',
           `border-radius: ${tokens.borderRadiusLg}`,
           `box-shadow: ${tokens.shadowLg}`,
           `z-index: ${tokens.zIndexPanel}`,
@@ -331,6 +329,8 @@ async function init(
           'overflow: hidden',
         ].join('; ');
 
+    iframe.style.boxSizing = 'border-box';
+    iframe.style.border = panelBorderCss(store.getState().config);
     iframe.setAttribute('title', locale.iframeTitleChat);
     iframe.setAttribute('allow', 'microphone; camera');
 
@@ -547,12 +547,18 @@ async function init(
     document.addEventListener('mouseup', onDragEnd);
   }
 
+  function setConfigPartial(overrides: Partial<WidgetConfig>) {
+    const updated = { ...store.getState().config, ...overrides };
+    store.setState({ config: updated });
+    if (panelIframe) panelIframe.style.border = panelBorderCss(updated);
+  }
+
   window.addEventListener('message', (ev) => {
     if (!ev.data || typeof ev.data.type !== 'string') return;
 
     // WI-0868: Live config preview from admin WidgetConfigurator
     if (ev.data.type === 'ar:config-preview' && ev.data.payload) {
-      store.setState({ config: { ...store.getState().config, ...ev.data.payload } });
+      setConfigPartial(ev.data.payload);
 
       // S259 D4: Resize panel iframe when dimension presets change.
       // Tokens are computed once at init; the iframe has fixed style.
@@ -821,10 +827,7 @@ async function init(
     setTheme: (overrides: Partial<DesignTokens>) => {
       store.setState({ tokenOverrides: overrides });
     },
-    setConfigPartial: (overrides: Partial<WidgetConfig>) => {
-      const current = store.getState().config;
-      store.setState({ config: { ...current, ...overrides } });
-    },
+    setConfigPartial,
     setTargetingRules: (rules: string[]) => {
       const current = store.getState().config;
       const updated = { ...current, widget_page_rules: rules };
@@ -936,6 +939,16 @@ function shouldShowOnPage(config: WidgetConfig): boolean {
   }
 
   return false;
+}
+
+/** Keep the visible outline inside the iframe's configured dimensions. */
+function panelBorderCss(config: WidgetConfig): string {
+  if (config.widget_panel_border_enabled !== true) return 'none';
+  const width = config.widget_panel_border_width ?? 2;
+  const color = config.widget_panel_border_color ?? '';
+  const safeWidth = Number.isInteger(width) && width >= 1 && width <= 8 ? width : 2;
+  const safeColor = /^#[0-9a-f]{6}(?:[0-9a-f]{2})?$/i.test(color) ? color : '#718096';
+  return `${safeWidth}px solid ${safeColor}`;
 }
 
 /** Detect mobile devices. */

@@ -77,6 +77,9 @@ _PREFS_DIRECT_FIELDS: set[str] = {
     "widget_shadow_intensity",
     "widget_panel_width",
     "widget_panel_height",
+    "widget_panel_border_enabled",
+    "widget_panel_border_width",
+    "widget_panel_border_color",
     "widget_locale",
     # Widget appearance — behavior (14 fields)
     "widget_offline_message",

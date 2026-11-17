@@ -494,13 +494,14 @@ class TestConversationActionMutations:
         """UI Escalate modal → POST /escalate → status + category."""
         _select_conversation(self._page, "Emily Watson")
         _click_escalate(self._page)
-        expect(self._page.get_by_text("Escalate to human")).to_be_visible()
-        self._page.get_by_role("textbox", name="Category").click()
+        dialog = self._page.get_by_role("dialog", name="Escalate to human", exact=True)
+        expect(dialog).to_be_visible()
+        dialog.get_by_role("textbox", name="Category").click()
         self._page.get_by_role("option", name="Service").click()
         with self._page.expect_request(
             lambda r: r.method == "POST" and "/escalate" in r.url
         ) as req_info:
-            self._page.get_by_role("button", name="Escalate", exact=True).click()
+            dialog.get_by_role("button", name="Escalate", exact=True).click()
         body = req_info.value.post_data or ""
         assert "service" in body
         expect(

@@ -254,6 +254,26 @@ def test_dark_widget_background_survives_preferences_round_trip():
     assert not validate_config({field: "not-a-color"}, TIER).valid
 
 
+@pytest.mark.parametrize("color", ["#87a9cb", "#f4f7f829"])
+def test_widget_panel_border_survives_preferences_round_trip(color):
+    from src.multi_tenant.config.field_mapping import _config_to_preferences, _preferences_to_config
+    from src.multi_tenant.tenant_config_schema import validate_config
+
+    values = {
+        "widget_panel_border_enabled": True,
+        "widget_panel_border_width": 3,
+        "widget_panel_border_color": color,
+    }
+    result = validate_config(values, TIER)
+    assert result.valid
+    stored = _config_to_preferences(TENANT_ID, result.sanitized, 1, "test-admin")
+    loaded = _preferences_to_config(stored.model_dump())
+    assert {field: loaded[field] for field in values} == values
+    assert not validate_config({"widget_panel_border_width": 0}, TIER).valid
+    assert not validate_config({"widget_panel_border_width": 9}, TIER).valid
+    assert not validate_config({"widget_panel_border_color": "not-a-color"}, TIER).valid
+
+
 class TestUpdateConfig:
     """Tests for update_config."""
 

@@ -14,6 +14,8 @@ import subprocess
 import sys
 from pathlib import Path
 
+import pytest
+
 WIDGET_SRC = Path(__file__).resolve().parent.parent.parent / "widget" / "src"
 PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 
@@ -134,9 +136,12 @@ class TestLocaleParity:
     """Verify check_locale_parity.py passes."""
 
     def test_parity_script_passes(self):
-        """python scripts/check_locale_parity.py exits 0."""
+        """Run locale parity when its script is present."""
+        parity_script = PROJECT_ROOT / "scripts" / "check_locale_parity.py"
+        if not parity_script.exists():
+            pytest.skip("Locale parity script is excluded from the public source export.")
         result = subprocess.run(
-            [sys.executable, str(PROJECT_ROOT / "scripts" / "check_locale_parity.py")],
+            [sys.executable, str(parity_script)],
             capture_output=True,
             text=True,
             cwd=str(PROJECT_ROOT),

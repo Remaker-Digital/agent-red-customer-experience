@@ -1236,6 +1236,9 @@ class PreferencesDocument(BaseModel):
     widget_shadow_intensity: str | None = Field(default=None, description="none | subtle | standard | heavy")
     widget_panel_width: str | None = Field(default=None, description="compact | standard | wide")
     widget_panel_height: str | None = Field(default=None, description="short | standard | tall")
+    widget_panel_border_enabled: bool | None = Field(default=None, description="Show an outline around the chat panel")
+    widget_panel_border_width: int | None = Field(default=None, ge=1, le=8, description="Chat panel border width in px")
+    widget_panel_border_color: str | None = Field(default=None, description="Chat panel border hex color")
     widget_locale: str | None = Field(default=None, description="auto | en | es | fr | de | pt | ja | zh | ko")
 
     # Behavior

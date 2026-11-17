@@ -14,7 +14,7 @@ The closed beta runs seven core roles in one gateway process: intent classificat
 
 The public source repository is [Remaker-Digital/agent-red-customer-experience](https://github.com/Remaker-Digital/agent-red-customer-experience).
 
-The public source snapshot is v2.0.20. Michael Palmeter directed the project, and AI coding agents built it.
+The public source snapshot is v2.0.23. Michael Palmeter directed the project, and AI coding agents built it.
 
 ## Try visitor chat
 

@@ -51,11 +51,14 @@ def _reset_registry():
 class TestRegistryLoading:
     """Test that YAML fields load correctly."""
 
-    def test_registry_loads_98_fields_including_widget_backgrounds(self):
+    def test_registry_loads_101_fields_including_widget_appearance(self):
         registry = get_field_registry()
-        assert len(registry) == 98
+        assert len(registry) == 101
         assert "widget_background_color" in registry
         assert "widget_dark_background_color" in registry
+        assert "widget_panel_border_enabled" in registry
+        assert "widget_panel_border_width" in registry
+        assert "widget_panel_border_color" in registry
 
     def test_all_fields_have_required_attributes(self):
         registry = get_field_registry()

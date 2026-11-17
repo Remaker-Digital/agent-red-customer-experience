@@ -4,7 +4,6 @@ import React, { useState, useEffect } from 'react';
 import {
   Paper,
   ColorPicker,
-  ColorInput,
   Slider,
   Select,
   SegmentedControl,
@@ -33,6 +32,7 @@ import { useAppContext } from '../layouts/StandaloneLayout';
 import { useConfig, useUpdateConfig, useRotateWidgetKey, useAutoSaveDraft } from '../../shared/hooks/index';
 import { useAvatarUpload, useDeleteAvatar } from '../../shared/hooks/useAvatar';
 import { AutoSaveIndicator } from '../../shared/components/AutoSaveIndicator';
+import { ValidatedColorField } from '../../shared/components/ValidatedColorField';
 import { HelpTooltip } from '../../shared/HelpTooltip';
 import { tokens } from '../../shared/theme/styles';
 
@@ -97,6 +97,9 @@ interface WidgetConfig {
   shadowIntensity: 'none' | 'subtle' | 'standard' | 'heavy';
   panelWidth: 'compact' | 'standard' | 'wide';
   panelHeight: 'short' | 'standard' | 'tall';
+  panelBorderEnabled: boolean;
+  panelBorderWidth: number;
+  panelBorderColor: string;
   locale: 'auto' | 'en' | 'es' | 'fr' | 'de' | 'pt' | 'ja' | 'zh' | 'ko';
   colorMode: 'light' | 'dark' | 'auto';
   autoOpen: boolean;
@@ -139,6 +142,9 @@ const DEFAULT_WIDGET_CONFIG: WidgetConfig = {
   shadowIntensity: 'standard',
   panelWidth: 'standard',
   panelHeight: 'standard',
+  panelBorderEnabled: false,
+  panelBorderWidth: 2,
+  panelBorderColor: '#718096',
   locale: 'auto',
   colorMode: 'auto',
   autoOpen: false,
@@ -188,6 +194,9 @@ function configToWidgetConfig(cfg: Record<string, unknown>): Partial<WidgetConfi
   if (cfg.widget_shadow_intensity != null) partial.shadowIntensity = String(cfg.widget_shadow_intensity) as WidgetConfig['shadowIntensity'];
   if (cfg.widget_panel_width != null) partial.panelWidth = String(cfg.widget_panel_width) as WidgetConfig['panelWidth'];
   if (cfg.widget_panel_height != null) partial.panelHeight = String(cfg.widget_panel_height) as WidgetConfig['panelHeight'];
+  if (cfg.widget_panel_border_enabled != null) partial.panelBorderEnabled = cfg.widget_panel_border_enabled === true;
+  if (cfg.widget_panel_border_width != null) partial.panelBorderWidth = Number(cfg.widget_panel_border_width);
+  if (cfg.widget_panel_border_color != null) partial.panelBorderColor = String(cfg.widget_panel_border_color);
   if (cfg.widget_locale != null) partial.locale = String(cfg.widget_locale) as WidgetConfig['locale'];
   if (cfg.widget_color_mode != null) partial.colorMode = String(cfg.widget_color_mode) as WidgetConfig['colorMode'];
   if (cfg.widget_auto_open != null) partial.autoOpen = Boolean(cfg.widget_auto_open);
@@ -234,6 +243,9 @@ function widgetConfigToApiFields(wc: WidgetConfig): Record<string, unknown> {
     widget_shadow_intensity: wc.shadowIntensity,
     widget_panel_width: wc.panelWidth,
     widget_panel_height: wc.panelHeight,
+    widget_panel_border_enabled: wc.panelBorderEnabled,
+    widget_panel_border_width: wc.panelBorderWidth,
+    widget_panel_border_color: wc.panelBorderColor,
     widget_locale: wc.locale,
     widget_color_mode: wc.colorMode,
     widget_auto_open: wc.autoOpen,
@@ -276,30 +288,6 @@ function SectionHeader({ children, tooltip, docLink }: { children: React.ReactNo
 // ---------------------------------------------------------------------------
 // ColorField — Mantine ColorPicker + hex input + swatches
 // ---------------------------------------------------------------------------
-
-function ConversationBackgroundField({ label, value, onChange }: {
-  label: string;
-  value: string;
-  onChange: (value: string) => void;
-}) {
-  const [input, setInput] = useState(value);
-  useEffect(() => setInput(value), [value]);
-
-  return (
-    <ColorInput
-      label={label}
-      placeholder="Use theme default"
-      format="hex"
-      value={input}
-      eyeDropperButtonProps={{ 'aria-label': `Pick a screen color for the ${label.toLowerCase()}` }}
-      onChange={(next) => {
-        setInput(next);
-        if (/^(#[0-9a-f]{6})?$/i.test(next)) onChange(next);
-      }}
-      onBlur={() => setInput(value)}
-    />
-  );
-}
 
 function ColorField({
   label,
@@ -1233,12 +1221,12 @@ function WidgetPageForm() {
                   </div>
                 </Group>
                 <Group grow align="flex-start" gap="md">
-                  <ConversationBackgroundField
+                  <ValidatedColorField
                     label="Light conversation background"
                     value={config.backgroundColor}
                     onChange={(value) => updateAndSave('backgroundColor', value)}
                   />
-                  <ConversationBackgroundField
+                  <ValidatedColorField
                     label="Dark conversation background"
                     value={config.darkBackgroundColor}
                     onChange={(value) => updateAndSave('darkBackgroundColor', value)}
@@ -1325,6 +1313,35 @@ function WidgetPageForm() {
                     color="action"
                   />
                 </div>
+                <Stack gap="sm">
+                  <Switch
+                    label="Show panel border"
+                    description="Add an outline around the chat overlay."
+                    checked={config.panelBorderEnabled}
+                    onChange={(event) => updateAndSave('panelBorderEnabled', event.currentTarget.checked)}
+                  />
+                  {config.panelBorderEnabled && (
+                    <Group grow align="flex-start">
+                      <Select
+                        label="Panel border width"
+                        allowDeselect={false}
+                        value={String(config.panelBorderWidth)}
+                        data={Array.from({ length: 8 }, (_, i) => ({
+                          value: String(i + 1),
+                          label: `${i + 1} px`,
+                        }))}
+                        onChange={(value) => value && updateAndSave('panelBorderWidth', Number(value))}
+                      />
+                      <ValidatedColorField
+                        label="Panel border color"
+                        value={config.panelBorderColor}
+                        allowEmpty={false}
+                        withAlpha
+                        onChange={(value) => updateAndSave('panelBorderColor', value)}
+                      />
+                    </Group>
+                  )}
+                </Stack>
                 <div>
                   <Text size="sm" fw={500} mb={6}>
                     Widget language <HelpTooltip text="Language for all widget UI text. Auto detects the visitor's browser language with English fallback." docLink="https://agentredcx.com/docs/admin-guide/widget-appearance" />

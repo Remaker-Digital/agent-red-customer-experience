@@ -41,6 +41,7 @@ import {
 } from './hooks';
 import type { NamedConfigSummary } from './hooks';
 import { tokens } from './theme/styles';
+import { ValidatedColorField } from './components/ValidatedColorField';
 
 // ---------------------------------------------------------------------------
 // Types
@@ -73,6 +74,9 @@ interface WidgetConfig {
   widget_launcher_shape: 'circle' | 'rounded-square' | 'pill';
   widget_launcher_icon: 'chat' | 'headset' | 'help';
   widget_panel_height: 'short' | 'standard' | 'tall';
+  widget_panel_border_enabled: boolean;
+  widget_panel_border_width: number;
+  widget_panel_border_color: string;
   widget_locale: 'auto' | 'en' | 'es' | 'fr' | 'de' | 'pt' | 'ja' | 'zh' | 'ko';
   // Behavior (9)
   widget_offline_message: string;
@@ -119,6 +123,9 @@ const DEFAULT_CONFIG: WidgetConfig = {
   widget_launcher_shape: 'circle',
   widget_launcher_icon: 'chat',
   widget_panel_height: 'standard',
+  widget_panel_border_enabled: false,
+  widget_panel_border_width: 2,
+  widget_panel_border_color: '#718096',
   widget_locale: 'auto',
   widget_offline_message: '',
   widget_auto_open: false,
@@ -1494,6 +1501,36 @@ export const WidgetConfigurator: React.FC<BaseComponentProps> = ({
                 <option value="tall">Tall (620px)</option>
               </select>
             </Field>
+            <ToggleField
+              st={s}
+              label="Show panel border"
+              description="Add an outline around the chat overlay."
+              value={localConfig.widget_panel_border_enabled}
+              onChange={(value) => updateField('widget_panel_border_enabled', value)}
+            />
+            {localConfig.widget_panel_border_enabled && (
+              <>
+                <Field st={s} label="Panel border width">
+                  <select
+                    aria-label="Panel border width"
+                    style={s.select}
+                    value={localConfig.widget_panel_border_width}
+                    onChange={(event) => updateField('widget_panel_border_width', Number(event.currentTarget.value))}
+                  >
+                    {Array.from({ length: 8 }, (_, i) => (
+                      <option key={i + 1} value={i + 1}>{i + 1} px</option>
+                    ))}
+                  </select>
+                </Field>
+                <ValidatedColorField
+                  label="Panel border color"
+                  value={localConfig.widget_panel_border_color}
+                  allowEmpty={false}
+                  withAlpha
+                  onChange={(value) => updateField('widget_panel_border_color', value)}
+                />
+              </>
+            )}
             <Field
               st={s}
               label="Widget language"

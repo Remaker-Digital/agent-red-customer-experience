@@ -149,8 +149,8 @@ def test_the_v2_0_6_note_requires_first_request_enforcement_on_staging():
     assert not any(path.name == NOTE_206 for path in (ROOT / "docs-site").rglob("*"))
 
 
-def test_the_product_version_is_v2_0_20():
+def test_the_product_version_is_v2_0_23():
     """The release pipeline refuses a tag whose version differs from PRODUCT_VERSION."""
     from src.multi_tenant.api_versioning import PRODUCT_VERSION
 
-    assert PRODUCT_VERSION == "2.0.20"
+    assert PRODUCT_VERSION == "2.0.23"

@@ -7,9 +7,21 @@ title: Changelog
 
 All notable changes to Agent Red Customer Experience are documented here.
 
-The product is in a closed beta at v2.0.20. Access is by request. Email support@remakerdigital.com. There is no self-serve sign-up and no free trial. Published prices are planned and are not on offer yet.
+The product is in a closed beta at v2.0.23. Access is by request. Email support@remakerdigital.com. There is no self-serve sign-up and no free trial. Published prices are planned and are not on offer yet.
 
 ---
+
+## v2.0.23 (closed beta)
+
+- Widget tests verify that partial configuration updates preserve the panel border setting.
+
+## v2.0.22 (closed beta)
+
+- Tenant administrators can add an outline to the visitor chat panel and choose its width, color, and opacity.
+
+## v2.0.21 (closed beta)
+
+- The Inbox browser test finds the escalation dialog by its accessible name. It still checks the request, status, and category.
 
 ## v2.0.20 (closed beta)
 
