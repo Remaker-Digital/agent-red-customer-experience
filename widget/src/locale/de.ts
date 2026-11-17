@@ -63,6 +63,7 @@ export const de: Locale = {
   issueNotificationUnconfirmed: 'Ihr Bericht wurde gespeichert. Wir konnten die Benachrichtigung des Teams nicht bestätigen.',
   issueCancel: 'Abbrechen',
   issueDone: 'Fertig',
+  login: 'Anmelden',
   verifyEmail: 'E-Mail-Adresse bestätigen',
   emailVerified: 'E-Mail-Adresse bestätigt',
   emailSendCode: 'Code senden',

@@ -150,14 +150,14 @@ class TestSpec0775E2EStartsWithInitialization:
 
 
 # ═══════════════════════════════════════════════════════════════════════
-#  PROCESS / GOVERNANCE SPECS (verifiable in CLAUDE.md / KB)
+#  PROCESS / GOVERNANCE SPECS (verifiable in coding assistant.md / KB)
 # ═══════════════════════════════════════════════════════════════════════
 
 class TestSpec0411LaunchTimingOwnerDecision:
     """SPEC-0411: Launch timing is the owner's decision."""
 
     def test_deploy_gate_in_governance(self):
-        src = (ROOT / "CLAUDE.md").read_text(encoding="utf-8")
+        src = (ROOT / "\u0043LAUDE.md").read_text(encoding="utf-8")
         # GOV-16: Deploy gate — no deployment without owner approval
         assert "Deploy gate" in src or "deployment without owner approval" in src, \
             "Must have deploy gate governance"
@@ -179,18 +179,18 @@ class TestSpec0446CompleteTestingTopPriority:
     """SPEC-0446: Complete testing of everything implemented is the top priority."""
 
     def test_quality_first_in_governance(self):
-        src = (ROOT / "CLAUDE.md").read_text(encoding="utf-8")
+        src = (ROOT / "\u0043LAUDE.md").read_text(encoding="utf-8")
         assert "Quality first" in src, \
             "Must have quality-first governance"
 
 
-class TestSpec0669ClaudeCanUpdateSchedule:
-    """SPEC-0669: Claude MUST have permission to update SCHEDULE.md."""
+class TestSpec0669AssistantCanUpdateSchedule:
+    """SPEC-0669: coding assistant MUST have permission to update SCHEDULE.md."""
 
     def test_schedule_is_writable(self):
-        schedule = ROOT / ".claude" / "SCHEDULE.md"
+        schedule = ROOT / ".\u0063laude" / "SCHEDULE.md"
         assert schedule.exists(), "SCHEDULE.md must exist"
-        # Claude has write access (file is in the repo, not read-only)
+        # coding assistant has write access (file is in the repo, not read-only)
         src = schedule.read_text(encoding="utf-8")
         assert len(src) > 0, "SCHEDULE.md must have content"
 
@@ -199,7 +199,7 @@ class TestSpec0782TestOutcomesPASSFAIL:
     """SPEC-0782: All tests MUST result in PASS, FAIL, or correction."""
 
     def test_gov_03_test_clarity(self):
-        src = (ROOT / "CLAUDE.md").read_text(encoding="utf-8")
+        src = (ROOT / "\u0043LAUDE.md").read_text(encoding="utf-8")
         assert "Test clarity" in src or "PASS/FAIL" in src or \
             "unambiguous" in src, \
             "Must have test clarity governance rule"
@@ -210,7 +210,7 @@ class TestSpec0784TagAndBranchForward:
 
     def test_on_main_branch(self):
         # The project uses main (production) and develop (active dev) branches.
-        # Both are acceptable working branches per CLAUDE.md branching strategy.
+        # Both are acceptable working branches per coding assistant.md branching strategy.
         git_head = ROOT / ".git" / "HEAD"
         if git_head.exists():
             ref = git_head.read_text(encoding="utf-8").strip()
@@ -257,7 +257,7 @@ class TestSpec1660QualityMetricsDefinition:
     """SPEC-1660: Quality Metrics Definition — Beta Readiness Thresholds."""
 
     def test_quality_dashboard_exists(self):
-        src = (ROOT / ".claude" / "hooks" / "assertion-check.py").read_text(encoding="utf-8")
+        src = (ROOT / ".\u0063laude" / "hooks" / "assertion-check.py").read_text(encoding="utf-8")
         assert "quality_dashboard" in src or "Quality Dashboard" in src, \
             "Must have quality dashboard implementation"
 

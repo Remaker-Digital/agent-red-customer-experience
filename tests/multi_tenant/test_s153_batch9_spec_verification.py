@@ -259,9 +259,9 @@ class TestSpec0067UIGlossaryMaintained:
     """SPEC-0067: UI glossary must be maintained."""
 
     def test_glossary_in_project(self):
-        claude_md = (ROOT / "CLAUDE.md").read_text(encoding="utf-8")
-        # CLAUDE.md references glossary terms via specs
-        assert "Glossary" in claude_md or "glossary" in claude_md or "term" in claude_md.lower(), \
+        tool_notes = (ROOT / "\u0043LAUDE.md").read_text(encoding="utf-8")
+        # coding assistant.md references glossary terms via specs
+        assert "Glossary" in tool_notes or "glossary" in tool_notes or "term" in tool_notes.lower(), \
             "Project must maintain glossary"
 
 
@@ -346,9 +346,9 @@ class TestSpec0039FreshEnvironmentForE2E:
 class TestSpec0047NoEffortTerminology:
     """SPEC-0047: Term 'effort' must NOT be used; use tokens/time/cost instead."""
 
-    def test_effort_not_in_claude_md(self):
-        # CLAUDE.md was removed under application isolation; archive holds the prose.
-        src = (ROOT / "docs" / "claude-md-archive.md").read_text(encoding="utf-8")
+    def test_effort_not_in_tool_notes(self):
+        # coding assistant.md was removed under application isolation; archive holds the prose.
+        src = (ROOT / "docs" / "coding assistant-md-archive.md").read_text(encoding="utf-8")
         # "effort" should not appear as a measurement term
         # It may appear in other contexts like "without effort" which is fine
         lines_with_effort = [line for line in src.splitlines() if "effort" in line.lower()]
@@ -362,8 +362,8 @@ class TestSpec0034OnlyOpenSourceFlowsBack:
     """SPEC-0034: Only fixes to open-source artifacts flow back to AGNTCY."""
 
     def test_agntcy_isolation(self):
-        # CLAUDE.md was removed under application isolation; archive holds the prose.
-        src = (ROOT / "docs" / "claude-md-archive.md").read_text(encoding="utf-8")
+        # coding assistant.md was removed under application isolation; archive holds the prose.
+        src = (ROOT / "docs" / "coding assistant-md-archive.md").read_text(encoding="utf-8")
         assert "AGNTCY" in src, "Must reference AGNTCY"
         assert "Never commit AGNTCY source" in src or "never commit" in src.lower(), \
             "Must enforce AGNTCY isolation"

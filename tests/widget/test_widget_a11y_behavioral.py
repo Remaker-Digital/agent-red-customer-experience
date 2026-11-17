@@ -51,7 +51,7 @@ class TestFocusRingContrast:
         assert "focusRingColor(tokens.colorPrimary)" in source, \
             "Flat header should use focusRingColor"
 
-    def test_codex_counterexample_gradient_safe(self):
+    def test_counterexample_gradient_safe(self):
         """Previously failing gradient #1AB624->#A12291 is safe with double ring."""
         source = _read(WIDGET_SRC / "components" / "Header.tsx")
         # Double ring guarantees one band >= 4.58:1 against ANY background

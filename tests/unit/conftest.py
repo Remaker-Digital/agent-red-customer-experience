@@ -174,7 +174,7 @@ _TESTS: dict[str, dict[str, tuple[str, ...]]] = {
         "scripts/deploy_pipeline.py": (
             "test_each_missing_marker_is_reported",
             "test_markers_are_files_this_repository_carries",
-            "test_repository_root_passes_without_claude_md",
+            "test_repository_root_passes_without_tool_notes",
         ),
     },
     "test_deploy_pipeline_scaling.py": {

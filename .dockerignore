@@ -1,62 +1,26 @@
-# Agent Red application build context.
-
-# Version control and local tooling
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
 .git
-.github/*.local
-.vscode
-.idea
-.claude
-.coding assistant
-
-# GT-KB governance and runtime surfaces (scripts/check_environment_isolation.py).
-# None exists here today; they keep GT-KB's files out of images after onboarding.
-.groundtruth
-bridge
-independent-progress-assessments
-groundtruth.db
-.groundtruth-chroma
-
-__pycache__
-*.pyc
-*.pyo
-*.egg-info
-.pytest_cache
-.mypy_cache
-.ruff_cache
-htmlcov
-.coverage
-
-# Secrets and local environment files
+.github
+.local
+.tools
+.sessions
+.worktrees
+.cache
 .env
-.env.local
-.env.*.local
-.env.integration
-.env.integration.example
-.env.example
-
-# Frontend dependency caches
-node_modules/
-admin/node_modules/
-admin/*/node_modules/
-widget/node_modules/
-docs-site/node_modules/
-
-# Generated frontend output and local build products
-build/
-dist/
-admin/*/dist/.vite
-docs-site/.cache/
-
-# Local/scratch artifacts
-logs/
-scratch/
-temp/
-tmp/
+.env.*
+**/node_modules
+**/__pycache__
+**/.pytest_cache
+**/.mypy_cache
+**/.ruff_cache
 *.log
 *.tmp
 *.bak
-
-# OS artifacts
-Thumbs.db
-desktop.ini
-.DS_Store
+bridge
+independent-progress-assessments
+groundtruth.db
+test-results*.xml
+playwright-report
+htmlcov
+.coverage*

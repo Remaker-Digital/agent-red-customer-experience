@@ -29,7 +29,7 @@ export default defineConfig(async ({ mode }) => {
 
   return {
     // Explicit root so Vite resolves node_modules correctly even when
-    // invoked from the project root (e.g. via .claude/launch.json).
+    // invoked from the project root by a local launch configuration.
     root: __dirname,
     base: '/admin/shopify/',
     plugins,

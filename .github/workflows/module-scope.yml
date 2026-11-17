@@ -1,0 +1,37 @@
+# Copyright (c) 2026 Michael Palmeter
+# SPDX-License-Identifier: MIT
+name: Module scope
+on:
+  push:
+    branches: ["main", "hfi/**"]
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  boundary:
+    if: startsWith(github.ref, 'refs/heads/hfi/') || startsWith(github.head_ref, 'hfi/')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Check changes with the trusted base policy
+        shell: bash
+        run: |
+          git fetch --no-tags origin main
+          base=$(git merge-base HEAD origin/main)
+          guard=$(mktemp)
+          git show "$base:tools/check_module_scope.py" > "$guard"
+          python "$guard" --base "$base" --head HEAD
+  guard-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - run: python -m unittest discover -s tools/tests -v

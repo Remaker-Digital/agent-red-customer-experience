@@ -63,6 +63,7 @@ export const ja: Locale = {
   issueNotificationUnconfirmed: 'レポートは保存されましたが、チームへの通知は確認できませんでした。',
   issueCancel: 'キャンセル',
   issueDone: '完了',
+  login: 'ログイン',
   verifyEmail: 'メールアドレスを確認',
   emailVerified: 'メールアドレス確認済み',
   emailSendCode: 'コードを送信',

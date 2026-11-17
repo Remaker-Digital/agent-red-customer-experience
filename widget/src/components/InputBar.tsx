@@ -20,7 +20,7 @@
  */
 
 import { FunctionComponent } from 'preact';
-import { useState, useRef, useCallback, useMemo, useId } from 'preact/hooks';
+import { useState, useRef, useCallback, useMemo, useId, useEffect } from 'preact/hooks';
 import type { DesignTokens } from '@/theme/tokens';
 import { AGENT_RED_BRAND_COLOR, focusRingColor } from '@/theme/tokens';
 import type { Locale } from '@/locale/en';
@@ -78,9 +78,27 @@ export const InputBar: FunctionComponent<InputBarProps> = ({
   const [attachment, setAttachment] = useState<TextAttachment | null>(null);
   const [attachmentError, setAttachmentError] = useState<AttachmentError | null>(null);
   const [readingAttachment, setReadingAttachment] = useState(false);
+  const [attachmentHelpVisible, setAttachmentHelpVisible] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const attachmentHelpId = useId();
+
+  useEffect(() => {
+    if (!attachmentHelpVisible) return;
+    if (!fileUploadEnabled) {
+      setAttachmentHelpVisible(false);
+      return;
+    }
+    const ownerDocument = textareaRef.current!.ownerDocument;
+    const dismissHelp = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        event.stopPropagation();
+        setAttachmentHelpVisible(false);
+      }
+    };
+    ownerDocument.addEventListener('keydown', dismissHelp, true);
+    return () => ownerDocument.removeEventListener('keydown', dismissHelp, true);
+  }, [attachmentHelpVisible, fileUploadEnabled]);
 
   const placeholder = inputPlaceholder || locale.inputPlaceholder;
   const selectedAttachment = fileUploadEnabled ? attachment : null;
@@ -202,36 +220,80 @@ export const InputBar: FunctionComponent<InputBarProps> = ({
               onChange={handleFileChange}
               hidden
             />
-            <button
-              type="button"
-              className="ar-input-attach"
-              aria-label={locale.attachFile}
-              aria-describedby={attachmentHelpId}
-              disabled={attachmentUnavailable}
-              onClick={() => fileInputRef.current?.click()}
+            <div
+              onMouseEnter={() => setAttachmentHelpVisible(true)}
+              onMouseLeave={(event) => {
+                if (!event.currentTarget.contains(event.currentTarget.ownerDocument.activeElement)) {
+                  setAttachmentHelpVisible(false);
+                }
+              }}
               style={{
-                background: 'none',
-                border: 'none',
-                color: attachmentUnavailable ? tokens.colorTextMuted : tokens.colorTextSecondary,
-                cursor: attachmentUnavailable ? 'default' : 'pointer',
-                padding: tokens.space1,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                borderRadius: tokens.borderRadiusSm,
-                transition: `color ${tokens.transitionFast}, box-shadow ${tokens.transitionFast}`,
-                outline: 'none',
+                position: 'relative',
                 flexShrink: 0,
-              }}
-              onMouseEnter={(e) => {
-                if (!attachmentUnavailable) (e.currentTarget as HTMLElement).style.color = tokens.colorText;
-              }}
-              onMouseLeave={(e) => {
-                if (!attachmentUnavailable) (e.currentTarget as HTMLElement).style.color = tokens.colorTextSecondary;
+                alignSelf: 'stretch',
+                display: 'flex',
+                alignItems: 'flex-end',
               }}
             >
-              <PaperclipIcon size={18} />
-            </button>
+              <button
+                type="button"
+                className="ar-input-attach"
+                aria-label={locale.attachFile}
+                aria-describedby={attachmentHelpId}
+                disabled={attachmentUnavailable}
+                onFocus={() => setAttachmentHelpVisible(true)}
+                onBlur={() => setAttachmentHelpVisible(false)}
+                onClick={() => {
+                  setAttachmentHelpVisible(false);
+                  fileInputRef.current?.click();
+                }}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  color: attachmentUnavailable ? tokens.colorTextMuted : tokens.colorTextSecondary,
+                  cursor: attachmentUnavailable ? 'default' : 'pointer',
+                  padding: tokens.space1,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  borderRadius: tokens.borderRadiusSm,
+                  transition: `color ${tokens.transitionFast}, box-shadow ${tokens.transitionFast}`,
+                  outline: 'none',
+                  flexShrink: 0,
+                }}
+                onMouseEnter={(e) => {
+                  if (!attachmentUnavailable) (e.currentTarget as HTMLElement).style.color = tokens.colorText;
+                }}
+                onMouseLeave={(e) => {
+                  if (!attachmentUnavailable) (e.currentTarget as HTMLElement).style.color = tokens.colorTextSecondary;
+                }}
+              >
+                <PaperclipIcon size={18} />
+              </button>
+              <span
+                id={attachmentHelpId}
+                role="tooltip"
+                hidden={!attachmentHelpVisible}
+                style={{
+                  position: 'absolute',
+                  bottom: '100%',
+                  left: 0,
+                  width: 'min(260px, calc(100vw - 48px))',
+                  padding: tokens.space2,
+                  backgroundColor: tokens.colorSurface,
+                  color: tokens.colorText,
+                  border: `${tokens.borderWidth} solid ${tokens.colorBorder}`,
+                  borderRadius: tokens.borderRadiusSm,
+                  fontFamily: tokens.fontFamily,
+                  fontSize: tokens.fontSizeXs,
+                  lineHeight: tokens.lineHeightNormal,
+                  overflowWrap: 'anywhere',
+                  zIndex: 1,
+                }}
+              >
+                {locale.textAttachment.help}
+              </span>
+            </div>
           </>
         )}
 
@@ -302,7 +364,7 @@ export const InputBar: FunctionComponent<InputBarProps> = ({
         </button>
       </div>
 
-      {fileUploadEnabled && (
+      {fileUploadEnabled && (readingAttachment || selectedAttachment || visibleAttachmentError) && (
         <div
           style={{
             padding: `0 ${tokens.space3} ${tokens.space1}`,
@@ -311,7 +373,6 @@ export const InputBar: FunctionComponent<InputBarProps> = ({
             color: tokens.colorTextSecondary,
           }}
         >
-          <p id={attachmentHelpId}>{locale.textAttachment.help}</p>
           {readingAttachment && <p role="status">{locale.textAttachment.reading}</p>}
           {selectedAttachment && (
             <div style={{ display: 'flex', alignItems: 'center', gap: tokens.space2 }}>

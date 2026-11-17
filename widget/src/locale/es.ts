@@ -63,6 +63,7 @@ export const es: Locale = {
   issueNotificationUnconfirmed: 'Tu reporte se guardó, pero no pudimos confirmar que se notificara al equipo.',
   issueCancel: 'Cancelar',
   issueDone: 'Listo',
+  login: 'Iniciar sesión',
   verifyEmail: 'Verificar correo',
   emailVerified: 'Correo verificado',
   emailSendCode: 'Enviar código',

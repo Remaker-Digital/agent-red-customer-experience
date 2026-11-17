@@ -15,7 +15,7 @@ The closed beta runs seven core roles in one gateway process: intent classificat
 
 The public source repository is [Remaker-Digital/agent-red-customer-experience](https://github.com/Remaker-Digital/agent-red-customer-experience).
 
-The public source snapshot is v2.0.23. Michael Palmeter directed the project, and AI coding agents built it.
+The public source snapshot is v2.0.24. Michael Palmeter directed the project, and AI coding agents built it.
 
 ## Try visitor chat
 
@@ -46,7 +46,7 @@ npm --prefix widget run typecheck
 npm --prefix widget run build
 ```
 
-Configuration examples use placeholders. The hosted service uses separate deployment and tenant settings. The container recipes reference production build inputs omitted from this preview.
+Configuration examples use placeholders. The hosted service uses separate deployment and tenant settings. The local container recipe builds all frontend bundles from source using public base images. Run `docker compose up --build api` for local evaluation. Configure isolated development integrations for end-to-end scenarios; the offline tests inject synthetic clients.
 
 ## Checks
 

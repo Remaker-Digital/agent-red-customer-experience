@@ -63,6 +63,7 @@ export const fr: Locale = {
   issueNotificationUnconfirmed: 'Votre signalement a été enregistré, mais nous ne pouvons pas confirmer que l’équipe a été prévenue.',
   issueCancel: 'Annuler',
   issueDone: 'Terminé',
+  login: 'Se connecter',
   verifyEmail: 'Vérifier mon adresse e-mail',
   emailVerified: 'Adresse e-mail vérifiée',
   emailSendCode: 'Envoyer le code',

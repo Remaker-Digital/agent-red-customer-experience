@@ -583,7 +583,7 @@ class TestStreamingSSE:
 
     def test_perf_30_sla_targets_match_contract(self):
         """PERF-30: SLA targets match documented contractual values."""
-        # Verify SLA targets match the commitments in CLAUDE.md
+        # Verify SLA targets match the commitments in coding assistant.md
         for tier in ["starter", "professional", "enterprise"]:
             targets = SLA_TARGETS[tier]
             assert targets["p50_ms"] == 1500

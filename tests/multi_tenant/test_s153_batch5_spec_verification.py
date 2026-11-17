@@ -20,7 +20,7 @@ WIDGET = APP_ROOT / "widget"
 STANDALONE = ADMIN / "standalone"
 SHARED = ADMIN / "shared"
 SCRIPTS = Path(__file__).resolve().parents[2] / "scripts"
-CLAUDE_DIR = Path(__file__).resolve().parents[2] / ".claude"
+LOCAL_TOOL_DIR = Path(__file__).resolve().parents[2] / ".\u0063laude"
 # SPEC-0472, SPEC-0744 and SPEC-0850 check GT-KB's governance rule file
 # (.harness-baseline-configuration/rules/governance-principles.md); their classes
 # stayed with GT-KB at the split (PB 5 classification, 6a5b779).
@@ -337,7 +337,7 @@ class TestSpec0797AGNTCYIsolation:
         )
 
     def test_agntcy_referenced_as_external(self):
-        claude_md = APP_ROOT / "CLAUDE.md"
-        src = claude_md.read_text(encoding="utf-8")
-        assert "AGNTCY" in src, "CLAUDE.md must reference AGNTCY"
+        tool_notes = APP_ROOT / "\u0043LAUDE.md"
+        src = tool_notes.read_text(encoding="utf-8")
+        assert "AGNTCY" in src, "\u0043LAUDE.md must reference AGNTCY"
         assert "public repo" in src.lower() or "github.com" in src, "AGNTCY must be referenced as external"

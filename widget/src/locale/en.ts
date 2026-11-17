@@ -69,6 +69,7 @@ export interface Locale {
   issueNotificationUnconfirmed: string;
   issueCancel: string;
   issueDone: string;
+  login: string;
   verifyEmail: string;
   emailVerified: string;
   emailSendCode: string;
@@ -176,6 +177,7 @@ export const en: Locale = {
   issueNotificationUnconfirmed: 'Your report was saved, but we could not confirm that the team was notified.',
   issueCancel: 'Cancel',
   issueDone: 'Done',
+  login: 'Login',
   verifyEmail: 'Verify email',
   emailVerified: 'Email verified',
   emailSendCode: 'Send code',

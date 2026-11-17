@@ -72,7 +72,7 @@ describe('direct visitor email verification', () => {
     fireEvent.input(screen.getByRole('textbox', { name: en.inputPlaceholder }), {
       target: { value: 'Can you help me?' },
     });
-    fireEvent.click(screen.getByRole('button', { name: 'Verify email' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Login' }));
     expect(screen.queryByRole('textbox', { name: en.inputPlaceholder })).toBeNull();
     fireEvent.input(screen.getByRole('textbox', { name: 'Email' }), { target: { value: email } });
     fireEvent.click(screen.getByRole('button', { name: 'Send code' }));
@@ -86,7 +86,7 @@ describe('direct visitor email verification', () => {
     fireEvent.click(screen.getByRole('button', { name: en.otpVerify }));
     await screen.findByText('Email verified');
     expect(store.getState().customerToken).toBe('synthetic-customer-token');
-    expect(screen.queryByRole('button', { name: 'Verify email' })).toBeNull();
+    expect(screen.queryByRole('button', { name: 'Login' })).toBeNull();
     expect(submittedBody('/api/chat/otp/send')).toMatchObject({ email });
     expect(submittedBody('/api/chat/otp/verify')).toEqual({ email, code: '321456' });
 
@@ -111,7 +111,7 @@ describe('direct visitor email verification', () => {
       .mockResolvedValueOnce(respond({ conversation_id: 'conv-guest' }))
       .mockResolvedValueOnce(respond({ message_id: 'msg-guest' }));
 
-    fireEvent.click(screen.getByRole('button', { name: 'Verify email' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Login' }));
     fireEvent.input(screen.getByRole('textbox', { name: 'Email' }), { target: { value: email } });
     fireEvent.click(screen.getByRole('button', { name: 'Send code' }));
     await screen.findByRole('alert');
@@ -126,13 +126,13 @@ describe('direct visitor email verification', () => {
 
   it('honors the tenant setting that disables email verification', () => {
     renderVisitor({ customer_email_verification: 'disabled' });
-    expect(screen.queryByRole('button', { name: 'Verify email' })).toBeNull();
+    expect(screen.queryByRole('button', { name: 'Login' })).toBeNull();
     expect(screen.getByRole('textbox', { name: en.inputPlaceholder })).toBeTruthy();
   });
 });
 
 
-it('keeps Verify email available when restoring a conversation containing only a report', async () => {
+it('keeps Login available when restoring a conversation containing only a report', async () => {
   const id = 'report-only-conversation';
   saveTranscript('pk_test_visitor', id, 'session');
   fetchMock.mockResolvedValueOnce(respond({
@@ -150,7 +150,7 @@ it('keeps Verify email available when restoring a conversation containing only a
   try {
     const store = renderVisitor({ widget_transcript_continuity: 'session' });
     await waitFor(() => expect(store.getState().conversationId).toBe(id));
-    expect(screen.getByRole('button', { name: 'Verify email' })).toBeTruthy();
+    expect(screen.getByRole('button', { name: 'Login' })).toBeTruthy();
     expect(store.getState().messages).toEqual([]);
   } finally {
     clearTranscript('pk_test_visitor', 'session');

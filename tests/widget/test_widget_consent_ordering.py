@@ -1,14 +1,14 @@
 """D5 I1 evidence: ConsentBanner renders before MessageList in Panel.tsx.
 
 This test discharges coding assistant review F2 from
-``bridge/agent-red-claude-design-gui-refresh-intake-implementation-002.md``:
+``bridge/agent-red-coding assistant-design-gui-refresh-intake-implementation-002.md``:
 the ``GOV-CD-PRESERVATION`` I1 invariant cites this exact file, so the path
 must exist and produce a PASS/FAIL.
 
 The check is a lightweight static source read — same pattern as
 ``tests/widget/test_widget_a11y_behavioral.py``. It guards the structural
 invariant that the GDPR consent flow is offered before any chat message can
-appear, regardless of any future Claude Design-driven refresh.
+appear, regardless of any future coding assistant Design-driven refresh.
 
 Copyright (c) 2026 Michael Palmeter
 SPDX-License-Identifier: MIT

@@ -756,7 +756,7 @@ async def get_test_run_checks(
     status: str | None = Query(None, description="Filter by check status: pass, fail, skip, error"),
     category: str | None = Query(None, description="Filter by category: health, api, config, security, etc."),
 ) -> TestRunChecksResponse:
-    """Return detailed check results for Claude diagnosis (SPEC-1846)."""
+    """Return detailed check results for coding assistant diagnosis (SPEC-1846)."""
     repo = _get_platform_repo()
     doc = await repo.get_config(_TEST_RUN_CONFIG_TYPE, run_id)
     if doc is None:

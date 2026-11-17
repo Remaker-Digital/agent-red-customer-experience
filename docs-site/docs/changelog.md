@@ -7,9 +7,13 @@ title: Changelog
 
 All notable changes to Agent Red Customer Experience are documented here.
 
-The product is in a closed beta at v2.0.23. Access is by request. Email support@remakerdigital.com. There is no self-serve sign-up and no free trial. Published prices are planned and are not on offer yet.
+The product is in a closed beta at v2.0.24. Access is by request. Email support@remakerdigital.com. There is no self-serve sign-up and no free trial. Published prices are planned and are not on offer yet.
 
 ---
+
+## 2.0.24
+
+- Complete cleansed source aligned with the recorded commercial release.
 
 ## v2.0.23 (closed beta)
 
@@ -178,7 +182,7 @@ Full test management from internal operations tooling:
 - Auto-polling detail modal with live progress bar
 - Performance chart showing pass rates over time
 - Checkbox suite selector for custom test combinations
-- Copy-for-Claude button exports failure JSON for debugging
+- Copy-for-coding assistant button exports failure JSON for debugging
 - Drill-down into individual test results
 
 ### Verification runner improvements
@@ -208,7 +212,7 @@ Tooling-triggered end-to-end health checks that run entirely within the Azure en
 
 - Trigger test runs from internal operations tooling with environment and suite selection
 - Auto-polling detail modal with live-updating progress bar
-- Copy-for-Claude button exports failure JSON to clipboard
+- Copy-for-coding assistant button exports failure JSON to clipboard
 - Unmount-safe polling with `useRef` guard
 
 ### Code review fixes (12 items)

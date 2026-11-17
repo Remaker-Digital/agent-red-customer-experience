@@ -169,12 +169,13 @@ it('leaves the ordinary guest text path available with attachments disabled', as
 
 it('resolves attachment help and validation errors after a runtime locale change', async () => {
   const { container } = openVisitorChat(true);
-  expect(screen.getByText('Attach a UTF-8 .txt file. Its contents are sent as part of your message.')).toBeTruthy();
+  const paperclip = screen.getByRole('button', { name: en.attachFile });
+  expect(screen.queryByRole('tooltip')).toBeNull();
+  fireEvent.focus(paperclip);
+  expect(screen.getByRole('tooltip').textContent).toBe(en.textAttachment.help);
 
   act(() => getStore().setState({ locale: de }));
-  expect(screen.getByText(
-    'Fügen Sie eine UTF-8-Textdatei (.txt) hinzu. Ihr Inhalt wird als Teil Ihrer Nachricht gesendet.',
-  )).toBeTruthy();
+  expect(screen.getByRole('tooltip').textContent).toBe(de.textAttachment.help);
 
   const file = new File(['synthetic fixture'], 'not-supported.pdf', { type: 'application/pdf' });
   fireEvent.change(fileInput(container), { target: { files: [file] } });
@@ -182,4 +183,96 @@ it('resolves attachment help and validation errors after a runtime locale change
   act(() => getStore().setState({ locale: en }));
   expect(screen.getByRole('alert').textContent).toBe('Choose a UTF-8 .txt file.');
   expect(fetchMock).not.toHaveBeenCalled();
+});
+
+it('shows attachment guidance on hover and keyboard focus with Escape dismissal', () => {
+  openVisitorChat(true);
+  const paperclip = screen.getByRole('button', { name: en.attachFile });
+  const control = paperclip.parentElement!;
+  const helpId = paperclip.getAttribute('aria-describedby');
+  expect(helpId).toBeTruthy();
+  expect(document.getElementById(helpId!)?.hidden).toBe(true);
+  expect(screen.queryByRole('tooltip')).toBeNull();
+
+  fireEvent.mouseEnter(control);
+  expect(screen.getByRole('tooltip').id).toBe(helpId);
+  expect(screen.getByRole('tooltip').textContent).toBe(en.textAttachment.help);
+  fireEvent.mouseLeave(control);
+  expect(screen.queryByRole('tooltip')).toBeNull();
+
+  fireEvent.focus(paperclip);
+  expect(screen.getByRole('tooltip').textContent).toBe(en.textAttachment.help);
+  const bubbled = vi.fn();
+  document.addEventListener('keydown', bubbled);
+  try {
+    fireEvent.keyDown(paperclip, { key: 'Escape' });
+    expect(screen.queryByRole('tooltip')).toBeNull();
+    expect(bubbled).not.toHaveBeenCalled();
+  } finally {
+    document.removeEventListener('keydown', bubbled);
+  }
+  expect(fetchMock).not.toHaveBeenCalled();
+  fireEvent.blur(paperclip);
+  fireEvent.focus(paperclip);
+  expect(screen.getByRole('tooltip')).toBeTruthy();
+  fireEvent.blur(paperclip);
+  expect(screen.queryByRole('tooltip')).toBeNull();
+});
+
+it('opens the file picker from the attachment icon and dismisses its tooltip', () => {
+  const { container } = openVisitorChat(true);
+  const paperclip = screen.getByRole('button', { name: en.attachFile });
+  const choose = vi.spyOn(fileInput(container), 'click');
+  fireEvent.focus(paperclip);
+  expect(screen.getByRole('tooltip')).toBeTruthy();
+  fireEvent.click(paperclip);
+  expect(choose).toHaveBeenCalledOnce();
+  expect(screen.queryByRole('tooltip')).toBeNull();
+  expect(fetchMock).not.toHaveBeenCalled();
+});
+
+it('dismisses hovered guidance on Escape while the composer retains focus', () => {
+  openVisitorChat(true);
+  const paperclip = screen.getByRole('button', { name: en.attachFile });
+  const composer = screen.getByRole('textbox');
+  fireEvent.focus(composer);
+  fireEvent.mouseEnter(paperclip.parentElement!);
+  expect(screen.getByRole('tooltip')).toBeTruthy();
+  fireEvent.keyDown(composer, { key: 'Escape' });
+  expect(screen.queryByRole('tooltip')).toBeNull();
+  expect(screen.getByRole('textbox')).toBe(composer);
+  expect(fetchMock).not.toHaveBeenCalled();
+});
+
+it('stops intercepting Escape when uploads are disabled at runtime', () => {
+  openVisitorChat(true);
+  fireEvent.focus(screen.getByRole('button', { name: en.attachFile }));
+  expect(screen.getByRole('tooltip')).toBeTruthy();
+  act(() => getStore().setState({ config: { widget_file_upload_enabled: false } }));
+  expect(screen.queryByRole('button', { name: en.attachFile })).toBeNull();
+  expect(screen.queryByRole('tooltip')).toBeNull();
+
+  const bubbled = vi.fn();
+  document.addEventListener('keydown', bubbled);
+  try {
+    fireEvent.keyDown(document, { key: 'Escape' });
+    expect(bubbled).toHaveBeenCalledOnce();
+  } finally {
+    document.removeEventListener('keydown', bubbled);
+  }
+  act(() => getStore().setState({ config: { widget_file_upload_enabled: true } }));
+  expect(screen.queryByRole('tooltip')).toBeNull();
+});
+
+it('anchors attachment guidance above the full composer row', () => {
+  openVisitorChat(true);
+  const paperclip = screen.getByRole('button', { name: en.attachFile });
+  const control = paperclip.parentElement!;
+  fireEvent.mouseEnter(control);
+  const tooltip = screen.getByRole('tooltip');
+  expect(control.style.alignSelf).toBe('stretch');
+  expect(control.style.display).toBe('flex');
+  expect(control.style.alignItems).toBe('flex-end');
+  expect(tooltip.style.bottom).toBe('100%');
+  expect(tooltip.parentElement).toBe(control);
 });

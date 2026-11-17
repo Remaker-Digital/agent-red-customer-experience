@@ -63,6 +63,7 @@ export const ko: Locale = {
   issueNotificationUnconfirmed: '신고는 저장되었지만 팀에 알림이 전달되었는지는 확인할 수 없습니다.',
   issueCancel: '취소',
   issueDone: '완료',
+  login: '로그인',
   verifyEmail: '이메일 인증',
   emailVerified: '이메일 인증 완료',
   emailSendCode: '코드 보내기',

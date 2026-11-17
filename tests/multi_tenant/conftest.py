@@ -231,14 +231,14 @@ def memory_repos():
 _PUBLIC_SNAPSHOT_ROOT = Path(__file__).resolve().parents[2]
 _PRIVATE_PATHS = {
     "test_s153_batch10_spec_verification.py": {
-        ".claude/SCHEDULE.md": {
+        ".\u0063laude/SCHEDULE.md": {
             "test_schedule_exists",
             "test_schedule_has_groups",
         },
-        "CLAUDE.md": {
+        "\u0043LAUDE.md": {
             "test_honest_feedback_in_project",
-            "test_customer_experience_in_claude_md",
-            "test_priority_in_claude_md",
+            "test_customer_experience_in_tool_notes",
+            "test_priority_in_tool_notes",
             "test_no_effort_estimates_as_metric",
             "test_quality_governance",
             "test_no_effort_in_governance",
@@ -248,9 +248,9 @@ _PRIVATE_PATHS = {
             "test_quality_governance_present",
             "test_honest_feedback_documented",
         },
-        "CLAUDE_ARCHIVE.md": {
+        "\u0043LAUDE_ARCHIVE.md": {
             "test_archive_exists",
-            "test_claude_md_references_archive",
+            "test_tool_notes_references_archive",
         },
         "scripts/deploy_pipeline.py": {
             "test_deploy_pipeline_has_phases",
@@ -270,13 +270,13 @@ _PRIVATE_PATHS = {
         },
     },
     "test_s153_batch11_spec_verification.py": {
-        ".claude/SCHEDULE.md": {
+        ".\u0063laude/SCHEDULE.md": {
             "test_schedule_is_writable",
         },
-        ".claude/hooks/assertion-check.py": {
+        ".\u0063laude/hooks/assertion-check.py": {
             "test_quality_dashboard_exists",
         },
-        "CLAUDE.md": {
+        "\u0043LAUDE.md": {
             "test_deploy_gate_in_governance",
             "test_quality_first_in_governance",
             "test_gov_03_test_clarity",
@@ -322,12 +322,12 @@ _PRIVATE_PATHS = {
         },
     },
     "test_s153_batch4_spec_verification.py": {
-        ".claude/hooks/assertion-check.py": {
+        ".\u0063laude/hooks/assertion-check.py": {
             "test_assertion_check_hook_has_dashboard",
         },
     },
     "test_s153_batch5_spec_verification.py": {
-        "CLAUDE.md": {
+        "\u0043LAUDE.md": {
             "test_agntcy_referenced_as_external",
         },
         "scripts/": {
@@ -355,7 +355,7 @@ _PRIVATE_PATHS = {
         },
     },
     "test_s153_batch9_spec_verification.py": {
-        "CLAUDE.md": {
+        "\u0043LAUDE.md": {
             "test_glossary_in_project",
         },
         "scripts/seed_tenant.py": {

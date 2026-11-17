@@ -63,6 +63,7 @@ export const zh: Locale = {
   issueNotificationUnconfirmed: '您的报告已保存，但我们无法确认团队已收到通知。',
   issueCancel: '取消',
   issueDone: '完成',
+  login: '登录',
   verifyEmail: '验证电子邮件',
   emailVerified: '电子邮件已验证',
   emailSendCode: '发送验证码',

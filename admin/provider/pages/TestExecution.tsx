@@ -293,8 +293,8 @@ export const TestExecutionPage: React.FC = () => {
     }
   }, [detailRunId, refreshRun]);
 
-  // Copy failures as JSON for Claude diagnosis
-  const copyForClaude = useCallback((run: PipelineRun) => {
+  // Copy failures as JSON for coding assistant diagnosis
+  const copyRunDiagnostics = useCallback((run: PipelineRun) => {
     const output = {
       runId: run.runId,
       environment: run.environment,
@@ -431,7 +431,7 @@ export const TestExecutionPage: React.FC = () => {
         </Stack>
       </Modal>
 
-      {/* Detail Modal — SPEC-1846: progress bar, checks table, copy for Claude */}
+      {/* Detail Modal : SPEC-1846: progress bar, checks table, copy for coding assistant */}
       <Modal opened={!!detailRun} onClose={() => setDetailRunId(null)} title={`Run ${detailRun?.runId}`} size="xl">
         {detailRun && (
           <Stack gap="sm">
@@ -586,8 +586,8 @@ export const TestExecutionPage: React.FC = () => {
                   View All Checks
                 </Button>
               )}
-              <Button size="xs" variant="subtle" onClick={() => copyForClaude(detailRun)}>
-                Copy for Claude
+              <Button size="xs" variant="subtle" onClick={() => copyRunDiagnostics(detailRun)}>
+                Copy for coding assistant
               </Button>
             </Group>
           </Stack>

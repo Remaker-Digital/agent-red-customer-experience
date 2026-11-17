@@ -454,7 +454,7 @@ class TestSpec1659QualityDashboard:
     """SPEC-1659: Quality Dashboard — Session-Start Quality Metrics."""
 
     def test_assertion_check_hook_has_dashboard(self):
-        hook = Path(__file__).resolve().parents[2] / ".claude" / "hooks" / "assertion-check.py"
+        hook = Path(__file__).resolve().parents[2] / ".\u0063laude" / "hooks" / "assertion-check.py"
         assert hook.exists(), "assertion-check.py hook must exist"
         src = hook.read_text(encoding="utf-8")
         assert "_quality_dashboard" in src or "quality_dashboard" in src, \

@@ -92,3 +92,14 @@ desktop.ini
 /.cache/
 /*.exe
 /*.bin
+
+# Local coding executables and worktree caches
+/*.exe
+/*.bin
+/*.run
+/*.AppImage
+/.tools/
+/tools-bin/
+/.cache/
+/.sessions/
+/.worktrees/

@@ -63,6 +63,7 @@ export const pt: Locale = {
   issueNotificationUnconfirmed: 'O relatório foi salvo, mas não conseguimos confirmar a notificação da equipe.',
   issueCancel: 'Cancelar',
   issueDone: 'Concluído',
+  login: 'Entrar',
   verifyEmail: 'Verificar e-mail',
   emailVerified: 'E-mail verificado',
   emailSendCode: 'Enviar código',

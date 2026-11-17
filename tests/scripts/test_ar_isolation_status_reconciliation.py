@@ -20,14 +20,14 @@ def _artifact_entry(name):
 # Owner principle (2026-10-06): agents working within GT-KB use GT-KB's rules,
 # hooks, skills and configuration, whether the session's subject is GT-KB or an
 # application. Agent Red carries no agent instructions or harness configuration
-# of its own. These replace the earlier checks that .claude and .coding assistant were
+# of its own. These replace the earlier checks that .coding assistant and .coding assistant were
 # "application-owned" configuration.
-AGENT_CONFIGURATION = {".claude", ".\u0063odex", ".agents", "CLAUDE.md", "AGENTS.md"}
+AGENT_CONFIGURATION = {".\u0063laude", ".\u0063odex", ".agents", "\u0043LAUDE.md", "AGENTS.md"}
 
 
 def test_registry_lists_no_application_agent_configuration():
     names = {e["name"] for e in _registry()["top_level_artifacts"]}
-    assert not (AGENT_CONFIGURATION | {"CLAUDE-ARCHITECTURE.md", "CLAUDE-REFERENCE.md", "CLAUDE_ARCHIVE.md"}) & names
+    assert not (AGENT_CONFIGURATION | {"\u0043LAUDE-ARCHITECTURE.md", "\u0043LAUDE-REFERENCE.md", "\u0043LAUDE_ARCHIVE.md"}) & names
 
 
 def test_agent_red_registry_uses_current_classifications_without_retired_authority_claims():

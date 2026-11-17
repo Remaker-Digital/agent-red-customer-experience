@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "snapshot_version": "v2.0.24",
+  "private_source_commit": "d5ea41ef73d2ad0d72816ea1fce0849e8a13cda8",
+  "projection_policy": "complete-cleansed-v1",
+  "historical_snapshots": [
+    {
+      "tag": "v2.0.23",
+      "public_commit": "782c51c72335e7f2b3d7ae3a723f4d9a7af826df",
+      "private_source_commit": "5677fb732f9dc1db9c99c84c26c921145af47d32",
+      "evidence": "Private v2.0.23 tag and Run 105 public snapshot export record"
+    }
+  ]
+}

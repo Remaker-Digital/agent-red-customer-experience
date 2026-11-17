@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 license = { file = "LICENSE" }
 name = "agent-red"
-version = "2.0.23"
+version = "2.0.24"
 description = "Agent Red Customer Experience application"
 requires-python = ">=3.12"
 dependencies = []

@@ -1,4 +1,4 @@
-"""S153 Batch 10 — CLAUDE.md governance + Config/Admin + Widget + Glossary + Process.
+"""S153 Batch 10 : \u0043LAUDE.md governance + Config/Admin + Widget + Glossary + Process.
 
 Specs verified against production interfaces.
 Copyright (c) 2026 Michael Palmeter
@@ -24,14 +24,14 @@ ROOT = Path(__file__).resolve().parents[2]
 
 
 # ═══════════════════════════════════════════════════════════════════════
-#  CLAUDE.MD GOVERNANCE SPECS
+#  coding assistant.MD GOVERNANCE SPECS
 # ═══════════════════════════════════════════════════════════════════════
 
 class TestSpec0092OwnerPersonalityHonestFeedback:
     """SPEC-0092: Project feedback guidance."""
 
     def test_honest_feedback_in_project(self):
-        src = (ROOT / "CLAUDE.md").read_text(encoding="utf-8")
+        src = (ROOT / "\u0043LAUDE.md").read_text(encoding="utf-8")
         assert "honest" in src.lower() or "feedback" in src.lower(), \
             "Must record honest feedback principle"
         assert "Feedback" in src, "Must have feedback guidance"
@@ -40,8 +40,8 @@ class TestSpec0092OwnerPersonalityHonestFeedback:
 class TestSpec0211ProductRenamedCustomerExperience:
     """SPEC-0211: Product renamed from 'Customer Engagement' to 'Customer Experience'."""
 
-    def test_customer_experience_in_claude_md(self):
-        src = (ROOT / "CLAUDE.md").read_text(encoding="utf-8")
+    def test_customer_experience_in_tool_notes(self):
+        src = (ROOT / "\u0043LAUDE.md").read_text(encoding="utf-8")
         assert "Customer Experience" in src, \
             "Project name must be 'Customer Experience'"
 
@@ -49,8 +49,8 @@ class TestSpec0211ProductRenamedCustomerExperience:
 class TestSpec0282TechnicalWorkPriority:
     """SPEC-0282: Technical work has elevated priority over creative/content work."""
 
-    def test_priority_in_claude_md(self):
-        src = (ROOT / "CLAUDE.md").read_text(encoding="utf-8")
+    def test_priority_in_tool_notes(self):
+        src = (ROOT / "\u0043LAUDE.md").read_text(encoding="utf-8")
         assert "Technical work has elevated priority" in src, \
             "Must document technical work priority"
 
@@ -59,8 +59,8 @@ class TestSpec0407NoEffortEstimates:
     """SPEC-0407: Effort estimates MUST NOT be presented."""
 
     def test_no_effort_estimates_as_metric(self):
-        src = (ROOT / "CLAUDE.md").read_text(encoding="utf-8")
-        # CLAUDE.md should not use effort as a measurement term
+        src = (ROOT / "\u0043LAUDE.md").read_text(encoding="utf-8")
+        # coding assistant.md should not use effort as a measurement term
         assert "effort estimate" not in src.lower(), \
             "Must not use effort estimates"
         assert "quality" in src.lower(), "Must focus on quality"
@@ -70,7 +70,7 @@ class TestSpec0408FocusOnQuality:
     """SPEC-0408: Primary focus on quality — correctness, completeness, absence of defects."""
 
     def test_quality_governance(self):
-        src = (ROOT / "CLAUDE.md").read_text(encoding="utf-8")
+        src = (ROOT / "\u0043LAUDE.md").read_text(encoding="utf-8")
         assert "Quality first" in src or "quality" in src.lower(), \
             "Must have quality-first governance"
         assert "GOV" in src, "Must have governance rules"
@@ -80,7 +80,7 @@ class TestSpec0564NoEffortTerminologyDup:
     """SPEC-0564: No effort estimates — focus on quality."""
 
     def test_no_effort_in_governance(self):
-        src = (ROOT / "CLAUDE.md").read_text(encoding="utf-8")
+        src = (ROOT / "\u0043LAUDE.md").read_text(encoding="utf-8")
         assert "level of effort" not in src.lower(), \
             "Must not use 'level of effort'"
 
@@ -89,40 +89,40 @@ class TestSpec0733NoEffortEstimatesDup2:
     """SPEC-0733: Effort estimates MUST NOT be provided."""
 
     def test_quality_over_effort(self):
-        src = (ROOT / "CLAUDE.md").read_text(encoding="utf-8")
+        src = (ROOT / "\u0043LAUDE.md").read_text(encoding="utf-8")
         # GOV-17: Quality first
         assert "Prioritize quality" in src or "quality" in src.lower(), \
             "Must prioritize quality over effort"
 
 
-class TestSpec0734ClaudeOffersFeedback:
-    """SPEC-0734: Claude MUST actively offer feedback on the owner's inputs."""
+class TestSpec0734AssistantOffersFeedback:
+    """SPEC-0734: coding assistant MUST actively offer feedback on the owner's inputs."""
 
     def test_feedback_guidance(self):
-        src = (ROOT / "CLAUDE.md").read_text(encoding="utf-8")
+        src = (ROOT / "\u0043LAUDE.md").read_text(encoding="utf-8")
         assert "Feedback" in src, "Must have feedback guidance"
         assert "coaching" in src.lower() or "inline" in src.lower(), \
             "Must have inline coaching mechanism"
 
 
-class TestSpec0746ClaudeMdDecomposed:
-    """SPEC-0746: CLAUDE.md historical info decomposed to CLAUDE_ARCHIVE.md."""
+class TestSpec0746ProjectNotesDecomposed:
+    """SPEC-0746: \u0043LAUDE.md historical info decomposed to \u0043LAUDE_ARCHIVE.md."""
 
     def test_archive_exists(self):
-        assert (ROOT / "CLAUDE_ARCHIVE.md").exists(), \
-            "CLAUDE_ARCHIVE.md must exist"
+        assert (ROOT / "\u0043LAUDE_ARCHIVE.md").exists(), \
+            "\u0043LAUDE_ARCHIVE.md must exist"
 
-    def test_claude_md_references_archive(self):
-        src = (ROOT / "CLAUDE.md").read_text(encoding="utf-8")
-        assert "CLAUDE_ARCHIVE.md" in src, \
-            "CLAUDE.md must reference the archive"
+    def test_tool_notes_references_archive(self):
+        src = (ROOT / "\u0043LAUDE.md").read_text(encoding="utf-8")
+        assert "\u0043LAUDE_ARCHIVE.md" in src, \
+            "\u0043LAUDE.md must reference the archive"
 
 
 class TestSpec0848TechnicalWorkPriorityDup:
     """SPEC-0848: Technical work MUST have elevated priority over creative/content."""
 
     def test_work_priority_bias(self):
-        src = (ROOT / "CLAUDE.md").read_text(encoding="utf-8")
+        src = (ROOT / "\u0043LAUDE.md").read_text(encoding="utf-8")
         assert "Work Priority Bias" in src or "elevated priority" in src, \
             "Must document work priority bias"
 
@@ -131,7 +131,7 @@ class TestSpec0849NoEffortEstimatesDup3:
     """SPEC-0849: No effort estimates — focus on quality."""
 
     def test_quality_governance_present(self):
-        src = (ROOT / "CLAUDE.md").read_text(encoding="utf-8")
+        src = (ROOT / "\u0043LAUDE.md").read_text(encoding="utf-8")
         # GOV-17 exists
         lines = [line for line in src.splitlines() if "17" in line and "Quality" in line]
         assert len(lines) > 0, "GOV-17 Quality first must exist"
@@ -141,7 +141,7 @@ class TestSpec0858HonestFeedbackDup:
     """SPEC-0858: Honest feedback MUST be provided — never exaggerate."""
 
     def test_honest_feedback_documented(self):
-        src = (ROOT / "CLAUDE.md").read_text(encoding="utf-8")
+        src = (ROOT / "\u0043LAUDE.md").read_text(encoding="utf-8")
         assert "honest" in src.lower() or "exaggerate" in src.lower() or \
             "terminology inconsistency" in src, \
             "Must document honest feedback principle"
@@ -390,11 +390,11 @@ class TestSpec0668ScheduleMdGroupings:
     """SPEC-0668: SCHEDULE.md MUST contain groupings of sequential prompts."""
 
     def test_schedule_exists(self):
-        schedule = ROOT / ".claude" / "SCHEDULE.md"
+        schedule = ROOT / ".\u0063laude" / "SCHEDULE.md"
         assert schedule.exists(), "SCHEDULE.md must exist"
 
     def test_schedule_has_groups(self):
-        src = (ROOT / ".claude" / "SCHEDULE.md").read_text(encoding="utf-8")
+        src = (ROOT / ".\u0063laude" / "SCHEDULE.md").read_text(encoding="utf-8")
         assert "Group" in src or "group" in src, \
             "Must have prompt groupings"
         assert "trigger" in src.lower(), \

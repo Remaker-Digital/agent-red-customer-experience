@@ -972,7 +972,7 @@ export const Panel: FunctionComponent<PanelProps> = ({
                     cursor: 'pointer',
                   }}
                 >
-                  {activeLocale.verifyEmail}
+                  {activeLocale.login}
                 </button>
               )}
             </div>

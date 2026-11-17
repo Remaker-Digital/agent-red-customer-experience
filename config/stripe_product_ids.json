@@ -1,0 +1,110 @@
+{
+  "mode": "test",
+  "meter": {
+    "conversation_overage": {
+      "meter_id": "dummy-not-a-service-id-1"
+    }
+  },
+  "tiers": {
+    "starter": {
+      "product_id": "dummy-not-a-service-id-2",
+      "monthly_price_id": "dummy-not-a-service-id-3",
+      "annual_price_id": "dummy-not-a-service-id-4",
+      "overage_price_id": "dummy-not-a-service-id-5",
+      "included_conversations": 1000
+    },
+    "professional": {
+      "product_id": "dummy-not-a-service-id-6",
+      "monthly_price_id": "dummy-not-a-service-id-7",
+      "annual_price_id": "dummy-not-a-service-id-8",
+      "overage_price_id": "dummy-not-a-service-id-9",
+      "included_conversations": 5000
+    },
+    "enterprise": {
+      "product_id": "dummy-not-a-service-id-10",
+      "monthly_price_id": "dummy-not-a-service-id-11",
+      "annual_price_id": "dummy-not-a-service-id-12",
+      "overage_price_id": "dummy-not-a-service-id-13",
+      "included_conversations": 20000
+    }
+  },
+  "packs": {
+    "pack_1k": {
+      "product_id": "dummy-not-a-service-id-14",
+      "price_id": "dummy-not-a-service-id-15",
+      "conversations": 1000
+    },
+    "pack_5k": {
+      "product_id": "dummy-not-a-service-id-16",
+      "price_id": "dummy-not-a-service-id-17",
+      "conversations": 5000
+    },
+    "pack_20k": {
+      "product_id": "dummy-not-a-service-id-18",
+      "price_id": "dummy-not-a-service-id-19",
+      "conversations": 20000
+    }
+  },
+  "addons": {
+    "addon_multi_language": {
+      "product_id": "dummy-not-a-service-id-20",
+      "price_id": "dummy-not-a-service-id-21",
+      "available_on": [
+        "starter",
+        "professional",
+        "enterprise"
+      ]
+    },
+    "addon_advanced_analytics": {
+      "product_id": "dummy-not-a-service-id-22",
+      "price_id": "dummy-not-a-service-id-23",
+      "available_on": [
+        "professional",
+        "enterprise"
+      ]
+    },
+    "addon_mailchimp": {
+      "product_id": "dummy-not-a-service-id-24",
+      "price_id": "dummy-not-a-service-id-25",
+      "available_on": [
+        "professional",
+        "enterprise"
+      ]
+    },
+    "addon_google_analytics": {
+      "product_id": "dummy-not-a-service-id-26",
+      "price_id": "dummy-not-a-service-id-27",
+      "available_on": [
+        "professional",
+        "enterprise"
+      ]
+    },
+    "addon_white_label": {
+      "product_id": "dummy-not-a-service-id-28",
+      "price_id": "dummy-not-a-service-id-29",
+      "available_on": [
+        "enterprise"
+      ]
+    },
+    "addon_priority_support": {
+      "product_id": "dummy-not-a-service-id-30",
+      "price_id": "dummy-not-a-service-id-31",
+      "available_on": [
+        "starter",
+        "professional"
+      ]
+    },
+    "addon_custom_integration": {
+      "product_id": "dummy-not-a-service-id-32",
+      "price_id": "dummy-not-a-service-id-33",
+      "available_on": [
+        "enterprise"
+      ]
+    }
+  },
+  "coupons": {
+    "annual_17pct_off": {
+      "coupon_id": "dummy-not-a-service-id-34"
+    }
+  }
+}

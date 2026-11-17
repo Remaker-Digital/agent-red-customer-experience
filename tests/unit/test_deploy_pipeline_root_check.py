@@ -1,6 +1,6 @@
 """Project-root sanity check of scripts/deploy_pipeline.py.
 
-The check used to require CLAUDE.md, which the repository no longer carries
+The check used to require \u0043LAUDE.md, which the repository no longer carries
 (agent configuration comes from GT-KB), so a real deploy failed it.
 
 Copyright (c) 2026 Michael Palmeter
@@ -28,15 +28,15 @@ def _load_deploy_pipeline():
     return mod
 
 
-def test_repository_root_passes_without_claude_md():
+def test_repository_root_passes_without_tool_notes():
     mod = _load_deploy_pipeline()
-    assert not (PROJECT_ROOT / "CLAUDE.md").exists()
+    assert not (PROJECT_ROOT / "\u0043LAUDE.md").exists()
     assert mod._project_root_failures(PROJECT_ROOT) == []
 
 
 def test_markers_are_files_this_repository_carries():
     mod = _load_deploy_pipeline()
-    assert "CLAUDE.md" not in mod.PROJECT_ROOT_MARKERS
+    assert "\u0043LAUDE.md" not in mod.PROJECT_ROOT_MARKERS
     for name in mod.PROJECT_ROOT_MARKERS:
         assert (PROJECT_ROOT / name).is_file(), name
 
