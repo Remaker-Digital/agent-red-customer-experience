@@ -17,6 +17,12 @@ The public source repository is [Remaker-Digital/agent-red-customer-experience](
 
 The public source snapshot is v2.0.24. Michael Palmeter directed the project, and AI coding agents built it.
 
+## Module development
+
+This repository is also a standalone workspace for independently packaged modules. Read the [module developer README](modules/README.md) before starting work, then use [PUBLIC-DEVELOPMENT.md](PUBLIC-DEVELOPMENT.md) for repository provenance and owner-relayed task and handoff templates. The current [operator console example](modules/operator-console-mcp/README.md) demonstrates independent installation and synthetic testing against the published contract.
+
+New module work stays within its assigned module folder and uses supported interfaces. The commercial project adopts pinned packages through compatibility checks; it does not merge this entire repository. The module catalog is open to new capabilities with clear contracts and verification.
+
 ## Try visitor chat
 
 Open the chat launcher on the [Remaker Digital Contact page](https://www.remakerdigital.com/contact/). Try **Ways to work with us** or ask a question about Remaker Digital. The live demo follows its own release schedule and may serve a different version from this snapshot.
